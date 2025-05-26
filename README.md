@@ -7,24 +7,28 @@ by Andrew Brampton ([bramp.net](https://bramp.net)) (c) 2013-2024
 A fluent interface for running FFmpeg from Java.
 
 ![Java](https://img.shields.io/badge/Java-8+-brightgreen.svg)
-[![Build Status](https://github.com/bramp/ffmpeg-cli-wrapper/actions/workflows/maven.yml/badge.svg)](https://github.com/bramp/ffmpeg-cli-wrapper/actions/workflows/maven.yml)
+[![PR Checks](https://github.com/bramp/ffmpeg-cli-wrapper/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/bramp/ffmpeg-cli-wrapper/actions/workflows/pr-checks.yml)
 [![Coverage Status](https://img.shields.io/coveralls/bramp/ffmpeg-cli-wrapper.svg)](https://coveralls.io/github/bramp/ffmpeg-cli-wrapper)
-[![Maven](https://img.shields.io/maven-central/v/net.bramp.ffmpeg/ffmpeg.svg)](http://mvnrepository.com/artifact/net.bramp.ffmpeg/ffmpeg)
+[![Maven Central](https://img.shields.io/maven-central/v/net.bramp.ffmpeg/ffmpeg.svg)](http://mvnrepository.com/artifact/net.bramp.ffmpeg/ffmpeg)
 [![Libraries.io](https://img.shields.io/librariesio/github/bramp/ffmpeg-cli-wrapper.svg)](https://libraries.io/github/bramp/ffmpeg-cli-wrapper)
 
 [GitHub](https://github.com/bramp/ffmpeg-cli-wrapper) | [API docs](https://bramp.github.io/ffmpeg-cli-wrapper/)
 
 ## Install
 
-We currently support Java 8 and above. Use Maven to install the dependency.
+We currently support Java 8 and above. Use Gradle to install the dependency.
 
-```xml
-<dependency>
-  <groupId>net.bramp.ffmpeg</groupId>
-  <artifactId>ffmpeg</artifactId>
-  <version>0.8.0</version>
-</dependency>
+For Gradle (Kotlin DSL, `build.gradle.kts`):
+```kotlin
+implementation("com.eygraber:ffmpeg-cli-wrapper:0.9.0")
 ```
+
+For Gradle (Groovy DSL, `build.gradle`):
+```groovy
+implementation 'com.eygraber:ffmpeg-cli-wrapper:0.9.0'
+```
+
+The latest release version can be found on [Maven Central](http://mvnrepository.com/artifact/com.eygraber/ffmpeg).
 
 ## Usage
 
@@ -130,35 +134,19 @@ FFmpegJob job = executor.createJob(builder, new ProgressListener() {
 job.run();
 ```
 
-## Building & Releasing
+## Building & Contributing
 
-If you wish to make changes, then building and releasing is simple:
-
-```bash
-# To build
-mvn
-
-# To test
-mvn test
-
-# To release (pushing jar to maven central)
-# (don't forget to set up your ~/.m2/settings.xml)
-mvn release:prepare
-mvn release:perform
-
-# To publish javadoc
-git checkout ffmpeg-0.x
-mvn clean javadoc:aggregate scm-publish:publish-scm
-```
-
-## Bumpings Deps
+If you wish to make changes, then building is simple with Gradle:
 
 ```bash
-# Update Maven Plugins
-mvn versions:display-plugin-updates
+# To build the project (compiles, tests, and assembles the JAR)
+./gradlew build
 
-# Library Dependencies
-mvn versions:display-dependency-updates 
+# To run tests
+./gradlew test
+
+# To generate Javadoc
+./gradlew javadoc
 ```
 
 ## Install FFmpeg on Ubuntu
