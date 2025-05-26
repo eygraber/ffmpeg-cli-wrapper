@@ -1,0 +1,56 @@
+name: PR Checks
+
+on:
+  pull_request
+
+jobs:
+  build:
+    name: JDK ${{ matrix.java-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [11, 17, 21, 23]
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Setup FFmpeg
+        uses: AnimMouse/setup-ffmpeg@v1
+
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: wrapper
+
+      - name: Build with Gradle
+        run: ./gradlew build --scan
+
+      - name: Publish Test Results (JUnit)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-jdk${{ matrix.java-version }}
+          path: '**/build/test-results/test/TEST-*.xml'
+
+      - name: Publish JaCoCo Coverage Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jacoco-report-jdk${{ matrix.java-version }}
+          path: '**/build/reports/jacoco/test/html/*'
+
+      # Consider adding a step to upload Spotbugs reports if desired
+      # - name: Publish Spotbugs Report
+      #   uses: actions/upload-artifact@v4
+      #   if: always()
+      #   with:
+      #     name: spotbugs-report-jdk${{ matrix.java-version }}
+      #     path: '**/build/reports/spotbugs/*.html' # Or XML

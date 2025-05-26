@@ -1,24 +1,45 @@
 #
 ffmpeg-release-64bit-static
 
-# Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-apidocs
-
-# IntelliJ
-*.iml
-.idea/
-
 # Testing files
 *.log
 *.log.mbtree
 output.mp4
 tmp/
+
+# Gradle
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+
+# Gradle caches
+.gradletasknamecache
+.gradle-scan/
+
+# Ignore Gradle build output files
+# *.jar # Commented out as it might be too broad for a library project that produces a jar for distribution
+*.war
+*.ear
+*.nar
+
+# Ignore Gradle report files
+**/build/reports/
+**/build/test-results/
+**/build/tmp/
+**/build/jacoco/
+**/build/libs/
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
