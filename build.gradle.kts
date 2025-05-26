@@ -4,10 +4,10 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     `java-library`
     jacoco
-    id("com.github.spotbugs") version "6.0.19"
-    id("net.ltgt.errorprone") version "4.2.0"
-    id("com.diffplug.spotless") version "6.25.0"
-    id("com.vanniktech.maven.publish") version "0.32.0"
+    alias(libs.plugins.errorprone)
+    alias(libs.plugins.maven.publish)
+    alias(libs.plugins.spotbugs)
+    alias(libs.plugins.spotless)
 }
 
 repositories {
@@ -20,25 +20,25 @@ java {
 }
 
 dependencies {
-    implementation("org.slf4j:slf4j-api:2.0.13")
-    compileOnly("com.github.spotbugs:spotbugs-annotations:4.8.6")
-    compileOnly("com.google.errorprone:error_prone_annotations:2.25.0")
-    implementation("com.google.guava:guava:33.2.1-jre")
-    implementation("commons-io:commons-io:2.16.1")
-    implementation("org.apache.commons:commons-lang3:3.16.0")
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("org.modelmapper:modelmapper:3.2.1")
-    compileOnly("com.google.code.findbugs:annotations:3.0.1")
+    implementation(libs.commons.io)
+    implementation(libs.commons.lang3)
+    implementation(libs.gson)
+    implementation(libs.guava)
+    implementation(libs.modelmapper)
+    implementation(libs.slf4j.api)
 
-    testImplementation("ch.qos.logback:logback-classic:1.3.14")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:4.11.0")
-    testImplementation("org.hamcrest:hamcrest:2.2")
-    testImplementation("org.hamcrest:hamcrest-integration:1.3")
-    testImplementation("com.nitorcreations:matchers:1.3")
-    testImplementation("org.glassfish.grizzly:grizzly-http-server:3.0.1")
+    testImplementation(libs.grizzly.http.server)
+    testImplementation(libs.hamcrest)
+    testImplementation(libs.hamcrest.integration)
+    testImplementation(libs.junit)
+    testImplementation(libs.logback.classic)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.nitorcreations.matchers)
 
-    errorprone("com.google.errorprone:error_prone_core:2.29.2")
+    compileOnly(libs.errorprone.annotations)
+    errorprone(libs.errorprone.core)
+    compileOnly(libs.findbugs.annotations)
+    compileOnly(libs.spotbugs.annotations)
 }
 
 tasks.withType<Test> {
