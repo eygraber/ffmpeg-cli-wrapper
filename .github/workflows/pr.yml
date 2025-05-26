@@ -15,11 +15,8 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v4
 
-      - name: Set up FFmpeg
-        uses: FedericoCarboni/setup-ffmpeg@v3.1
-        id: setup-ffmpeg
-        with:
-          ffmpeg-version: 7.0.2
+      - name: Setup FFmpeg
+        uses: AnimMouse/setup-ffmpeg@v1
 
       - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v4
