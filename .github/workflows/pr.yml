@@ -19,7 +19,7 @@ jobs:
         uses: FedericoCarboni/setup-ffmpeg@v3.1
         id: setup-ffmpeg
         with:
-          ffmpeg-version: release
+          ffmpeg-version: 7.0.2
 
       - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v4
