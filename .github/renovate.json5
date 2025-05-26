@@ -1,19 +1,27 @@
 {
   extends: [
-    "config:base"
+    'config:recommended',
   ],
-  enabledManagers: ["gradle", "gradle-wrapper", "github-actions"],
-  labels: ["dependencies"],
+  enabledManagers: [
+    'gradle',
+    'gradle-wrapper',
+    'github-actions',
+  ],
+  labels: [
+    'dependencies',
+  ],
   prHourlyLimit: 3,
   packageRules: [
     {
-      matchDatasources: ["maven"],
-      depType: "dependencies",
+      matchDatasources: [
+        'maven',
+      ],
+      depType: 'dependencies',
       registryUrls: [
-        "https://repo.maven.apache.org/maven2/",
-        "https://plugins.gradle.org/m2",
+        'https://repo.maven.apache.org/maven2/',
+        'https://plugins.gradle.org/m2',
       ],
       automerge: true,
-    }
-  ]
+    },
+  ],
 }
