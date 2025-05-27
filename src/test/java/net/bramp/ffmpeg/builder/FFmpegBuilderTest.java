@@ -5,8 +5,6 @@ import static net.bramp.ffmpeg.FFmpeg.AUDIO_FORMAT_S16;
 import static net.bramp.ffmpeg.FFmpeg.AUDIO_SAMPLE_48000;
 import static net.bramp.ffmpeg.FFmpeg.FPS_30;
 import static net.bramp.ffmpeg.builder.MetadataSpecifier.*;
-import static net.bramp.ffmpeg.builder.StreamSpecifier.tag;
-import static net.bramp.ffmpeg.builder.StreamSpecifier.usable;
 import static net.bramp.ffmpeg.builder.StreamSpecifierType.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -29,7 +27,7 @@ public class FFmpegBuilderTest {
 
     List<String> args =
         new FFmpegBuilder()
-            .setVerbosity(Verbosity.DEBUG)
+            .setVerbosity(Verbosity.Debug)
             .setUserAgent(
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36")
             .setInput("input")
@@ -339,16 +337,16 @@ public class FFmpegBuilderTest {
             .done()
             .addOutput("output")
             .addMetaTag("title", "Movie Title")
-            .addMetaTag(chapter(0), "author", "Bob")
-            .addMetaTag(program(0), "comment", "Awesome")
-            .addMetaTag(stream(0), "copyright", "Megacorp")
-            .addMetaTag(stream(Video), "framerate", "24fps")
-            .addMetaTag(stream(Video, 0), "artist", "Joe")
-            .addMetaTag(stream(Audio, 0), "language", "eng")
-            .addMetaTag(stream(Subtitle, 0), "language", "fre")
-            .addMetaTag(stream(usable()), "year", "2010")
-            .addMetaTag(stream(tag("key")), "a", "b")
-            .addMetaTag(stream(tag("key", "value")), "a", "b")
+            .addMetaTag(MetadataSpecifier.Companion.chapter(0), "author", "Bob")
+            .addMetaTag(MetadataSpecifier.Companion.program(0), "comment", "Awesome")
+            .addMetaTag(MetadataSpecifier.Companion.stream(0), "copyright", "Megacorp")
+            .addMetaTag(MetadataSpecifier.Companion.stream(Video), "framerate", "24fps")
+            .addMetaTag(MetadataSpecifier.Companion.stream(Video, 0), "artist", "Joe")
+            .addMetaTag(MetadataSpecifier.Companion.stream(Audio, 0), "language", "eng")
+            .addMetaTag(MetadataSpecifier.Companion.stream(Subtitle, 0), "language", "fre")
+            .addMetaTag(MetadataSpecifier.Companion.stream(StreamSpecifier.Companion.usable()), "year", "2010")
+            .addMetaTag(MetadataSpecifier.Companion.stream(StreamSpecifier.Companion.tag("key")), "a", "b")
+            .addMetaTag(MetadataSpecifier.Companion.stream(StreamSpecifier.Companion.tag("key", "value")), "a", "b")
             .done()
             .build();
 
@@ -540,7 +538,7 @@ public class FFmpegBuilderTest {
     List<String> args =
         new FFmpegBuilder()
             .overrideOutputFiles(true)
-            .setVerbosity(FFmpegBuilder.Verbosity.INFO)
+            .setVerbosity(FFmpegBuilder.Verbosity.Info)
             // X11 screen input
             .addInput(":0.0+0,0")
             .setFormat("x11grab")
@@ -600,7 +598,7 @@ public class FFmpegBuilderTest {
             .done()
             .addOutput("output.mp4")
             .done()
-            .setStrict(Strict.EXPERIMENTAL)
+            .setStrict(Strict.Experimental)
             .build();
 
     assertEquals(

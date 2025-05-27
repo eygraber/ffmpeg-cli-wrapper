@@ -14,39 +14,39 @@ public class CodecTest {
     assertThat(c1.getLongName(), is("Uncompressed 4:2:2 10-bit"));
     assertThat(c1.getCanDecode(), is(true));
     assertThat(c1.getCanEncode(), is(false));
-    assertThat(c1.getType(), is(CodecType.VIDEO));
+    assertThat(c1.getType(), is(CodecType.Video));
     assertThat(c1.isIntraFrameOnly(), is(true));
-    assertThat(c1.supportsLossyCompression(), is(false));
-    assertThat(c1.losslessCompression, is(true));
+    assertThat(c1.isLossyCompressionSupported(), is(false));
+    assertThat(c1.isLosslessCompressionSupported(), is(true));
 
     Codec c2 = new Codec("4xm", "4X Movie", "D.V.L.");
     assertThat(c2.getName(), is("4xm"));
     assertThat(c2.getLongName(), is("4X Movie"));
     assertThat(c2.getCanDecode(), is(true));
     assertThat(c2.getCanEncode(), is(false));
-    assertThat(c2.getType(), is(CodecType.VIDEO));
+    assertThat(c2.getType(), is(CodecType.Video));
     assertThat(c2.isIntraFrameOnly(), is(false));
-    assertThat(c2.supportsLossyCompression(), is(true));
-    assertThat(c2.supportsLosslessCompression(), is(false));
+    assertThat(c2.isLossyCompressionSupported(), is(true));
+    assertThat(c2.isLosslessCompressionSupported(), is(false));
 
     Codec c3 = new Codec("alias_pix", "Alias/Wavefront PIX image", "DEVI.S");
     assertThat(c3.getName(), is("alias_pix"));
     assertThat(c3.getLongName(), is("Alias/Wavefront PIX image"));
     assertThat(c3.getCanDecode(), is(true));
     assertThat(c3.getCanEncode(), is(true));
-    assertThat(c3.getType(), is(CodecType.VIDEO));
+    assertThat(c3.getType(), is(CodecType.Video));
     assertThat(c3.isIntraFrameOnly(), is(true));
-    assertThat(c3.supportsLossyCompression(), is(false));
-    assertThat(c3.supportsLosslessCompression(), is(true));
+    assertThat(c3.isLossyCompressionSupported(), is(false));
+    assertThat(c3.isLosslessCompressionSupported(), is(true));
 
     Codec c4 = new Codec("binkaudio_rdft", "Bink Audio (RDFT)", "D.AIL.");
-    assertThat(c4.getType(), is(CodecType.AUDIO));
+    assertThat(c4.getType(), is(CodecType.Audio));
 
     Codec c6 = new Codec("mov_text", "MOV text", "DES...");
-    assertThat(c6.getType(), is(CodecType.SUBTITLE));
+    assertThat(c6.getType(), is(CodecType.Subtitle));
 
     Codec c7 = new Codec("bin_data", "binary data", "..D...");
-    assertThat(c7.getType(), is(CodecType.DATA));
+    assertThat(c7.getType(), is(CodecType.Data));
   }
 
   @Test(expected = IllegalArgumentException.class)

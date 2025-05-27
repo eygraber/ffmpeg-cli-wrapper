@@ -8,7 +8,7 @@ import java.io.OutputStream;
  *
  * @author bramp
  */
-class MockProcess extends Process {
+public class MockProcess extends Process {
   final OutputStream stdin;
   final InputStream stdout;
   final InputStream stderr;

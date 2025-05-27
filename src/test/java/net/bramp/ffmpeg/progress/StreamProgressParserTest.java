@@ -10,7 +10,6 @@ import net.bramp.ffmpeg.fixtures.Progresses;
 import org.junit.Test;
 
 public class StreamProgressParserTest {
-
   RecordingProgressListener listener = new RecordingProgressListener();
 
   @Test
@@ -22,7 +21,7 @@ public class StreamProgressParserTest {
     InputStream inputStream = combineResource(Progresses.allFiles);
     parser.processStream(inputStream);
 
-    assertThat(listener.progesses, equalTo(Progresses.allProgresses));
+    assertThat(listener.progresses, equalTo(Progresses.allProgresses));
   }
 
   @Test
@@ -34,6 +33,6 @@ public class StreamProgressParserTest {
     InputStream inputStream = combineResource(Progresses.naProgressFile);
     parser.processStream(inputStream);
 
-    assertThat(listener.progesses, equalTo(Progresses.naProgresses));
+    assertThat(listener.progresses, equalTo(Progresses.naProgresses));
   }
 }

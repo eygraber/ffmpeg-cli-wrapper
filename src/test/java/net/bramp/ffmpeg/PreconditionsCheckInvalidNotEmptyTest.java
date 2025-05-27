@@ -21,6 +21,6 @@ public class PreconditionsCheckInvalidNotEmptyTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testUri() {
-    Preconditions.checkNotEmpty(input, "test must throw exception");
+    Preconditions.checkNotNullEmptyOrBlank(input, "test must throw exception");
   }
 }

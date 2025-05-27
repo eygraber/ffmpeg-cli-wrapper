@@ -6,27 +6,30 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
+
+import net.bramp.ffmpeg.lang.MockProcess;
 import net.bramp.ffmpeg.lang.NewProcessAnswer;
+
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 /** Tests what happens when using avconv */
 @RunWith(MockitoJUnitRunner.class)
 public class FFmpegAvTest {
 
-  @Mock ProcessFunction runFunc;
+  ProcessFunction runFunc = args -> new MockProcess(
+          Helper.loadResource("avconv-version")
+  );
 
   FFmpeg ffmpeg;
 
   @Before
-  public void before() throws IOException {
-    when(runFunc.run(argThatHasItem("-version")))
-        .thenAnswer(new NewProcessAnswer("avconv-version"));
-
-    ffmpeg = new FFmpeg(runFunc);
+  public void before() {
+    ffmpeg = new FFmpeg(FFmpeg.DEFAULT_PATH, runFunc);
   }
 
   @Test

@@ -81,7 +81,7 @@ public class FFmpegExecutorTest {
   public void testNormal() throws InterruptedException, ExecutionException, IOException {
     FFmpegBuilder builder =
         new FFmpegBuilder()
-            .setVerbosity(FFmpegBuilder.Verbosity.DEBUG)
+            .setVerbosity(FFmpegBuilder.Verbosity.Debug)
             .setUserAgent(
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36")
             .setInput(getWebserverRoot() + Samples.base_big_buck_bunny_720p_1mb)
@@ -106,13 +106,13 @@ public class FFmpegExecutorTest {
             // .setVideoPixelFormat("yuv420p")
             // .setVideoBitStreamFilter("noise")
             .setVideoQuality(2)
-            .setStrict(Strict.EXPERIMENTAL)
+            .setStrict(Strict.Experimental)
             .done();
 
     FFmpegJob job = ffExecutor.createJob(builder);
     runAndWait(job);
 
-    assertEquals(FFmpegJob.State.FINISHED, job.getState());
+    assertEquals(FFmpegJob.State.Finished, job.getState());
   }
 
   @Test
@@ -137,7 +137,7 @@ public class FFmpegExecutorTest {
     FFmpegJob job = ffExecutor.createTwoPassJob(builder);
     runAndWait(job);
 
-    assertEquals(FFmpegJob.State.FINISHED, job.getState());
+    assertEquals(FFmpegJob.State.Finished, job.getState());
   }
 
   @Test
@@ -158,7 +158,7 @@ public class FFmpegExecutorTest {
     FFmpegJob job = ffExecutor.createJob(builder);
     runAndWait(job);
 
-    assertEquals(FFmpegJob.State.FINISHED, job.getState());
+    assertEquals(FFmpegJob.State.Finished, job.getState());
   }
 
   @Test
@@ -180,7 +180,7 @@ public class FFmpegExecutorTest {
     FFmpegJob job = ffExecutor.createJob(builder);
     runAndWait(job);
 
-    assertEquals(FFmpegJob.State.FINISHED, job.getState());
+    assertEquals(FFmpegJob.State.Finished, job.getState());
   }
 
   /** Test if addStdoutOutput() actually works, and the output can be correctly captured. */
@@ -231,14 +231,14 @@ public class FFmpegExecutorTest {
     FFmpegJob job = ffExecutor.createJob(builder, listener);
     runAndWait(job);
 
-    assertEquals(FFmpegJob.State.FINISHED, job.getState());
+    assertEquals(FFmpegJob.State.Finished, job.getState());
 
-    List<Progress> progesses = listener.progesses;
+    List<Progress> progesses = listener.progresses;
 
     // Since the results of ffmpeg are not predictable, test for the bare minimum.
     assertThat(progesses, hasSize(greaterThanOrEqualTo(2)));
-    assertThat(progesses.get(0).status, is(Progress.Status.CONTINUE));
-    assertThat(progesses.get(progesses.size() - 1).status, is(Progress.Status.END));
+    assertThat(progesses.get(0).getStatus(), is(Progress.Status.Continue));
+    assertThat(progesses.get(progesses.size() - 1).getStatus(), is(Progress.Status.End));
   }
 
   @Test
@@ -261,7 +261,7 @@ public class FFmpegExecutorTest {
             .setVideoCodec("libx264")
             .setVideoFrameRate(24, 1)
             .setVideoResolution(640, 480)
-            .setStrict(Strict.EXPERIMENTAL) // Allow FFmpeg to use experimental specs
+            .setStrict(Strict.Experimental) // Allow FFmpeg to use experimental specs
             .done();
 
     // Run a one-pass encode

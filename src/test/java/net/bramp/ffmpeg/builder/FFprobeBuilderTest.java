@@ -86,14 +86,8 @@ public class FFprobeBuilderTest {
   }
 
   @Test
-  public void throwsExceptionIfInputIsNull() {
-    final FFprobeBuilder builder = new FFprobeBuilder();
-    assertThrows(NullPointerException.class, () -> builder.setInput(null));
-  }
-
-  @Test
   public void throwsExceptionIfNoInputIsGiven() {
     final FFprobeBuilder builder = new FFprobeBuilder();
-    assertThrows(NullPointerException.class, builder::build);
+    assertThrows(IllegalStateException.class, builder::build);
   }
 }

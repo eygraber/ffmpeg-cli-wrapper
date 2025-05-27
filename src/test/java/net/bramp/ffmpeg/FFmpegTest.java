@@ -48,7 +48,7 @@ public class FFmpegTest {
     when(runFunc.run(argThatHasItem("-layouts")))
         .thenAnswer(new NewProcessAnswer("ffmpeg-layouts"));
 
-    ffmpeg = new FFmpeg(runFunc);
+    ffmpeg = new FFmpeg(FFmpeg.DEFAULT_PATH, runFunc);
   }
 
   @SuppressWarnings("unchecked")
@@ -78,7 +78,7 @@ public class FFmpegTest {
             .done();
 
     try {
-      ffmpeg.run(builder);
+      ffmpeg.runWithBuilder(builder);
     } catch (Throwable t) {
       fail(t.getClass().getSimpleName() + " was thrown");
     }
@@ -98,7 +98,7 @@ public class FFmpegTest {
             .done();
 
     try {
-      ffmpeg.run(builder);
+      ffmpeg.runWithBuilder(builder);
     } catch (Throwable t) {
       fail(t.getClass().getSimpleName() + " was thrown");
     }

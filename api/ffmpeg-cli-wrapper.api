@@ -1,0 +1,1640 @@
+public class net/bramp/commons/lang3/math/gson/FractionAdapter : com/google/gson/TypeAdapter {
+	public fun <init> ()V
+	public synthetic fun read (Lcom/google/gson/stream/JsonReader;)Ljava/lang/Object;
+	public fun read (Lcom/google/gson/stream/JsonReader;)Lorg/apache/commons/lang3/math/Fraction;
+	public synthetic fun write (Lcom/google/gson/stream/JsonWriter;Ljava/lang/Object;)V
+	public fun write (Lcom/google/gson/stream/JsonWriter;Lorg/apache/commons/lang3/math/Fraction;)V
+}
+
+public class net/bramp/ffmpeg/FFmpeg {
+	public static final field AUDIO_DEPTH_DBL Ljava/lang/String;
+	public static final field AUDIO_DEPTH_FLT Ljava/lang/String;
+	public static final field AUDIO_DEPTH_S16 Ljava/lang/String;
+	public static final field AUDIO_DEPTH_S32 Ljava/lang/String;
+	public static final field AUDIO_DEPTH_U8 Ljava/lang/String;
+	public static final field AUDIO_FORMAT_DBL Ljava/lang/String;
+	public static final field AUDIO_FORMAT_FLT Ljava/lang/String;
+	public static final field AUDIO_FORMAT_S16 Ljava/lang/String;
+	public static final field AUDIO_FORMAT_S32 Ljava/lang/String;
+	public static final field AUDIO_FORMAT_U8 Ljava/lang/String;
+	public static final field AUDIO_MONO I
+	public static final field AUDIO_SAMPLE_11025 I
+	public static final field AUDIO_SAMPLE_12000 I
+	public static final field AUDIO_SAMPLE_16000 I
+	public static final field AUDIO_SAMPLE_22050 I
+	public static final field AUDIO_SAMPLE_32000 I
+	public static final field AUDIO_SAMPLE_44100 I
+	public static final field AUDIO_SAMPLE_48000 I
+	public static final field AUDIO_SAMPLE_8000 I
+	public static final field AUDIO_SAMPLE_96000 I
+	public static final field AUDIO_STEREO I
+	public static final field DEFAULT_PATH Ljava/lang/String;
+	public static final field FFMPEG Ljava/lang/String;
+	public static final field FPS_23_976 Lorg/apache/commons/lang3/math/Fraction;
+	public static final field FPS_24 Lorg/apache/commons/lang3/math/Fraction;
+	public static final field FPS_29_97 Lorg/apache/commons/lang3/math/Fraction;
+	public static final field FPS_30 Lorg/apache/commons/lang3/math/Fraction;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/ProcessFunction;)V
+	public fun <init> (Lnet/bramp/ffmpeg/ProcessFunction;)V
+	public fun builder ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun channelLayouts ()Ljava/util/List;
+	public fun codecs ()Ljava/util/List;
+	protected fun createProgressParser (Lnet/bramp/ffmpeg/progress/ProgressListener;)Lnet/bramp/ffmpeg/progress/ProgressParser;
+	public fun filters ()Ljava/util/List;
+	public fun formats ()Ljava/util/List;
+	public fun getPath ()Ljava/lang/String;
+	public fun isFFmpeg ()Z
+	public synthetic fun path (Ljava/util/List;)Ljava/util/List;
+	public fun pixelFormats ()Ljava/util/List;
+	public fun run (Ljava/util/List;)V
+	public fun run (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;)V
+	public fun run (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+	public synthetic fun setProcessErrorStream (Ljava/lang/Appendable;)V
+	public synthetic fun setProcessOutputStream (Ljava/lang/Appendable;)V
+	public synthetic fun version ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/FFmpegException : java/io/IOException {
+	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegError;)V
+	public fun getError ()Lnet/bramp/ffmpeg/probe/FFmpegError;
+}
+
+public class net/bramp/ffmpeg/FFmpegExecutor {
+	public fun <init> ()V
+	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;)V
+	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/FFprobe;)V
+	public fun createJob (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;)Lnet/bramp/ffmpeg/job/FFmpegJob;
+	public fun createJob (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)Lnet/bramp/ffmpeg/job/FFmpegJob;
+	public fun createTwoPassJob (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;)Lnet/bramp/ffmpeg/job/FFmpegJob;
+	public fun createTwoPassJob (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)Lnet/bramp/ffmpeg/job/FFmpegJob;
+}
+
+public final class net/bramp/ffmpeg/FFmpegUtils {
+	public static fun fromTimecode (Ljava/lang/String;)J
+	public static fun millisecondsToString (J)Ljava/lang/String;
+	public static fun parseBitrate (Ljava/lang/String;)J
+	public static fun toTimecode (JLjava/util/concurrent/TimeUnit;)Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/FFprobe {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/ProcessFunction;)V
+	public fun <init> (Lnet/bramp/ffmpeg/ProcessFunction;)V
+	public fun builder ()Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+	public synthetic fun getPath ()Ljava/lang/String;
+	public fun isFFprobe ()Z
+	public synthetic fun path (Ljava/util/List;)Ljava/util/List;
+	public fun probe (Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public fun probe (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public fun probe (Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public fun probe (Ljava/util/List;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public fun probe (Lnet/bramp/ffmpeg/builder/FFprobeBuilder;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public fun run (Ljava/util/List;)V
+	public synthetic fun setProcessErrorStream (Ljava/lang/Appendable;)V
+	public synthetic fun setProcessOutputStream (Ljava/lang/Appendable;)V
+	public synthetic fun version ()Ljava/lang/String;
+}
+
+public final class net/bramp/ffmpeg/Preconditions {
+	public static fun checkNotEmpty (Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/String;
+	public static fun checkValidStream (Ljava/net/URI;)Ljava/net/URI;
+}
+
+public abstract interface class net/bramp/ffmpeg/ProcessFunction {
+	public abstract fun run (Ljava/util/List;)Ljava/lang/Process;
+}
+
+public class net/bramp/ffmpeg/RunProcessFunction : net/bramp/ffmpeg/ProcessFunction {
+	public fun <init> ()V
+	public fun run (Ljava/util/List;)Ljava/lang/Process;
+	public fun setWorkingDirectory (Ljava/io/File;)Lnet/bramp/ffmpeg/RunProcessFunction;
+	public fun setWorkingDirectory (Ljava/lang/String;)Lnet/bramp/ffmpeg/RunProcessFunction;
+}
+
+public class net/bramp/ffmpeg/adapter/BooleanTypeAdapter : com/google/gson/JsonDeserializer {
+	public fun <init> ()V
+	public fun deserialize (Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Boolean;
+	public synthetic fun deserialize (Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;
+}
+
+public class net/bramp/ffmpeg/adapter/FFmpegPacketsAndFramesAdapter : com/google/gson/JsonDeserializer {
+	public fun <init> ()V
+	public synthetic fun deserialize (Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;
+	public fun deserialize (Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/bramp/ffmpeg/probe/FFmpegFrameOrPacket;
+}
+
+public class net/bramp/ffmpeg/adapter/FFmpegStreamSideDataAdapter : com/google/gson/JsonDeserializer {
+	public fun <init> ()V
+	public synthetic fun deserialize (Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;
+	public fun deserialize (Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;
+}
+
+public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
+	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
+	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;Ljava/lang/String;)V
+	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lcom/google/common/collect/ImmutableList$Builder;)V
+	public fun buildOptions ()Lnet/bramp/ffmpeg/options/EncodingOptions;
+	public fun getProbeResult ()Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public fun getStreamLoop ()I
+	protected fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;
+	protected synthetic fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun readAtNativeFrameRate ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;
+	public fun setStreamLoop (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;
+}
+
+public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
+	public field audio_bit_rate J
+	public field audio_bit_stream_filter Ljava/lang/String;
+	public field audio_filter Ljava/lang/String;
+	public field audio_quality Ljava/lang/Double;
+	public field audio_sample_format Ljava/lang/String;
+	protected field bFrames Ljava/lang/Integer;
+	protected field complexFilter Ljava/lang/String;
+	public field constantRateFactor Ljava/lang/Double;
+	public field video_bit_rate J
+	public field video_bit_stream_filter Ljava/lang/String;
+	public field video_filter Ljava/lang/String;
+	public field video_preset Ljava/lang/String;
+	public field video_quality Ljava/lang/Double;
+	public fun <init> ()V
+	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
+	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/net/URI;)V
+	protected fun addAudioFlags (Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun addSourceTarget (ILcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun addVideoFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun build (I)Ljava/util/List;
+	protected fun build (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;I)Ljava/util/List;
+	public fun buildOptions ()Lnet/bramp/ffmpeg/options/EncodingOptions;
+	protected static fun formatDecimalInteger (D)Ljava/lang/String;
+	public fun getAudioBitRate ()J
+	public fun getAudioBitStreamFilter ()Ljava/lang/String;
+	public fun getAudioFilter ()Ljava/lang/String;
+	public fun getAudioQuality ()Ljava/lang/Double;
+	public fun getAudioSampleFormat ()Ljava/lang/String;
+	public fun getComplexFilter ()Ljava/lang/String;
+	public fun getConstantRateFactor ()Ljava/lang/Double;
+	protected fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	protected synthetic fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun getVideoBitRate ()J
+	public fun getVideoBitStreamFilter ()Ljava/lang/String;
+	public fun getVideoFilter ()Ljava/lang/String;
+	public fun getVideoPreset ()Ljava/lang/String;
+	public fun getVideoQuality ()Ljava/lang/Double;
+	public final fun setAudioBitDepth (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setAudioBitRate (J)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setAudioBitStreamFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setAudioFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setAudioQuality (D)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setAudioSampleFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setBFrames (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setComplexFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setConstantRateFactor (D)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setVideoBitRate (J)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setVideoBitStreamFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setVideoFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setVideoPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public fun setVideoQuality (D)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+}
+
+public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
+	protected static final field DEVNULL Ljava/lang/String;
+	public field audio_channels I
+	public field audio_codec Ljava/lang/String;
+	public field audio_enabled Z
+	public field audio_preset Ljava/lang/String;
+	public field audio_sample_rate I
+	public field duration Ljava/lang/Long;
+	public final field extra_args Ljava/util/List;
+	public field filename Ljava/lang/String;
+	public field format Ljava/lang/String;
+	public final field meta_tags Ljava/util/List;
+	public field pass_padding_bitrate J
+	public field preset Ljava/lang/String;
+	public field presetFilename Ljava/lang/String;
+	public field startOffset Ljava/lang/Long;
+	public field strict Lnet/bramp/ffmpeg/builder/Strict;
+	public field subtitle_enabled Z
+	public field subtitle_preset Ljava/lang/String;
+	public field targetSize J
+	public field throwWarnings Z
+	public field uri Ljava/net/URI;
+	public field video_codec Ljava/lang/String;
+	public field video_copyinkf Z
+	public field video_enabled Z
+	public field video_frame_rate Lorg/apache/commons/lang3/math/Fraction;
+	public field video_frames Ljava/lang/Integer;
+	public field video_height I
+	public field video_movflags Ljava/lang/String;
+	public field video_pixel_format Ljava/lang/String;
+	public field video_size Ljava/lang/String;
+	public field video_width I
+	protected fun <init> ()V
+	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
+	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/net/URI;)V
+	protected fun addAudioFlags (Lcom/google/common/collect/ImmutableList$Builder;)V
+	public fun addExtraArgs ([Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	protected fun addFormatArgs (Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lcom/google/common/collect/ImmutableList$Builder;)V
+	public fun addMetaTag (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun addMetaTag (Lnet/bramp/ffmpeg/builder/MetadataSpecifier;Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	protected abstract fun addSourceTarget (ILcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun addVideoFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun build (I)Ljava/util/List;
+	protected fun build (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;I)Ljava/util/List;
+	public abstract fun buildOptions ()Lnet/bramp/ffmpeg/options/EncodingOptions;
+	public fun disableAudio ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun disableSubtitle ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun disableVideo ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun done ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun getFilename ()Ljava/lang/String;
+	protected abstract fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun getUri ()Ljava/net/URI;
+	protected static fun isValidSize (I)Z
+	public fun setAudioChannels (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setAudioCodec (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setAudioPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setAudioSampleRate (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setDuration (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setFilename (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setFrames (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setPassPaddingBitrate (J)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setPresetFilename (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setStartOffset (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setStrict (Lnet/bramp/ffmpeg/builder/Strict;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setSubtitleCodec (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setSubtitlePreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setTargetSize (J)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setUri (Ljava/net/URI;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoCodec (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoCopyInkf (Z)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoFrameRate (D)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoFrameRate (II)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoFrameRate (Lorg/apache/commons/lang3/math/Fraction;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoHeight (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoMovFlags (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoPixelFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoResolution (II)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoResolution (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setVideoWidth (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/options/EncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/options/MainEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+}
+
+public class net/bramp/ffmpeg/builder/AudioCodec {
+	public static final field AAC Ljava/lang/String;
+	public static final field AAC_LATM Ljava/lang/String;
+	public static final field AC3 Ljava/lang/String;
+	public static final field AC4 Ljava/lang/String;
+	public static final field ACELP_KELVIN Ljava/lang/String;
+	public static final field ADPCM_4XM Ljava/lang/String;
+	public static final field ADPCM_ADX Ljava/lang/String;
+	public static final field ADPCM_AFC Ljava/lang/String;
+	public static final field ADPCM_AGM Ljava/lang/String;
+	public static final field ADPCM_AICA Ljava/lang/String;
+	public static final field ADPCM_ARGO Ljava/lang/String;
+	public static final field ADPCM_CT Ljava/lang/String;
+	public static final field ADPCM_DTK Ljava/lang/String;
+	public static final field ADPCM_EA Ljava/lang/String;
+	public static final field ADPCM_EA_MAXIS_XA Ljava/lang/String;
+	public static final field ADPCM_EA_R1 Ljava/lang/String;
+	public static final field ADPCM_EA_R2 Ljava/lang/String;
+	public static final field ADPCM_EA_R3 Ljava/lang/String;
+	public static final field ADPCM_EA_XAS Ljava/lang/String;
+	public static final field ADPCM_G722 Ljava/lang/String;
+	public static final field ADPCM_G726 Ljava/lang/String;
+	public static final field ADPCM_G726LE Ljava/lang/String;
+	public static final field ADPCM_IMA_ACORN Ljava/lang/String;
+	public static final field ADPCM_IMA_ALP Ljava/lang/String;
+	public static final field ADPCM_IMA_AMV Ljava/lang/String;
+	public static final field ADPCM_IMA_APC Ljava/lang/String;
+	public static final field ADPCM_IMA_APM Ljava/lang/String;
+	public static final field ADPCM_IMA_CUNNING Ljava/lang/String;
+	public static final field ADPCM_IMA_DAT4 Ljava/lang/String;
+	public static final field ADPCM_IMA_DK3 Ljava/lang/String;
+	public static final field ADPCM_IMA_DK4 Ljava/lang/String;
+	public static final field ADPCM_IMA_EA_EACS Ljava/lang/String;
+	public static final field ADPCM_IMA_EA_SEAD Ljava/lang/String;
+	public static final field ADPCM_IMA_ISS Ljava/lang/String;
+	public static final field ADPCM_IMA_MOFLEX Ljava/lang/String;
+	public static final field ADPCM_IMA_MTF Ljava/lang/String;
+	public static final field ADPCM_IMA_OKI Ljava/lang/String;
+	public static final field ADPCM_IMA_QT Ljava/lang/String;
+	public static final field ADPCM_IMA_RAD Ljava/lang/String;
+	public static final field ADPCM_IMA_SMJPEG Ljava/lang/String;
+	public static final field ADPCM_IMA_SSI Ljava/lang/String;
+	public static final field ADPCM_IMA_WAV Ljava/lang/String;
+	public static final field ADPCM_IMA_WS Ljava/lang/String;
+	public static final field ADPCM_MS Ljava/lang/String;
+	public static final field ADPCM_MTAF Ljava/lang/String;
+	public static final field ADPCM_PSX Ljava/lang/String;
+	public static final field ADPCM_SBPRO_2 Ljava/lang/String;
+	public static final field ADPCM_SBPRO_3 Ljava/lang/String;
+	public static final field ADPCM_SBPRO_4 Ljava/lang/String;
+	public static final field ADPCM_SWF Ljava/lang/String;
+	public static final field ADPCM_THP Ljava/lang/String;
+	public static final field ADPCM_THP_LE Ljava/lang/String;
+	public static final field ADPCM_VIMA Ljava/lang/String;
+	public static final field ADPCM_XA Ljava/lang/String;
+	public static final field ADPCM_XMD Ljava/lang/String;
+	public static final field ADPCM_YAMAHA Ljava/lang/String;
+	public static final field ADPCM_ZORK Ljava/lang/String;
+	public static final field ALAC Ljava/lang/String;
+	public static final field AMR_NB Ljava/lang/String;
+	public static final field AMR_WB Ljava/lang/String;
+	public static final field ANULL Ljava/lang/String;
+	public static final field APAC Ljava/lang/String;
+	public static final field APE Ljava/lang/String;
+	public static final field APTX Ljava/lang/String;
+	public static final field APTX_HD Ljava/lang/String;
+	public static final field ATRAC1 Ljava/lang/String;
+	public static final field ATRAC3 Ljava/lang/String;
+	public static final field ATRAC3AL Ljava/lang/String;
+	public static final field ATRAC3P Ljava/lang/String;
+	public static final field ATRAC3PAL Ljava/lang/String;
+	public static final field ATRAC9 Ljava/lang/String;
+	public static final field AVC Ljava/lang/String;
+	public static final field BINKAUDIO_DCT Ljava/lang/String;
+	public static final field BINKAUDIO_RDFT Ljava/lang/String;
+	public static final field BMV_AUDIO Ljava/lang/String;
+	public static final field BONK Ljava/lang/String;
+	public static final field CBD2_DPCM Ljava/lang/String;
+	public static final field CELT Ljava/lang/String;
+	public static final field CODEC2 Ljava/lang/String;
+	public static final field COMFORTNOISE Ljava/lang/String;
+	public static final field COOK Ljava/lang/String;
+	public static final field DERF_DPCM Ljava/lang/String;
+	public static final field DFPWM Ljava/lang/String;
+	public static final field DOLBY_E Ljava/lang/String;
+	public static final field DSD_LSBF Ljava/lang/String;
+	public static final field DSD_LSBF_PLANAR Ljava/lang/String;
+	public static final field DSD_MSBF Ljava/lang/String;
+	public static final field DSD_MSBF_PLANAR Ljava/lang/String;
+	public static final field DSICINAUDIO Ljava/lang/String;
+	public static final field DSS_SP Ljava/lang/String;
+	public static final field DST Ljava/lang/String;
+	public static final field DTS Ljava/lang/String;
+	public static final field DVAUDIO Ljava/lang/String;
+	public static final field EAC3 Ljava/lang/String;
+	public static final field EVRC Ljava/lang/String;
+	public static final field FASTAUDIO Ljava/lang/String;
+	public static final field FLAC Ljava/lang/String;
+	public static final field FTR Ljava/lang/String;
+	public static final field G723_1 Ljava/lang/String;
+	public static final field G729 Ljava/lang/String;
+	public static final field GREMLIN_DPCM Ljava/lang/String;
+	public static final field GSM Ljava/lang/String;
+	public static final field GSM_MS Ljava/lang/String;
+	public static final field GV Ljava/lang/String;
+	public static final field HCA Ljava/lang/String;
+	public static final field HCOM Ljava/lang/String;
+	public static final field IAC Ljava/lang/String;
+	public static final field ILBC Ljava/lang/String;
+	public static final field IMC Ljava/lang/String;
+	public static final field INTERPLAYACM Ljava/lang/String;
+	public static final field INTERPLAY_DPCM Ljava/lang/String;
+	public static final field MACE3 Ljava/lang/String;
+	public static final field MACE6 Ljava/lang/String;
+	public static final field METASOUND Ljava/lang/String;
+	public static final field MISC4 Ljava/lang/String;
+	public static final field MLP Ljava/lang/String;
+	public static final field MP1 Ljava/lang/String;
+	public static final field MP2 Ljava/lang/String;
+	public static final field MP3 Ljava/lang/String;
+	public static final field MP3ADU Ljava/lang/String;
+	public static final field MP3ON4 Ljava/lang/String;
+	public static final field MP4ALS Ljava/lang/String;
+	public static final field MPEGH_3D_AUDIO Ljava/lang/String;
+	public static final field MSNSIREN Ljava/lang/String;
+	public static final field MUSEPACK7 Ljava/lang/String;
+	public static final field MUSEPACK8 Ljava/lang/String;
+	public static final field NELLYMOSER Ljava/lang/String;
+	public static final field OPUS Ljava/lang/String;
+	public static final field OSQ Ljava/lang/String;
+	public static final field PAF_AUDIO Ljava/lang/String;
+	public static final field PCM_ALAW Ljava/lang/String;
+	public static final field PCM_BLURAY Ljava/lang/String;
+	public static final field PCM_DVD Ljava/lang/String;
+	public static final field PCM_F16LE Ljava/lang/String;
+	public static final field PCM_F24LE Ljava/lang/String;
+	public static final field PCM_F32BE Ljava/lang/String;
+	public static final field PCM_F32LE Ljava/lang/String;
+	public static final field PCM_F64BE Ljava/lang/String;
+	public static final field PCM_F64LE Ljava/lang/String;
+	public static final field PCM_LXF Ljava/lang/String;
+	public static final field PCM_MULAW Ljava/lang/String;
+	public static final field PCM_S16BE Ljava/lang/String;
+	public static final field PCM_S16BE_PLANAR Ljava/lang/String;
+	public static final field PCM_S16LE Ljava/lang/String;
+	public static final field PCM_S16LE_PLANAR Ljava/lang/String;
+	public static final field PCM_S24BE Ljava/lang/String;
+	public static final field PCM_S24DAUD Ljava/lang/String;
+	public static final field PCM_S24LE Ljava/lang/String;
+	public static final field PCM_S24LE_PLANAR Ljava/lang/String;
+	public static final field PCM_S32BE Ljava/lang/String;
+	public static final field PCM_S32LE Ljava/lang/String;
+	public static final field PCM_S32LE_PLANAR Ljava/lang/String;
+	public static final field PCM_S64BE Ljava/lang/String;
+	public static final field PCM_S64LE Ljava/lang/String;
+	public static final field PCM_S8 Ljava/lang/String;
+	public static final field PCM_S8_PLANAR Ljava/lang/String;
+	public static final field PCM_SGA Ljava/lang/String;
+	public static final field PCM_U16BE Ljava/lang/String;
+	public static final field PCM_U16LE Ljava/lang/String;
+	public static final field PCM_U24BE Ljava/lang/String;
+	public static final field PCM_U24LE Ljava/lang/String;
+	public static final field PCM_U32BE Ljava/lang/String;
+	public static final field PCM_U32LE Ljava/lang/String;
+	public static final field PCM_U8 Ljava/lang/String;
+	public static final field PCM_VIDC Ljava/lang/String;
+	public static final field QCELP Ljava/lang/String;
+	public static final field QDM2 Ljava/lang/String;
+	public static final field QDMC Ljava/lang/String;
+	public static final field RALF Ljava/lang/String;
+	public static final field RA_144 Ljava/lang/String;
+	public static final field RA_288 Ljava/lang/String;
+	public static final field RKA Ljava/lang/String;
+	public static final field ROQ_DPCM Ljava/lang/String;
+	public static final field S302M Ljava/lang/String;
+	public static final field SBC Ljava/lang/String;
+	public static final field SDX2_DPCM Ljava/lang/String;
+	public static final field SHORTEN Ljava/lang/String;
+	public static final field SIPR Ljava/lang/String;
+	public static final field SIREN Ljava/lang/String;
+	public static final field SMACKAUDIO Ljava/lang/String;
+	public static final field SMV Ljava/lang/String;
+	public static final field SOL_DPCM Ljava/lang/String;
+	public static final field SONIC Ljava/lang/String;
+	public static final field SONICLS Ljava/lang/String;
+	public static final field SPEEX Ljava/lang/String;
+	public static final field SVX_EXP Ljava/lang/String;
+	public static final field SVX_FIB Ljava/lang/String;
+	public static final field TAK Ljava/lang/String;
+	public static final field TRUEHD Ljava/lang/String;
+	public static final field TRUESPEECH Ljava/lang/String;
+	public static final field TTA Ljava/lang/String;
+	public static final field TWINVQ Ljava/lang/String;
+	public static final field VMDAUDIO Ljava/lang/String;
+	public static final field VORBIS Ljava/lang/String;
+	public static final field WADY_DPCM Ljava/lang/String;
+	public static final field WAVARC Ljava/lang/String;
+	public static final field WAVESYNTH Ljava/lang/String;
+	public static final field WAVPACK Ljava/lang/String;
+	public static final field WESTWOOD_SND1 Ljava/lang/String;
+	public static final field WMALOSSLESS Ljava/lang/String;
+	public static final field WMAPRO Ljava/lang/String;
+	public static final field WMAV1 Ljava/lang/String;
+	public static final field WMAV2 Ljava/lang/String;
+	public static final field WMAVOICE Ljava/lang/String;
+	public static final field XAN_DPCM Ljava/lang/String;
+	public static final field XMA1 Ljava/lang/String;
+	public static final field XMA2 Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public class net/bramp/ffmpeg/builder/FFmpegBuilder {
+	protected field strict Lnet/bramp/ffmpeg/builder/Strict;
+	public fun <init> ()V
+	public fun addExtraArgs ([Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun addHlsOutput (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public fun addInput (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegFileInputBuilder;
+	public fun addInput (Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun addInput (Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)Lnet/bramp/ffmpeg/builder/FFmpegFileInputBuilder;
+	public fun addOutput (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegOutputBuilder;
+	public fun addOutput (Ljava/net/URI;)Lnet/bramp/ffmpeg/builder/FFmpegOutputBuilder;
+	public fun addOutput (Lnet/bramp/ffmpeg/builder/FFmpegOutputBuilder;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun addProgress (Ljava/net/URI;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun addStdoutOutput ()Lnet/bramp/ffmpeg/builder/FFmpegOutputBuilder;
+	public fun build ()Ljava/util/List;
+	protected fun clearInputs ()V
+	protected fun doAddInput (Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;
+	public fun getOverrideOutputFiles ()Z
+	public fun overrideOutputFiles (Z)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun readAtNativeFrameRate ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setAudioFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setComplexFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setInput (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegFileInputBuilder;
+	public fun setInput (Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setInput (Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)Lnet/bramp/ffmpeg/builder/FFmpegFileInputBuilder;
+	public fun setPass (I)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setPassDirectory (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setPassPrefix (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setStartOffset (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setStrict (Lnet/bramp/ffmpeg/builder/Strict;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setThreads (I)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setUserAgent (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setVBR (Ljava/lang/Integer;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setVerbosity (Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun setVideoFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+}
+
+public final class net/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity : java/lang/Enum {
+	public static final field DEBUG Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public static final field ERROR Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public static final field FATAL Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public static final field INFO Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public static final field PANIC Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public static final field QUIET Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public static final field VERBOSE Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public static final field WARNING Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public static fun values ()[Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+}
+
+public class net/bramp/ffmpeg/builder/FFmpegFileInputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder {
+	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
+	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)V
+	protected fun addSourceTarget (ILcom/google/common/collect/ImmutableList$Builder;)V
+}
+
+public class net/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder {
+	public field hls_base_url Ljava/lang/String;
+	public field hls_init_time Ljava/lang/Long;
+	public field hls_list_size Ljava/lang/Integer;
+	public field hls_segment_filename Ljava/lang/String;
+	public field hls_time Ljava/lang/Long;
+	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
+	protected fun addFormatArgs (Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected synthetic fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	protected synthetic fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	protected fun getThis ()Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public synthetic fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public fun setHlsBaseUrl (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public fun setHlsInitTime (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public fun setHlsListSize (I)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public fun setHlsSegmentFileName (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public fun setHlsTime (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+}
+
+public class net/bramp/ffmpeg/builder/FFmpegOutputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder {
+	public fun <init> ()V
+	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
+	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/net/URI;)V
+}
+
+public class net/bramp/ffmpeg/builder/FFprobeBuilder {
+	public fun <init> ()V
+	public fun addExtraArgs ([Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+	public fun build ()Ljava/util/List;
+	public fun setInput (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+	public fun setShowChapters (Z)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+	public fun setShowFormat (Z)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+	public fun setShowFrames (Z)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+	public fun setShowPackets (Z)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+	public fun setShowStreams (Z)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+	public fun setUserAgent (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+}
+
+public class net/bramp/ffmpeg/builder/MetadataSpecifier {
+	public static fun chapter (I)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
+	public static fun checkValidKey (Ljava/lang/String;)Ljava/lang/String;
+	public static fun global ()Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
+	public static fun program (I)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
+	public fun spec ()Ljava/lang/String;
+	public static fun stream (I)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
+	public static fun stream (Lnet/bramp/ffmpeg/builder/StreamSpecifier;)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
+	public static fun stream (Lnet/bramp/ffmpeg/builder/StreamSpecifierType;)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
+	public static fun stream (Lnet/bramp/ffmpeg/builder/StreamSpecifierType;I)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
+}
+
+public class net/bramp/ffmpeg/builder/StreamSpecifier {
+	public static fun id (I)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
+	public static fun program (I)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
+	public static fun program (II)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
+	public fun spec ()Ljava/lang/String;
+	public static fun stream (I)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
+	public static fun stream (Lnet/bramp/ffmpeg/builder/StreamSpecifierType;)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
+	public static fun stream (Lnet/bramp/ffmpeg/builder/StreamSpecifierType;I)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
+	public static fun tag (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
+	public static fun tag (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
+	public static fun usable ()Lnet/bramp/ffmpeg/builder/StreamSpecifier;
+}
+
+public final class net/bramp/ffmpeg/builder/StreamSpecifierType : java/lang/Enum {
+	public static final field Attachment Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
+	public static final field Audio Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
+	public static final field Data Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
+	public static final field PureVideo Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
+	public static final field Subtitle Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
+	public static final field Video Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
+	public static fun values ()[Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
+}
+
+public final class net/bramp/ffmpeg/builder/Strict : java/lang/Enum {
+	public static final field EXPERIMENTAL Lnet/bramp/ffmpeg/builder/Strict;
+	public static final field NORMAL Lnet/bramp/ffmpeg/builder/Strict;
+	public static final field STRICT Lnet/bramp/ffmpeg/builder/Strict;
+	public static final field UNOFFICIAL Lnet/bramp/ffmpeg/builder/Strict;
+	public static final field VERY Lnet/bramp/ffmpeg/builder/Strict;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/Strict;
+	public static fun values ()[Lnet/bramp/ffmpeg/builder/Strict;
+}
+
+public class net/bramp/ffmpeg/builder/VideoCodec {
+	public static final field A64_MULTI Ljava/lang/String;
+	public static final field A64_MULTI5 Ljava/lang/String;
+	public static final field AASC Ljava/lang/String;
+	public static final field AGM Ljava/lang/String;
+	public static final field AIC Ljava/lang/String;
+	public static final field ALIAS_PIX Ljava/lang/String;
+	public static final field AMV Ljava/lang/String;
+	public static final field ANM Ljava/lang/String;
+	public static final field ANSI Ljava/lang/String;
+	public static final field APNG Ljava/lang/String;
+	public static final field ARBC Ljava/lang/String;
+	public static final field ARGO Ljava/lang/String;
+	public static final field ASV1 Ljava/lang/String;
+	public static final field ASV2 Ljava/lang/String;
+	public static final field AURA Ljava/lang/String;
+	public static final field AURA2 Ljava/lang/String;
+	public static final field AV1 Ljava/lang/String;
+	public static final field AVRN Ljava/lang/String;
+	public static final field AVRP Ljava/lang/String;
+	public static final field AVS Ljava/lang/String;
+	public static final field AVS2 Ljava/lang/String;
+	public static final field AVS3 Ljava/lang/String;
+	public static final field AVUI Ljava/lang/String;
+	public static final field AYUV Ljava/lang/String;
+	public static final field BETHSOFTVID Ljava/lang/String;
+	public static final field BFI Ljava/lang/String;
+	public static final field BINKVIDEO Ljava/lang/String;
+	public static final field BINTEXT Ljava/lang/String;
+	public static final field BITPACKED Ljava/lang/String;
+	public static final field BMP Ljava/lang/String;
+	public static final field BMV_VIDEO Ljava/lang/String;
+	public static final field BPS Ljava/lang/String;
+	public static final field BRENDER_PIX Ljava/lang/String;
+	public static final field C93 Ljava/lang/String;
+	public static final field CAVS Ljava/lang/String;
+	public static final field CDGRAPHICS Ljava/lang/String;
+	public static final field CDTOONS Ljava/lang/String;
+	public static final field CDXL Ljava/lang/String;
+	public static final field CFHD Ljava/lang/String;
+	public static final field CINEPAK Ljava/lang/String;
+	public static final field CLEARVIDEO Ljava/lang/String;
+	public static final field CLJR Ljava/lang/String;
+	public static final field CLLC Ljava/lang/String;
+	public static final field CMV Ljava/lang/String;
+	public static final field CPIA Ljava/lang/String;
+	public static final field CRI Ljava/lang/String;
+	public static final field CSCD Ljava/lang/String;
+	public static final field CYUV Ljava/lang/String;
+	public static final field DAALA Ljava/lang/String;
+	public static final field DDS Ljava/lang/String;
+	public static final field DFA Ljava/lang/String;
+	public static final field DIRAC Ljava/lang/String;
+	public static final field DNXHD Ljava/lang/String;
+	public static final field DPX Ljava/lang/String;
+	public static final field DSICINVIDEO Ljava/lang/String;
+	public static final field DVVIDEO Ljava/lang/String;
+	public static final field DXA Ljava/lang/String;
+	public static final field DXTORY Ljava/lang/String;
+	public static final field DXV Ljava/lang/String;
+	public static final field ESCAPE124 Ljava/lang/String;
+	public static final field ESCAPE130 Ljava/lang/String;
+	public static final field EVC Ljava/lang/String;
+	public static final field EXR Ljava/lang/String;
+	public static final field FFV1 Ljava/lang/String;
+	public static final field FFVHUFF Ljava/lang/String;
+	public static final field FIC Ljava/lang/String;
+	public static final field FITS Ljava/lang/String;
+	public static final field FLASHSV Ljava/lang/String;
+	public static final field FLASHSV2 Ljava/lang/String;
+	public static final field FLIC Ljava/lang/String;
+	public static final field FLV1 Ljava/lang/String;
+	public static final field FMVC Ljava/lang/String;
+	public static final field FRAPS Ljava/lang/String;
+	public static final field FRWU Ljava/lang/String;
+	public static final field G2M Ljava/lang/String;
+	public static final field GDV Ljava/lang/String;
+	public static final field GEM Ljava/lang/String;
+	public static final field GIF Ljava/lang/String;
+	public static final field H261 Ljava/lang/String;
+	public static final field H263 Ljava/lang/String;
+	public static final field H263I Ljava/lang/String;
+	public static final field H263P Ljava/lang/String;
+	public static final field H264 Ljava/lang/String;
+	public static final field HAP Ljava/lang/String;
+	public static final field HDR Ljava/lang/String;
+	public static final field HEVC Ljava/lang/String;
+	public static final field HNM4VIDEO Ljava/lang/String;
+	public static final field HQX Ljava/lang/String;
+	public static final field HQ_HQA Ljava/lang/String;
+	public static final field HUFFYUV Ljava/lang/String;
+	public static final field HYMT Ljava/lang/String;
+	public static final field IDCIN Ljava/lang/String;
+	public static final field IDF Ljava/lang/String;
+	public static final field IFF_ILBM Ljava/lang/String;
+	public static final field IMM4 Ljava/lang/String;
+	public static final field IMM5 Ljava/lang/String;
+	public static final field INDEO2 Ljava/lang/String;
+	public static final field INDEO3 Ljava/lang/String;
+	public static final field INDEO4 Ljava/lang/String;
+	public static final field INDEO5 Ljava/lang/String;
+	public static final field INTERPLAYVIDEO Ljava/lang/String;
+	public static final field IPU Ljava/lang/String;
+	public static final field JPEG2000 Ljava/lang/String;
+	public static final field JPEGLS Ljava/lang/String;
+	public static final field JPEGXL Ljava/lang/String;
+	public static final field JV Ljava/lang/String;
+	public static final field KGV1 Ljava/lang/String;
+	public static final field KMVC Ljava/lang/String;
+	public static final field LAGARITH Ljava/lang/String;
+	public static final field LJPEG Ljava/lang/String;
+	public static final field LOCO Ljava/lang/String;
+	public static final field LSCR Ljava/lang/String;
+	public static final field M101 Ljava/lang/String;
+	public static final field MAD Ljava/lang/String;
+	public static final field MAGICYUV Ljava/lang/String;
+	public static final field MDEC Ljava/lang/String;
+	public static final field MEDIA100 Ljava/lang/String;
+	public static final field MIMIC Ljava/lang/String;
+	public static final field MJPEG Ljava/lang/String;
+	public static final field MJPEGB Ljava/lang/String;
+	public static final field MMVIDEO Ljava/lang/String;
+	public static final field MOBICLIP Ljava/lang/String;
+	public static final field MOTIONPIXELS Ljava/lang/String;
+	public static final field MPEG1VIDEO Ljava/lang/String;
+	public static final field MPEG2VIDEO Ljava/lang/String;
+	public static final field MPEG4 Ljava/lang/String;
+	public static final field MSA1 Ljava/lang/String;
+	public static final field MSCC Ljava/lang/String;
+	public static final field MSMPEG4V1 Ljava/lang/String;
+	public static final field MSMPEG4V2 Ljava/lang/String;
+	public static final field MSMPEG4V3 Ljava/lang/String;
+	public static final field MSP2 Ljava/lang/String;
+	public static final field MSRLE Ljava/lang/String;
+	public static final field MSS1 Ljava/lang/String;
+	public static final field MSS2 Ljava/lang/String;
+	public static final field MSVIDEO1 Ljava/lang/String;
+	public static final field MSZH Ljava/lang/String;
+	public static final field MTS2 Ljava/lang/String;
+	public static final field MV30 Ljava/lang/String;
+	public static final field MVC1 Ljava/lang/String;
+	public static final field MVC2 Ljava/lang/String;
+	public static final field MVDV Ljava/lang/String;
+	public static final field MVHA Ljava/lang/String;
+	public static final field MWSC Ljava/lang/String;
+	public static final field MXPEG Ljava/lang/String;
+	public static final field NOTCHLC Ljava/lang/String;
+	public static final field NUV Ljava/lang/String;
+	public static final field PAF_VIDEO Ljava/lang/String;
+	public static final field PAM Ljava/lang/String;
+	public static final field PBM Ljava/lang/String;
+	public static final field PCX Ljava/lang/String;
+	public static final field PDV Ljava/lang/String;
+	public static final field PFM Ljava/lang/String;
+	public static final field PGM Ljava/lang/String;
+	public static final field PGMYUV Ljava/lang/String;
+	public static final field PGX Ljava/lang/String;
+	public static final field PHM Ljava/lang/String;
+	public static final field PHOTOCD Ljava/lang/String;
+	public static final field PICTOR Ljava/lang/String;
+	public static final field PIXLET Ljava/lang/String;
+	public static final field PNG Ljava/lang/String;
+	public static final field PPM Ljava/lang/String;
+	public static final field PRORES Ljava/lang/String;
+	public static final field PROSUMER Ljava/lang/String;
+	public static final field PSD Ljava/lang/String;
+	public static final field PTX Ljava/lang/String;
+	public static final field QDRAW Ljava/lang/String;
+	public static final field QOI Ljava/lang/String;
+	public static final field QPEG Ljava/lang/String;
+	public static final field QTRLE Ljava/lang/String;
+	public static final field R10K Ljava/lang/String;
+	public static final field R210 Ljava/lang/String;
+	public static final field RASC Ljava/lang/String;
+	public static final field RAWVIDEO Ljava/lang/String;
+	public static final field RL2 Ljava/lang/String;
+	public static final field ROQ Ljava/lang/String;
+	public static final field RPZA Ljava/lang/String;
+	public static final field RSCC Ljava/lang/String;
+	public static final field RTV1 Ljava/lang/String;
+	public static final field RV10 Ljava/lang/String;
+	public static final field RV20 Ljava/lang/String;
+	public static final field RV30 Ljava/lang/String;
+	public static final field RV40 Ljava/lang/String;
+	public static final field SANM Ljava/lang/String;
+	public static final field SCPR Ljava/lang/String;
+	public static final field SCREENPRESSO Ljava/lang/String;
+	public static final field SGA Ljava/lang/String;
+	public static final field SGI Ljava/lang/String;
+	public static final field SGIRLE Ljava/lang/String;
+	public static final field SHEERVIDEO Ljava/lang/String;
+	public static final field SIMBIOSIS_IMX Ljava/lang/String;
+	public static final field SMACKVIDEO Ljava/lang/String;
+	public static final field SMC Ljava/lang/String;
+	public static final field SMVJPEG Ljava/lang/String;
+	public static final field SNOW Ljava/lang/String;
+	public static final field SP5X Ljava/lang/String;
+	public static final field SPEEDHQ Ljava/lang/String;
+	public static final field SRGC Ljava/lang/String;
+	public static final field SUNRAST Ljava/lang/String;
+	public static final field SVG Ljava/lang/String;
+	public static final field SVQ1 Ljava/lang/String;
+	public static final field SVQ3 Ljava/lang/String;
+	public static final field TARGA Ljava/lang/String;
+	public static final field TARGA_Y216 Ljava/lang/String;
+	public static final field TDSC Ljava/lang/String;
+	public static final field TGQ Ljava/lang/String;
+	public static final field TGV Ljava/lang/String;
+	public static final field THEORA Ljava/lang/String;
+	public static final field THP Ljava/lang/String;
+	public static final field TIERTEXSEQVIDEO Ljava/lang/String;
+	public static final field TIFF Ljava/lang/String;
+	public static final field TMV Ljava/lang/String;
+	public static final field TQI Ljava/lang/String;
+	public static final field TRUEMOTION1 Ljava/lang/String;
+	public static final field TRUEMOTION2 Ljava/lang/String;
+	public static final field TRUEMOTION2RT Ljava/lang/String;
+	public static final field TSCC Ljava/lang/String;
+	public static final field TSCC2 Ljava/lang/String;
+	public static final field TXD Ljava/lang/String;
+	public static final field ULTI Ljava/lang/String;
+	public static final field UTVIDEO Ljava/lang/String;
+	public static final field V Ljava/lang/String;
+	public static final field V210 Ljava/lang/String;
+	public static final field V210X Ljava/lang/String;
+	public static final field V308 Ljava/lang/String;
+	public static final field V408 Ljava/lang/String;
+	public static final field V410 Ljava/lang/String;
+	public static final field VB Ljava/lang/String;
+	public static final field VBLE Ljava/lang/String;
+	public static final field VBN Ljava/lang/String;
+	public static final field VC1 Ljava/lang/String;
+	public static final field VC1IMAGE Ljava/lang/String;
+	public static final field VCR1 Ljava/lang/String;
+	public static final field VIXL Ljava/lang/String;
+	public static final field VMDVIDEO Ljava/lang/String;
+	public static final field VMIX Ljava/lang/String;
+	public static final field VMNC Ljava/lang/String;
+	public static final field VNULL Ljava/lang/String;
+	public static final field VP3 Ljava/lang/String;
+	public static final field VP4 Ljava/lang/String;
+	public static final field VP5 Ljava/lang/String;
+	public static final field VP6 Ljava/lang/String;
+	public static final field VP6A Ljava/lang/String;
+	public static final field VP6F Ljava/lang/String;
+	public static final field VP7 Ljava/lang/String;
+	public static final field VP8 Ljava/lang/String;
+	public static final field VP9 Ljava/lang/String;
+	public static final field VQC Ljava/lang/String;
+	public static final field VVC Ljava/lang/String;
+	public static final field WBMP Ljava/lang/String;
+	public static final field WCMV Ljava/lang/String;
+	public static final field WEBP Ljava/lang/String;
+	public static final field WMV1 Ljava/lang/String;
+	public static final field WMV2 Ljava/lang/String;
+	public static final field WMV3 Ljava/lang/String;
+	public static final field WMV3IMAGE Ljava/lang/String;
+	public static final field WNV1 Ljava/lang/String;
+	public static final field WRAPPED_AVFRAME Ljava/lang/String;
+	public static final field WS_VQA Ljava/lang/String;
+	public static final field XAN_WC3 Ljava/lang/String;
+	public static final field XAN_WC4 Ljava/lang/String;
+	public static final field XBIN Ljava/lang/String;
+	public static final field XBM Ljava/lang/String;
+	public static final field XFACE Ljava/lang/String;
+	public static final field XM Ljava/lang/String;
+	public static final field XPM Ljava/lang/String;
+	public static final field XWD Ljava/lang/String;
+	public static final field Y41P Ljava/lang/String;
+	public static final field YLC Ljava/lang/String;
+	public static final field YOP Ljava/lang/String;
+	public static final field YUV4 Ljava/lang/String;
+	public static final field ZEROCODEC Ljava/lang/String;
+	public static final field ZLIB Ljava/lang/String;
+	public static final field ZMBV Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public class net/bramp/ffmpeg/gson/LowercaseEnumTypeAdapterFactory : com/google/gson/TypeAdapterFactory {
+	public fun <init> ()V
+	public fun create (Lcom/google/gson/Gson;Lcom/google/gson/reflect/TypeToken;)Lcom/google/gson/TypeAdapter;
+}
+
+public abstract interface class net/bramp/ffmpeg/info/ChannelLayout {
+	public abstract fun getName ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/info/Codec {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getCanDecode ()Z
+	public fun getCanEncode ()Z
+	public fun getLongName ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun getType ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public fun hashCode ()I
+	public fun isIntraFrameOnly ()Z
+	public fun supportsLosslessCompression ()Z
+	public fun supportsLossyCompression ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/info/Filter {
+	public fun <init> (ZZZLjava/lang/String;Lnet/bramp/ffmpeg/info/FilterPattern;Lnet/bramp/ffmpeg/info/FilterPattern;Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getDescription ()Ljava/lang/String;
+	public fun getInputPattern ()Lnet/bramp/ffmpeg/info/FilterPattern;
+	public fun getName ()Ljava/lang/String;
+	public fun getOutputPattern ()Lnet/bramp/ffmpeg/info/FilterPattern;
+	public fun hashCode ()I
+	public fun isCommandSupport ()Z
+	public fun isSliceThreading ()Z
+	public fun isTimelineSupported ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/info/FilterPattern {
+	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getStreams ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun isSinkOrSource ()Z
+	public fun isVariableStreams ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/info/Format {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getCanDemux ()Z
+	public fun getCanMux ()Z
+	public fun getLongName ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/info/IndividualChannel : net/bramp/ffmpeg/info/ChannelLayout {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getDescription ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/bramp/ffmpeg/info/InfoParser {
+	public static fun parseLayouts (Ljava/io/BufferedReader;)Ljava/util/List;
+}
+
+public class net/bramp/ffmpeg/info/PixelFormat {
+	public fun <init> (Ljava/lang/String;IILjava/lang/String;)V
+	public fun canDecode ()Z
+	public fun canEncode ()Z
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getBitsPerPixel ()I
+	public fun getName ()Ljava/lang/String;
+	public fun getNumberOfComponents ()I
+	public fun hashCode ()I
+	public fun isBitstreamFormat ()Z
+	public fun isHardwareAccelerated ()Z
+	public fun isPalettedFormat ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/info/StandardChannelLayout : net/bramp/ffmpeg/info/ChannelLayout {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getDecomposition ()Ljava/util/List;
+	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/io/CRC32InputStream : java/io/FilterInputStream {
+	public fun <init> (Ljava/io/InputStream;)V
+	public fun getValue ()J
+	public fun mark (I)V
+	public fun markSupported ()Z
+	public fun read ()I
+	public fun read ([B)I
+	public fun read ([BII)I
+	public fun reset ()V
+	public fun resetCrc ()V
+	public fun skip (J)J
+}
+
+public class net/bramp/ffmpeg/io/LoggingFilterReader : java/io/FilterReader {
+	public fun <init> (Ljava/io/Reader;Lorg/slf4j/Logger;)V
+	protected fun log ()V
+	public fun read ()I
+	public fun read ([CII)I
+}
+
+public final class net/bramp/ffmpeg/io/ProcessUtils {
+	public static fun waitForWithTimeout (Ljava/lang/Process;JLjava/util/concurrent/TimeUnit;)I
+}
+
+public abstract class net/bramp/ffmpeg/job/FFmpegJob : java/lang/Runnable {
+	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;)V
+	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+	public fun getState ()Lnet/bramp/ffmpeg/job/FFmpegJob$State;
+}
+
+public final class net/bramp/ffmpeg/job/FFmpegJob$State : java/lang/Enum {
+	public static final field FAILED Lnet/bramp/ffmpeg/job/FFmpegJob$State;
+	public static final field FINISHED Lnet/bramp/ffmpeg/job/FFmpegJob$State;
+	public static final field RUNNING Lnet/bramp/ffmpeg/job/FFmpegJob$State;
+	public static final field WAITING Lnet/bramp/ffmpeg/job/FFmpegJob$State;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/job/FFmpegJob$State;
+	public static fun values ()[Lnet/bramp/ffmpeg/job/FFmpegJob$State;
+}
+
+public class net/bramp/ffmpeg/job/SinglePassFFmpegJob : net/bramp/ffmpeg/job/FFmpegJob {
+	public final field builder Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;)V
+	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+	public fun run ()V
+}
+
+public class net/bramp/ffmpeg/job/TwoPassFFmpegJob : net/bramp/ffmpeg/job/FFmpegJob {
+	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;)V
+	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+	protected fun deletePassLog ()V
+	public fun run ()V
+}
+
+public class net/bramp/ffmpeg/modelmapper/Mapper {
+	public static fun map (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;)V
+	public static fun map (Lnet/bramp/ffmpeg/options/EncodingOptions;Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;)V
+	public static fun map (Lnet/bramp/ffmpeg/options/MainEncodingOptions;Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;)V
+	public static fun map (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;)V
+}
+
+public class net/bramp/ffmpeg/modelmapper/NotDefaultCondition : org/modelmapper/Condition {
+	public static final field notDefault Lnet/bramp/ffmpeg/modelmapper/NotDefaultCondition;
+	public fun <init> ()V
+	public fun applies (Lorg/modelmapper/spi/MappingContext;)Z
+}
+
+public class net/bramp/ffmpeg/nut/Frame {
+	public fun <init> ()V
+	public fun read (Lnet/bramp/ffmpeg/nut/NutReader;Lnet/bramp/ffmpeg/nut/NutDataInputStream;I)V
+	protected fun readMetaData (Lnet/bramp/ffmpeg/nut/NutDataInputStream;)Ljava/util/Map;
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/nut/FrameCode {
+	public fun <init> ()V
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/nut/IndexPacket {
+	public fun <init> ()V
+}
+
+public class net/bramp/ffmpeg/nut/InfoPacket {
+	public fun <init> ()V
+}
+
+public class net/bramp/ffmpeg/nut/MainHeaderPacket : net/bramp/ffmpeg/nut/Packet {
+	public static final field BROADCAST_MODE I
+	public fun <init> ()V
+	protected fun readBody (Lnet/bramp/ffmpeg/nut/NutDataInputStream;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/nut/NutDataInputStream : java/io/DataInput {
+	public fun <init> (Ljava/io/InputStream;)V
+	public fun getCRC ()J
+	public fun offset ()J
+	public fun readBoolean ()Z
+	public fun readByte ()B
+	public fun readChar ()C
+	public fun readDouble ()D
+	public fun readFloat ()F
+	public fun readFully ([B)V
+	public fun readFully ([BII)V
+	public fun readInt ()I
+	public fun readLine ()Ljava/lang/String;
+	public fun readLong ()J
+	public fun readShort ()S
+	public fun readSignedVarInt ()J
+	public fun readStartCode ()J
+	public fun readUTF ()Ljava/lang/String;
+	public fun readUnsignedByte ()I
+	public fun readUnsignedShort ()I
+	public fun readVarArray ()[B
+	public fun readVarInt ()I
+	public fun readVarLong ()J
+	public fun resetCRC ()V
+	public fun skipBytes (I)I
+}
+
+public class net/bramp/ffmpeg/nut/NutReader {
+	public field header Lnet/bramp/ffmpeg/nut/MainHeaderPacket;
+	public final field streams Ljava/util/List;
+	public fun <init> (Ljava/io/InputStream;Lnet/bramp/ffmpeg/nut/NutReaderListener;)V
+	public static fun isKnownStartcode (J)Z
+	public fun read ()V
+	protected fun readFileId ()V
+	protected fun readReservedHeaders ()J
+}
+
+public abstract interface class net/bramp/ffmpeg/nut/NutReaderListener {
+	public abstract fun frame (Lnet/bramp/ffmpeg/nut/Frame;)V
+	public abstract fun stream (Lnet/bramp/ffmpeg/nut/Stream;)V
+}
+
+public class net/bramp/ffmpeg/nut/Packet {
+	public final field footer Lnet/bramp/ffmpeg/nut/PacketFooter;
+	public final field header Lnet/bramp/ffmpeg/nut/PacketHeader;
+	public fun <init> ()V
+	public fun read (Lnet/bramp/ffmpeg/nut/NutDataInputStream;J)V
+	protected fun readBody (Lnet/bramp/ffmpeg/nut/NutDataInputStream;)V
+	public fun seekToPacketFooter (Lnet/bramp/ffmpeg/nut/NutDataInputStream;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/bramp/ffmpeg/nut/Packet$Startcode : java/lang/Enum {
+	public static final field INDEX Lnet/bramp/ffmpeg/nut/Packet$Startcode;
+	public static final field INFO Lnet/bramp/ffmpeg/nut/Packet$Startcode;
+	public static final field MAIN Lnet/bramp/ffmpeg/nut/Packet$Startcode;
+	public static final field STREAM Lnet/bramp/ffmpeg/nut/Packet$Startcode;
+	public static final field SYNCPOINT Lnet/bramp/ffmpeg/nut/Packet$Startcode;
+	public fun equalsCode (J)Z
+	public static fun isPossibleStartcode (J)Z
+	public static fun of (J)Lnet/bramp/ffmpeg/nut/Packet$Startcode;
+	public static fun toString (J)Ljava/lang/String;
+	public fun value ()J
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/nut/Packet$Startcode;
+	public static fun values ()[Lnet/bramp/ffmpeg/nut/Packet$Startcode;
+}
+
+public class net/bramp/ffmpeg/nut/PacketFooter {
+	public fun <init> ()V
+	public fun read (Lnet/bramp/ffmpeg/nut/NutDataInputStream;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/nut/PacketHeader {
+	public fun <init> ()V
+	public fun read (Lnet/bramp/ffmpeg/nut/NutDataInputStream;J)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/nut/RawHandler {
+	public fun <init> ()V
+	public static fun streamToAudioFormat (Lnet/bramp/ffmpeg/nut/StreamHeaderPacket;)Ljavax/sound/sampled/AudioFormat;
+	public static fun toAudioInputStream (Lnet/bramp/ffmpeg/nut/Frame;)Ljavax/sound/sampled/AudioInputStream;
+	public static fun toBufferedImage (Lnet/bramp/ffmpeg/nut/Frame;)Ljava/awt/image/BufferedImage;
+}
+
+public class net/bramp/ffmpeg/nut/Stream {
+	public fun <init> (Lnet/bramp/ffmpeg/nut/MainHeaderPacket;Lnet/bramp/ffmpeg/nut/StreamHeaderPacket;)V
+}
+
+public class net/bramp/ffmpeg/nut/StreamHeaderPacket : net/bramp/ffmpeg/nut/Packet {
+	public static final field AUDIO I
+	public static final field SUBTITLE I
+	public static final field USER_DATA I
+	public static final field VIDEO I
+	public fun <init> ()V
+	protected static fun fourccToString ([B)Ljava/lang/String;
+	protected fun readBody (Lnet/bramp/ffmpeg/nut/NutDataInputStream;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/nut/SyncPointPacket {
+	public fun <init> ()V
+}
+
+public class net/bramp/ffmpeg/options/AudioEncodingOptions {
+	public final field bit_rate J
+	public final field channels I
+	public final field codec Ljava/lang/String;
+	public final field enabled Z
+	public final field quality Ljava/lang/Double;
+	public final field sample_format Ljava/lang/String;
+	public final field sample_rate I
+	public fun <init> (ZLjava/lang/String;IILjava/lang/String;JLjava/lang/Double;)V
+	public fun getBitRate ()J
+	public fun getChannels ()I
+	public fun getCodec ()Ljava/lang/String;
+	public fun getQuality ()Ljava/lang/Double;
+	public fun getSampleFormat ()Ljava/lang/String;
+	public fun getSampleRate ()I
+	public fun isEnabled ()Z
+}
+
+public class net/bramp/ffmpeg/options/EncodingOptions {
+	public final field audio Lnet/bramp/ffmpeg/options/AudioEncodingOptions;
+	public final field main Lnet/bramp/ffmpeg/options/MainEncodingOptions;
+	public final field video Lnet/bramp/ffmpeg/options/VideoEncodingOptions;
+	public fun <init> (Lnet/bramp/ffmpeg/options/MainEncodingOptions;Lnet/bramp/ffmpeg/options/AudioEncodingOptions;Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)V
+	public fun getAudio ()Lnet/bramp/ffmpeg/options/AudioEncodingOptions;
+	public fun getMain ()Lnet/bramp/ffmpeg/options/MainEncodingOptions;
+	public fun getVideo ()Lnet/bramp/ffmpeg/options/VideoEncodingOptions;
+}
+
+public class net/bramp/ffmpeg/options/MainEncodingOptions {
+	public final field duration Ljava/lang/Long;
+	public final field format Ljava/lang/String;
+	public final field startOffset Ljava/lang/Long;
+	public fun <init> (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;)V
+	public fun getDuration ()Ljava/lang/Long;
+	public fun getFormat ()Ljava/lang/String;
+	public fun getStartOffset ()Ljava/lang/Long;
+}
+
+public class net/bramp/ffmpeg/options/VideoEncodingOptions {
+	public final field bit_rate J
+	public final field codec Ljava/lang/String;
+	public final field enabled Z
+	public final field filter Ljava/lang/String;
+	public final field frame_rate Lorg/apache/commons/lang3/math/Fraction;
+	public final field frames Ljava/lang/Integer;
+	public final field height I
+	public final field preset Ljava/lang/String;
+	public final field width I
+	public fun <init> (ZLjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;IIJLjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;)V
+	public fun getBitRate ()J
+	public fun getCodec ()Ljava/lang/String;
+	public fun getFilter ()Ljava/lang/String;
+	public fun getFrameRate ()Lorg/apache/commons/lang3/math/Fraction;
+	public fun getFrames ()Ljava/lang/Integer;
+	public fun getHeight ()I
+	public fun getPreset ()Ljava/lang/String;
+	public fun getWidth ()I
+	public fun isEnabled ()Z
+}
+
+public class net/bramp/ffmpeg/probe/FFmpegChapter {
+	public field end J
+	public field end_time Ljava/lang/String;
+	public field id J
+	public field start J
+	public field start_time Ljava/lang/String;
+	public field tags Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;
+	public field time_base Ljava/lang/String;
+	public fun <init> ()V
+	public fun getEnd ()J
+	public fun getEndTime ()Ljava/lang/String;
+	public fun getId ()J
+	public fun getStart ()J
+	public fun getStartTime ()Ljava/lang/String;
+	public fun getTags ()Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;
+	public fun getTimeBase ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/probe/FFmpegChapterTag {
+	public field title Ljava/lang/String;
+	public fun <init> ()V
+	public fun getTitle ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/probe/FFmpegDisposition {
+	public field _default Z
+	public field attached_pic Z
+	public field captions Z
+	public field clean_effects Z
+	public field comment Z
+	public field dependent Z
+	public field descriptions Z
+	public field dub Z
+	public field forced Z
+	public field hearing_impaired Z
+	public field karaoke Z
+	public field lyrics Z
+	public field metadata Z
+	public field non_diegetic Z
+	public field original Z
+	public field still_image Z
+	public field timed_thumbnails Z
+	public field visual_impaired Z
+	public fun <init> ()V
+	public fun isAttachedPic ()Z
+	public fun isCaptions ()Z
+	public fun isCleanEffects ()Z
+	public fun isComment ()Z
+	public fun isDefault ()Z
+	public fun isDependent ()Z
+	public fun isDescriptions ()Z
+	public fun isDub ()Z
+	public fun isForced ()Z
+	public fun isHearingImpaired ()Z
+	public fun isKaraoke ()Z
+	public fun isLyrics ()Z
+	public fun isMetadata ()Z
+	public fun isNonDiegetic ()Z
+	public fun isOriginal ()Z
+	public fun isStillImage ()Z
+	public fun isTimedThumbnails ()Z
+	public fun isVisualImpaired ()Z
+}
+
+public class net/bramp/ffmpeg/probe/FFmpegError : java/io/Serializable {
+	public field code I
+	public field string Ljava/lang/String;
+	public fun <init> ()V
+	public fun getCode ()I
+	public fun getString ()Ljava/lang/String;
+}
+
+public class net/bramp/ffmpeg/probe/FFmpegFormat {
+	public field bit_rate J
+	public field duration D
+	public field filename Ljava/lang/String;
+	public field format_long_name Ljava/lang/String;
+	public field format_name Ljava/lang/String;
+	public field nb_programs I
+	public field nb_streams I
+	public field probe_score I
+	public field size J
+	public field start_time D
+	public field tags Ljava/util/Map;
+	public fun <init> ()V
+	public fun getBitRate ()J
+	public fun getDuration ()D
+	public fun getFilename ()Ljava/lang/String;
+	public fun getFormatLongName ()Ljava/lang/String;
+	public fun getFormatName ()Ljava/lang/String;
+	public fun getNbPrograms ()I
+	public fun getNbStreams ()I
+	public fun getProbeScore ()I
+	public fun getSize ()J
+	public fun getStartTime ()D
+	public fun getTags ()Ljava/util/Map;
+}
+
+public class net/bramp/ffmpeg/probe/FFmpegFrame : net/bramp/ffmpeg/probe/FFmpegFrameOrPacket {
+	public field best_effort_timestamp J
+	public field best_effort_timestamp_time F
+	public field channel_layout Ljava/lang/String;
+	public field channels I
+	public field key_frame I
+	public field media_type Lnet/bramp/ffmpeg/shared/CodecType;
+	public field nb_samples I
+	public field pkt_dts J
+	public field pkt_dts_time D
+	public field pkt_duration J
+	public field pkt_duration_time F
+	public field pkt_pos J
+	public field pkt_pts J
+	public field pkt_pts_time D
+	public field pkt_size J
+	public field sample_fmt Ljava/lang/String;
+	public field stream_index I
+	public fun <init> ()V
+	public fun getBestEffortTimestamp ()J
+	public fun getBestEffortTimestampTime ()F
+	public fun getChannelLayout ()Ljava/lang/String;
+	public fun getChannels ()I
+	public fun getKeyFrame ()I
+	public fun getMediaType ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public fun getNbSamples ()I
+	public fun getPktDts ()J
+	public fun getPktDtsTime ()D
+	public fun getPktDuration ()J
+	public fun getPktDurationTime ()F
+	public fun getPktPos ()J
+	public fun getPktPts ()J
+	public fun getPktPtsTime ()D
+	public fun getPktSize ()J
+	public fun getSampleFmt ()Ljava/lang/String;
+	public fun getStreamIndex ()I
+}
+
+public abstract interface class net/bramp/ffmpeg/probe/FFmpegFrameOrPacket {
+}
+
+public class net/bramp/ffmpeg/probe/FFmpegPacket : net/bramp/ffmpeg/probe/FFmpegFrameOrPacket {
+	public field codec_type Lnet/bramp/ffmpeg/shared/CodecType;
+	public field dts J
+	public field dts_time D
+	public field duration J
+	public field duration_time F
+	public field flags Ljava/lang/String;
+	public field pos Ljava/lang/String;
+	public field pts J
+	public field pts_time D
+	public field size Ljava/lang/String;
+	public field stream_index I
+	public fun <init> ()V
+	public fun getCodecType ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public fun getDts ()J
+	public fun getDtsTime ()D
+	public fun getDuration ()J
+	public fun getDurationTime ()F
+	public fun getFlags ()Ljava/lang/String;
+	public fun getPos ()Ljava/lang/String;
+	public fun getPts ()J
+	public fun getPtsTime ()D
+	public fun getSize ()Ljava/lang/String;
+	public fun getStreamIndex ()I
+}
+
+public class net/bramp/ffmpeg/probe/FFmpegProbeResult {
+	public field chapters Ljava/util/List;
+	public field error Lnet/bramp/ffmpeg/probe/FFmpegError;
+	public field format Lnet/bramp/ffmpeg/probe/FFmpegFormat;
+	public field packets_and_frames Ljava/util/List;
+	public field streams Ljava/util/List;
+	public fun <init> ()V
+	public fun getChapters ()Ljava/util/List;
+	public fun getError ()Lnet/bramp/ffmpeg/probe/FFmpegError;
+	public fun getFormat ()Lnet/bramp/ffmpeg/probe/FFmpegFormat;
+	public fun getFrames ()Ljava/util/List;
+	public fun getPackets ()Ljava/util/List;
+	public fun getStreams ()Ljava/util/List;
+	public fun hasError ()Z
+}
+
+public class net/bramp/ffmpeg/probe/FFmpegStream {
+	public field avg_frame_rate Lorg/apache/commons/lang3/math/Fraction;
+	public field bit_rate J
+	public field bits_per_raw_sample I
+	public field bits_per_sample I
+	public field channel_layout Ljava/lang/String;
+	public field channels I
+	public field chroma_location Ljava/lang/String;
+	public field codec_long_name Ljava/lang/String;
+	public field codec_name Ljava/lang/String;
+	public field codec_tag Ljava/lang/String;
+	public field codec_tag_string Ljava/lang/String;
+	public field codec_time_base Lorg/apache/commons/lang3/math/Fraction;
+	public field codec_type Lnet/bramp/ffmpeg/shared/CodecType;
+	public field display_aspect_ratio Ljava/lang/String;
+	public field disposition Lnet/bramp/ffmpeg/probe/FFmpegDisposition;
+	public field duration D
+	public field duration_ts J
+	public field has_b_frames I
+	public field height I
+	public field id Ljava/lang/String;
+	public field index I
+	public field is_avc Ljava/lang/String;
+	public field level I
+	public field max_bit_rate J
+	public field nal_length_size Ljava/lang/String;
+	public field nb_frames J
+	public field pix_fmt Ljava/lang/String;
+	public field profile Ljava/lang/String;
+	public field r_frame_rate Lorg/apache/commons/lang3/math/Fraction;
+	public field refs I
+	public field sample_aspect_ratio Ljava/lang/String;
+	public field sample_fmt Ljava/lang/String;
+	public field sample_rate I
+	public field side_data_list [Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;
+	public field start_pts J
+	public field start_time D
+	public field tags Ljava/util/Map;
+	public field time_base Lorg/apache/commons/lang3/math/Fraction;
+	public field width I
+	public fun <init> ()V
+	public fun getAvgFrameRate ()Lorg/apache/commons/lang3/math/Fraction;
+	public fun getBitRate ()J
+	public fun getBitsPerRawSample ()I
+	public fun getBitsPerSample ()I
+	public fun getChannelLayout ()Ljava/lang/String;
+	public fun getChannels ()I
+	public fun getChromaLocation ()Ljava/lang/String;
+	public fun getCodecLongName ()Ljava/lang/String;
+	public fun getCodecName ()Ljava/lang/String;
+	public fun getCodecTag ()Ljava/lang/String;
+	public fun getCodecTagString ()Ljava/lang/String;
+	public fun getCodecTimeBase ()Lorg/apache/commons/lang3/math/Fraction;
+	public fun getCodecType ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public fun getDisplayAspectRatio ()Ljava/lang/String;
+	public fun getDisposition ()Lnet/bramp/ffmpeg/probe/FFmpegDisposition;
+	public fun getDuration ()D
+	public fun getDurationTs ()J
+	public fun getHasBFrames ()I
+	public fun getHeight ()I
+	public fun getId ()Ljava/lang/String;
+	public fun getIndex ()I
+	public fun getIsAvc ()Ljava/lang/String;
+	public fun getLevel ()I
+	public fun getMaxBitRate ()J
+	public fun getNalLengthSize ()Ljava/lang/String;
+	public fun getNbFrames ()J
+	public fun getPixFmt ()Ljava/lang/String;
+	public fun getProfile ()Ljava/lang/String;
+	public fun getRFrameRate ()Lorg/apache/commons/lang3/math/Fraction;
+	public fun getRefs ()I
+	public fun getSampleAspectRatio ()Ljava/lang/String;
+	public fun getSampleFmt ()Ljava/lang/String;
+	public fun getSampleRate ()I
+	public fun getSideDataList ()Ljava/util/List;
+	public fun getStartPts ()J
+	public fun getStartTime ()D
+	public fun getTags ()Ljava/util/Map;
+	public fun getTimeBase ()Lorg/apache/commons/lang3/math/Fraction;
+	public fun getWidth ()I
+}
+
+public class net/bramp/ffmpeg/probe/FFmpegStream$SideData {
+	public field displaymatrix Ljava/lang/String;
+	public field rotation I
+	public field side_data_type Ljava/lang/String;
+	public fun <init> ()V
+	public fun getDisplaymatrix ()Ljava/lang/String;
+	public fun getRotation ()I
+	public fun getSideDataType ()Ljava/lang/String;
+}
+
+public abstract class net/bramp/ffmpeg/progress/AbstractSocketProgressParser : net/bramp/ffmpeg/progress/ProgressParser {
+	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+	public fun close ()V
+	protected abstract fun getRunnable (Ljava/util/concurrent/CountDownLatch;)Ljava/lang/Runnable;
+	protected abstract fun getThreadName ()Ljava/lang/String;
+	public fun start ()V
+	public fun stop ()V
+}
+
+public class net/bramp/ffmpeg/progress/Progress {
+	public field bitrate J
+	public field drop_frames J
+	public field dup_frames J
+	public field fps Lorg/apache/commons/lang3/math/Fraction;
+	public field frame J
+	public field out_time_ns J
+	public field speed F
+	public field status Lnet/bramp/ffmpeg/progress/Progress$Status;
+	public field total_size J
+	public fun <init> ()V
+	public fun <init> (JFJJJJJFLnet/bramp/ffmpeg/progress/Progress$Status;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getBitrate ()J
+	public fun getDropFrames ()J
+	public fun getDupFrames ()J
+	public fun getFps ()Lorg/apache/commons/lang3/math/Fraction;
+	public fun getFrame ()J
+	public fun getOutTimeNs ()J
+	public fun getSpeed ()F
+	public fun getStatus ()Lnet/bramp/ffmpeg/progress/Progress$Status;
+	public fun getTotalSize ()J
+	public fun hashCode ()I
+	public fun isEnd ()Z
+	protected fun parseLine (Ljava/lang/String;)Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class net/bramp/ffmpeg/progress/Progress$Status : java/lang/Enum {
+	public static final field CONTINUE Lnet/bramp/ffmpeg/progress/Progress$Status;
+	public static final field END Lnet/bramp/ffmpeg/progress/Progress$Status;
+	public static fun of (Ljava/lang/String;)Lnet/bramp/ffmpeg/progress/Progress$Status;
+	public fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/progress/Progress$Status;
+	public static fun values ()[Lnet/bramp/ffmpeg/progress/Progress$Status;
+}
+
+public abstract interface class net/bramp/ffmpeg/progress/ProgressListener {
+	public abstract fun progress (Lnet/bramp/ffmpeg/progress/Progress;)V
+}
+
+public abstract interface class net/bramp/ffmpeg/progress/ProgressParser : java/io/Closeable {
+	public abstract fun getUri ()Ljava/net/URI;
+	public abstract fun start ()V
+	public abstract fun stop ()V
+}
+
+public class net/bramp/ffmpeg/progress/StreamProgressParser {
+	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+	public fun processReader (Ljava/io/Reader;)V
+	public fun processStream (Ljava/io/InputStream;)V
+}
+
+public class net/bramp/ffmpeg/progress/TcpProgressParser : net/bramp/ffmpeg/progress/AbstractSocketProgressParser {
+	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;ILjava/net/InetAddress;)V
+	protected fun getRunnable (Ljava/util/concurrent/CountDownLatch;)Ljava/lang/Runnable;
+	protected fun getThreadName ()Ljava/lang/String;
+	public fun getUri ()Ljava/net/URI;
+	public fun stop ()V
+}
+
+public class net/bramp/ffmpeg/progress/UdpProgressParser : net/bramp/ffmpeg/progress/AbstractSocketProgressParser {
+	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;ILjava/net/InetAddress;)V
+	protected fun getRunnable (Ljava/util/concurrent/CountDownLatch;)Ljava/lang/Runnable;
+	protected fun getThreadName ()Ljava/lang/String;
+	public fun getUri ()Ljava/net/URI;
+	public fun stop ()V
+}
+
+public final class net/bramp/ffmpeg/shared/CodecType : java/lang/Enum {
+	public static final field ATTACHMENT Lnet/bramp/ffmpeg/shared/CodecType;
+	public static final field AUDIO Lnet/bramp/ffmpeg/shared/CodecType;
+	public static final field DATA Lnet/bramp/ffmpeg/shared/CodecType;
+	public static final field SUBTITLE Lnet/bramp/ffmpeg/shared/CodecType;
+	public static final field VIDEO Lnet/bramp/ffmpeg/shared/CodecType;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/shared/CodecType;
+	public static fun values ()[Lnet/bramp/ffmpeg/shared/CodecType;
+}
+

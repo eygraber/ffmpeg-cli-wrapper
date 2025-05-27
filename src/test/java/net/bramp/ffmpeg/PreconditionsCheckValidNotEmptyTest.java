@@ -21,6 +21,6 @@ public class PreconditionsCheckValidNotEmptyTest {
 
   @Test
   public void testUri() {
-    Preconditions.checkNotEmpty(input, "test must not throw exception");
+    Preconditions.checkNotNullEmptyOrBlank(input, "test must not throw exception");
   }
 }

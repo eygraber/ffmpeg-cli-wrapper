@@ -44,7 +44,7 @@ public class UdpProgressParserTest extends AbstractProgressParserTest {
 
     parser.stop();
 
-    assertThat(progesses, equalTo(Progresses.allProgresses));
+    assertThat(progresses, equalTo(Progresses.allProgresses));
   }
 
   @Test
@@ -69,6 +69,6 @@ public class UdpProgressParserTest extends AbstractProgressParserTest {
 
     parser.stop();
 
-    assertThat(progesses, equalTo(Progresses.naProgresses));
+    assertThat(progresses, equalTo(Progresses.naProgresses));
   }
 }

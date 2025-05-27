@@ -16,11 +16,47 @@ public final class Progresses {
 
   public static final ImmutableList<Progress> allProgresses =
       ImmutableList.of(
-          new Progress(5, 0.0f, 800, 48, 512000000, 0, 0, 1.01f, Progress.Status.CONTINUE),
-          new Progress(118, 23.4f, -1, -1, 5034667000L, 0, 0, -1, Progress.Status.CONTINUE),
           new Progress(
-              132, 23.1f, 1935500, 1285168, 5312000000L, 0, 0, 0.929f, Progress.Status.END));
+              5,
+              org.apache.commons.lang3.math.Fraction.getFraction(0.0f),
+              800,
+              48,
+              512000000,
+              0,
+              0,
+              1.01f,
+              Progress.Status.Continue),
+          new Progress(
+              118,
+              org.apache.commons.lang3.math.Fraction.getFraction(23.4f),
+              -1,
+              -1,
+              5034667000L,
+              0,
+              0,
+              -1,
+              Progress.Status.Continue),
+          new Progress(
+              132,
+              org.apache.commons.lang3.math.Fraction.getFraction(23.1f),
+              1935500,
+              1285168,
+              5312000000L,
+              0,
+              0,
+              0.929f,
+              Progress.Status.End));
 
   public static final ImmutableList<Progress> naProgresses =
-      ImmutableList.of(new Progress(0, 0.0f, -1, -1, -1, 0, 0, -1, Progress.Status.END));
+      ImmutableList.of(
+          new Progress(
+              0,
+              org.apache.commons.lang3.math.Fraction.getFraction(0.0f),
+              -1,
+              -1,
+              -1,
+              0,
+              0,
+              -1,
+              Progress.Status.End));
 }

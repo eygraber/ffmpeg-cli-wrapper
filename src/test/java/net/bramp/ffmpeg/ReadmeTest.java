@@ -60,7 +60,7 @@ public class ReadmeTest {
             .setVideoCodec("libx264") // Video using x264
             .setVideoFrameRate(24, 1) // at 24 frames per second
             .setVideoResolution(640, 480) // at 640x480 resolution
-            .setStrict(Strict.EXPERIMENTAL) // Allow FFmpeg to use experimental specs
+            .setStrict(Strict.Experimental) // Allow FFmpeg to use experimental specs
             .done();
 
     FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
@@ -81,18 +81,18 @@ public class ReadmeTest {
         String.format(
             locale,
             "File: '%s' ; Format: '%s' ; Duration: %.3fs",
-            format.filename,
-            format.format_long_name,
-            format.duration);
+            format.getFilename(),
+            format.getFormatLongName(),
+            format.getDuration());
 
     FFmpegStream stream = probeResult.getStreams().get(0);
     String line2 =
         String.format(
             locale,
             "Codec: '%s' ; Width: %dpx ; Height: %dpx",
-            stream.codec_long_name,
-            stream.width,
-            stream.height);
+            stream.getCodecLongName(),
+            stream.getWidth(),
+            stream.getHeight());
 
     assertThat(
         line1,
@@ -122,11 +122,11 @@ public class ReadmeTest {
             new ProgressListener() {
 
               // Using the FFmpegProbeResult determine the duration of the input
-              final double duration_ns = in.getFormat().duration * TimeUnit.SECONDS.toNanos(1);
+              final double duration_ns = in.getFormat().getDuration() * TimeUnit.SECONDS.toNanos(1);
 
               @Override
               public void progress(Progress progress) {
-                double percentage = progress.out_time_ns / duration_ns;
+                double percentage = progress.getOutTimeNs() / duration_ns;
 
                 // Print out interesting information about the progress
                 System.out.println(
@@ -134,16 +134,16 @@ public class ReadmeTest {
                         locale,
                         "[%.0f%%] status:%s frame:%d time:%s fps:%.0f speed:%.2fx",
                         percentage * 100,
-                        progress.status,
-                        progress.frame,
-                        FFmpegUtils.toTimecode(progress.out_time_ns, TimeUnit.NANOSECONDS),
-                        progress.fps.doubleValue(),
-                        progress.speed));
+                        progress.getStatus(),
+                        progress.getFrame(),
+                        FFmpegUtils.toTimecode(progress.getOutTimeNs(), TimeUnit.NANOSECONDS),
+                        progress.getFps().doubleValue(),
+                        progress.getSpeed()));
               }
             });
 
     job.run();
 
-    assertEquals(FFmpegJob.State.FINISHED, job.getState());
+    assertEquals(FFmpegJob.State.Finished, job.getState());
   }
 }
