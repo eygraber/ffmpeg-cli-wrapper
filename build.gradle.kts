@@ -1,10 +1,13 @@
 import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    `java-library`
     jacoco
+    alias(libs.plugins.dokka)
     alias(libs.plugins.errorprone)
+    alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.maven.publish)
     alias(libs.plugins.spotbugs)
     alias(libs.plugins.spotless)
@@ -41,6 +44,10 @@ dependencies {
     compileOnly(libs.spotbugs.annotations)
 }
 
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions.jvmTarget = JvmTarget.JVM_1_8
+}
+
 tasks.withType<Test> {
     testLogging {
         events = setOf(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
@@ -49,11 +56,6 @@ tasks.withType<Test> {
         junitXml.required.set(true)
         html.required.set(true)
     }
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    options.encoding = "UTF-8"
-    options.compilerArgs.addAll(listOf("-Xlint:all", "-Xlint:-options"))
 }
 
 jacoco {
