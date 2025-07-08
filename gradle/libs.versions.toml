@@ -19,7 +19,7 @@ nitorcreationsMatchers = "1.3"
 slf4j = "2.0.17"
 spotbugsAnnotations = "4.8.6"
 spotbugsPlugin = "6.2.1"
-spotlessPlugin = "7.0.4"
+spotlessPlugin = "7.1.0"
 
 [libraries]
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
