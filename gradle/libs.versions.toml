@@ -1,7 +1,7 @@
 [versions]
 commonsIo = "2.19.0"
 commonsLang3 = "3.17.0"
-errorproneAnnotations = "2.39.0"
+errorproneAnnotations = "2.40.0"
 errorproneCore = "2.29.2"
 errorpronePlugin = "4.3.0"
 findbugsAnnotations = "3.0.1"
