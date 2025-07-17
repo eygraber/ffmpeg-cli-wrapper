@@ -22,7 +22,7 @@ public class FFprobeAvTest {
 
   FFprobe ffprobe;
 
-  static final Gson gson = FFmpegUtils.getGson();
+  static final Gson gson = FFmpegUtils.INSTANCE.getGson();
 
   @Before
   public void before() throws IOException {

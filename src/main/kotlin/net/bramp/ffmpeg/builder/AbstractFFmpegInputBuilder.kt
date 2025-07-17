@@ -5,7 +5,7 @@ import net.bramp.ffmpeg.options.EncodingOptions
 import net.bramp.ffmpeg.probe.FFmpegProbeResult
 
 abstract class AbstractFFmpegInputBuilder<T : AbstractFFmpegInputBuilder<T>> :
-    AbstractFFmpegStreamBuilder<T> {
+  AbstractFFmpegStreamBuilder<T> {
 
   val probeResult: FFmpegProbeResult?
 
@@ -20,9 +20,9 @@ abstract class AbstractFFmpegInputBuilder<T : AbstractFFmpegInputBuilder<T>> :
   protected constructor(parent: FFmpegBuilder, filename: String) : this(parent, null, filename)
 
   protected constructor(
-      parent: FFmpegBuilder,
-      probeResult: FFmpegProbeResult?,
-      filename: String
+    parent: FFmpegBuilder,
+    probeResult: FFmpegProbeResult?,
+    filename: String,
   ) : super(parent, filename) {
     this.probeResult = probeResult
   }
@@ -46,23 +46,19 @@ abstract class AbstractFFmpegInputBuilder<T : AbstractFFmpegInputBuilder<T>> :
 
   // getThis() is assumed to be inherited from AbstractFFmpegStreamBuilder.kt
 
-  override fun buildOptions(): EncodingOptions? {
-    return null
-  }
+  override fun buildOptions(): EncodingOptions? = null
 
   override fun addGlobalFlags(parent: FFmpegBuilder, args: ImmutableList.Builder<String>) {
-    if (this.readAtNativeFrameRate) {
+    if(this.readAtNativeFrameRate) {
       args.add("-re")
     }
 
-    if (this.streamLoop != 0) {
+    if(this.streamLoop != 0) {
       args.add("-stream_loop", this.streamLoop.toString())
     }
 
     super.addGlobalFlags(parent, args)
   }
 
-  fun getStreamLoop(): Int {
-    return streamLoop
-  }
+  fun getStreamLoop(): Int = streamLoop
 }

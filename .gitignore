@@ -32,6 +32,8 @@ build/
 
 # IntelliJ
 .idea/
+# Make an exception for the code style
+!.idea/codeStyles/
 *.iml
 *.ipr
 *.iws

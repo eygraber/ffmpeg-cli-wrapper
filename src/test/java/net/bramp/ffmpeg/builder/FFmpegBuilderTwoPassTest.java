@@ -45,8 +45,7 @@ public class FFmpegBuilderTwoPassTest {
 
   @Test
   public void secondPass() {
-    List<String> command =
-        new FFmpegBuilder()
+    List<String> command = new FFmpegBuilder()
             .addInput("input.mp4")
             .done()
             .addOutput("output.mp4")

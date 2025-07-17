@@ -5,8 +5,6 @@ import static net.bramp.ffmpeg.FFmpeg.AUDIO_FORMAT_S16;
 import static net.bramp.ffmpeg.FFmpeg.AUDIO_SAMPLE_48000;
 import static net.bramp.ffmpeg.FFmpeg.FPS_30;
 import static net.bramp.ffmpeg.builder.MetadataSpecifier.*;
-import static net.bramp.ffmpeg.builder.StreamSpecifier.tag;
-import static net.bramp.ffmpeg.builder.StreamSpecifier.usable;
 import static net.bramp.ffmpeg.builder.StreamSpecifierType.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -339,16 +337,16 @@ public class FFmpegBuilderTest {
             .done()
             .addOutput("output")
             .addMetaTag("title", "Movie Title")
-            .addMetaTag(chapter(0), "author", "Bob")
-            .addMetaTag(program(0), "comment", "Awesome")
-            .addMetaTag(stream(0), "copyright", "Megacorp")
-            .addMetaTag(stream(Video), "framerate", "24fps")
-            .addMetaTag(stream(Video, 0), "artist", "Joe")
-            .addMetaTag(stream(Audio, 0), "language", "eng")
-            .addMetaTag(stream(Subtitle, 0), "language", "fre")
-            .addMetaTag(stream(usable()), "year", "2010")
-            .addMetaTag(stream(tag("key")), "a", "b")
-            .addMetaTag(stream(tag("key", "value")), "a", "b")
+            .addMetaTag(MetadataSpecifier.Companion.chapter(0), "author", "Bob")
+            .addMetaTag(MetadataSpecifier.Companion.program(0), "comment", "Awesome")
+            .addMetaTag(MetadataSpecifier.Companion.stream(0), "copyright", "Megacorp")
+            .addMetaTag(MetadataSpecifier.Companion.stream(Video), "framerate", "24fps")
+            .addMetaTag(MetadataSpecifier.Companion.stream(Video, 0), "artist", "Joe")
+            .addMetaTag(MetadataSpecifier.Companion.stream(Audio, 0), "language", "eng")
+            .addMetaTag(MetadataSpecifier.Companion.stream(Subtitle, 0), "language", "fre")
+            .addMetaTag(MetadataSpecifier.Companion.stream(StreamSpecifier.Companion.usable()), "year", "2010")
+            .addMetaTag(MetadataSpecifier.Companion.stream(StreamSpecifier.Companion.tag("key")), "a", "b")
+            .addMetaTag(MetadataSpecifier.Companion.stream(StreamSpecifier.Companion.tag("key", "value")), "a", "b")
             .done()
             .build();
 

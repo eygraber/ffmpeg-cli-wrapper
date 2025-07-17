@@ -1,84 +1,122 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.base.Preconditions
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
+import net.bramp.ffmpeg.FFmpegUtils.toTimecode
+import net.bramp.ffmpeg.Preconditions.checkNotEmpty
 import java.util.concurrent.TimeUnit
-import net.bramp.ffmpeg.FFmpegUtils // Assuming FFmpegUtils.kt exists
+import javax.annotation.CheckReturnValue
 
-class FFmpegHlsOutputBuilder : AbstractFFmpegOutputBuilder<FFmpegHlsOutputBuilder> {
+class FFmpegHlsOutputBuilder(parent: FFmpegBuilder, filename: String) :
+  AbstractFFmpegOutputBuilder<FFmpegHlsOutputBuilder>(parent, filename) {
+  var hlsTime: Long? = null
+  var hlsSegmentFilename: String? = null
+  var hlsInitTime: Long? = null
+  var hlsListSize: Int? = null
 
-  var hls_time: Long? = null
-  var hls_segment_filename: String? = null
-  var hls_init_time: Long? = null
-  var hls_list_size: Int? = null
-  var hls_base_url: String? = null
+  @JvmField
+  var hlsBaseUrl: String? = null
 
-  internal constructor(parent: FFmpegBuilder, filename: String) : super(parent, filename) {
-    this.format = "hls" // Default format for HLS
+  init {
+    format = "hls"
   }
 
-  override fun setFormat(format: String?): FFmpegHlsOutputBuilder {
-    // Allow 'hls' or null (if someone tries to reset it, though super might disallow null)
-    // but enforce it's 'hls' if not null.
-    if (format != null && format != "hls") {
+  override fun setFormat(format: String): FFmpegHlsOutputBuilder {
+    if(format != "hls") {
       throw IllegalArgumentException(
-          "Format cannot be set to anything else except 'hls' for FFmpegHlsOutputBuilder. Attempted: $format")
+        "Format cannot be set to anything else except 'hls' for FFmpegHlsOutputBuilder",
+      )
     }
-    // If format is null, let superclass decide (it might default or throw).
-    // If format is "hls", then it's fine.
-    super.setFormat(format ?: "hls") // Pass "hls" if null, otherwise the format (which must be "hls")
+    super.setFormat(format)
     return this
   }
 
+  /**
+   * Set the target segment length. Default value is 2 seconds.
+   *
+   * @param duration hls_time to set
+   * @param units The units the offset is in
+   * @return [FFmpegHlsOutputBuilder]
+   */
   fun setHlsTime(duration: Long, units: TimeUnit): FFmpegHlsOutputBuilder {
-    Preconditions.checkNotNull(units)
-    this.hls_time = units.toMillis(duration)
+    hlsTime = units.toMillis(duration)
     return this
   }
 
-  fun setHlsSegmentFileName(filename: String): FFmpegHlsOutputBuilder {
-    this.hls_segment_filename = net.bramp.ffmpeg.Preconditions.checkNotEmpty(filename, "filename must not be empty")
+  /**
+   * hls_segment_filename Examples <br></br>
+   * <br></br>
+   * "file%03d.ts" segment files: file000.ts, file001.ts, file002.ts, etc.
+   *
+   * @param filename hls_segment_file_name to set
+   * @return [FFmpegHlsOutputBuilder]
+   */
+  fun setHlsSegmentFileName(filename: String?): FFmpegHlsOutputBuilder {
+    hlsSegmentFilename = checkNotEmpty(filename, "filename must not be empty")
     return this
   }
 
+  /**
+   * **Segment will be cut on the next key frame after this time has passed on the first m3u8
+   * list.** <br></br>
+   *
+   * @param duration hls_init_time to set
+   * @param units The units the offset is in
+   * @return [FFmpegHlsOutputBuilder]
+   */
   fun setHlsInitTime(duration: Long, units: TimeUnit): FFmpegHlsOutputBuilder {
-    Preconditions.checkNotNull(units)
-    this.hls_init_time = units.toMillis(duration)
+    hlsInitTime = units.toMillis(duration)
     return this
   }
 
+  /**
+   * **Set the maximum number of playlist entries. If set to 0 the list file will contain all the
+   * segments .** <br></br>
+   * Default value is 5 <br></br>
+   *
+   * @param size hls_time to set
+   * @return [FFmpegHlsOutputBuilder]
+   */
   fun setHlsListSize(size: Int): FFmpegHlsOutputBuilder {
-    require(size >= 0) { "Size cannot be less than 0." }
-    this.hls_list_size = size
+    com.google.common.base.Preconditions.checkArgument(size >= 0, "Size cannot be less than 0.")
+    hlsListSize = size
     return this
   }
 
-  fun setHlsBaseUrl(baseurl: String): FFmpegHlsOutputBuilder {
-    this.hls_base_url = net.bramp.ffmpeg.Preconditions.checkNotEmpty(baseurl, "baseurl must not be empty")
+  /**
+   * **Append baseurl to every entry in the playlist. Useful to generate playlists with absolute
+   * paths. <br></br>
+   * Note that the playlist sequence number must be unique for each segment and it is not to be
+   * confused with the segment filename sequence number which can be cyclic, for example if the wrap
+   * option is specified.** <br></br>
+   *
+   * @param baseurl hls_base_url to set
+   * @return [FFmpegHlsOutputBuilder]
+   */
+  fun setHlsBaseUrl(baseurl: String?): FFmpegHlsOutputBuilder {
+    hlsBaseUrl = checkNotEmpty(baseurl, "baseurl must not be empty")
     return this
   }
 
   override fun addFormatArgs(args: ImmutableList.Builder<String>) {
-    super.addFormatArgs(args) // Add args from AbstractFFmpegOutputBuilder first
-
-    hls_time?.let { args.add("-hls_time", FFmpegUtils.toTimecode(it, TimeUnit.MILLISECONDS)) }
-    
-    if (!Strings.isNullOrEmpty(hls_segment_filename)) {
-      args.add("-hls_segment_filename", hls_segment_filename)
+    super.addFormatArgs(args)
+    if(hlsTime != null) {
+      args.add("-hls_time", toTimecode(hlsTime!!, TimeUnit.MILLISECONDS))
     }
-
-    hls_init_time?.let { args.add("-hls_init_time", FFmpegUtils.toTimecode(it, TimeUnit.MILLISECONDS)) }
-    
-    hls_list_size?.let { args.add("-hls_list_size", it.toString()) }
-    
-    if (!Strings.isNullOrEmpty(hls_base_url)) {
-      args.add("-hls_base_url", hls_base_url)
+    if(!Strings.isNullOrEmpty(hlsSegmentFilename)) {
+      args.add("-hls_segment_filename", hlsSegmentFilename)
+    }
+    if(hlsInitTime != null) {
+      args.add("-hls_init_time", toTimecode(hlsInitTime!!, TimeUnit.MILLISECONDS))
+    }
+    if(hlsListSize != null) {
+      args.add("-hls_list_size", hlsListSize.toString())
+    }
+    if(!Strings.isNullOrEmpty(hlsBaseUrl)) {
+      args.add("-hls_base_url", hlsBaseUrl)
     }
   }
 
-  // getThis() is inherited from AbstractFFmpegStreamBuilder
-  // For a concrete class like this, it will correctly return FFmpegHlsOutputBuilder
-  // due to the generic T being resolved.
-  // No override for getThis() is needed here.
+  @CheckReturnValue
+  override fun getThis(): FFmpegHlsOutputBuilder = this
 }

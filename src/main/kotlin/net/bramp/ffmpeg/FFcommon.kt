@@ -4,6 +4,9 @@ import com.google.common.base.Preconditions
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import com.google.common.io.CharStreams
+import net.bramp.ffmpeg.io.ProcessUtils
+import net.bramp.ffmpeg.probe.FFmpegError
+import net.bramp.ffmpeg.probe.FFmpegProbeResult
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
@@ -11,14 +14,11 @@ import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
-import net.bramp.ffmpeg.io.ProcessUtils
-import net.bramp.ffmpeg.probe.FFmpegError
-import net.bramp.ffmpeg.probe.FFmpegProbeResult
 
 /** Private class to contain common methods for both FFmpeg and FFprobe. */
 abstract class FFcommon protected constructor(
-    val path: String,
-    protected val runFunc: ProcessFunction = RunProcessFunction()
+  val path: String,
+  protected val runFunc: ProcessFunction = RunProcessFunction(),
 ) {
 
   init {
@@ -39,17 +39,13 @@ abstract class FFcommon protected constructor(
   // However, the primary constructor with default parameter for runFunc is more idiomatic Kotlin.
   constructor(path: String) : this(path, RunProcessFunction()) {}
 
-  private fun _wrapInReader(inputStream: InputStream): BufferedReader {
-    return BufferedReader(InputStreamReader(inputStream, StandardCharsets.UTF_8))
-  }
+  private fun _wrapInReader(inputStream: InputStream): BufferedReader = BufferedReader(
+    InputStreamReader(inputStream, StandardCharsets.UTF_8),
+  )
 
-  protected fun wrapInReader(p: Process): BufferedReader {
-    return _wrapInReader(p.inputStream)
-  }
+  protected fun wrapInReader(p: Process): BufferedReader = _wrapInReader(p.inputStream)
 
-  protected fun wrapErrorInReader(p: Process): BufferedReader {
-    return _wrapInReader(p.errorStream)
-  }
+  protected fun wrapErrorInReader(p: Process): BufferedReader = _wrapInReader(p.errorStream)
 
   @Throws(IOException::class)
   protected fun throwOnError(p: Process) {
@@ -58,7 +54,8 @@ abstract class FFcommon protected constructor(
         // TODO Parse the error
         throw IOException("$path returned non-zero exit status. Check stdout.")
       }
-    } catch (e: TimeoutException) {
+    }
+    catch(e: TimeoutException) {
       throw IOException("Timed out waiting for $path to finish.", e)
     }
   }
@@ -68,10 +65,10 @@ abstract class FFcommon protected constructor(
     try {
       if (ProcessUtils.waitForWithTimeout(p, 1, TimeUnit.SECONDS) != 0) {
         val ffmpegError: FFmpegError? = result?.error
-        throw FFmpegException(
-            "$path returned non-zero exit status. Check stdout.", ffmpegError)
+        throw FFmpegException("$path returned non-zero exit status. Check stdout.", ffmpegError)
       }
-    } catch (e: TimeoutException) {
+    }
+    catch(e: TimeoutException) {
       throw IOException("Timed out waiting for $path to finish.", e)
     }
   }
@@ -85,7 +82,7 @@ abstract class FFcommon protected constructor(
   @Synchronized
   @Throws(IOException::class)
   fun version(): String {
-    if (this.version == null) {
+    if(this.version == null) {
       val p = runFunc.run(ImmutableList.of(path, "-version"))
       try {
         val r = wrapInReader(p)
@@ -95,10 +92,11 @@ abstract class FFcommon protected constructor(
 
         // If process didn't error, but versionLine is null, it's an unexpected output
         if (versionLine == null) {
-            throw IOException("Failed to read version from $path output: version line was null after successful process execution.")
+          throw IOException(
+            "Failed to read version from $path output: version line was null after successful process execution.",
+          )
         }
         this.version = versionLine
-
       } finally {
         p.destroy()
       }
@@ -113,9 +111,7 @@ abstract class FFcommon protected constructor(
    * @param args The arguments to pass to the binary.
    * @return The full path and arguments to execute the binary.
    */
-  fun path(args: List<String>): List<String> {
-    return ImmutableList.builder<String>().add(path).addAll(args).build()
-  }
+  fun path(args: List<String>): List<String> = ImmutableList.builder<String>().add(path).addAll(args).build()
 
   /**
    * Runs the binary (ffmpeg) with the supplied args. Blocking until finished.
@@ -124,14 +120,15 @@ abstract class FFcommon protected constructor(
    * @throws IOException If there is a problem executing the binary.
    */
   @Throws(IOException::class)
-  fun run(args: List<String>) {
+  open fun run(args: List<String>) {
     val p = runFunc.run(path(args))
     try {
       // TODO Move the copy onto a thread, so that FFmpegProgressListener can be on this thread.
       CharStreams.copy(wrapInReader(p), processOutputStream)
       CharStreams.copy(wrapErrorInReader(p), processErrorStream)
       throwOnError(p)
-    } finally {
+    }
+    finally {
       p.destroy()
     }
   }

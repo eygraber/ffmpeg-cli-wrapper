@@ -2,18 +2,18 @@ package net.bramp.ffmpeg.builder
 
 import com.google.common.base.Preconditions
 import com.google.common.collect.ImmutableList
-import java.util.ArrayList
-import net.bramp.ffmpeg.Preconditions as FfmpegProjectPreconditions
+import net.bramp.ffmpeg.Preconditions.checkNotEmpty
+import javax.annotation.CheckReturnValue
 
+/** Builds a ffprobe command line  */
 class FFprobeBuilder {
-  private var showFormat: Boolean = true
-  private var showStreams: Boolean = true
-  private var showChapters: Boolean = true
-  private var showFrames: Boolean = false
-  private var showPackets: Boolean = false
+  private var showFormat = true
+  private var showStreams = true
+  private var showChapters = true
+  private var showFrames = false
+  private var showPackets = false
   private var userAgent: String? = null
   private var input: String? = null
-
   private val extraArgs: MutableList<String> = ArrayList()
 
   fun setShowFormat(showFormat: Boolean): FFprobeBuilder {
@@ -46,43 +46,35 @@ class FFprobeBuilder {
     return this
   }
 
-  fun setInput(filename: String): FFprobeBuilder {
-    this.input = Preconditions.checkNotNull(filename)
+  fun setInput(filename: String?): FFprobeBuilder {
+    input = filename!!
     return this
   }
 
-  fun addExtraArgs(vararg values: String): FFprobeBuilder {
-    require(values.isNotEmpty()) { "one or more values must be supplied" }
-    FfmpegProjectPreconditions.checkNotEmpty(values[0], "first extra arg may not be empty")
-
-    for (value in values) {
-      extraArgs.add(Preconditions.checkNotNull(value))
+  fun addExtraArgs(vararg values: String?): FFprobeBuilder {
+    Preconditions.checkArgument(values.isNotEmpty(), "one or more values must be supplied")
+    checkNotEmpty(values[0], "first extra arg may not be empty")
+    for(value in values) {
+      extraArgs.add(value!!)
     }
     return this
   }
 
+  @CheckReturnValue
   fun build(): List<String> {
     val args = ImmutableList.builder<String>()
-
     Preconditions.checkNotNull(input, "Input must be specified")
-
-    args.add("-v", "quiet") // Verbosity quiet
-        .add("-print_format", "json")
-        .add("-show_error") // Always show errors
-
-    userAgent?.let { args.add("-user_agent", it) }
-
+    args.add("-v", "quiet").add("-print_format", "json").add("-show_error")
+    if(userAgent != null) {
+      args.add("-user_agent", userAgent)
+    }
     args.addAll(extraArgs)
-
-    if (showFormat) args.add("-show_format")
-    if (showStreams) args.add("-show_streams")
-    if (showChapters) args.add("-show_chapters")
-    if (showPackets) args.add("-show_packets")
-    if (showFrames) args.add("-show_frames")
-
-    // Input is guaranteed non-null here by Preconditions.checkNotNull above
-    args.add(input!!)
-
+    if(showFormat) args.add("-show_format")
+    if(showStreams) args.add("-show_streams")
+    if(showChapters) args.add("-show_chapters")
+    if(showPackets) args.add("-show_packets")
+    if(showFrames) args.add("-show_frames")
+    args.add(input)
     return args.build()
   }
 }

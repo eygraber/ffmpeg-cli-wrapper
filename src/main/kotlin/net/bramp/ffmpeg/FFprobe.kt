@@ -2,13 +2,13 @@ package net.bramp.ffmpeg
 
 import com.google.common.base.MoreObjects
 import com.google.gson.Gson
-import java.io.IOException
-import java.io.Reader
 import net.bramp.ffmpeg.builder.FFprobeBuilder
 import net.bramp.ffmpeg.io.LoggingFilterReader
 import net.bramp.ffmpeg.probe.FFmpegProbeResult
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.io.IOException
+import java.io.Reader
 
 /**
  * Wrapper around FFprobe
@@ -36,9 +36,7 @@ class FFprobe : FFcommon {
    * @throws IOException If a I/O error occurs while executing ffprobe.
    */
   @Throws(IOException::class)
-  fun isFFprobe(): Boolean {
-    return version().startsWith("ffprobe")
-  }
+  fun isFFprobe(): Boolean = version().startsWith("ffprobe")
 
   /**
    * Throws an exception if this is an unsupported version of ffprobe.
@@ -48,35 +46,28 @@ class FFprobe : FFcommon {
    */
   @Throws(IllegalArgumentException::class, IOException::class)
   private fun checkIfFFprobe() {
-    if (!isFFprobe()) {
-      throw IllegalArgumentException(
-          "This binary '$path' is not a supported version of ffprobe")
+    if(!isFFprobe()) {
+      throw IllegalArgumentException("This binary '$path' is not a supported version of ffprobe")
     }
   }
 
   @Throws(IOException::class)
-  override fun run(args: List<String>) {
-    checkIfFFprobe()
-    super.run(args)
-  }
-
-  @Throws(IOException::class)
-  @JvmOverloads 
-  fun probe(mediaPath: String, userAgent: String? = null): FFmpegProbeResult {
-    return probe(this.builder().setInput(mediaPath).setUserAgent(userAgent))
-  }
+  @JvmOverloads
+  fun probe(
+    mediaPath: String,
+    userAgent: String? = null,
+  ): FFmpegProbeResult = probe(this.builder().setInput(mediaPath).setUserAgent(userAgent))
 
   @Throws(IOException::class)
   fun probe(builder: FFprobeBuilder): FFmpegProbeResult {
     // Preconditions.checkNotNull(builder) // builder is non-null by type
     return probe(builder.build())
   }
-  
+
   @Throws(IOException::class)
-  fun probe(mediaPath: String, userAgent: String?, vararg extraArgs: String?): FFmpegProbeResult {
-    return probe(
-        this.builder().setInput(mediaPath).setUserAgent(userAgent).addExtraArgs(*extraArgs).build())
-  }
+  fun probe(mediaPath: String, userAgent: String?, vararg extraArgs: String?): FFmpegProbeResult = probe(
+    this.builder().setInput(mediaPath).setUserAgent(userAgent).addExtraArgs(*extraArgs).build(),
+  )
 
   @Throws(IOException::class)
   fun probe(args: List<String>): FFmpegProbeResult {
@@ -103,21 +94,19 @@ class FFprobe : FFcommon {
       }
 
       return result
-
-    } finally {
+    }
+    finally {
       p.destroy()
     }
   }
 
-  fun builder(): FFprobeBuilder {
-    return FFprobeBuilder()
-  }
+  fun builder(): FFprobeBuilder = FFprobeBuilder()
 
   companion object {
     internal val LOG: Logger = LoggerFactory.getLogger(FFprobe::class.java)
 
     internal const val FFPROBE = "ffprobe"
-    
+
     @JvmField // For Java compatibility as public static final
     val DEFAULT_PATH: String = MoreObjects.firstNonNull(System.getenv("FFPROBE"), FFPROBE)
 

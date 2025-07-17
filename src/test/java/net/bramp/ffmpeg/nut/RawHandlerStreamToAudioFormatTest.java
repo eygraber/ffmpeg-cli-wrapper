@@ -34,17 +34,17 @@ public class RawHandlerStreamToAudioFormatTest {
   public RawHandlerStreamToAudioFormatTest(
       String fourcc, int sampleRateNum, int sampleRateDenom, int channels, AudioFormat expected) {
     stream = new StreamHeaderPacket();
-    stream.type = StreamHeaderPacket.AUDIO;
+    stream.setType(StreamHeaderPacket.AUDIO);
     stream.fourcc = fourcc.getBytes(StandardCharsets.ISO_8859_1);
-    stream.sampleRate = Fraction.getFraction(sampleRateNum, sampleRateDenom);
-    stream.channels = channels;
+    stream.setSampleRate(Fraction.getFraction(sampleRateNum, sampleRateDenom));
+    stream.setChannels(channels);
 
     this.expected = expected;
   }
 
   @Test
   public void testStreamToAudioFormat() {
-    AudioFormat format = RawHandler.streamToAudioFormat(stream);
+    AudioFormat format = RawHandler.INSTANCE.streamToAudioFormat(stream);
 
     // Compare strings since AudioFormat does not have a good equalsCode(..) method.
     assertThat(format.toString(), equalTo(expected.toString()));

@@ -37,8 +37,8 @@ public class FormatDecimalIntegerTest {
   }
 
   @Test
-  public void formatDecimalInteger() throws Exception {
-    String got = FFmpegOutputBuilder.formatDecimalInteger(input);
+  public void formatDecimalInteger() {
+    String got = AbstractFFmpegOutputBuilder.formatDecimalInteger(input);
 
     assertThat(got, equalTo(expected));
   }

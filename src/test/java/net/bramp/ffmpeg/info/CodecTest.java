@@ -16,8 +16,8 @@ public class CodecTest {
     assertThat(c1.getCanEncode(), is(false));
     assertThat(c1.getType(), is(CodecType.VIDEO));
     assertThat(c1.isIntraFrameOnly(), is(true));
-    assertThat(c1.supportsLossyCompression(), is(false));
-    assertThat(c1.losslessCompression, is(true));
+    assertThat(c1.getSupportsLossyCompression(), is(false));
+    assertThat(c1.getSupportsLosslessCompression(), is(true));
 
     Codec c2 = new Codec("4xm", "4X Movie", "D.V.L.");
     assertThat(c2.getName(), is("4xm"));
@@ -26,8 +26,8 @@ public class CodecTest {
     assertThat(c2.getCanEncode(), is(false));
     assertThat(c2.getType(), is(CodecType.VIDEO));
     assertThat(c2.isIntraFrameOnly(), is(false));
-    assertThat(c2.supportsLossyCompression(), is(true));
-    assertThat(c2.supportsLosslessCompression(), is(false));
+    assertThat(c2.getSupportsLossyCompression(), is(true));
+    assertThat(c2.getSupportsLosslessCompression(), is(false));
 
     Codec c3 = new Codec("alias_pix", "Alias/Wavefront PIX image", "DEVI.S");
     assertThat(c3.getName(), is("alias_pix"));
@@ -36,8 +36,8 @@ public class CodecTest {
     assertThat(c3.getCanEncode(), is(true));
     assertThat(c3.getType(), is(CodecType.VIDEO));
     assertThat(c3.isIntraFrameOnly(), is(true));
-    assertThat(c3.supportsLossyCompression(), is(false));
-    assertThat(c3.supportsLosslessCompression(), is(true));
+    assertThat(c3.getSupportsLossyCompression(), is(false));
+    assertThat(c3.getSupportsLosslessCompression(), is(true));
 
     Codec c4 = new Codec("binkaudio_rdft", "Bink Audio (RDFT)", "D.AIL.");
     assertThat(c4.getType(), is(CodecType.AUDIO));

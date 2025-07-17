@@ -21,7 +21,7 @@ public class MapperTest {
 
     FFmpegOutputBuilder mappedObj = new FFmpegOutputBuilder();
 
-    Mapper.map(options, mappedObj);
+    Mapper.INSTANCE.map(options, mappedObj);
 
     // TODO Add actual test!
   }

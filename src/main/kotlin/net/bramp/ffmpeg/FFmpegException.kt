@@ -1,7 +1,7 @@
 package net.bramp.ffmpeg
 
-import java.io.IOException
 import net.bramp.ffmpeg.probe.FFmpegError
+import java.io.IOException
 
 class FFmpegException(message: String?, val error: FFmpegError?) : IOException(message) {
   companion object {

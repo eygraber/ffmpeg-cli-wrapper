@@ -78,7 +78,7 @@ public class FFmpegTest {
             .done();
 
     try {
-      ffmpeg.run(builder);
+      ffmpeg.runWithBuilder(builder);
     } catch (Throwable t) {
       fail(t.getClass().getSimpleName() + " was thrown");
     }
@@ -98,7 +98,7 @@ public class FFmpegTest {
             .done();
 
     try {
-      ffmpeg.run(builder);
+      ffmpeg.runWithBuilder(builder);
     } catch (Throwable t) {
       fail(t.getClass().getSimpleName() + " was thrown");
     }

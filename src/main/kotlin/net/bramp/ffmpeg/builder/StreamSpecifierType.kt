@@ -1,25 +1,24 @@
 package net.bramp.ffmpeg.builder
 
 enum class StreamSpecifierType(private val prefix: String) {
-  /** Video */
+  /** Video  */
   Video("v"),
 
-  /** Video streams which are not attached pictures, video thumbnails or cover arts. */
+  /** Video streams which are not attached pictures, video thumbnails or cover arts.  */
   PureVideo("V"),
 
-  /** Audio */
+  /** Audio  */
   Audio("a"),
 
-  /** Subtitles */
+  /** Subtitles  */
   Subtitle("s"),
 
-  /** Data */
+  /** Data  */
   Data("d"),
 
-  /** Attachment */
-  Attachment("t");
+  /** Attachment  */
+  Attachment("t"),
+  ;
 
-  override fun toString(): String {
-    return prefix
-  }
+  override fun toString(): String = prefix
 }

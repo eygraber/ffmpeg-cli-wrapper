@@ -23,7 +23,7 @@ object Preconditions {
   fun checkNotEmpty(arg: String?, errorMessage: Any?): String {
     val isEmpty = Strings.isNullOrEmpty(arg) || (arg != null && CharMatcher.whitespace().matchesAllOf(arg))
     require(!isEmpty) { errorMessage?.toString() ?: "Argument cannot be null, empty, or blank" }
-    return arg!! 
+    return arg!!
   }
 
   /**
@@ -41,11 +41,11 @@ object Preconditions {
     val scheme = uri.scheme
     val lowerScheme = Ascii.toLowerCase(requireNotNull(scheme) { "URI is missing a scheme" })
 
-    if (rtps.contains(lowerScheme)) {
+    if(rtps.contains(lowerScheme)) {
       return uri
     }
 
-    if (udpTcp.contains(lowerScheme)) {
+    if(udpTcp.contains(lowerScheme)) {
       require(uri.port != -1) { "must set port when using udp or tcp scheme" }
       return uri
     }

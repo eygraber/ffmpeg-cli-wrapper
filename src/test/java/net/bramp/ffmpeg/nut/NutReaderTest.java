@@ -38,20 +38,20 @@ public class NutReaderTest {
       throws InterruptedException, ExecutionException, IOException, LineUnavailableException {
 
     List<String> args =
-        new FFmpegBuilder()
-            .setInput(Samples.big_buck_bunny_720p_1mb)
-            .done()
-            .addStdoutOutput()
-            .setFormat("nut")
-            .setVideoCodec("rawvideo")
-            // .setVideoPixelFormat("rgb24") // TODO make 24bit / channel work
-            .setVideoPixelFormat("argb") // 8 bits per channel
-            .setAudioCodec("pcm_s32le")
-            .done()
-            .build();
+            new FFmpegBuilder()
+                    .setInput(Samples.big_buck_bunny_720p_1mb)
+                    .done()
+                    .addStdoutOutput()
+                    .setFormat("nut")
+                    .setVideoCodec("rawvideo")
+                    // .setVideoPixelFormat("rgb24") // TODO make 24bit / channel work
+                    .setVideoPixelFormat("argb") // 8 bits per channel
+                    .setAudioCodec("pcm_s32le")
+                    .done()
+                    .build();
 
     List<String> newArgs =
-        ImmutableList.<String>builder().add(FFmpeg.DEFAULT_PATH).addAll(args).build();
+            ImmutableList.<String>builder().add(FFmpeg.DEFAULT_PATH).addAll(args).build();
 
     ProcessBuilder builder = new ProcessBuilder(newArgs);
     Process p = builder.start();
@@ -65,7 +65,7 @@ public class NutReaderTest {
               @Override
               public void stream(Stream stream) {
 
-                if (stream.header.type == StreamHeaderPacket.AUDIO) {
+                if (stream.getHeader().getType() == (long) StreamHeaderPacket.AUDIO) {
 
                   if (!OUTPUT_AUDIO) {
                     return;
@@ -79,7 +79,7 @@ public class NutReaderTest {
                   try {
                     line = AudioSystem.getSourceDataLine(null);
 
-                    AudioFormat format = RawHandler.streamToAudioFormat(stream.header);
+                    AudioFormat format = RawHandler.INSTANCE.streamToAudioFormat(stream.getHeader());
                     line.open(format);
                     line.start();
 
@@ -95,24 +95,24 @@ public class NutReaderTest {
               public void frame(Frame frame) {
                 LOG.debug("{}", frame);
 
-                final StreamHeaderPacket header = frame.stream.header;
+                final StreamHeaderPacket header = frame.getStream().getHeader();
 
-                if (header.type == StreamHeaderPacket.VIDEO) {
-                  BufferedImage img = RawHandler.toBufferedImage(frame);
+                if (header.getType() == (long) StreamHeaderPacket.VIDEO) {
+                  BufferedImage img = RawHandler.INSTANCE.toBufferedImage(frame);
 
                   if (!OUTPUT_IMAGES) {
                     return;
                   }
 
                   try {
-                    ImageIO.write(img, "png", new File(String.format("test-%08d.png", frame.pts)));
+                    ImageIO.write(img, "png", new File(String.format("test-%08d.png", frame.getPts())));
                   } catch (IOException e) {
                     LOG.error("Failed to write png", e);
                   }
 
-                } else if (header.type == StreamHeaderPacket.AUDIO) {
+                } else if (header.getType() == (long) StreamHeaderPacket.AUDIO) {
                   if (line != null) {
-                    line.write(frame.data, 0, frame.data.length);
+                    line.write(frame.getData(), 0, frame.getData().length);
                   }
                 }
               }

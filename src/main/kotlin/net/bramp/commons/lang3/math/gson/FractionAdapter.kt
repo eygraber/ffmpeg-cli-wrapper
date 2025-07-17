@@ -5,8 +5,8 @@ import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import java.io.IOException
 import org.apache.commons.lang3.math.Fraction
+import java.io.IOException
 
 /**
  * GSON TypeAdapter for Apache Commons Math Fraction Object
@@ -15,36 +15,36 @@ import org.apache.commons.lang3.math.Fraction
  */
 @Immutable
 class FractionAdapter(
-    /** If set, 0/0 returns this value, instead of throwing a ArithmeticException */
-    @SuppressWarnings("Immutable") // TODO Remove when https://github.com/google/error-prone/issues/512 is fixed
-    private val zeroByZero: Fraction = Fraction.ZERO,
-    /** If set, N/0 returns this value, instead of throwing a ArithmeticException */
-    @SuppressWarnings("Immutable") // TODO Remove when https://github.com/google/error-prone/issues/512 is fixed
-    private val divideByZero: Fraction = Fraction.ZERO
+  /** If set, 0/0 returns this value, instead of throwing a ArithmeticException */
+  @SuppressWarnings("Immutable") // TODO Remove when https://github.com/google/error-prone/issues/512 is fixed
+  private val zeroByZero: Fraction = Fraction.ZERO,
+  /** If set, N/0 returns this value, instead of throwing a ArithmeticException */
+  @SuppressWarnings("Immutable") // TODO Remove when https://github.com/google/error-prone/issues/512 is fixed
+  private val divideByZero: Fraction = Fraction.ZERO,
 ) : TypeAdapter<Fraction>() {
 
   @Throws(IOException::class)
   override fun read(reader: JsonReader): Fraction? {
     val next = reader.peek()
 
-    if (next == JsonToken.NULL) {
+    if(next == JsonToken.NULL) {
       reader.nextNull()
       return null
     }
 
-    if (next == JsonToken.NUMBER) {
+    if(next == JsonToken.NUMBER) {
       return Fraction.getFraction(reader.nextDouble())
     }
 
     val fractionString = reader.nextString().trim()
 
     // Ambiguous as to what 0/0 is, but FFmpeg seems to think it's zero
-    if ("0/0" == fractionString) {
+    if("0/0" == fractionString) {
       return zeroByZero
     }
 
     // Another edge cases is invalid files sometimes output 1/0.
-    if (fractionString.endsWith("/0")) {
+    if(fractionString.endsWith("/0")) {
       return divideByZero
     }
 
@@ -53,7 +53,7 @@ class FractionAdapter(
 
   @Throws(IOException::class)
   override fun write(writer: JsonWriter, value: Fraction?) {
-    if (value == null) {
+    if(value == null) {
       writer.nullValue()
       return
     }

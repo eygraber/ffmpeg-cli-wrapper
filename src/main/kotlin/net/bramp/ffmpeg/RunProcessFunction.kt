@@ -2,10 +2,10 @@ package net.bramp.ffmpeg
 
 import com.google.common.base.Joiner
 import com.google.common.base.Preconditions
-import java.io.File
-import java.io.IOException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.io.File
+import java.io.IOException
 
 /**
  * Simple function that creates a Process with the arguments, and returns a BufferedReader reading
@@ -23,7 +23,7 @@ class RunProcessFunction : ProcessFunction {
     // args is non-null by type List<String>. If it could be null from Java, use List<String>?
     Preconditions.checkArgument(args.isNotEmpty(), "No arguments specified")
 
-    if (LOG.isInfoEnabled) {
+    if(LOG.isInfoEnabled) {
       LOG.info("{}", Joiner.on(" ").join(args))
     }
 

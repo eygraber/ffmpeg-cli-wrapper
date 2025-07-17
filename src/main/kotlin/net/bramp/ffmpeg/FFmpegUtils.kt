@@ -3,8 +3,6 @@ package net.bramp.ffmpeg
 import com.google.common.base.CharMatcher
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import java.util.concurrent.TimeUnit
-import java.util.regex.Pattern
 import net.bramp.commons.lang3.math.gson.FractionAdapter
 import net.bramp.ffmpeg.adapter.FFmpegPacketsAndFramesAdapter
 import net.bramp.ffmpeg.adapter.FFmpegStreamSideDataAdapter
@@ -12,14 +10,16 @@ import net.bramp.ffmpeg.gson.LowercaseEnumTypeAdapterFactory
 import net.bramp.ffmpeg.probe.FFmpegFrameOrPacket
 import net.bramp.ffmpeg.probe.FFmpegStream
 import org.apache.commons.lang3.math.Fraction
+import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
 
 /** Helper class with commonly used methods */
 object FFmpegUtils {
 
-  internal val gson: Gson = setupGson()
+  val gson: Gson = setupGson()
   internal val BITRATE_REGEX: Pattern = Pattern.compile("(\\d+(?:\\.\\d+)?)kbits/s")
   internal val TIME_REGEX: Pattern = Pattern.compile("(\\d+):(\\d+):(\\d+(?:\\.\\d+)?)")
-  internal val ZERO: CharMatcher = CharMatcher.is('0')
+  internal val ZERO: CharMatcher = CharMatcher.`is`('0')
 
   /**
    * Convert milliseconds to "hh:mm:ss.ms" String representation.
@@ -29,15 +29,15 @@ object FFmpegUtils {
    * @deprecated please use #toTimecode() instead.
    */
   @Deprecated(
-      "please use #toTimecode() instead.",
-      ReplaceWith(
-          "FFmpegUtils.toTimecode(milliseconds, TimeUnit.MILLISECONDS)",
-          "java.util.concurrent.TimeUnit", // Assuming MILLISECONDS is imported via TimeUnit
-          "net.bramp.ffmpeg.FFmpegUtils"))
+    "please use #toTimecode() instead.",
+    ReplaceWith(
+      "FFmpegUtils.toTimecode(milliseconds, TimeUnit.MILLISECONDS)",
+      "java.util.concurrent.TimeUnit", // Assuming MILLISECONDS is imported via TimeUnit
+      "net.bramp.ffmpeg.FFmpegUtils",
+    ),
+  )
   @JvmStatic
-  fun millisecondsToString(milliseconds: Long): String {
-    return toTimecode(milliseconds, TimeUnit.MILLISECONDS)
-  }
+  fun millisecondsToString(milliseconds: Long): String = toTimecode(milliseconds, TimeUnit.MILLISECONDS)
 
   /**
    * Convert the duration to "hh:mm:ss" timecode representation, where ss (seconds) can be decimal.
@@ -62,9 +62,10 @@ object FFmpegUtils {
     val hours = TimeUnit.MINUTES.toHours(minutes)
     minutes -= TimeUnit.HOURS.toMinutes(hours)
 
-    return if (ns == 0L) {
+    return if(ns == 0L) {
       String.format("%02d:%02d:%02d", hours, minutes, seconds)
-    } else {
+    }
+    else {
       ZERO.trimTrailingFrom(String.format("%02d:%02d:%02d.%09d", hours, minutes, seconds, ns))
     }
   }
@@ -80,7 +81,7 @@ object FFmpegUtils {
   fun fromTimecode(time: String): Long {
     Preconditions.checkNotEmpty(time, "time must not be empty string")
 
-    if (time == "N/A") {
+    if(time == "N/A") {
       return -1L
     }
 
@@ -91,9 +92,9 @@ object FFmpegUtils {
     val mins = m.group(2).toLong()
     val secs = m.group(3).toDouble()
 
-    return TimeUnit.HOURS.toNanos(hours) + 
-           TimeUnit.MINUTES.toNanos(mins) + 
-           (TimeUnit.SECONDS.toNanos(1) * secs).toLong()
+    return TimeUnit.HOURS.toNanos(hours) +
+      TimeUnit.MINUTES.toNanos(mins) +
+      (TimeUnit.SECONDS.toNanos(1) * secs).toLong()
   }
 
   /**
@@ -106,7 +107,7 @@ object FFmpegUtils {
   fun parseBitrate(bitrate: String): Long {
     Preconditions.checkNotEmpty(bitrate, "bitrate must not be empty string")
 
-    if (bitrate == "N/A") {
+    if(bitrate == "N/A") {
       return -1L
     }
     val m = BITRATE_REGEX.matcher(bitrate)
