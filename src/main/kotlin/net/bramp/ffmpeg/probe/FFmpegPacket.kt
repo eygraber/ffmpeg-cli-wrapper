@@ -1,28 +1,31 @@
 package net.bramp.ffmpeg.probe
 
-import com.google.gson.annotations.SerializedName
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.serializer
+import net.bramp.ffmpeg.FFmpegUtils
 import net.bramp.ffmpeg.shared.CodecType
+import net.bramp.ffmpeg.serde.CodecTypeSerializer
 
-@SuppressFBWarnings(
-  value = ["UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD"],
-  justification = "POJO objects where the fields are populated by gson",
-)
+@Serializable
 data class FFmpegPacket(
-  @SerializedName("codec_type")
-  val codecType: CodecType? = null,
-  @SerializedName("stream_index")
-  val streamIndex: Int = 0,
-  val pts: Long = 0,
-  @SerializedName("pts_time")
-  val ptsTime: Double = 0.0,
-  val dts: Long = 0,
-  @SerializedName("dts_time")
-  val dtsTime: Double = 0.0,
-  val duration: Long = 0,
-  @SerializedName("duration_time")
-  val durationTime: Float = 0f,
-  val size: String = "",
-  val pos: String = "",
-  val flags: String = "",
-) : FFmpegFrameOrPacket
+  var type: String? = null, // "packet" in packets_and_frames format
+  @SerialName("codec_type") @Serializable(with = CodecTypeSerializer::class) var codecType: CodecType? = null,
+  @SerialName("stream_index") var streamIndex: Int = 0,
+  var pts: Long = 0,
+  @SerialName("pts_time") var ptsTime: String? = null,
+  var dts: Long = 0,
+  @SerialName("dts_time") var dtsTime: String? = null,
+  var duration: Long = 0,
+  @SerialName("duration_time") var durationTime: String? = null,
+  var size: String? = null,
+  var pos: String? = null,
+  @SerialName("flags") var flags: String? = null,
+) : FFmpegFrameOrPacket {
+    companion object {
+        @JvmStatic
+        fun fromJson(json: String): FFmpegPacket {
+          return FFmpegUtils.json.decodeFromString(serializer<FFmpegPacket>(), json)
+        }
+    }
+}

@@ -1,32 +1,20 @@
 package net.bramp.ffmpeg.probe
 
-import com.google.gson.annotations.SerializedName
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
+import org.apache.commons.lang3.math.Fraction
 
-@SuppressFBWarnings(
-  value = ["UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD", "UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"],
-  justification = "POJO objects where the fields are populated by gson",
-)
+@Serializable
 data class FFmpegFormat(
-  val filename: String = "",
-  @SerializedName("nb_streams")
-  val nbStreams: Int = 0,
-  @SerializedName("nb_programs")
-  val nbPrograms: Int = 0,
-  @SerializedName("format_name")
-  val formatName: String = "",
-  @SerializedName("format_long_name")
-  val formatLongName: String = "",
-  @SerializedName("start_time")
-  val startTime: Double = 0.0,
-  /** Duration in seconds  */
-  val duration: Double = 0.0,
-  /** File size in bytes  */
-  val size: Long = 0,
-  /** Bitrate  */
-  @SerializedName("bit_rate")
-  val bitRate: Long = 0,
-  @SerializedName("probe_score")
-  val probeScore: Int = 0,
-  val tags: Map<String, String>? = null,
+  var filename: String? = null,
+  @SerialName("nb_streams") var nbStreams: Int = 0,
+  @SerialName("nb_programs") var nbPrograms: Int = 0,
+  @SerialName("format_name") var formatName: String? = null,
+  @SerialName("format_long_name") var formatLongName: String? = null,
+  @SerialName("start_time") var startTime: Double? = null,
+  @SerialName("duration") var duration: Double? = null,
+  var size: Long = 0,
+  @SerialName("bit_rate") var bitRate: Long = 0,
+  @SerialName("probe_score") var probeScore: Int = 0,
+  var tags: Map<String, String>? = null,
 )

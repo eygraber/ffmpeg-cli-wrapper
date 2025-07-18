@@ -112,7 +112,7 @@ class FFmpegBuilder {
   }
 
   fun addInput(result: FFmpegProbeResult): FFmpegFileInputBuilder {
-    val filename = requireNotNull(result.format).filename
+    val filename = requireNotNull(result.format?.filename) { "format.filename must not be null" }
     return doAddInput(FFmpegFileInputBuilder(this, filename, result))
   }
 
@@ -362,7 +362,7 @@ class FFmpegBuilder {
     if(pass > 0) {
       args.add("-pass", pass.toString())
       passPrefix?.let {
-        args.add("-passlogfile", passDirectory + it)
+        args.add("-passlogfile", "$passDirectory$it")
       }
     }
     if(!Strings.isNullOrEmpty(audioFilter)) {

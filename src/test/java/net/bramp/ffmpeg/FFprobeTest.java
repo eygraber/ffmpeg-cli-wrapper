@@ -77,7 +77,7 @@ public class FFprobeTest {
     when(runFunc.run(argThatHasItem(Samples.chapters_with_long_id)))
         .thenAnswer(new NewProcessAnswer("chapters_with_long_id.m4b"));
 
-    ffprobe = new FFprobe(runFunc);
+    ffprobe = new FFprobe("ffprobe", runFunc);
   }
 
   @Test
@@ -87,7 +87,7 @@ public class FFprobeTest {
     assertEquals(
         "ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers", ffprobe.version());
 
-    verify(runFunc, times(1)).run(argThatHasItem("-version"));
+    verify(runFunc, times(2)).run(argThatHasItem("-version"));
   }
 
   @Test
@@ -146,11 +146,11 @@ public class FFprobeTest {
     assertThat(firstPacket.getCodecType(), is(CodecType.Audio));
     assertThat(firstPacket.getStreamIndex(), is(1));
     assertThat(firstPacket.getPts(), is(0L));
-    assertThat(firstPacket.getPtsTime(), is(0.0));
+    assertThat(firstPacket.getPtsTime(), is("0.000000"));
     assertThat(firstPacket.getDts(), is(0L));
-    assertThat(firstPacket.getDtsTime(), is(0.0));
+    assertThat(firstPacket.getDtsTime(), is("0.000000"));
     assertThat(firstPacket.getDuration(), is(1024L));
-    assertThat(firstPacket.getDurationTime(), is(0.021333F));
+    assertThat(firstPacket.getDurationTime(), is("0.021333"));
     assertThat(firstPacket.getSize(), is("967"));
     assertThat(firstPacket.getPos(), is("4261"));
     assertThat(firstPacket.getFlags(), is("K_"));
@@ -159,11 +159,11 @@ public class FFprobeTest {
     assertThat(secondPacket.getCodecType(), is(CodecType.Video));
     assertThat(secondPacket.getStreamIndex(), is(0));
     assertThat(secondPacket.getPts(), is(0L));
-    assertThat(secondPacket.getPtsTime(), is(0.0));
+    assertThat(secondPacket.getPtsTime(), is("0.000000"));
     assertThat(secondPacket.getDts(), is(0L));
-    assertThat(secondPacket.getDtsTime(), is(0.0));
+    assertThat(secondPacket.getDtsTime(), is("0.000000"));
     assertThat(secondPacket.getDuration(), is(512L));
-    assertThat(secondPacket.getDurationTime(), is(0.04F));
+    assertThat(secondPacket.getDurationTime(), is("0.040000"));
     assertThat(secondPacket.getSize(), is("105222"));
     assertThat(secondPacket.getPos(), is("5228"));
     assertThat(secondPacket.getFlags(), is("K_"));
@@ -172,11 +172,11 @@ public class FFprobeTest {
     assertThat(lastPacket.getCodecType(), is(CodecType.Audio));
     assertThat(lastPacket.getStreamIndex(), is(1));
     assertThat(lastPacket.getPts(), is(253952L));
-    assertThat(lastPacket.getPtsTime(), is(5.290667));
+    assertThat(lastPacket.getPtsTime(), is("5.290667"));
     assertThat(lastPacket.getDts(), is(253952L));
-    assertThat(lastPacket.getDtsTime(), is(5.290667));
+    assertThat(lastPacket.getDtsTime(), is("5.290667"));
     assertThat(lastPacket.getDuration(), is(1024L));
-    assertThat(lastPacket.getDurationTime(), is(0.021333F));
+    assertThat(lastPacket.getDurationTime(), is("0.021333"));
     assertThat(lastPacket.getSize(), is("1111"));
     assertThat(lastPacket.getPos(), is("1054609"));
     assertThat(lastPacket.getFlags(), is("K_"));
@@ -197,13 +197,13 @@ public class FFprobeTest {
     FFmpegFrame firstFrame = info.getFrames().get(0);
     assertThat(firstFrame.getStreamIndex(), is(1));    assertThat(firstFrame.getKeyFrame(), is(1));
     assertThat(firstFrame.getPktPts(), is(0L));
-    assertThat(firstFrame.getPktPtsTime(), is(0.0));
+    assertThat(firstFrame.getPktPtsTime(), is("0.000000"));
     assertThat(firstFrame.getPktDts(), is(0L));
-    assertThat(firstFrame.getPktDtsTime(), is(0.0));
+    assertThat(firstFrame.getPktDtsTime(), is("0.000000"));
     assertThat(firstFrame.getBestEffortTimestamp(), is(0L));
-    assertThat(firstFrame.getBestEffortTimestampTime(), is(0.0F));
+    assertThat(firstFrame.getBestEffortTimestampTime(), is("0.000000"));
     assertThat(firstFrame.getPktDuration(), is(1024L));
-    assertThat(firstFrame.getPktDurationTime(), is(0.021333F));
+    assertThat(firstFrame.getPktDurationTime(), is("0.021333"));
     assertThat(firstFrame.getPktPos(), is(4261L));
     assertThat(firstFrame.getPktSize(), is(967L));
     assertThat(firstFrame.getSampleFmt(), is("fltp"));
@@ -216,13 +216,13 @@ public class FFprobeTest {
     assertThat(secondFrame.getStreamIndex(), is(0));
     assertThat(secondFrame.getKeyFrame(), is(1));
     assertThat(secondFrame.getPktPts(), is(0L));
-    assertThat(secondFrame.getPktPtsTime(), is(0.0));
+    assertThat(secondFrame.getPktPtsTime(), is("0.000000"));
     assertThat(secondFrame.getPktDts(), is(0L));
-    assertThat(secondFrame.getPktDtsTime(), is(0.0));
+    assertThat(secondFrame.getPktDtsTime(), is("0.000000"));
     assertThat(secondFrame.getBestEffortTimestamp(), is(0L));
-    assertThat(secondFrame.getBestEffortTimestampTime(), is(0.0F));
+    assertThat(secondFrame.getBestEffortTimestampTime(), is("0.000000"));
     assertThat(secondFrame.getPktDuration(), is(512L));
-    assertThat(secondFrame.getPktDurationTime(), is(0.04F));
+    assertThat(secondFrame.getPktDurationTime(), is("0.040000"));
     assertThat(secondFrame.getPktPos(), is(5228L));
     assertThat(secondFrame.getPktSize(), is(105222L));
     assertThat(secondFrame.getSampleFmt(), new IsNull<>());
@@ -252,11 +252,11 @@ public class FFprobeTest {
     assertThat(firstPacket.getCodecType(), is(CodecType.Audio));
     assertThat(firstPacket.getStreamIndex(), is(1));
     assertThat(firstPacket.getPts(), is(0L));
-    assertThat(firstPacket.getPtsTime(), is(0.0));
+    assertThat(firstPacket.getPtsTime(), is("0.000000"));
     assertThat(firstPacket.getDts(), is(0L));
-    assertThat(firstPacket.getDtsTime(), is(0.0));
+    assertThat(firstPacket.getDtsTime(), is("0.000000"));
     assertThat(firstPacket.getDuration(), is(1024L));
-    assertThat(firstPacket.getDurationTime(), is(0.021333F));
+    assertThat(firstPacket.getDurationTime(), is("0.021333"));
     assertThat(firstPacket.getSize(), is("967"));
     assertThat(firstPacket.getPos(), is("4261"));
     assertThat(firstPacket.getFlags(), is("K_"));
@@ -265,11 +265,11 @@ public class FFprobeTest {
     assertThat(secondPacket.getCodecType(), is(CodecType.Video));
     assertThat(secondPacket.getStreamIndex(), is(0));
     assertThat(secondPacket.getPts(), is(0L));
-    assertThat(secondPacket.getPtsTime(), is(0.0));
+    assertThat(secondPacket.getPtsTime(), is("0.000000"));
     assertThat(secondPacket.getDts(), is(0L));
-    assertThat(secondPacket.getDtsTime(), is(0.0));
+    assertThat(secondPacket.getDtsTime(), is("0.000000"));
     assertThat(secondPacket.getDuration(), is(512L));
-    assertThat(secondPacket.getDurationTime(), is(0.04F));
+    assertThat(secondPacket.getDurationTime(), is("0.040000"));
     assertThat(secondPacket.getSize(), is("105222"));
     assertThat(secondPacket.getPos(), is("5228"));
     assertThat(secondPacket.getFlags(), is("K_"));
@@ -278,11 +278,11 @@ public class FFprobeTest {
     assertThat(lastPacket.getCodecType(), is(CodecType.Audio));
     assertThat(lastPacket.getStreamIndex(), is(1));
     assertThat(lastPacket.getPts(), is(253952L));
-    assertThat(lastPacket.getPtsTime(), is(5.290667));
+    assertThat(lastPacket.getPtsTime(), is("5.290667"));
     assertThat(lastPacket.getDts(), is(253952L));
-    assertThat(lastPacket.getDtsTime(), is(5.290667));
+    assertThat(lastPacket.getDtsTime(), is("5.290667"));
     assertThat(lastPacket.getDuration(), is(1024L));
-    assertThat(lastPacket.getDurationTime(), is(0.021333F));
+    assertThat(lastPacket.getDurationTime(), is("0.021333"));
     assertThat(lastPacket.getSize(), is("1111"));
     assertThat(lastPacket.getPos(), is("1054609"));
     assertThat(lastPacket.getFlags(), is("K_"));
@@ -291,13 +291,13 @@ public class FFprobeTest {
     assertThat(firstFrame.getStreamIndex(), is(1));
     assertThat(firstFrame.getKeyFrame(), is(1));
     assertThat(firstFrame.getPktPts(), is(0L));
-    assertThat(firstFrame.getPktPtsTime(), is(0.0));
+    assertThat(firstFrame.getPktPtsTime(), is("0.000000"));
     assertThat(firstFrame.getPktDts(), is(0L));
-    assertThat(firstFrame.getPktDtsTime(), is(0.0));
+    assertThat(firstFrame.getPktDtsTime(), is("0.000000"));
     assertThat(firstFrame.getBestEffortTimestamp(), is(0L));
-    assertThat(firstFrame.getBestEffortTimestampTime(), is(0.0F));
+    assertThat(firstFrame.getBestEffortTimestampTime(), is("0.000000"));
     assertThat(firstFrame.getPktDuration(), is(1024L));
-    assertThat(firstFrame.getPktDurationTime(), is(0.021333F));
+    assertThat(firstFrame.getPktDurationTime(), is("0.021333"));
     assertThat(firstFrame.getPktPos(), is(4261L));
     assertThat(firstFrame.getPktSize(), is(967L));
     assertThat(firstFrame.getSampleFmt(), is("fltp"));
@@ -310,13 +310,13 @@ public class FFprobeTest {
     assertThat(secondFrame.getStreamIndex(), is(0));
     assertThat(secondFrame.getKeyFrame(), is(1));
     assertThat(secondFrame.getPktPts(), is(0L));
-    assertThat(secondFrame.getPktPtsTime(), is(0.0));
+    assertThat(secondFrame.getPktPtsTime(), is("0.000000"));
     assertThat(secondFrame.getPktDts(), is(0L));
-    assertThat(secondFrame.getPktDtsTime(), is(0.0));
+    assertThat(secondFrame.getPktDtsTime(), is("0.000000"));
     assertThat(secondFrame.getBestEffortTimestamp(), is(0L));
-    assertThat(secondFrame.getBestEffortTimestampTime(), is(0.0F));
+    assertThat(secondFrame.getBestEffortTimestampTime(), is("0.000000"));
     assertThat(secondFrame.getPktDuration(), is(512L));
-    assertThat(secondFrame.getPktDurationTime(), is(0.04F));
+    assertThat(secondFrame.getPktDurationTime(), is("0.040000"));
     assertThat(secondFrame.getPktPos(), is(5228L));
     assertThat(secondFrame.getPktSize(), is(105222L));
     assertThat(secondFrame.getSampleFmt(), new IsNull<>());
@@ -333,13 +333,13 @@ public class FFprobeTest {
     assertThat(actual.getStreamIndex(), is(1));
     assertThat(actual.getKeyFrame(), is(1));
     assertThat(actual.getPktPts(), is(253952L));
-    assertThat(actual.getPktPtsTime(), is(5.290667));
+    assertThat(actual.getPktPtsTime(), is("5.290667"));
     assertThat(actual.getPktDts(), is(253952L));
-    assertThat(actual.getPktDtsTime(), is(5.290667));
+    assertThat(actual.getPktDtsTime(), is("5.290667"));
     assertThat(actual.getBestEffortTimestamp(), is(253952L));
-    assertThat(actual.getBestEffortTimestampTime(), is(5.290667F));
+    assertThat(actual.getBestEffortTimestampTime(), is("5.290667"));
     assertThat(actual.getPktDuration(), is(1024L));
-    assertThat(actual.getPktDurationTime(), is(0.021333F));
+    assertThat(actual.getPktDurationTime(), is("0.021333"));
     assertThat(actual.getPktPos(), is(1054609L));
     assertThat(actual.getPktSize(), is(1111L));
     assertThat(actual.getSampleFmt(), is("fltp"));
@@ -424,7 +424,7 @@ public class FFprobeTest {
 
   @Test
   public void testShouldThrowErrorWithoutMock() throws IOException {
-    FFprobe probe = new FFprobe();
+    FFprobe probe = new FFprobe(FFprobe.DEFAULT_PATH);
     FFmpegException e = assertThrows(FFmpegException.class, () -> probe.probe("doesnotexist.mp4"));
 
     assertNotNull(e);
@@ -462,7 +462,7 @@ public class FFprobeTest {
   public void testProbeDefaultArguments() throws IOException {
     ffprobe.probe(Samples.always_on_my_mind);
 
-    verify(runFunc, times(2)).run(argsCaptor.capture());
+    verify(runFunc, times(1)).run(argsCaptor.capture());
 
     List<String> value = Helper.subList(argsCaptor.getValue(), 1);
 
@@ -485,7 +485,7 @@ public class FFprobeTest {
   public void testProbeProbeBuilder() throws IOException {
     ffprobe.probe(new FFprobeBuilder().setInput(Samples.always_on_my_mind));
 
-    verify(runFunc, times(2)).run(argsCaptor.capture());
+    verify(runFunc, times(1)).run(argsCaptor.capture());
 
     List<String> value = Helper.subList(argsCaptor.getValue(), 1);
 
@@ -508,7 +508,7 @@ public class FFprobeTest {
   public void testProbeProbeBuilderBuilt() throws IOException {
     ffprobe.probe(new FFprobeBuilder().setInput(Samples.always_on_my_mind).build());
 
-    verify(runFunc, times(2)).run(argsCaptor.capture());
+    verify(runFunc, times(1)).run(argsCaptor.capture());
 
     List<String> value = Helper.subList(argsCaptor.getValue(), 1);
 
@@ -531,7 +531,7 @@ public class FFprobeTest {
   public void testProbeProbeExtraArgs() throws IOException {
     ffprobe.probe(Samples.always_on_my_mind, null, "-rw_timeout", "0");
 
-    verify(runFunc, times(2)).run(argsCaptor.capture());
+    verify(runFunc, times(1)).run(argsCaptor.capture());
 
     List<String> value = Helper.subList(argsCaptor.getValue(), 1);
 
@@ -556,7 +556,7 @@ public class FFprobeTest {
   public void testProbeProbeUserAgent() throws IOException {
     ffprobe.probe(Samples.always_on_my_mind, "ffmpeg-cli-wrapper");
 
-    verify(runFunc, times(2)).run(argsCaptor.capture());
+    verify(runFunc, times(1)).run(argsCaptor.capture());
 
     List<String> value = Helper.subList(argsCaptor.getValue(), 1);
 
@@ -776,11 +776,11 @@ public class FFprobeTest {
     assertEquals(CodecType.Audio, packet.getCodecType());
     assertEquals(1, packet.getStreamIndex());
     assertEquals(253952, packet.getPts());
-    assertEquals(5.290667, packet.getPtsTime(), 0.0001);
+    assertEquals("5.290667", packet.getPtsTime());
     assertEquals(253952, packet.getDts());
-    assertEquals(5.290667, packet.getDtsTime(), 0.0001);
+    assertEquals("5.290667", packet.getDtsTime());
     assertEquals(1024, packet.getDuration());
-    assertEquals(0.021333, packet.getDurationTime(), 0.0001);
+    assertEquals("0.021333", packet.getDurationTime());
     assertEquals("1111", packet.getSize());
     assertEquals("1054609", packet.getPos());
     assertEquals("K_", packet.getFlags());
@@ -798,13 +798,13 @@ public class FFprobeTest {
     assertEquals(1, frame.getStreamIndex());
     assertEquals(1, frame.getKeyFrame());
     assertEquals(253952, frame.getPktPts());
-    assertEquals(5.290667, frame.getPktPtsTime(), 0.0001);
+    assertEquals("5.290667", frame.getPktPtsTime());
     assertEquals(253952, frame.getPktDts());
-    assertEquals(5.290667, frame.getPktDtsTime(), 0.0001);
+    assertEquals("5.290667", frame.getPktDtsTime());
     assertEquals(253952, frame.getBestEffortTimestamp());
-    assertEquals(5.290667, frame.getBestEffortTimestampTime(), 0.0001);
+    assertEquals("5.290667", frame.getBestEffortTimestampTime());
     assertEquals(1024, frame.getPktDuration());
-    assertEquals(0.021333, frame.getPktDurationTime(), 0.0001);
+    assertEquals("0.021333", frame.getPktDurationTime());
     assertEquals(1054609, frame.getPktPos());
     assertEquals(1111, frame.getPktSize());
     assertEquals("fltp", frame.getSampleFmt());
