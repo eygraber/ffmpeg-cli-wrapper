@@ -23,7 +23,7 @@ public class ReadmeTest {
 
   final Locale locale = Locale.US;
   final FFmpeg ffmpeg = new FFmpeg();
-  final FFprobe ffprobe = new FFprobe();
+  final FFprobe ffprobe = new FFprobe(FFprobe.DEFAULT_PATH);
 
   public ReadmeTest() throws IOException {}
 

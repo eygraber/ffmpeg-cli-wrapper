@@ -1,6 +1,7 @@
 import com.vanniktech.maven.publish.SonatypeHost
 import io.gitlab.arturbosch.detekt.Detekt
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.gradle.kotlin.dsl.detektPlugins
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -10,6 +11,7 @@ plugins {
   alias(libs.plugins.detekt)
   alias(libs.plugins.dokka)
   alias(libs.plugins.kotlinJvm)
+  alias(libs.plugins.kotlinx.serialization)
   alias(libs.plugins.maven.publish)
 }
 
@@ -25,8 +27,9 @@ java {
 dependencies {
   implementation(libs.commons.io)
   implementation(libs.commons.lang3)
-  implementation(libs.gson)
   implementation(libs.guava)
+  implementation(libs.jsonSugar)
+  implementation(libs.kotlinx.serialization.json)
   implementation(libs.modelmapper)
   implementation(libs.slf4j.api)
 
@@ -36,6 +39,7 @@ dependencies {
   testImplementation(libs.junit)
   testImplementation(libs.logback.classic)
   testImplementation(libs.mockito.core)
+  testImplementation(libs.mockk)
   testImplementation(libs.nitorcreations.matchers)
 
   detektPlugins(libs.detektEygraber.formatting)

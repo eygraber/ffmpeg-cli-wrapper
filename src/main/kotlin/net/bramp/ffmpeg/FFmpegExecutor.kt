@@ -9,7 +9,7 @@ import java.io.IOException
 
 class FFmpegExecutor @JvmOverloads @Throws(IOException::class) constructor(
   val ffmpeg: FFmpeg = FFmpeg(),
-  val ffprobe: FFprobe = FFprobe(),
+  val ffprobe: FFprobe = FFprobe(FFprobe.DEFAULT_PATH),
 ) {
 
   fun createJob(builder: FFmpegBuilder): FFmpegJob = SinglePassFFmpegJob(ffmpeg, builder)

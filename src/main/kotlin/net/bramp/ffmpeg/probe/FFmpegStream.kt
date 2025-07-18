@@ -1,87 +1,68 @@
 package net.bramp.ffmpeg.probe
 
-import com.google.gson.annotations.SerializedName
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import net.bramp.ffmpeg.shared.CodecType
+import net.bramp.ffmpeg.serde.CodecTypeSerializer
 import org.apache.commons.lang3.math.Fraction
 
-@SuppressFBWarnings(
-  value = ["UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD"],
-  justification = "POJO objects where the fields are populated by gson",
-)
+@Serializable
 data class FFmpegStream(
-  val index: Int = 0,
-  @SerializedName("codec_name")
-  val codecName: String = "",
-  @SerializedName("codec_long_name")
-  val codecLongName: String = "",
-  val profile: String = "",
-  @SerializedName("codec_type")
-  val codecType: CodecType? = null,
-  @SerializedName("codec_time_base")
-  val codecTimeBase: Fraction? = null,
-  @SerializedName("codec_tag_string")
-  val codecTagString: String = "",
-  @SerializedName("codec_tag")
-  val codecTag: String = "",
-  val width: Int = 0,
-  val height: Int = 0,
-  @SerializedName("has_bframes")
-  val hasBFrames: Int = 0,
-  @SerializedName("sample_aspect_ratio")
-  val sampleAspectRatio: String? = null, // TODO Change to a Ratio/Fraction object
-  @SerializedName("display_aspect_ratio")
-  val displayAspectRatio: String? = null,
-  @SerializedName("pix_fmt")
-  val pixFmt: String? = null,
-  val level: Int = 0,
-  @SerializedName("chroma_location")
-  val chromaLocation: String? = null,
-  val refs: Int = 0,
-  @Suppress("NonBooleanPropertyPrefixedWithIs")
-  @SerializedName("is_avc")
-  val isAvc: String? = null,
-  @SerializedName("nal_length_size")
-  val nalLengthSize: String? = null,
-  val id: String = "",
-  @SerializedName("r_frame_rate")
-  val rFrameRate: Fraction? = null,
-  @SerializedName("avg_frame_rate")
-  val avgFrameRate: Fraction? = null,
-  @SerializedName("time_base")
-  val timeBase: Fraction? = null,
-  @SerializedName("start_pts")
-  val startPts: Long = 0,
-  @SerializedName("start_time")
-  val startTime: Double = 0.0,
-  @SerializedName("duration_ts")
-  val durationTs: Long = 0,
-  val duration: Double = 0.0,
-  @SerializedName("bit_rate")
-  val bitRate: Long = 0,
-  @SerializedName("max_bit_rate")
-  val maxBitRate: Long = 0,
-  @SerializedName("bits_per_raw_sample")
-  val bitsPerRawSample: Int = 0,
-  @SerializedName("bits_per_sample")
-  val bitsPerSample: Int = 0,
-  @SerializedName("nb_frames")
-  val nbFrames: Long = 0,
-  @SerializedName("sample_fmt")
-  val sampleFmt: String? = null,
-  @SerializedName("sample_rate")
-  val sampleRate: Int = 0,
-  val channels: Int = 0,
-  @SerializedName("channel_layout")
-  val channelLayout: String? = null,
-  val disposition: FFmpegDisposition? = null,
-  val tags: Map<String, String>? = null,
-  @SerializedName("side_data_list")
-  val sideDataList: List<SideData>? = emptyList(),
+  var index: Int = 0,
+  @SerialName("codec_name") var codecName: String? = null,
+  @SerialName("codec_long_name") var codecLongName: String? = null,
+  var profile: String? = null,
+  @SerialName("codec_type") @Serializable(with = CodecTypeSerializer::class) var codecType: CodecType? = null,
+  @SerialName("codec_time_base") @Contextual var codecTimeBase: Fraction? = null,
+  @SerialName("codec_tag_string") var codecTagString: String? = null,
+  @SerialName("codec_tag") var codecTag: String? = null,
+  var width: Int = 0,
+  var height: Int = 0,
+  @SerialName("coded_width") var codedWidth: Int? = null,
+  @SerialName("coded_height") var codedHeight: Int? = null,
+  @SerialName("has_b_frames") var hasBFrames: Int = 0,
+  @SerialName("sample_aspect_ratio") var sampleAspectRatio: String? = null,
+  @SerialName("display_aspect_ratio") var displayAspectRatio: String? = null,
+  @SerialName("pix_fmt") var pixFmt: String? = null,
+  var level: Int = 0,
+  @SerialName("color_range") var colorRange: String? = null,
+  @SerialName("color_space") var colorSpace: String? = null,
+  @SerialName("color_transfer") var colorTransfer: String? = null,
+  @SerialName("color_primaries") var colorPrimaries: String? = null,
+  @SerialName("chroma_location") var chromaLocation: String? = null,
+  @SerialName("field_order") var fieldOrder: String? = null,
+  var timecode: String? = null,
+  var refs: Int = 0,
+  var id: String? = null,
+  @SerialName("r_frame_rate") @Contextual var rFrameRate: Fraction? = null,
+  @SerialName("avg_frame_rate") @Contextual var avgFrameRate: Fraction? = null,
+  @SerialName("time_base") @Contextual var timeBase: Fraction? = null,
+  @SerialName("start_pts") var startPts: Long = 0,
+  @SerialName("start_time") var startTime: Double? = null,
+  @SerialName("duration_ts") var durationTs: Long = 0,
+  var duration: Double? = null,
+  @SerialName("bit_rate") var bitRate: Long = 0,
+  @SerialName("max_bit_rate") var maxBitRate: Long = 0,
+  @SerialName("bits_per_raw_sample") var bitsPerRawSample: Int = 0,
+  @SerialName("nal_length_size") var nalLengthSize: String? = null,
+  @SerialName("is_avc") var isAvc: String? = null,
+  @SerialName("bits_per_sample") var bitsPerSample: Int = 0,
+  @SerialName("nb_frames") var nbFrames: Long = 0,
+  @SerialName("nb_read_frames") var nbReadFrames: Long? = null,
+  @SerialName("nb_read_packets") var nbReadPackets: Long? = null,
+  var channels: Int = 0,
+  @SerialName("sample_rate") var sampleRate: Int = 0,
+  @SerialName("channel_layout") var channelLayout: String? = null,
+  @SerialName("sample_fmt") var sampleFmt: String? = null,
+  var disposition: FFmpegDisposition? = null,
+  var tags: Map<String, String>? = null,
+  @SerialName("side_data_list") var sideDataList: List<SideData> = emptyList(),
 ) {
-  data class SideData(
-    val sideDataType: String = "",
-    val displayMatrix: String = "",
-    val rotation: Int = 0,
-  )
+    @Serializable
+    data class SideData(
+      @SerialName("side_data_type") var sideDataType: String? = null,
+      @SerialName("displaymatrix") var displayMatrix: String? = null,
+      var rotation: Int = 0,
+    )
 }

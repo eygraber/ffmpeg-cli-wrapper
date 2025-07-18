@@ -1,41 +1,42 @@
 package net.bramp.ffmpeg.probe
 
-import com.google.common.collect.ImmutableList
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+@Serializable
 data class FFmpegProbeResult @JvmOverloads constructor(
-  val error: FFmpegError? = null,
-  val format: FFmpegFormat? = null,
-  val streams: List<FFmpegStream>? = null,
-  val chapters: List<FFmpegChapter>? = emptyList(),
-  @SerializedName("packets")
-  val parsedPackets: List<FFmpegPacket>? = null,
-  @SerializedName("frames")
-  val parsedFrames: List<FFmpegFrame>? = null,
-  @SerializedName("packets_and_frames")
-  val packetsAndFrames: List<FFmpegFrameOrPacket>? = null,
+  var error: FFmpegError? = null,
+  var format: FFmpegFormat? = null,
+  var streams: List<FFmpegStream>? = emptyList(),
+  var chapters: List<FFmpegChapter>? = emptyList(),
+  var packets: List<FFmpegPacket>? = emptyList(),
+  var frames: List<FFmpegFrame>? = emptyList(),
+  @SerialName("packets_and_frames")
+  @kotlinx.serialization.Serializable(with = net.bramp.ffmpeg.serde.FFmpegFrameOrPacketListSerializer::class)
+  private var _packetsAndFrames: List<FFmpegFrameOrPacket>? = null,
 ) {
-  private val actualPackets: List<FFmpegPacket> by lazy {
-    if(parsedPackets == null) {
-      packetsAndFrames?.filterIsInstance<FFmpegPacket>().orEmpty()
-    }
-    else {
-      ImmutableList.copyOf(parsedPackets)
-    }
-  }
-
-  private val actualFrames: List<FFmpegFrame> by lazy {
-    if(parsedFrames == null) {
-      packetsAndFrames?.filterIsInstance<FFmpegFrame>().orEmpty()
-    }
-    else {
-      ImmutableList.copyOf(parsedFrames)
-    }
-  }
-
   fun hasError(): Boolean = error != null
 
-  fun getPackets(): List<FFmpegPacket> = ImmutableList.copyOf(actualPackets)
+  init {
+    // If packets_and_frames is present, split it into packets and frames
+    _packetsAndFrames?.let { packetsAndFrames ->
+      val splitPackets = mutableListOf<FFmpegPacket>()
+      val splitFrames = mutableListOf<FFmpegFrame>()
 
-  fun getFrames(): List<FFmpegFrame> = ImmutableList.copyOf(actualFrames)
+      for(item in packetsAndFrames) {
+        when(item) {
+          is FFmpegPacket -> splitPackets.add(item)
+          is FFmpegFrame -> splitFrames.add(item)
+        }
+      }
+
+      if(packets.isNullOrEmpty()) {
+        packets = splitPackets
+      }
+      if(frames.isNullOrEmpty()) {
+        frames = splitFrames
+      }
+    }
+  }
 }

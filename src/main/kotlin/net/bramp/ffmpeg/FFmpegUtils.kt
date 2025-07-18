@@ -1,15 +1,14 @@
 package net.bramp.ffmpeg
 
 import com.google.common.base.CharMatcher
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import net.bramp.commons.lang3.math.gson.FractionAdapter
-import net.bramp.ffmpeg.adapter.FFmpegPacketsAndFramesAdapter
-import net.bramp.ffmpeg.adapter.FFmpegStreamSideDataAdapter
-import net.bramp.ffmpeg.gson.LowercaseEnumTypeAdapterFactory
-import net.bramp.ffmpeg.probe.FFmpegFrameOrPacket
-import net.bramp.ffmpeg.probe.FFmpegStream
-import org.apache.commons.lang3.math.Fraction
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.contextual
+import net.bramp.ffmpeg.serde.FFmpegFrameOrPacketSerializer
+import net.bramp.ffmpeg.serde.FFmpegStreamSideDataSerializer
+import net.bramp.ffmpeg.serde.FractionSerializer
+import net.bramp.ffmpeg.serde.LowercaseEnumSerializer
+import net.bramp.ffmpeg.shared.CodecType
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
@@ -17,7 +16,16 @@ import java.util.regex.Pattern
 /** Helper class with commonly used methods */
 object FFmpegUtils {
 
-  val gson: Gson = setupGson()
+  val json: Json = Json {
+    ignoreUnknownKeys = true
+    serializersModule = SerializersModule {
+      contextual(FractionSerializer)
+      contextual(FFmpegFrameOrPacketSerializer)
+      contextual(FFmpegStreamSideDataSerializer)
+      contextual(LowercaseEnumSerializer<CodecType>())
+    }
+  }
+
   internal val bitrateRegex: Pattern = Pattern.compile("(\\d+(?:\\.\\d+)?)kbits/s")
   internal val timeRegex: Pattern = Pattern.compile("(\\d+):(\\d+):(\\d+(?:\\.\\d+)?)")
   internal val zeroMatcher: CharMatcher = CharMatcher.`is`('0')
@@ -96,8 +104,8 @@ object FFmpegUtils {
     val secs = m.group(3).toDouble()
 
     return TimeUnit.HOURS.toNanos(hours) +
-      TimeUnit.MINUTES.toNanos(mins) +
-      (TimeUnit.SECONDS.toNanos(1) * secs).toLong()
+           TimeUnit.MINUTES.toNanos(mins) +
+           (TimeUnit.SECONDS.toNanos(1) * secs).toLong()
   }
 
   /**
@@ -117,16 +125,5 @@ object FFmpegUtils {
     require(m.find()) { "Invalid bitrate '$bitrate'" }
 
     return (m.group(1).toFloat() * 1000).toLong()
-  }
-
-  private fun setupGson(): Gson {
-    val builder = GsonBuilder()
-
-    builder.registerTypeAdapterFactory(LowercaseEnumTypeAdapterFactory())
-    builder.registerTypeAdapter(Fraction::class.java, FractionAdapter()) // Assuming FractionAdapter is available
-    builder.registerTypeAdapter(FFmpegFrameOrPacket::class.java, FFmpegPacketsAndFramesAdapter())
-    builder.registerTypeAdapter(FFmpegStream.SideData::class.java, FFmpegStreamSideDataAdapter())
-
-    return builder.create()
   }
 }
