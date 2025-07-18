@@ -9,39 +9,43 @@ object InfoParser {
   fun parseLayouts(r: BufferedReader): List<ChannelLayout> {
     val individualChannelLookup: MutableMap<String, IndividualChannel> = HashMap()
     val channelLayouts: MutableList<ChannelLayout> = ArrayList()
-    var line: String?
-    var parsingIndividualChannels = false
-    var parsingChannelLayouts = false
-    while(r.readLine().also { line = it } != null) {
-      if (line!!.startsWith("NAME") || line!!.isEmpty()) {
+    var isParsingIndividualChannels = false
+    var isParsingChannelLayouts = false
+
+    r.forEachLine { line ->
+      if(line.startsWith("NAME") || line.isEmpty()) {
         // Skip header and empty lines
-        continue
       }
-      else if (line == "Individual channels:") {
-        parsingIndividualChannels = true
-        parsingChannelLayouts = false
+      else if(line == "Individual channels:") {
+        isParsingIndividualChannels = true
+        isParsingChannelLayouts = false
       }
-      else if (line == "Standard channel layouts:") {
-        parsingIndividualChannels = false
-        parsingChannelLayouts = true
+      else if(line == "Standard channel layouts:") {
+        isParsingIndividualChannels = false
+        isParsingChannelLayouts = true
       }
-      else if (parsingIndividualChannels) {
-        val s = line!!.split(" ".toRegex(), 2).toTypedArray()
+      else if(isParsingIndividualChannels) {
+        val s = line.split(" ".toRegex(), 2).toTypedArray()
         val individualChannel = IndividualChannel(s[0], s[1].trim())
         channelLayouts.add(individualChannel)
         individualChannelLookup[individualChannel.name] = individualChannel
       }
-      else if (parsingChannelLayouts) {
-        val s = line!!.split(" ".toRegex(), 2).toTypedArray()
+      else if(isParsingChannelLayouts) {
+        val s = line.split(" ".toRegex(), 2).toTypedArray()
         val decomposition: MutableList<IndividualChannel> = ArrayList()
-        for (channelName in Splitter.on('+').split(s[1].trim())) {
-          decomposition.add(individualChannelLookup[channelName]!!)
+        for(channelName in Splitter.on('+').split(s[1].trim())) {
+          decomposition.add(
+            requireNotNull(individualChannelLookup[channelName]) {
+              "No channel found for $channelName"
+            },
+          )
         }
         channelLayouts.add(
           StandardChannelLayout(s[0], decomposition.toList()),
         )
       }
     }
+
     return channelLayouts
   }
 }

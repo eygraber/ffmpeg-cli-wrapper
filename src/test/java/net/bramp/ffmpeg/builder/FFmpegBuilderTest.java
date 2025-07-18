@@ -27,7 +27,7 @@ public class FFmpegBuilderTest {
 
     List<String> args =
         new FFmpegBuilder()
-            .setVerbosity(Verbosity.DEBUG)
+            .setVerbosity(Verbosity.Debug)
             .setUserAgent(
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36")
             .setInput("input")
@@ -538,7 +538,7 @@ public class FFmpegBuilderTest {
     List<String> args =
         new FFmpegBuilder()
             .overrideOutputFiles(true)
-            .setVerbosity(FFmpegBuilder.Verbosity.INFO)
+            .setVerbosity(FFmpegBuilder.Verbosity.Info)
             // X11 screen input
             .addInput(":0.0+0,0")
             .setFormat("x11grab")
@@ -598,7 +598,7 @@ public class FFmpegBuilderTest {
             .done()
             .addOutput("output.mp4")
             .done()
-            .setStrict(Strict.EXPERIMENTAL)
+            .setStrict(Strict.Experimental)
             .build();
 
     assertEquals(

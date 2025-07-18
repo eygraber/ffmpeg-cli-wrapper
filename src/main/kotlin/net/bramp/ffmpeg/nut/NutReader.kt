@@ -5,6 +5,7 @@ import net.bramp.ffmpeg.nut.Packet.StartCode
 import java.io.EOFException
 import java.io.IOException
 import java.io.InputStream
+import java.util.Locale
 
 /**
  * Demuxer for the FFmpeg Nut file format.
@@ -19,7 +20,7 @@ import java.io.InputStream
 class NutReader(inputStream: InputStream, private val listener: NutReaderListener) {
   lateinit var header: MainHeaderPacket
   val streams: MutableList<Stream> = ArrayList()
-  private val `in`: NutDataInputStream = NutDataInputStream(inputStream)
+  private val dataInputStream: NutDataInputStream = NutDataInputStream(inputStream)
 
   /**
    * Read the magic at the beginning of the file.
@@ -29,28 +30,12 @@ class NutReader(inputStream: InputStream, private val listener: NutReaderListene
   @Throws(IOException::class)
   private fun readFileId() {
     val b = ByteArray(HEADER.size)
-    `in`.readFully(b)
+    dataInputStream.readFully(b)
     if(!b.contentEquals(HEADER)) {
       throw IOException(
         "file_id_string does not match. got: " + String(b, Charsets.ISO_8859_1),
       )
     }
-  }
-
-  /**
-   * Read headers we don't know how to parse yet, returning the next startcode.
-   *
-   * @return The next startcode
-   * @throws IOException If a I/O error occurs
-   */
-  @Throws(IOException::class)
-  private fun readReservedHeaders(): Long {
-    var startcode = `in`.readStartCode()
-    while(StartCode.isPossibleStartcode(startcode) && isKnownStartcode(startcode)) {
-      Packet().read(`in`, startcode) // Discard unknown packet
-      startcode = `in`.readStartCode()
-    }
-    return startcode
   }
 
   /**
@@ -61,9 +46,9 @@ class NutReader(inputStream: InputStream, private val listener: NutReaderListene
   @Throws(IOException::class)
   fun read() {
     readFileId()
-    `in`.resetCRC()
+    dataInputStream.resetCRC()
     try {
-      var startcode = `in`.readStartCode()
+      var startcode = dataInputStream.readStartCode()
       while (true) {
         val packet = StartCode.of(startcode)
         if (packet == null) {
@@ -73,42 +58,42 @@ class NutReader(inputStream: InputStream, private val listener: NutReaderListene
 
           // This is a frame packet
           val f = Frame()
-          f.read(this, `in`, startcode.toInt())
+          f.read(this, dataInputStream, startcode.toInt())
           listener.frame(f)
-          startcode = `in`.readStartCode()
+          startcode = dataInputStream.readStartCode()
           continue
         }
         when (packet) {
-          StartCode.MAIN -> {
+          StartCode.Main -> {
             header = MainHeaderPacket()
-            if (!StartCode.MAIN.equalsCode(startcode)) {
-              throw IOException(String.format("expected main header found: 0x%X", startcode))
+            if (!StartCode.Main.equalsCode(startcode)) {
+              throw IOException(String.format(Locale.ROOT, "expected main header found: 0x%X", startcode))
             }
-            header.read(`in`, startcode)
-            startcode = `in`.readStartCode()
+            header.read(dataInputStream, startcode)
+            startcode = dataInputStream.readStartCode()
           }
-          StartCode.STREAM -> {
-            if (!StartCode.STREAM.equalsCode(startcode)) {
-              throw IOException(String.format("expected stream header found: 0x%X", startcode))
+          StartCode.Stream -> {
+            if (!StartCode.Stream.equalsCode(startcode)) {
+              throw IOException(String.format(Locale.ROOT, "expected stream header found: 0x%X", startcode))
             }
             val streamHeader = StreamHeaderPacket()
-            streamHeader.read(`in`, startcode)
+            streamHeader.read(dataInputStream, startcode)
             val stream = Stream(header, streamHeader)
             streams.add(stream)
             listener.stream(stream)
-            startcode = `in`.readStartCode()
+            startcode = dataInputStream.readStartCode()
           }
-          StartCode.SYNCPOINT -> {
-            Packet().read(`in`, startcode) // Discard for the moment
-            startcode = `in`.readStartCode()
+          StartCode.SyncPoint -> {
+            Packet().read(dataInputStream, startcode) // Discard for the moment
+            startcode = dataInputStream.readStartCode()
           }
-          StartCode.INDEX -> {
-            Packet().read(`in`, startcode) // Discard for the moment
-            startcode = `in`.readStartCode()
+          StartCode.Index -> {
+            Packet().read(dataInputStream, startcode) // Discard for the moment
+            startcode = dataInputStream.readStartCode()
           }
-          StartCode.INFO -> {
-            Packet().read(`in`, startcode) // Discard for the moment
-            startcode = `in`.readStartCode()
+          StartCode.Info -> {
+            Packet().read(dataInputStream, startcode) // Discard for the moment
+            startcode = dataInputStream.readStartCode()
           }
         }
       }

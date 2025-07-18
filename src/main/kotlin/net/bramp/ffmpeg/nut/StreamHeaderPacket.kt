@@ -28,32 +28,32 @@ class StreamHeaderPacket : Packet() {
   var channels = 0
 
   @Throws(IOException::class)
-  override fun readBody(input: NutDataInputStream) {
-    id = input.readVarInt()
-    type = input.readVarLong()
-    fourcc = input.readVarArray()
+  override fun readBody(dataInputStream: NutDataInputStream) {
+    id = dataInputStream.readVarInt()
+    type = dataInputStream.readVarLong()
+    fourcc = dataInputStream.readVarArray()
     if(fourcc.size != 2 && fourcc.size != 4) {
       // TODO In future fourcc could be a different size, but for sanity checking lets leave this
       // check in.
       throw IOException("Unexpected fourcc length: " + fourcc.size)
     }
-    timeBaseId = input.readVarInt()
-    msbPtsShift = input.readVarInt()
+    timeBaseId = dataInputStream.readVarInt()
+    msbPtsShift = dataInputStream.readVarInt()
     if(msbPtsShift >= 16) {
       throw IOException("invalid msbPtsShift $msbPtsShift want < 16")
     }
-    maxPtsDistance = input.readVarInt()
-    decodeDelay = input.readVarLong()
-    flags = input.readVarLong()
-    codecSpecificData = input.readVarArray()
+    maxPtsDistance = dataInputStream.readVarInt()
+    decodeDelay = dataInputStream.readVarLong()
+    flags = dataInputStream.readVarLong()
+    codecSpecificData = dataInputStream.readVarArray()
     if(type == VIDEO.toLong()) {
-      width = input.readVarInt()
-      height = input.readVarInt()
+      width = dataInputStream.readVarInt()
+      height = dataInputStream.readVarInt()
       if(width == 0 || height == 0) {
         throw IOException("invalid video dimensions " + width + "x" + height)
       }
-      sampleWidth = input.readVarInt()
-      sampleHeight = input.readVarInt()
+      sampleWidth = dataInputStream.readVarInt()
+      sampleHeight = dataInputStream.readVarInt()
 
       // Both MUST be 0 if unknown otherwise both MUST be nonzero.
       if((sampleWidth == 0 || sampleHeight == 0) && sampleWidth != sampleHeight) {
@@ -61,13 +61,13 @@ class StreamHeaderPacket : Packet() {
           "invalid video sample dimensions " + sampleWidth + "x" + sampleHeight,
         )
       }
-      colorspaceType = input.readVarLong()
+      colorspaceType = dataInputStream.readVarLong()
     }
     else if(type == AUDIO.toLong()) {
-      val samplerateNum = input.readVarInt()
-      val samplerateDenom = input.readVarInt()
+      val samplerateNum = dataInputStream.readVarInt()
+      val samplerateDenom = dataInputStream.readVarInt()
       sampleRate = Fraction.getFraction(samplerateNum, samplerateDenom)
-      channels = input.readVarInt()
+      channels = dataInputStream.readVarInt()
     }
   }
 

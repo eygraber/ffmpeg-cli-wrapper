@@ -14,6 +14,8 @@ class TcpProgressParser @JvmOverloads constructor(
   private val server: ServerSocket = ServerSocket(port, 0, addr)
   override val uri: URI = createUri("tcp", server.inetAddress, server.localPort)
 
+  override val threadName = "TcpProgressParser"
+
   @Synchronized
   @Throws(IOException::class)
   override fun stop() {
@@ -24,9 +26,6 @@ class TcpProgressParser @JvmOverloads constructor(
     server.close() // This unblocks server.accept();
     super.stop()
   }
-
-  override val threadName: String
-    get() = "TcpProgressParser"
 
   override fun getRunnable(startSignal: CountDownLatch): Runnable = TcpProgressParserRunnable(
     parser,

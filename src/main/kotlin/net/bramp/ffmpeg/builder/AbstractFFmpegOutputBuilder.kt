@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.base.Preconditions
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.options.AudioEncodingOptions
@@ -11,6 +10,7 @@ import java.net.URI
 import java.util.regex.Pattern
 
 /** Builds a representation of a single output/encoding setting */
+@Suppress("Deprecation")
 abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
   AbstractFFmpegStreamBuilder<T> {
 
@@ -22,34 +22,42 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
   var constantRateFactor: Double? = null
 
   @Deprecated("Use getAudioSampleFormat() or setAudioSampleFormat()")
-  var audio_sample_format: String? = null
+  @JvmField
+  var audioSampleFormat: String? = null
 
   @Deprecated("Use getAudioBitRate() or setAudioBitRate()")
-  var audio_bit_rate: Long = 0L
+  @JvmField
+  var audioBitRate: Long = 0L
 
   @Deprecated("Use getAudioQuality() or setAudioQuality()")
-  var audio_quality: Double? = null
+  var audioQuality: Double? = null
 
   @Deprecated("Use getAudioBitStreamFilter() or setAudioBitStreamFilter()")
-  var audio_bit_stream_filter: String? = null
+  @JvmField
+  var audioBitStreamFilter: String? = null
 
   @Deprecated("Use getAudioFilter() or setAudioFilter()")
-  var audio_filter: String? = null
+  @JvmField
+  var audioFilter: String? = null
 
   @Deprecated("Use getVideoBitRate() or setVideoBitRate()")
-  var video_bit_rate: Long = 0L
+  @JvmField
+  var videoBitRate: Long = 0L
 
   @Deprecated("Use getVideoQuality() or setVideoQuality()")
-  var video_quality: Double? = null
+  var videoQuality: Double? = null
 
   @Deprecated("Use getVideoPreset() or setVideoPreset()")
-  var video_preset: String? = null
+  @JvmField
+  var videoPreset: String? = null
 
   @Deprecated("Use getVideoFilter() or setVideoFilter()")
-  var video_filter: String? = null
+  @JvmField
+  var videoFilter: String? = null
 
   @Deprecated("Use getVideoBitStreamFilter() or setVideoBitStreamFilter()")
-  var video_bit_stream_filter: String? = null
+  @JvmField
+  var videoBitStreamFilter: String? = null
 
   protected var bFrames: Int? = null
 
@@ -68,28 +76,29 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
     return getThis()
   }
 
-  fun setVideoBitRate(bit_rate: Long): T {
-    require(bit_rate > 0) { "bit rate must be positive" }
+  fun setVideoBitRate(bitRate: Long): T {
+    require(bitRate > 0) { "bit rate must be positive" }
     this.video_enabled = true
-    this.video_bit_rate = bit_rate
+    this.videoBitRate = bitRate
     return getThis()
   }
 
   fun setVideoQuality(quality: Double): T {
     require(quality > 0) { "quality must be positive" }
     this.video_enabled = true
-    this.video_quality = quality
+    this.videoQuality = quality
     return getThis()
   }
 
   fun setVideoBitStreamFilter(filter: String): T {
-    this.video_bit_stream_filter = net.bramp.ffmpeg.Preconditions.checkNotEmpty(filter, "filter must not be empty")
+    this.videoBitStreamFilter =
+      net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
     return getThis()
   }
 
   fun setVideoPreset(preset: String): T {
     this.video_enabled = true
-    this.video_preset = net.bramp.ffmpeg.Preconditions.checkNotEmpty(preset, "video preset must not be empty")
+    this.videoPreset = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(preset, "video preset must not be empty")
     return getThis()
   }
 
@@ -100,89 +109,93 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
 
   fun setVideoFilter(filter: String): T {
     this.video_enabled = true
-    this.video_filter = net.bramp.ffmpeg.Preconditions.checkNotEmpty(filter, "filter must not be empty")
+    this.videoFilter = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
     return getThis()
   }
 
   @Deprecated(
     "use setAudioSampleFormat instead.",
-    ReplaceWith("this.setAudioSampleFormat(bit_depth)"),
+    ReplaceWith("this.setAudioSampleFormat(bitDepth)"),
   )
-  fun setAudioBitDepth(bit_depth: String): T = setAudioSampleFormat(bit_depth)
+  fun setAudioBitDepth(bitDepth: String): T = setAudioSampleFormat(bitDepth)
 
-  fun setAudioSampleFormat(sample_format: String): T {
+  fun setAudioSampleFormat(sampleFormat: String): T {
     this.audio_enabled = true
-    this.audio_sample_format =
-      net.bramp.ffmpeg.Preconditions.checkNotEmpty(sample_format, "sample format must not be empty")
+    this.audioSampleFormat =
+      net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(sampleFormat, "sample format must not be empty")
     return getThis()
   }
 
-  fun setAudioBitRate(bit_rate: Long): T {
-    require(bit_rate > 0) { "bit rate must be positive" }
+  fun setAudioBitRate(bitRate: Long): T {
+    require(bitRate > 0) { "bit rate must be positive" }
     this.audio_enabled = true
-    this.audio_bit_rate = bit_rate
+    this.audioBitRate = bitRate
     return getThis()
   }
 
   fun setAudioQuality(quality: Double): T {
     require(quality > 0) { "quality must be positive" }
     this.audio_enabled = true
-    this.audio_quality = quality
+    this.audioQuality = quality
     return getThis()
   }
 
   fun setAudioBitStreamFilter(filter: String): T {
     this.audio_enabled = true
-    this.audio_bit_stream_filter = net.bramp.ffmpeg.Preconditions.checkNotEmpty(filter, "filter must not be empty")
+    this.audioBitStreamFilter =
+      net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
     return getThis()
   }
 
   fun setComplexFilter(filter: String): T {
-    this.complexFilter = net.bramp.ffmpeg.Preconditions.checkNotEmpty(filter, "filter must not be empty")
+    this.complexFilter = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
     return getThis()
   }
 
   fun setAudioFilter(filter: String): T {
     this.audio_enabled = true
-    this.audio_filter = net.bramp.ffmpeg.Preconditions.checkNotEmpty(filter, "filter must not be empty")
+    this.audioFilter = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
     return getThis()
   }
 
   override fun buildOptions(): EncodingOptions = EncodingOptions(
     MainEncodingOptions(format, startOffset, duration),
     AudioEncodingOptions(
-      audio_enabled,
-      audio_codec,
-      audio_channels,
-      audio_sample_rate,
-      audio_sample_format,
-      audio_bit_rate,
-      audio_quality,
+      isEnabled = audio_enabled,
+      codec = audio_codec,
+      channels = audio_channels,
+      sampleRate = audio_sample_rate,
+      sampleFormat = audioSampleFormat,
+      bitRate = audioBitRate,
+      quality = audioQuality,
     ),
     VideoEncodingOptions(
-      video_enabled,
-      video_codec,
-      video_frame_rate,
-      video_width,
-      video_height,
-      video_bit_rate,
-      video_frames,
-      video_filter,
-      video_preset,
+      isEnabled = video_enabled,
+      codec = video_codec,
+      frameRate = video_frame_rate,
+      width = video_width,
+      height = video_height,
+      bitRate = videoBitRate,
+      frames = video_frames,
+      filter = videoFilter,
+      preset = videoPreset,
     ),
   )
 
   override fun build(pass: Int): List<String> {
-    Preconditions.checkState(parent != null, "Can not build without parent being set")
-    return build(parent!!, pass)
+    checkNotNull(parent) {
+      "Can not build without parent being set"
+    }
+    return build(parent, pass)
   }
 
   override fun build(parent: FFmpegBuilder, pass: Int): List<String> {
     if(pass > 0) {
-      require(targetSize != 0L || video_bit_rate != 0L) {
+      require(targetSize != 0L || videoBitRate != 0L) {
         "Target size, or video bitrate must be specified when using two-pass"
       }
-      require(format != null) { "Format must be specified when using two-pass" }
+
+      requireNotNull(format) { "Format must be specified when using two-pass" }
     }
 
     if(targetSize > 0L) {
@@ -196,13 +209,13 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
       checkNotNull(inputProbeResult) { "Target size must be used with setInput(FFmpegProbeResult)" }
 
       val durationInSeconds = inputProbeResult.format?.duration ?: 0.0
-      val totalBitRate = ((targetSize * 8) / durationInSeconds).toLong() - pass_padding_bitrate
+      val totalBitRate = (targetSize * 8 / durationInSeconds).toLong() - pass_padding_bitrate
 
-      if(video_enabled && video_bit_rate == 0L) {
-        val audioBitRateForCalc = if(audio_enabled) audio_bit_rate else 0L
-        video_bit_rate = totalBitRate - audioBitRateForCalc
-      } else if(audio_enabled && audio_bit_rate == 0L) {
-        audio_bit_rate = totalBitRate
+      if(video_enabled && videoBitRate == 0L) {
+        val audioBitRateForCalc = if(audio_enabled) audioBitRate else 0L
+        videoBitRate = totalBitRate - audioBitRateForCalc
+      } else if(audio_enabled && audioBitRate == 0L) {
+        audioBitRate = totalBitRate
       }
     }
     return super.build(parent, pass)
@@ -217,52 +230,50 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
   override fun addVideoFlags(parent: FFmpegBuilder, args: ImmutableList.Builder<String>) {
     super.addVideoFlags(parent, args)
 
-    if(video_bit_rate > 0L && video_quality != null) {
-      throw IllegalStateException("Only one of video_bit_rate and video_quality can be set")
+    check(videoBitRate <= 0L || videoQuality == null) { "Only one of video_bit_rate and video_quality can be set" }
+    if(videoBitRate > 0L) {
+      args.add("-b:v", videoBitRate.toString())
     }
-    if(video_bit_rate > 0L) {
-      args.add("-b:v", video_bit_rate.toString())
+    videoQuality?.let { args.add("-qscale:v", formatDecimalInteger(it)) }
+    if(!Strings.isNullOrEmpty(videoPreset)) {
+      args.add("-vpre", videoPreset)
     }
-    video_quality?.let { args.add("-qscale:v", formatDecimalInteger(it)) }
-    if(!Strings.isNullOrEmpty(video_preset)) {
-      args.add("-vpre", video_preset)
-    }
-    if(!Strings.isNullOrEmpty(video_filter)) {
+    if(!Strings.isNullOrEmpty(videoFilter)) {
       check(parent.inputs.size == 1) {
         "Video filter only works with one input, instead use setComplexVideoFilter(..)"
       }
-      args.add("-vf", video_filter)
+      args.add("-vf", videoFilter)
     }
-    if(!Strings.isNullOrEmpty(video_bit_stream_filter)) {
-      args.add("-bsf:v", video_bit_stream_filter)
+    if(!Strings.isNullOrEmpty(videoBitStreamFilter)) {
+      args.add("-bsf:v", videoBitStreamFilter)
     }
     bFrames?.let { args.add("-bf", it.toString()) }
   }
 
   override fun addAudioFlags(args: ImmutableList.Builder<String>) {
     super.addAudioFlags(args)
-    if(!Strings.isNullOrEmpty(audio_sample_format)) {
-      args.add("-sample_fmt", audio_sample_format)
+    if(!Strings.isNullOrEmpty(audioSampleFormat)) {
+      args.add("-sample_fmt", audioSampleFormat)
     }
-    if(audio_bit_rate > 0L && audio_quality != null && throwWarnings) { // throwWarnings is inherited
-      throw IllegalStateException("Only one of audio_bit_rate and audio_quality can be set")
+    check(audioBitRate <= 0L || audioQuality == null || !throwWarnings) {
+      "Only one of audio_bit_rate and audio_quality can be set"
     }
-    if(audio_bit_rate > 0L) {
-      args.add("-b:a", audio_bit_rate.toString())
+    if(audioBitRate > 0L) {
+      args.add("-b:a", audioBitRate.toString())
     }
-    audio_quality?.let { args.add("-qscale:a", formatDecimalInteger(it)) }
-    if(!Strings.isNullOrEmpty(audio_bit_stream_filter)) {
-      args.add("-bsf:a", audio_bit_stream_filter)
+    audioQuality?.let { args.add("-qscale:a", formatDecimalInteger(it)) }
+    if(!Strings.isNullOrEmpty(audioBitStreamFilter)) {
+      args.add("-bsf:a", audioBitStreamFilter)
     }
-    if(!Strings.isNullOrEmpty(audio_filter)) {
-      args.add("-af", audio_filter)
+    if(!Strings.isNullOrEmpty(audioFilter)) {
+      args.add("-af", audioFilter)
     }
   }
 
   override fun addSourceTarget(pass: Int, args: ImmutableList.Builder<String>) {
-    if(filename != null && uri != null) {
-      throw IllegalStateException("Only one of filename and uri can be set")
-    }
+    val filename = filename
+    val uri = uri
+    check(filename == null || uri == null) { "Only one of filename and uri can be set" }
     when {
       pass == 1 -> args.add(DEVNULL) // DEVNULL assumed to be inherited or defined
       filename != null -> args.add(filename)

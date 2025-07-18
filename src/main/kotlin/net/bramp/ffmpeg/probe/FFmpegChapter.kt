@@ -1,5 +1,6 @@
 package net.bramp.ffmpeg.probe
 
+import com.google.gson.annotations.SerializedName
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 
 @SuppressFBWarnings(
@@ -8,10 +9,13 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 )
 data class FFmpegChapter(
   val id: Long = 0,
-  val time_base: String = "",
+  @SerializedName("time_base")
+  val timeBase: String = "",
   val start: Long = 0,
-  val start_time: String = "",
+  @SerializedName("start_time")
+  val startTime: String = "",
   val end: Long = 0,
-  val end_time: String = "",
+  @SerializedName("end_time")
+  val endTime: String = "",
   val tags: FFmpegChapterTag? = null,
 )

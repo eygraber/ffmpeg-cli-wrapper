@@ -5,14 +5,14 @@ import java.util.List;
 
 /** Test class to keep a record of all progresses. */
 public class RecordingProgressListener implements ProgressListener {
-  public final List<Progress> progesses = Lists.newArrayList();
+  public final List<Progress> progresses = Lists.newArrayList();
 
   @Override
   public void progress(Progress p) {
-    progesses.add(p);
+    progresses.add(p);
   }
 
   public void reset() {
-    progesses.clear();
+    progresses.clear();
   }
 }

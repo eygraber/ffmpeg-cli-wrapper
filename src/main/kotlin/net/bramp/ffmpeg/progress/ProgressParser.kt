@@ -6,11 +6,6 @@ import java.net.URI
 
 /** Parses the FFmpeg progress fields  */
 interface ProgressParser : Closeable {
-  @Throws(IOException::class)
-  fun start()
-
-  @Throws(IOException::class)
-  fun stop()
 
   /**
    * The URL to parse to FFmpeg to communicate with this parser
@@ -18,4 +13,10 @@ interface ProgressParser : Closeable {
    * @return The URI to communicate with FFmpeg.
    */
   val uri: URI
+
+  @Throws(IOException::class)
+  fun start()
+
+  @Throws(IOException::class)
+  fun stop()
 }

@@ -25,7 +25,7 @@ public final class Progresses {
               0,
               0,
               1.01f,
-              Progress.Status.CONTINUE),
+              Progress.Status.Continue),
           new Progress(
               118,
               org.apache.commons.lang3.math.Fraction.getFraction(23.4f),
@@ -35,7 +35,7 @@ public final class Progresses {
               0,
               0,
               -1,
-              Progress.Status.CONTINUE),
+              Progress.Status.Continue),
           new Progress(
               132,
               org.apache.commons.lang3.math.Fraction.getFraction(23.1f),
@@ -45,7 +45,7 @@ public final class Progresses {
               0,
               0,
               0.929f,
-              Progress.Status.END));
+              Progress.Status.End));
 
   public static final ImmutableList<Progress> naProgresses =
       ImmutableList.of(
@@ -58,5 +58,5 @@ public final class Progresses {
               0,
               0,
               -1,
-              Progress.Status.END));
+              Progress.Status.End));
 }

@@ -22,9 +22,9 @@ data class Codec(
   /** Intra frame only codec  */
   val isIntraFrameOnly: Boolean,
   /** Codec supports lossy compression  */
-  val supportsLossyCompression: Boolean,
-  /** Codeco supports lessless compression  */
-  val supportsLosslessCompression: Boolean,
+  val isLossyCompressionSupported: Boolean,
+  /** Codec supports lossless compression  */
+  val isLosslessCompressionSupported: Boolean,
 ) {
 
   /**
@@ -83,11 +83,11 @@ data class Codec(
     private fun codecType(flags: String): CodecType {
       Preconditions.checkArgument(flags.length == 6, "Codec flags is invalid '%s'", flags)
       return when(flags[2]) {
-        'V' -> CodecType.VIDEO
-        'A' -> CodecType.AUDIO
-        'S' -> CodecType.SUBTITLE
-        'D' -> CodecType.DATA
-        'T' -> CodecType.ATTACHMENT
+        'V' -> CodecType.Video
+        'A' -> CodecType.Audio
+        'S' -> CodecType.Subtitle
+        'D' -> CodecType.Data
+        'T' -> CodecType.Attachment
         else -> throw IllegalArgumentException("Invalid codec type '" + flags[2] + "'")
       }
     }

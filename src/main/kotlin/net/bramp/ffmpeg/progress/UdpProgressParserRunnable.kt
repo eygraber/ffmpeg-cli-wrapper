@@ -23,13 +23,14 @@ internal class UdpProgressParserRunnable(
         if (packet.length == 0) {
           continue
         }
-        ByteArrayInputStream(packet.data, packet.offset, packet.length)
-          .use { `in` -> parser.processStream(`in`) }
+        parser.processStream(
+          ByteArrayInputStream(packet.data, packet.offset, packet.length),
+        )
       }
-      catch (e: SocketException) {
+      catch (_: SocketException) {
         // Most likely a Socket closed exception, which we can safely ignore
       }
-      catch (e: IOException) {
+      catch (_: IOException) {
         // We have no good way to report this back to the user... yet
         // TODO Report to the user that this failed in some way
       }

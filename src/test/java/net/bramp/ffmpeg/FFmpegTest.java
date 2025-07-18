@@ -48,7 +48,7 @@ public class FFmpegTest {
     when(runFunc.run(argThatHasItem("-layouts")))
         .thenAnswer(new NewProcessAnswer("ffmpeg-layouts"));
 
-    ffmpeg = new FFmpeg(runFunc);
+    ffmpeg = new FFmpeg(FFmpeg.DEFAULT_PATH, runFunc);
   }
 
   @SuppressWarnings("unchecked")

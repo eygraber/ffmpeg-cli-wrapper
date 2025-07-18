@@ -6,6 +6,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   jacoco
+  alias(libs.plugins.abiCompat)
   alias(libs.plugins.detekt)
   alias(libs.plugins.dokka)
   alias(libs.plugins.kotlinJvm)

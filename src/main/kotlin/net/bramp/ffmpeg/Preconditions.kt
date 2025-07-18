@@ -1,8 +1,6 @@
 package net.bramp.ffmpeg
 
 import com.google.common.base.Ascii
-import com.google.common.base.CharMatcher
-import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import java.net.URI
 
@@ -20,10 +18,12 @@ object Preconditions {
    * @return The passed in argument if it is not blank
    */
   @JvmStatic
-  fun checkNotEmpty(arg: String?, errorMessage: Any?): String {
-    val isEmpty = Strings.isNullOrEmpty(arg) || (arg != null && CharMatcher.whitespace().matchesAllOf(arg))
-    require(!isEmpty) { errorMessage?.toString() ?: "Argument cannot be null, empty, or blank" }
-    return arg!!
+  fun checkNotNullEmptyOrBlank(arg: String?, errorMessage: Any?): String {
+    require(!arg.isNullOrBlank()) {
+      errorMessage?.toString() ?: "Argument cannot be null, empty, or blank"
+    }
+
+    return arg
   }
 
   /**
@@ -35,9 +35,7 @@ object Preconditions {
    */
   @JvmStatic
   @Throws(IllegalArgumentException::class)
-  fun checkValidStream(uri: URI?): URI {
-    requireNotNull(uri) { "URI cannot be null" }
-
+  fun checkValidStream(uri: URI): URI {
     val scheme = uri.scheme
     val lowerScheme = Ascii.toLowerCase(requireNotNull(scheme) { "URI is missing a scheme" })
 

@@ -270,7 +270,7 @@ public abstract class AbstractFFmpegStreamBuilderTest {
   @Test
   public void testSetStrict() {
     AbstractFFmpegStreamBuilder<?> builder = getBuilder();
-    builder.setStrict(Strict.STRICT);
+    builder.setStrict(Strict.Strict);
     List<String> command = builder.build(0);
 
     assertEquals("strict", command.get(command.indexOf("-strict") + 1));

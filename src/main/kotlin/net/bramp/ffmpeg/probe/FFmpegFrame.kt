@@ -1,5 +1,6 @@
 package net.bramp.ffmpeg.probe
 
+import com.google.gson.annotations.SerializedName
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import net.bramp.ffmpeg.shared.CodecType
 
@@ -8,21 +9,37 @@ import net.bramp.ffmpeg.shared.CodecType
   justification = "POJO objects where the fields are populated by gson",
 )
 data class FFmpegFrame(
-  val media_type: CodecType? = null,
-  val stream_index: Int = 0,
-  val key_frame: Int = 0,
-  val pkt_pts: Long = 0,
-  val pkt_pts_time: Double = 0.0,
-  val pkt_dts: Long = 0,
-  val pkt_dts_time: Double = 0.0,
-  val best_effort_timestamp: Long = 0,
-  val best_effort_timestamp_time: Float = 0f,
-  val pkt_duration: Long = 0,
-  val pkt_duration_time: Float = 0f,
-  val pkt_pos: Long = 0,
-  val pkt_size: Long = 0,
-  val sample_fmt: String? = null,
-  val nb_samples: Int = 0,
+  @SerializedName("media_type")
+  val mediaType: CodecType? = null,
+  @SerializedName("stream_index")
+  val streamIndex: Int = 0,
+  @SerializedName("key_frame")
+  val keyFrame: Int = 0,
+  @SerializedName("pkt_pts")
+  val pktPts: Long = 0,
+  @SerializedName("pkt_pts_time")
+  val pktPtsTime: Double = 0.0,
+  @SerializedName("pkt_dts")
+  val pktDts: Long = 0,
+  @SerializedName("pkt_dts_time")
+  val pktDtsTime: Double = 0.0,
+  @SerializedName("best_effort_timestamp")
+  val bestEffortTimestamp: Long = 0,
+  @SerializedName("best_effort_timestamp_time")
+  val bestEffortTimestampTime: Float = 0f,
+  @SerializedName("pkt_duration")
+  val pktDuration: Long = 0,
+  @SerializedName("pkt_duration_time")
+  val pktDurationTime: Float = 0f,
+  @SerializedName("pkt_pos")
+  val pktPos: Long = 0,
+  @SerializedName("pkt_size")
+  val pktSize: Long = 0,
+  @SerializedName("sample_fmt")
+  val sampleFmt: String? = null,
+  @SerializedName("nb_samples")
+  val nbSamples: Int = 0,
   val channels: Int = 0,
-  val channel_layout: String? = null,
+  @SerializedName("channel_layout")
+  val channelLayout: String? = null,
 ) : FFmpegFrameOrPacket

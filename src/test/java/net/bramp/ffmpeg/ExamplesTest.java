@@ -251,7 +251,7 @@ public class ExamplesTest {
   public void testExample9() throws IOException {
     FFmpegBuilder builder =
         new FFmpegBuilder()
-            .setVerbosity(FFmpegBuilder.Verbosity.DEBUG)
+            .setVerbosity(FFmpegBuilder.Verbosity.Debug)
             .setInput("input.mp3")
             .done()
             .overrideOutputFiles(true) // Override the output if it exists

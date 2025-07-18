@@ -5,6 +5,7 @@ import org.apache.commons.lang3.math.Fraction
 import java.io.EOFException
 import java.io.IOException
 import java.nio.charset.StandardCharsets
+import java.util.Locale
 import java.util.TreeMap
 
 /** A video or audio frame  */
@@ -20,29 +21,29 @@ class Frame {
   private fun readMetaData(input: NutDataInputStream): Map<String, Any> {
     val data: MutableMap<String, Any> = TreeMap()
     val count = input.readVarLong()
-    for(i in 0 until count) {
+    repeat(count.toInt()) {
       val name = String(input.readVarArray(), StandardCharsets.UTF_8)
       val type = input.readSignedVarInt()
       val value: Any
-      if (type == -1L) {
+      if(type == -1L) {
         value = String(input.readVarArray(), StandardCharsets.UTF_8)
       }
-      else if (type == -2L) {
+      else if(type == -2L) {
         val k = String(input.readVarArray(), StandardCharsets.UTF_8)
         val v = String(input.readVarArray(), StandardCharsets.UTF_8)
         value = "$k=$v" // TODO Change this some how
       }
-      else if (type == -3L) {
+      else if(type == -3L) {
         value = input.readSignedVarInt()
       }
-      else if (type == -4L) {
+      else if(type == -4L) {
         /*
          * t (v coded universal timestamp) tmp v id= tmp % time_base_count value= (tmp /
          * time_base_count) * timeBase[id]
          */
         value = input.readVarLong() // TODO Convert to timestamp
       }
-      else if (type < -4) {
+      else if(type < -4) {
         val denominator = -type - 4
         val numerator = input.readSignedVarInt()
         value = Fraction.getFraction(numerator.toInt(), denominator.toInt())
@@ -55,6 +56,7 @@ class Frame {
     return data
   }
 
+  @Suppress("ThrowsCount")
   @Throws(IOException::class)
   fun read(nut: NutReader, input: NutDataInputStream, code: Int) {
     if(code == 'N'.code) {
@@ -120,7 +122,7 @@ class Frame {
     if(flags and FLAG_RESERVED == FLAG_RESERVED) {
       frameRes = input.readVarInt()
     }
-    for(i in 0 until frameRes) {
+    repeat(frameRes) {
       input.readVarLong() // Discard
     }
     if(flags and FLAG_CHECKSUM == FLAG_CHECKSUM) {
@@ -161,7 +163,7 @@ class Frame {
   override fun toString(): String = MoreObjects.toStringHelper(this)
     .add("id", stream.header.id)
     .add("pts", pts)
-    .add("data", String.format("(%d bytes)", data.size))
+    .add("data", String.format(Locale.ROOT, "(%d bytes)", data.size))
     .toString()
 
   companion object {

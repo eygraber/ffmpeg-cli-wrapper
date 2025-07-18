@@ -9,7 +9,7 @@ abstract class AbstractFFmpegInputBuilder<T : AbstractFFmpegInputBuilder<T>> :
 
   val probeResult: FFmpegProbeResult?
 
-  private var readAtNativeFrameRate: Boolean = false
+  private var isReadAtNativeFrameRate: Boolean = false
 
   /**
    * Number of times input stream shall be looped. Loop 0 means no loop, loop -1 means infinite
@@ -28,7 +28,7 @@ abstract class AbstractFFmpegInputBuilder<T : AbstractFFmpegInputBuilder<T>> :
   }
 
   fun readAtNativeFrameRate(): T {
-    this.readAtNativeFrameRate = true
+    this.isReadAtNativeFrameRate = true
     return getThis()
   }
 
@@ -49,7 +49,7 @@ abstract class AbstractFFmpegInputBuilder<T : AbstractFFmpegInputBuilder<T>> :
   override fun buildOptions(): EncodingOptions? = null
 
   override fun addGlobalFlags(parent: FFmpegBuilder, args: ImmutableList.Builder<String>) {
-    if(this.readAtNativeFrameRate) {
+    if(this.isReadAtNativeFrameRate) {
       args.add("-re")
     }
 

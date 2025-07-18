@@ -19,13 +19,13 @@ class SinglePassFFmpegJob(
   }
 
   override fun run() {
-    state = State.RUNNING
+    state = State.Running
     try {
       ffmpeg.runWithBuilder(builder, listener)
-      state = State.FINISHED
+      state = State.Finished
     }
     catch(t: Throwable) {
-      state = State.FAILED
+      state = State.Failed
       Throwables.throwIfUnchecked(t)
       throw RuntimeException(t)
     }

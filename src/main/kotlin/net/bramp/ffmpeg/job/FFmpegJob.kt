@@ -11,11 +11,11 @@ import net.bramp.ffmpeg.progress.ProgressListener
  */
 abstract class FFmpegJob(val ffmpeg: FFmpeg, val listener: ProgressListener?) : Runnable {
   enum class State {
-    WAITING,
-    RUNNING,
-    FINISHED,
-    FAILED,
+    Waiting,
+    Running,
+    Finished,
+    Failed,
   }
 
-  var state: State = State.WAITING
+  var state: State = State.Waiting
 }

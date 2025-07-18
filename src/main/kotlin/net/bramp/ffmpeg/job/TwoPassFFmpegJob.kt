@@ -38,22 +38,22 @@ class TwoPassFFmpegJob(
   }
 
   override fun run() {
-    state = State.RUNNING
+    state = State.Running
     try {
       try {
         // Two pass
-        val override = builder.overrideOutputFiles
+        val shouldOverride = builder.overrideOutputFiles
         val b1 = builder.setPass(1).overrideOutputFiles(true)
         ffmpeg.runWithBuilder(b1, listener)
-        val b2 = builder.setPass(2).overrideOutputFiles(override)
+        val b2 = builder.setPass(2).overrideOutputFiles(shouldOverride)
         ffmpeg.runWithBuilder(b2, listener)
       } finally {
         deletePassLog()
       }
-      state = State.FINISHED
+      state = State.Finished
     }
     catch(t: Throwable) {
-      state = State.FAILED
+      state = State.Failed
       Throwables.throwIfUnchecked(t)
       throw RuntimeException(t)
     }

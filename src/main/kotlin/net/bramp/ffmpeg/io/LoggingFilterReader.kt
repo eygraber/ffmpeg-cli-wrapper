@@ -29,7 +29,7 @@ class LoggingFilterReader(input: Reader?, val logger: Logger) : FilterReader(inp
     }
 
     // If end of stream, or contains new line
-    if(ret == -1 || indexOf(cbuf, LOG_CHAR, off, ret) != -1) {
+    if(ret == -1 || indexOf(array = cbuf, c = LOG_CHAR, off = off, len = ret) != -1) {
       // BUG this will log a unfinished line, if a string such as
       // "line \n unfinished" is read.
       log()

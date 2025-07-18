@@ -49,7 +49,7 @@ class LowercaseEnumTypeAdapterFactory : TypeAdapterFactory {
 
   @CheckReturnValue
   override fun <T> create(gson: Gson, type: TypeToken<T>): TypeAdapter<T>? {
-    val rawType = type.rawType as Class<T>
+    val rawType = type.rawType as? Class<T> ?: return null
     if(!rawType.isEnum) {
       return null
     }
@@ -57,7 +57,7 @@ class LowercaseEnumTypeAdapterFactory : TypeAdapterFactory {
     // Setup mapping of consts
     val lowercaseToEnum = mutableMapOf<String, T>()
     for(constant in rawType.enumConstants) {
-      lowercaseToEnum[toLowercase(constant as Any)] = constant
+      lowercaseToEnum[toLowercase(requireNotNull(constant) as Any)] = constant
     }
 
     return MyTypeAdapter(lowercaseToEnum)

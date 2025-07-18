@@ -27,9 +27,9 @@ class MetadataSpecifier private constructor(val spec: String) {
 
     fun stream(index: Int): MetadataSpecifier = MetadataSpecifier("s", StreamSpecifier.stream(index))
 
-    fun stream(type: StreamSpecifierType?): MetadataSpecifier = MetadataSpecifier("s", StreamSpecifier.stream(type))
+    fun stream(type: StreamSpecifierType): MetadataSpecifier = MetadataSpecifier("s", StreamSpecifier.stream(type))
 
-    fun stream(streamType: StreamSpecifierType?, streamIndex: Int): MetadataSpecifier = MetadataSpecifier(
+    fun stream(streamType: StreamSpecifierType, streamIndex: Int): MetadataSpecifier = MetadataSpecifier(
       "s",
       StreamSpecifier.stream(streamType, streamIndex),
     )

@@ -21,7 +21,7 @@ class StreamSpecifier private constructor(private val spec: String) {
      * @param type The stream type
      * @return A new StreamSpecifier
      */
-    fun stream(type: StreamSpecifierType?): StreamSpecifier = StreamSpecifier(type.toString())
+    fun stream(type: StreamSpecifierType): StreamSpecifier = StreamSpecifier(type.toString())
 
     /**
      * Matches the stream number stream_index of this type.
@@ -30,32 +30,32 @@ class StreamSpecifier private constructor(private val spec: String) {
      * @param index The stream index
      * @return A new StreamSpecifier
      */
-    fun stream(type: StreamSpecifierType?, index: Int): StreamSpecifier = StreamSpecifier(type.toString() + ":" + index)
+    fun stream(type: StreamSpecifierType, index: Int): StreamSpecifier = StreamSpecifier("$type:$index")
 
     /**
      * Matches all streams in the program.
      *
-     * @param program_id The program id
+     * @param programId The program id
      * @return A new StreamSpecifier
      */
-    fun program(program_id: Int): StreamSpecifier = StreamSpecifier("p:$program_id")
+    fun program(programId: Int): StreamSpecifier = StreamSpecifier("p:$programId")
 
     /**
      * Matches the stream with number stream_index in the program with the id program_id.
      *
-     * @param program_id The program id
-     * @param stream_index The stream index
+     * @param programId The program id
+     * @param streamIndex The stream index
      * @return A new StreamSpecifier
      */
-    fun program(program_id: Int, stream_index: Int): StreamSpecifier = StreamSpecifier("p:$program_id:$stream_index")
+    fun program(programId: Int, streamIndex: Int): StreamSpecifier = StreamSpecifier("p:$programId:$streamIndex")
 
     /**
      * Match the stream by stream id (e.g. PID in MPEG-TS container).
      *
-     * @param stream_id The stream id
+     * @param streamId The stream id
      * @return A new StreamSpecifier
      */
-    fun id(stream_id: Int): StreamSpecifier = StreamSpecifier("i:$stream_id")
+    fun id(streamId: Int): StreamSpecifier = StreamSpecifier("i:$streamId")
 
     /**
      * Matches all streams with the given metadata tag.

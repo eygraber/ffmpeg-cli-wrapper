@@ -35,17 +35,12 @@ abstract class FFcommon protected constructor(
   /** Process error stream */
   var processErrorStream: Appendable = System.err
 
-  // This secondary constructor is to maintain closer compatibility if FFcommon("path") was called from Java elsewhere.
-  // However, the primary constructor with default parameter for runFunc is more idiomatic Kotlin.
-  constructor(path: String) : this(path, RunProcessFunction()) {}
+  protected fun wrapInReader(inputStream: InputStream): BufferedReader =
+    BufferedReader(InputStreamReader(inputStream, StandardCharsets.UTF_8))
 
-  private fun _wrapInReader(inputStream: InputStream): BufferedReader = BufferedReader(
-    InputStreamReader(inputStream, StandardCharsets.UTF_8),
-  )
+  protected fun wrapInReader(p: Process): BufferedReader = wrapInReader(p.inputStream)
 
-  protected fun wrapInReader(p: Process): BufferedReader = _wrapInReader(p.inputStream)
-
-  protected fun wrapErrorInReader(p: Process): BufferedReader = _wrapInReader(p.errorStream)
+  protected fun wrapErrorInReader(p: Process): BufferedReader = wrapInReader(p.errorStream)
 
   @Throws(IOException::class)
   protected fun throwOnError(p: Process) {
@@ -61,6 +56,7 @@ abstract class FFcommon protected constructor(
   }
 
   @Throws(IOException::class)
+  @Suppress("CanBeNonNullable")
   protected fun throwOnError(p: Process, result: FFmpegProbeResult?) {
     try {
       if (ProcessUtils.waitForWithTimeout(p, 1, TimeUnit.SECONDS) != 0) {
@@ -101,8 +97,10 @@ abstract class FFcommon protected constructor(
         p.destroy()
       }
     }
-    // The version property is now guaranteed to be non-null if this point is reached without exception.
-    return this.version!!
+
+    return requireNotNull(this.version) {
+      "The version property should be guaranteed to be non-null if this point is reached without exception."
+    }
   }
 
   /**

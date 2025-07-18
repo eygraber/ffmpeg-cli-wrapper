@@ -18,7 +18,7 @@ import org.modelmapper.convention.NameTokenizers
  * @author bramp
  */
 object Mapper {
-  private val mapper = newModelMapper()
+  private val modelMapper = newModelMapper()
 
   private fun <S, D> createTypeMap(
     mapper: ModelMapper,
@@ -31,17 +31,32 @@ object Mapper {
     .setPropertyCondition(config.propertyCondition)
 
   private fun newModelMapper(): ModelMapper {
-    val mapper = ModelMapper()
-    val config = mapper
+    val modelMapper = ModelMapper()
+    val config = modelMapper
       .configuration
       .copy()
       .setFieldMatchingEnabled(true)
       .setPropertyCondition(notDefault)
       .setSourceNameTokenizer(NameTokenizers.UNDERSCORE)
-    createTypeMap(mapper, MainEncodingOptions::class.java, FFmpegOutputBuilder::class.java, config)
-    createTypeMap(mapper, AudioWrapper::class.java, FFmpegOutputBuilder::class.java, config)
-    createTypeMap(mapper, VideoWrapper::class.java, FFmpegOutputBuilder::class.java, config)
-    return mapper
+    createTypeMap(
+      mapper = modelMapper,
+      sourceType = MainEncodingOptions::class.java,
+      destinationType = FFmpegOutputBuilder::class.java,
+      config = config,
+    )
+    createTypeMap(
+      mapper = modelMapper,
+      sourceType = AudioWrapper::class.java,
+      destinationType = FFmpegOutputBuilder::class.java,
+      config = config,
+    )
+    createTypeMap(
+      mapper = modelMapper,
+      sourceType = VideoWrapper::class.java,
+      destinationType = FFmpegOutputBuilder::class.java,
+      config = config,
+    )
+    return modelMapper
   }
 
   /** Simple wrapper object, to inject the word "audio" in the property name  */
@@ -51,15 +66,15 @@ object Mapper {
   internal class VideoWrapper(val video: VideoEncodingOptions)
 
   fun <T : AbstractFFmpegStreamBuilder<*>> map(opts: MainEncodingOptions, dest: T) {
-    mapper.map(opts, dest)
+    modelMapper.map(opts, dest)
   }
 
   fun <T : AbstractFFmpegStreamBuilder<*>> map(opts: AudioEncodingOptions, dest: T) {
-    mapper.map(AudioWrapper(opts), dest)
+    modelMapper.map(AudioWrapper(opts), dest)
   }
 
   fun <T : AbstractFFmpegStreamBuilder<*>> map(opts: VideoEncodingOptions, dest: T) {
-    mapper.map(VideoWrapper(opts), dest)
+    modelMapper.map(VideoWrapper(opts), dest)
   }
 
   fun <T : AbstractFFmpegStreamBuilder<*>> map(opts: EncodingOptions, dest: T) {

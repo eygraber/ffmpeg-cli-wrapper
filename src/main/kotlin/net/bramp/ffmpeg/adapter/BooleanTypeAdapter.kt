@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException
 import java.lang.reflect.Type
 
 class BooleanTypeAdapter : JsonDeserializer<Boolean> {
+  @Suppress("ReturnCount")
   @Throws(JsonParseException::class)
   override fun deserialize(
     json: JsonElement?,

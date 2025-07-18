@@ -16,13 +16,12 @@ import java.io.IOException
 @Immutable
 class FractionAdapter(
   /** If set, 0/0 returns this value, instead of throwing a ArithmeticException */
-  @SuppressWarnings("Immutable") // TODO Remove when https://github.com/google/error-prone/issues/512 is fixed
   private val zeroByZero: Fraction = Fraction.ZERO,
   /** If set, N/0 returns this value, instead of throwing a ArithmeticException */
-  @SuppressWarnings("Immutable") // TODO Remove when https://github.com/google/error-prone/issues/512 is fixed
   private val divideByZero: Fraction = Fraction.ZERO,
 ) : TypeAdapter<Fraction>() {
 
+  @Suppress("ReturnCount")
   @Throws(IOException::class)
   override fun read(reader: JsonReader): Fraction? {
     val next = reader.peek()

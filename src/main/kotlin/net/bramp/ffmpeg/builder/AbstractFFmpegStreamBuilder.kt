@@ -14,8 +14,8 @@ import org.apache.commons.lang3.math.Fraction
 import java.net.URI
 import java.util.concurrent.TimeUnit
 
+@Suppress("VariableNaming", "BooleanPropertyNaming")
 abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
-
   val parent: FFmpegBuilder?
 
   @JvmField
@@ -60,7 +60,7 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   val extra_args: MutableList<String> = ArrayList()
 
   @JvmField
-  var strict: Strict = Strict.NORMAL
+  var strict: Strict = Strict.Normal
 
   @JvmField
   var targetSize: Long = 0L
@@ -74,7 +74,7 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
 
   protected constructor(parent: FFmpegBuilder, filename: String) {
     this.parent = Preconditions.checkNotNull(parent)
-    this.filename = net.bramp.ffmpeg.Preconditions.checkNotEmpty(filename, "filename must not be empty")
+    this.filename = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(filename, "filename must not be empty")
   }
 
   protected constructor(parent: FFmpegBuilder, uri: URI) {
@@ -120,17 +120,18 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   }
 
   fun setPresetFilename(presetFilename: String): T {
-    this.presetFilename = net.bramp.ffmpeg.Preconditions.checkNotEmpty(presetFilename, "file preset must not be empty")
+    this.presetFilename =
+      net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(presetFilename, "file preset must not be empty")
     return getThis()
   }
 
   fun setPreset(preset: String): T {
-    this.preset = net.bramp.ffmpeg.Preconditions.checkNotEmpty(preset, "preset must not be empty")
+    this.preset = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(preset, "preset must not be empty")
     return getThis()
   }
 
   fun setFilename(filename: String): T {
-    this.filename = net.bramp.ffmpeg.Preconditions.checkNotEmpty(filename, "filename must not be empty")
+    this.filename = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(filename, "filename must not be empty")
     return getThis()
   }
 
@@ -140,13 +141,13 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   }
 
   open fun setFormat(format: String): T {
-    this.format = net.bramp.ffmpeg.Preconditions.checkNotEmpty(format, "format must not be empty")
+    this.format = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(format, "format must not be empty")
     return getThis()
   }
 
   fun setVideoCodec(codec: String): T {
     this.video_enabled = true
-    this.video_codec = net.bramp.ffmpeg.Preconditions.checkNotEmpty(codec, "codec must not be empty")
+    this.video_codec = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(codec, "codec must not be empty")
     return getThis()
   }
 
@@ -158,19 +159,20 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
 
   fun setVideoMovFlags(movflags: String): T {
     this.video_enabled = true
-    this.video_movflags = net.bramp.ffmpeg.Preconditions.checkNotEmpty(movflags, "movflags must not be empty")
+    this.video_movflags =
+      net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(movflags, "movflags must not be empty")
     return getThis()
   }
 
-  fun setVideoFrameRate(frame_rate: Fraction): T {
+  fun setVideoFrameRate(frameRate: Fraction): T {
     this.video_enabled = true
-    this.video_frame_rate = Preconditions.checkNotNull(frame_rate)
+    this.video_frame_rate = Preconditions.checkNotNull(frameRate)
     return getThis()
   }
 
   fun setVideoFrameRate(frames: Int, per: Int): T = setVideoFrameRate(Fraction.getFraction(frames, per))
 
-  fun setVideoFrameRate(frame_rate: Double): T = setVideoFrameRate(Fraction.getFraction(frame_rate))
+  fun setVideoFrameRate(frameRate: Double): T = setVideoFrameRate(Fraction.getFraction(frameRate))
 
   fun setFrames(frames: Int): T {
     this.video_enabled = true
@@ -204,19 +206,21 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
 
   fun setVideoResolution(abbreviation: String): T {
     this.video_enabled = true
-    this.video_size = net.bramp.ffmpeg.Preconditions.checkNotEmpty(abbreviation, "video abbreviation must not be empty")
+    this.video_size =
+      net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(abbreviation, "video abbreviation must not be empty")
     return getThis()
   }
 
   fun setVideoPixelFormat(format: String): T {
     this.video_enabled = true
-    this.video_pixel_format = net.bramp.ffmpeg.Preconditions.checkNotEmpty(format, "format must not be empty")
+    this.video_pixel_format =
+      net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(format, "format must not be empty")
     return getThis()
   }
 
   fun addMetaTag(key: String, value: String): T {
     MetadataSpecifier.checkValidKey(key)
-    net.bramp.ffmpeg.Preconditions.checkNotEmpty(value, "value must not be empty")
+    net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(value, "value must not be empty")
     meta_tags.add("-metadata")
     meta_tags.add("$key=$value")
     return getThis()
@@ -224,7 +228,7 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
 
   fun addMetaTag(spec: MetadataSpecifier, key: String, value: String): T {
     MetadataSpecifier.checkValidKey(key)
-    net.bramp.ffmpeg.Preconditions.checkNotEmpty(value, "value must not be empty")
+    net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(value, "value must not be empty")
     meta_tags.add("-metadata:${spec.spec}")
     meta_tags.add("$key=$value")
     return getThis()
@@ -232,13 +236,13 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
 
   fun setAudioCodec(codec: String): T {
     this.audio_enabled = true
-    this.audio_codec = net.bramp.ffmpeg.Preconditions.checkNotEmpty(codec, "codec must not be empty")
+    this.audio_codec = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(codec, "codec must not be empty")
     return getThis()
   }
 
   fun setSubtitleCodec(codec: String): T {
     this.subtitle_enabled = true
-    this.subtitle_codec = net.bramp.ffmpeg.Preconditions.checkNotEmpty(codec, "codec must not be empty")
+    this.subtitle_codec = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(codec, "codec must not be empty")
     return getThis()
   }
 
@@ -249,10 +253,10 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
     return getThis()
   }
 
-  fun setAudioSampleRate(sample_rate: Int): T {
-    require(sample_rate > 0) { "sample rate must be positive" }
+  fun setAudioSampleRate(sampleRate: Int): T {
+    require(sampleRate > 0) { "sample rate must be positive" }
     this.audio_enabled = true
-    this.audio_sample_rate = sample_rate
+    this.audio_sample_rate = sampleRate
     return getThis()
   }
 
@@ -285,19 +289,21 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
 
   fun setAudioPreset(preset: String): T {
     this.audio_enabled = true
-    this.audio_preset = net.bramp.ffmpeg.Preconditions.checkNotEmpty(preset, "audio preset must not be empty")
+    this.audio_preset =
+      net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(preset, "audio preset must not be empty")
     return getThis()
   }
 
   fun setSubtitlePreset(preset: String): T {
     this.subtitle_enabled = true
-    this.subtitle_preset = net.bramp.ffmpeg.Preconditions.checkNotEmpty(preset, "subtitle preset must not be empty")
+    this.subtitle_preset =
+      net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(preset, "subtitle preset must not be empty")
     return getThis()
   }
 
   fun addExtraArgs(vararg values: String): T {
     require(values.isNotEmpty()) { "one or more values must be supplied" }
-    net.bramp.ffmpeg.Preconditions.checkNotEmpty(values[0], "first extra arg may not be empty")
+    net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(values[0], "first extra arg may not be empty")
 
     for(value in values) {
       extra_args.add(Preconditions.checkNotNull(value))
@@ -357,7 +363,7 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   protected abstract fun addSourceTarget(pass: Int, args: ImmutableList.Builder<String>)
 
   protected open fun addGlobalFlags(parent: FFmpegBuilder, args: ImmutableList.Builder<String>) {
-    if(strict != Strict.NORMAL) {
+    if(strict != Strict.Normal) {
       args.add("-strict", strict.toString().lowercase())
     }
     if(!Strings.isNullOrEmpty(format)) {
@@ -403,11 +409,13 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
     if(!Strings.isNullOrEmpty(video_movflags)) {
       args.add("-movflags", video_movflags)
     }
-    if(video_size != null) {
+
+    val videoSize = video_size
+    if(videoSize != null) {
       require(video_width == 0 && video_height == 0) {
         "Can not specific width or height, as well as an abbreviatied video size"
       }
-      args.add("-s", video_size)
+      args.add("-s", videoSize)
     }
     else if(video_width != 0 && video_height != 0) {
       args.add("-s", "${video_width}x${video_height}")

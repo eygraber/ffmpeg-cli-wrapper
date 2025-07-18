@@ -11,12 +11,13 @@ import java.util.zip.CRC32
  */
 class CRC32InputStream(input: InputStream?) : FilterInputStream(input) {
   private val crc = CRC32()
-  fun resetCrc() {
-    crc.reset()
-  }
 
   val value: Long
     get() = crc.value
+
+  fun resetCrc() {
+    crc.reset()
+  }
 
   @Throws(IOException::class)
   override fun read(): Int {
@@ -52,11 +53,11 @@ class CRC32InputStream(input: InputStream?) : FilterInputStream(input) {
   }
 
   @Synchronized
-  override fun mark(readlimit: Int): Unit = throw UnsupportedOperationException("mark not supported")
+  override fun mark(readlimit: Int) = throw UnsupportedOperationException("mark not supported")
 
   @Synchronized
   @Throws(IOException::class)
-  override fun reset(): Unit = throw UnsupportedOperationException("reset not supported")
+  override fun reset() = throw UnsupportedOperationException("reset not supported")
 
   override fun markSupported(): Boolean = false
 }

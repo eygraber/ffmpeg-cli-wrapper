@@ -1,9 +1,8 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.FFmpegUtils.toTimecode
-import net.bramp.ffmpeg.Preconditions.checkNotEmpty
+import net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank
 import java.util.concurrent.TimeUnit
 import javax.annotation.CheckReturnValue
 
@@ -22,11 +21,7 @@ class FFmpegHlsOutputBuilder(parent: FFmpegBuilder, filename: String) :
   }
 
   override fun setFormat(format: String): FFmpegHlsOutputBuilder {
-    if(format != "hls") {
-      throw IllegalArgumentException(
-        "Format cannot be set to anything else except 'hls' for FFmpegHlsOutputBuilder",
-      )
-    }
+    require(format == "hls") { "Format cannot be set to anything else except 'hls' for FFmpegHlsOutputBuilder" }
     super.setFormat(format)
     return this
   }
@@ -52,7 +47,7 @@ class FFmpegHlsOutputBuilder(parent: FFmpegBuilder, filename: String) :
    * @return [FFmpegHlsOutputBuilder]
    */
   fun setHlsSegmentFileName(filename: String?): FFmpegHlsOutputBuilder {
-    hlsSegmentFilename = checkNotEmpty(filename, "filename must not be empty")
+    hlsSegmentFilename = checkNotNullEmptyOrBlank(filename, "filename must not be empty")
     return this
   }
 
@@ -94,25 +89,29 @@ class FFmpegHlsOutputBuilder(parent: FFmpegBuilder, filename: String) :
    * @return [FFmpegHlsOutputBuilder]
    */
   fun setHlsBaseUrl(baseurl: String?): FFmpegHlsOutputBuilder {
-    hlsBaseUrl = checkNotEmpty(baseurl, "baseurl must not be empty")
+    hlsBaseUrl = checkNotNullEmptyOrBlank(baseurl, "baseurl must not be empty")
     return this
   }
 
   override fun addFormatArgs(args: ImmutableList.Builder<String>) {
     super.addFormatArgs(args)
-    if(hlsTime != null) {
-      args.add("-hls_time", toTimecode(hlsTime!!, TimeUnit.MILLISECONDS))
+    hlsTime?.let {
+      args.add("-hls_time", toTimecode(it, TimeUnit.MILLISECONDS))
     }
-    if(!Strings.isNullOrEmpty(hlsSegmentFilename)) {
+
+    if(!hlsSegmentFilename.isNullOrEmpty()) {
       args.add("-hls_segment_filename", hlsSegmentFilename)
     }
-    if(hlsInitTime != null) {
-      args.add("-hls_init_time", toTimecode(hlsInitTime!!, TimeUnit.MILLISECONDS))
+
+    hlsInitTime?.let {
+      args.add("-hls_init_time", toTimecode(it, TimeUnit.MILLISECONDS))
     }
-    if(hlsListSize != null) {
-      args.add("-hls_list_size", hlsListSize.toString())
+
+    hlsListSize?.let {
+      args.add("-hls_list_size", it.toString())
     }
-    if(!Strings.isNullOrEmpty(hlsBaseUrl)) {
+
+    if(!hlsBaseUrl.isNullOrEmpty()) {
       args.add("-hls_base_url", hlsBaseUrl)
     }
   }

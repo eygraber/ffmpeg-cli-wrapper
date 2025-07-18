@@ -3,6 +3,7 @@ package net.bramp.ffmpeg.nut
 import com.google.common.base.MoreObjects
 import org.apache.commons.lang3.math.Fraction
 import java.io.IOException
+import java.util.Locale
 
 class MainHeaderPacket : Packet() {
   var version: Long = 0
@@ -12,39 +13,39 @@ class MainHeaderPacket : Packet() {
   lateinit var timeBase: Array<Fraction>
   var flags: Long = 0
 
-  val frameCodes: MutableList<FrameCode> = ArrayList<FrameCode>()
-  val elision: MutableList<ByteArray> = ArrayList<ByteArray>()
+  val frameCodes: MutableList<FrameCode> = ArrayList()
+  val elision: MutableList<ByteArray> = ArrayList()
 
   @Throws(IOException::class)
-  override fun readBody(`in`: NutDataInputStream) {
+  override fun readBody(dataInputStream: NutDataInputStream) {
     frameCodes.clear()
 
-    version = `in`.readVarLong()
+    version = dataInputStream.readVarLong()
     if(version > 3) {
-      minorVersion = `in`.readVarLong()
+      minorVersion = dataInputStream.readVarLong()
     }
 
-    streamCount = `in`.readVarInt()
+    streamCount = dataInputStream.readVarInt()
     if(streamCount >= 250) {
-      throw IOException("Illegal stream count " + streamCount + " must be < 250")
+      throw IOException("Illegal stream count $streamCount must be < 250")
     }
 
-    maxDistance = `in`.readVarLong()
-    if(maxDistance > 65536) {
-      maxDistance = 65536
+    maxDistance = dataInputStream.readVarLong()
+    if(maxDistance > 65_536) {
+      maxDistance = 65_536
     }
 
-    val time_base_count = `in`.readVarInt()
-    timeBase = Array(time_base_count) {
-      val time_base_num = `in`.readVarLong().toInt()
-      val time_base_denom = `in`.readVarLong().toInt()
-      Fraction.getFraction(time_base_num, time_base_denom)
+    val timeBaseCount = dataInputStream.readVarInt()
+    timeBase = Array(timeBaseCount) {
+      val timeBaseNum = dataInputStream.readVarLong().toInt()
+      val timeBaseDenom = dataInputStream.readVarLong().toInt()
+      Fraction.getFraction(timeBaseNum, timeBaseDenom)
     }
 
     var pts: Long = 0
     var mul = 1
-    var stream_id = 0
-    var header_idx = 0
+    var streamId = 0
+    var headerIdx = 0
 
     var match = 1L - (1L shl 62)
     var size: Int
@@ -53,79 +54,80 @@ class MainHeaderPacket : Packet() {
 
     var i = 0
     while(i < 256) {
-      val flags = `in`.readVarLong()
-      val fields = `in`.readVarLong()
-      if (fields > 0) {
-        pts = `in`.readSignedVarInt()
+      val flags = dataInputStream.readVarLong()
+      val fields = dataInputStream.readVarLong()
+      if(fields > 0) {
+        pts = dataInputStream.readSignedVarInt()
       }
-      if (fields > 1) {
-        mul = `in`.readVarInt()
-        if (mul >= 16384) {
-          throw IOException("Illegal mul value " + mul + " must be < 16384")
+      if(fields > 1) {
+        mul = dataInputStream.readVarInt()
+        if(mul >= 16_384) {
+          throw IOException("Illegal mul value $mul must be < 16384")
         }
       }
-      if (fields > 2) {
-        stream_id = `in`.readVarInt()
-        if (stream_id >= streamCount) {
+      if(fields > 2) {
+        streamId = dataInputStream.readVarInt()
+        if(streamId >= streamCount) {
           throw IOException(
-            "Illegal stream id value " + stream_id + " must be < " + streamCount,
+            "Illegal stream id value $streamId must be < $streamCount",
           )
         }
       }
-      if (fields > 3) {
-        size = `in`.readVarInt()
+      size = if(fields > 3) {
+        dataInputStream.readVarInt()
       }
       else {
-        size = 0
+        0
       }
-      if (fields > 4) {
-        reserved = `in`.readVarInt()
-        if (reserved >= 256) {
-          throw IOException("Illegal reserved frame count " + reserved + " must be < 256")
+      if(fields > 4) {
+        reserved = dataInputStream.readVarInt()
+        if(reserved >= 256) {
+          throw IOException("Illegal reserved frame count $reserved must be < 256")
         }
       }
       else {
         reserved = 0
       }
-      if (fields > 5) {
-        count = `in`.readVarLong()
+      count = if(fields > 5) {
+        dataInputStream.readVarLong()
       }
       else {
-        count = mul.toLong() - size
+        mul.toLong() - size
       }
-      if (fields > 6) {
-        match = `in`.readSignedVarInt()
+      if(fields > 6) {
+        match = dataInputStream.readSignedVarInt()
       }
-      if (fields > 7) {
-        header_idx = `in`.readVarInt()
+      if(fields > 7) {
+        headerIdx = dataInputStream.readVarInt()
       }
-      for (j in 8..<fields) {
-        `in`.readVarLong() // Throw away
+      repeat(fields.toInt() - 8) {
+        dataInputStream.readVarLong() // Throw away
       }
 
-      if (stream_id >= streamCount) {
+      if(streamId >= streamCount) {
         throw IOException(
-          String.format("Invalid stream value %d, must be < %d", stream_id, streamCount),
+          String.format(Locale.ROOT, "Invalid stream value %d, must be < %d", streamId, streamCount),
         )
       }
 
-      if (count <= 0 || (count > 256 - i - (if (i <= 'N'.code) 1 else 0))) {
+      if(count <= 0 || count > 256 - i - (if(i <= 'N'.code) 1 else 0)) {
         throw IOException(
           String.format(
+            Locale.ROOT,
             "Invalid count value %d, must be > 0 && < %d",
             count,
-            256 - i - (if (i <= 'N'.code) 1 else 0),
+            256 - i - if(i <= 'N'.code) 1 else 0,
           ),
         )
       }
 
       var j = 0
-      while (j < count && i < 256) {
+      while(j < count && i < 256) {
         val fc = FrameCode()
         frameCodes.add(fc)
 
         // Skip 'N' because that is an illegal frame code
-        if (i == 'N'.code) {
+        if(i == 'N'.code) {
           fc.flags = Frame.FLAG_INVALID
           j--
           j++
@@ -134,15 +136,15 @@ class MainHeaderPacket : Packet() {
         }
 
         fc.flags = flags
-        fc.streamId = stream_id
+        fc.streamId = streamId
         fc.dataSizeMul = mul
         fc.dataSizeLsb = size + j
         fc.ptsDelta = pts
         fc.reservedCount = reserved
         fc.matchTimeDelta = match
-        fc.headerIdx = header_idx
+        fc.headerIdx = headerIdx
 
-        if (fc.dataSizeLsb >= 16384) {
+        if(fc.dataSizeLsb >= 16_384) {
           throw IOException("Illegal dataSizeLsb value " + fc.dataSizeLsb + " must be < 16384")
         }
         j++
@@ -151,20 +153,20 @@ class MainHeaderPacket : Packet() {
     }
 
     var remain = 1024
-    if(`in`.offset() < (header.end - 4)) {
-      val header_count = `in`.readVarInt()
-      if(header_count >= 128) {
-        throw IOException("Invalid header_count value $header_count must be < 128")
+    if(dataInputStream.offset() < header.end - 4) {
+      val headerCount = dataInputStream.readVarInt()
+      if(headerCount >= 128) {
+        throw IOException("Invalid header_count value $headerCount must be < 128")
       }
 
       elision.clear()
       elision.add(ByteArray(0)) // First elision is always empty
-      for(i in 1..<header_count) {
-        val e = `in`.readVarArray()
-        if (e.isEmpty() || e.size >= 256) {
+      repeat(headerCount) {
+        val e = dataInputStream.readVarArray()
+        if(e.isEmpty() || e.size >= 256) {
           throw IOException("Invalid elision length " + e.size + " must be > 0 and < 256")
         }
-        if (e.size > remain) {
+        if(e.size > remain) {
           throw IOException(
             "Invalid elision length value " + e.size + " must be <= " + remain,
           )
@@ -174,12 +176,12 @@ class MainHeaderPacket : Packet() {
       }
     }
 
-    if(version > 3 && (`in`.offset() < (header.end - 4))) {
-      flags = `in`.readVarLong()
+    if(version > 3 && dataInputStream.offset() < header.end - 4) {
+      flags = dataInputStream.readVarLong()
     }
   }
 
-  public override fun toString(): String = MoreObjects.toStringHelper(this)
+  override fun toString(): String = MoreObjects.toStringHelper(this)
     .add("header", header)
     .add("version", version)
     .add("minorVersion", minorVersion)

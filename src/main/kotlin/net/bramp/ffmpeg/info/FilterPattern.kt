@@ -44,11 +44,12 @@ data class FilterPattern(
 
       for(i in pattern.indices) {
         when (val c = pattern[i]) {
-          '|', 'N' -> {
-          }
-          'A' -> streams.add(CodecType.AUDIO)
-          'V' -> streams.add(CodecType.VIDEO)
-          else -> throw IllegalStateException("Unsupported character in filter pattern $c")
+          '|',
+          'N',
+          -> {}
+          'A' -> streams.add(CodecType.Audio)
+          'V' -> streams.add(CodecType.Video)
+          else -> check(false) { "Unsupported character in filter pattern $c" }
         }
       }
 

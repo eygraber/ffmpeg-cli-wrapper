@@ -12,10 +12,12 @@ class UdpProgressParser @JvmOverloads constructor(
   addr: InetAddress? = InetAddress.getLoopbackAddress(),
 ) : AbstractSocketProgressParser(listener) {
   private val socket: DatagramSocket = DatagramSocket(port, addr)
-  override val uri: URI
+
+  override val uri: URI = createUri("udp", socket.localAddress, socket.localPort)
+
+  override val threadName = "UdpProgressParser"
 
   init {
-    uri = createUri("udp", socket.localAddress, socket.localPort)
     socket.broadcast = false
     // this.socket.setSoTimeout(); // TODO Setup timeouts
   }
@@ -30,9 +32,6 @@ class UdpProgressParser @JvmOverloads constructor(
     socket.close()
     super.stop()
   }
-
-  override val threadName: String
-    get() = "UdpProgressParser"
 
   override fun getRunnable(startSignal: CountDownLatch): Runnable = UdpProgressParserRunnable(
     parser,

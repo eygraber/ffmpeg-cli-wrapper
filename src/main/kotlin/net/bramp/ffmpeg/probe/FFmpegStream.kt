@@ -1,5 +1,6 @@
 package net.bramp.ffmpeg.probe
 
+import com.google.gson.annotations.SerializedName
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import net.bramp.ffmpeg.shared.CodecType
 import org.apache.commons.lang3.math.Fraction
@@ -10,48 +11,77 @@ import org.apache.commons.lang3.math.Fraction
 )
 data class FFmpegStream(
   val index: Int = 0,
-  val codec_name: String = "",
-  val codec_long_name: String = "",
+  @SerializedName("codec_name")
+  val codecName: String = "",
+  @SerializedName("codec_long_name")
+  val codecLongName: String = "",
   val profile: String = "",
-  val codec_type: CodecType? = null,
-  val codec_time_base: Fraction? = null,
-  val codec_tag_string: String = "",
-  val codec_tag: String = "",
+  @SerializedName("codec_type")
+  val codecType: CodecType? = null,
+  @SerializedName("codec_time_base")
+  val codecTimeBase: Fraction? = null,
+  @SerializedName("codec_tag_string")
+  val codecTagString: String = "",
+  @SerializedName("codec_tag")
+  val codecTag: String = "",
   val width: Int = 0,
   val height: Int = 0,
-  val has_b_frames: Int = 0,
-  val sample_aspect_ratio: String? = null, // TODO Change to a Ratio/Fraction object
-  val display_aspect_ratio: String? = null,
-  val pix_fmt: String? = null,
+  @SerializedName("has_bframes")
+  val hasBFrames: Int = 0,
+  @SerializedName("sample_aspect_ratio")
+  val sampleAspectRatio: String? = null, // TODO Change to a Ratio/Fraction object
+  @SerializedName("display_aspect_ratio")
+  val displayAspectRatio: String? = null,
+  @SerializedName("pix_fmt")
+  val pixFmt: String? = null,
   val level: Int = 0,
-  val chroma_location: String? = null,
+  @SerializedName("chroma_location")
+  val chromaLocation: String? = null,
   val refs: Int = 0,
-  val is_avc: String? = null,
-  val nal_length_size: String? = null,
+  @Suppress("NonBooleanPropertyPrefixedWithIs")
+  @SerializedName("is_avc")
+  val isAvc: String? = null,
+  @SerializedName("nal_length_size")
+  val nalLengthSize: String? = null,
   val id: String = "",
-  val r_frame_rate: Fraction? = null,
-  val avg_frame_rate: Fraction? = null,
-  val time_base: Fraction? = null,
-  val start_pts: Long = 0,
-  val start_time: Double = 0.0,
-  val duration_ts: Long = 0,
+  @SerializedName("r_frame_rate")
+  val rFrameRate: Fraction? = null,
+  @SerializedName("avg_frame_rate")
+  val avgFrameRate: Fraction? = null,
+  @SerializedName("time_base")
+  val timeBase: Fraction? = null,
+  @SerializedName("start_pts")
+  val startPts: Long = 0,
+  @SerializedName("start_time")
+  val startTime: Double = 0.0,
+  @SerializedName("duration_ts")
+  val durationTs: Long = 0,
   val duration: Double = 0.0,
-  val bit_rate: Long = 0,
-  val max_bit_rate: Long = 0,
-  val bits_per_raw_sample: Int = 0,
-  val bits_per_sample: Int = 0,
-  val nb_frames: Long = 0,
-  val sample_fmt: String? = null,
-  val sample_rate: Int = 0,
+  @SerializedName("bit_rate")
+  val bitRate: Long = 0,
+  @SerializedName("max_bit_rate")
+  val maxBitRate: Long = 0,
+  @SerializedName("bits_per_raw_sample")
+  val bitsPerRawSample: Int = 0,
+  @SerializedName("bits_per_sample")
+  val bitsPerSample: Int = 0,
+  @SerializedName("nb_frames")
+  val nbFrames: Long = 0,
+  @SerializedName("sample_fmt")
+  val sampleFmt: String? = null,
+  @SerializedName("sample_rate")
+  val sampleRate: Int = 0,
   val channels: Int = 0,
-  val channel_layout: String? = null,
+  @SerializedName("channel_layout")
+  val channelLayout: String? = null,
   val disposition: FFmpegDisposition? = null,
   val tags: Map<String, String>? = null,
-  val side_data_list: List<SideData>? = emptyList(),
+  @SerializedName("side_data_list")
+  val sideDataList: List<SideData>? = emptyList(),
 ) {
   data class SideData(
-    val side_data_type: String = "",
-    val displaymatrix: String = "",
+    val sideDataType: String = "",
+    val displayMatrix: String = "",
     val rotation: Int = 0,
   )
 }

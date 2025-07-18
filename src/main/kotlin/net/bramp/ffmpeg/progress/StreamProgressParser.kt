@@ -16,11 +16,15 @@ class StreamProgressParser(private val listener: ProgressListener) {
 
   @Throws(IOException::class)
   fun processReader(reader: Reader) {
-    val `in` = wrapInBufferedReader(reader)
-    var line: String?
+    val bufferedReader = wrapInBufferedReader(reader)
     var p = Progress()
-    while(`in`.readLine().also { line = it } != null) {
-      if (p.parseLine(line!!)) {
+    bufferedReader.forEachLine { line ->
+      val (newProgress, isFinished) = p.parseLine(line)
+      if(newProgress != null) {
+        p = newProgress
+      }
+
+      if(isFinished) {
         listener.progress(p)
         p = Progress()
       }
@@ -28,11 +32,7 @@ class StreamProgressParser(private val listener: ProgressListener) {
   }
 
   companion object {
-    private fun wrapInBufferedReader(reader: Reader): BufferedReader = if(reader is BufferedReader) {
-      reader
-    }
-    else {
-      BufferedReader(reader)
-    }
+    private fun wrapInBufferedReader(reader: Reader): BufferedReader =
+      reader as? BufferedReader ?: BufferedReader(reader)
   }
 }

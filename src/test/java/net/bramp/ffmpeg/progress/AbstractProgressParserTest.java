@@ -15,26 +15,19 @@ import org.junit.Test;
 import org.junit.rules.Timeout;
 
 public abstract class AbstractProgressParserTest {
-
   @Rule public Timeout timeout = new Timeout(10, TimeUnit.SECONDS);
 
-  final List<Progress> progesses = Collections.synchronizedList(new ArrayList<Progress>());
+  final List<Progress> progresses = Collections.synchronizedList(new ArrayList<>());
 
   ProgressParser parser;
   URI uri;
 
-  final ProgressListener listener =
-      new ProgressListener() {
-        @Override
-        public void progress(Progress p) {
-          progesses.add(p);
-        }
-      };
+  final ProgressListener listener = progresses::add;
 
   @Before
   public void setupParser() throws IOException, URISyntaxException {
-    synchronized (progesses) {
-      progesses.clear();
+    synchronized (progresses) {
+      progresses.clear();
     }
 
     parser = newParser(listener);
@@ -45,30 +38,30 @@ public abstract class AbstractProgressParserTest {
       throws IOException, URISyntaxException;
 
   @Test
-  public void testNoConnection() throws IOException, InterruptedException {
+  public void testNoConnection() throws IOException {
     parser.start();
     parser.stop();
-    assertTrue(progesses.isEmpty());
+    assertTrue(progresses.isEmpty());
   }
 
   @Test
-  public void testDoubleStop() throws IOException, InterruptedException {
+  public void testDoubleStop() throws IOException {
     parser.start();
     parser.stop();
     parser.stop();
-    assertTrue(progesses.isEmpty());
+    assertTrue(progresses.isEmpty());
   }
 
   @Test(expected = IllegalThreadStateException.class)
   public void testDoubleStart() throws IOException {
     parser.start();
     parser.start();
-    assertTrue(progesses.isEmpty());
+    assertTrue(progresses.isEmpty());
   }
 
   @Test()
   public void testStopNoStart() throws IOException {
     parser.stop();
-    assertTrue(progesses.isEmpty());
+    assertTrue(progresses.isEmpty());
   }
 }

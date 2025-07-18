@@ -36,7 +36,7 @@ class FFprobe : FFcommon {
    * @throws IOException If a I/O error occurs while executing ffprobe.
    */
   @Throws(IOException::class)
-  fun isFFprobe(): Boolean = version().startsWith("ffprobe")
+  fun isFfprobe(): Boolean = version().startsWith("ffprobe")
 
   /**
    * Throws an exception if this is an unsupported version of ffprobe.
@@ -45,10 +45,8 @@ class FFprobe : FFcommon {
    * @throws IOException If a I/O error occurs while executing ffprobe.
    */
   @Throws(IllegalArgumentException::class, IOException::class)
-  private fun checkIfFFprobe() {
-    if(!isFFprobe()) {
-      throw IllegalArgumentException("This binary '$path' is not a supported version of ffprobe")
-    }
+  private fun checkIfFfprobe() {
+    require(isFfprobe()) { "This binary '$path' is not a supported version of ffprobe" }
   }
 
   @Throws(IOException::class)
@@ -59,25 +57,27 @@ class FFprobe : FFcommon {
   ): FFmpegProbeResult = probe(this.builder().setInput(mediaPath).setUserAgent(userAgent))
 
   @Throws(IOException::class)
-  fun probe(builder: FFprobeBuilder): FFmpegProbeResult {
-    // Preconditions.checkNotNull(builder) // builder is non-null by type
-    return probe(builder.build())
-  }
+  fun probe(builder: FFprobeBuilder): FFmpegProbeResult =
+    probe(builder.build())
 
   @Throws(IOException::class)
-  fun probe(mediaPath: String, userAgent: String?, vararg extraArgs: String?): FFmpegProbeResult = probe(
-    this.builder().setInput(mediaPath).setUserAgent(userAgent).addExtraArgs(*extraArgs).build(),
+  fun probe(mediaPath: String, userAgent: String?, vararg extraArgs: String): FFmpegProbeResult = probe(
+    builder()
+      .setInput(mediaPath)
+      .setUserAgent(userAgent)
+      .addExtraArgs(*extraArgs)
+      .build(),
   )
 
   @Throws(IOException::class)
   fun probe(args: List<String>): FFmpegProbeResult {
-    checkIfFFprobe()
+    checkIfFfprobe()
 
     val p = runFunc.run(path(args))
     try {
       var reader: Reader = wrapInReader(p)
-      if (LOG.isDebugEnabled) {
-        reader = LoggingFilterReader(reader, LOG)
+      if (logger.isDebugEnabled) {
+        reader = LoggingFilterReader(reader, logger)
       }
 
       val result: FFmpegProbeResult? = gson.fromJson(reader, FFmpegProbeResult::class.java)
@@ -103,12 +103,13 @@ class FFprobe : FFcommon {
   fun builder(): FFprobeBuilder = FFprobeBuilder()
 
   companion object {
-    internal val LOG: Logger = LoggerFactory.getLogger(FFprobe::class.java)
+    internal val logger: Logger = LoggerFactory.getLogger(FFprobe::class.java)
 
-    internal const val FFPROBE = "ffprobe"
+    internal const val FFPROBE_COMMAND = "ffprobe"
 
+    @Suppress("ObjectPropertyNaming")
     @JvmField // For Java compatibility as public static final
-    val DEFAULT_PATH: String = MoreObjects.firstNonNull(System.getenv("FFPROBE"), FFPROBE)
+    val DEFAULT_PATH: String = MoreObjects.firstNonNull(System.getenv("FFPROBE"), FFPROBE_COMMAND)
 
     // Assumes FFmpegUtils.kt is already converted and its gson is accessible (e.g. internal)
     internal val gson: Gson by lazy { FFmpegUtils.gson }

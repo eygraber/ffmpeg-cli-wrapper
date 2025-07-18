@@ -17,13 +17,13 @@ internal class TcpProgressParserRunnable(
         // is scheduled. This happens more often on Travis than a unloaded system.
         startSignal.countDown()
         server.accept().use { socket ->
-          socket.getInputStream().use { stream -> parser.processStream(stream) }
+          parser.processStream(socket.getInputStream())
         }
       }
-      catch (e: SocketException) {
+      catch (_: SocketException) {
         // Most likely a Socket closed exception, which we can safely ignore
       }
-      catch (e: IOException) {
+      catch (_: IOException) {
         // We have no good way to report this back to the user... yet
         // TODO Report to the user that this failed in some way
       }

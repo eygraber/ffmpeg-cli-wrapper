@@ -49,65 +49,67 @@ object RawHandler {
    * @param header The stream's header.
    * @return The AudioFormat matching this header.
    */
+  @Suppress("UseRequire")
   fun streamToAudioFormat(header: StreamHeaderPacket): AudioFormat {
-    Preconditions.checkArgument(header.type == StreamHeaderPacket.AUDIO.toLong())
+    require(header.type == StreamHeaderPacket.AUDIO.toLong())
+    require(header.fourcc.size == 4) {
+      "unknown fourcc value: '${fourccToString(header.fourcc)}'"
+    }
+
+    val alaw = byteArrayOf('A'.code.toByte(), 'L'.code.toByte(), 'A'.code.toByte(), 'W'.code.toByte())
+    val ulaw = byteArrayOf('U'.code.toByte(), 'L'.code.toByte(), 'A'.code.toByte(), 'W'.code.toByte())
 
     // Vars that go into the AudioFormat
     val encoding: AudioFormat.Encoding
     val sampleRate = header.sampleRate.toFloat()
     var bits = 8
-    var bigEndian = false
+    var isBigEndian = false
     val fourcc = header.fourcc
-    if(fourcc.contentEquals(byteArrayOf('A'.code.toByte(), 'L'.code.toByte(), 'A'.code.toByte(), 'W'.code.toByte()))) {
+
+    if(fourcc.contentEquals(alaw)) {
       encoding = AudioFormat.Encoding.ALAW
     }
-    else if(fourcc.contentEquals(
-        byteArrayOf('U'.code.toByte(), 'L'.code.toByte(), 'A'.code.toByte(), 'W'.code.toByte()),
-      )
-    ) {
+    else if(fourcc.contentEquals(ulaw)) {
       encoding = AudioFormat.Encoding.ULAW
     }
-    else if(fourcc.size == 4) {
+    else {
       val type: Byte
       val interleaving: Byte
-      if(fourcc[0] == 'P'.code.toByte()) {
-        bigEndian = false
+
+      val isFourCCLittleEndian = fourcc[0] == 'P'.code.toByte()
+      val isFourCCBigEndian = fourcc[3] == 'P'.code.toByte()
+
+      require(isFourCCLittleEndian || isFourCCBigEndian) {
+        "unknown fourcc value: '${fourccToString(fourcc)}'"
+      }
+
+      if(isFourCCLittleEndian) {
+        isBigEndian = false
         type = fourcc[1]
         interleaving = fourcc[2]
         bits = fourcc[3].toInt()
       }
-      else if(fourcc[3] == 'P'.code.toByte()) {
-        bigEndian = true
+      else {
+        isBigEndian = true
         type = fourcc[2]
         interleaving = fourcc[1]
         bits = fourcc[0].toInt()
       }
-      else {
-        throw IllegalArgumentException(
-          "unknown fourcc value: '" + fourccToString(fourcc) + "'",
-        )
+
+      require(interleaving == 'D'.code.toByte()) {
+        "unsupported interleaving '$interleaving' in fourcc value '${fourccToString(fourcc)}'"
       }
-      if(interleaving != 'D'.code.toByte()) {
-        throw IllegalArgumentException(
-          "unsupported interleaving '" +
-            interleaving +
-            "' in fourcc value '" +
-            fourccToString(fourcc) +
-            "'",
-        )
-      }
+
       when(type) {
         'S'.code.toByte() -> encoding = AudioFormat.Encoding.PCM_SIGNED
         'U'.code.toByte() -> encoding = AudioFormat.Encoding.PCM_UNSIGNED
         'F'.code.toByte() -> encoding = AudioFormat.Encoding.PCM_FLOAT
         else -> throw IllegalArgumentException(
-          "unknown fourcc '" + fourccToString(fourcc) + "' type: " + type,
+          "unknown fourcc '${fourccToString(fourcc)}' type: $type",
         )
       }
     }
-    else {
-      throw IllegalArgumentException("unknown fourcc value: '" + fourccToString(fourcc) + "'")
-    }
+
     val frameSize = bits * header.channels / 8
     val frameRate = sampleRate // This may not be true for the compressed formats
     return AudioFormat(
@@ -117,7 +119,7 @@ object RawHandler {
       header.channels,
       frameSize,
       frameRate,
-      bigEndian,
+      isBigEndian,
     )
   }
 

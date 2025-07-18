@@ -10,7 +10,9 @@ import javax.annotation.CheckReturnValue
 
 abstract class AbstractSocketProgressParser(listener: ProgressListener) : ProgressParser {
   val parser: StreamProgressParser = StreamProgressParser(listener)
+
   private var thread: Thread? = null // Thread for handling incoming connections
+
   protected abstract val threadName: String
 
   protected abstract fun getRunnable(startSignal: CountDownLatch): Runnable
@@ -43,13 +45,12 @@ abstract class AbstractSocketProgressParser(listener: ProgressListener) : Progre
 
   @Throws(IOException::class)
   override fun stop() {
-    if(thread != null) {
-      thread?.interrupt() // This unblocks processStream();
-      try {
-        thread?.join()
-      } catch(e: InterruptedException) {
-        Thread.currentThread().interrupt()
-      }
+    thread?.interrupt() // This unblocks processStream();
+    try {
+      thread?.join()
+    }
+    catch(_: InterruptedException) {
+      Thread.currentThread().interrupt()
     }
   }
 

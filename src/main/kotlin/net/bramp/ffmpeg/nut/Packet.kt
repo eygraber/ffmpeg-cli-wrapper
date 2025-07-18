@@ -4,14 +4,15 @@ import com.google.common.base.MoreObjects
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.IOException
+import java.util.Locale
 
 open class Packet {
   enum class StartCode(private val startcode: Long) {
-    MAIN(0x7A561F5F04ADL + ((('N'.code shl 8).toLong() + 'M'.code.toLong()) shl 48)),
-    STREAM(0x11405BF2F9DBL + ((('N'.code shl 8).toLong() + 'S'.code.toLong()) shl 48)),
-    SYNCPOINT(0xE4ADEECA4569L + ((('N'.code shl 8).toLong() + 'K'.code.toLong()) shl 48)),
-    INDEX(0xDD672F23E64EL + ((('N'.code shl 8).toLong() + 'X'.code.toLong()) shl 48)),
-    INFO(0xAB68B596BA78L + ((('N'.code shl 8).toLong() + 'I'.code.toLong()) shl 48)),
+    Main(0x7A561F5F04ADL + (('N'.code.toLong() shl 8) + 'M'.code.toLong() shl 48)),
+    Stream(0x11405BF2F9DBL + (('N'.code.toLong() shl 8) + 'S'.code.toLong() shl 48)),
+    SyncPoint(0xE4ADEECA4569L + (('N'.code.toLong() shl 8) + 'K'.code.toLong() shl 48)),
+    Index(0xDD672F23E64EL + (('N'.code.toLong() shl 8) + 'X'.code.toLong() shl 48)),
+    Info(0xAB68B596BA78L + (('N'.code.toLong() shl 8) + 'I'.code.toLong() shl 48)),
     ;
 
     fun value(): Long = startcode
@@ -34,14 +35,14 @@ open class Packet {
         return null
       }
 
-      fun isPossibleStartcode(startcode: Long): Boolean = (startcode and 0xFFL) == 'N'.code.toLong()
+      fun isPossibleStartcode(startcode: Long): Boolean = startcode and 0xFFL == 'N'.code.toLong()
 
       fun toString(startcode: Long): String {
         val c = of(startcode)
         if(c != null) {
           return c.name
         }
-        return String.format("%X", startcode)
+        return String.format(Locale.ROOT, "%X", startcode)
       }
     }
   }
@@ -50,26 +51,26 @@ open class Packet {
   val footer: PacketFooter = PacketFooter()
 
   @Throws(IOException::class)
-  protected open fun readBody(`in`: NutDataInputStream) {
+  protected open fun readBody(dataInputStream: NutDataInputStream) {
     // Default implementation does nothing
   }
 
   @Throws(IOException::class)
-  fun read(`in`: NutDataInputStream, startcode: Long) {
-    header.read(`in`, startcode)
-    readBody(`in`)
-    seekToPacketFooter(`in`)
-    footer.read(`in`)
+  fun read(dataInputStream: NutDataInputStream, startcode: Long) {
+    header.read(dataInputStream, startcode)
+    readBody(dataInputStream)
+    seekToPacketFooter(dataInputStream)
+    footer.read(dataInputStream)
   }
 
   @Throws(IOException::class)
-  fun seekToPacketFooter(`in`: NutDataInputStream) {
-    val current = `in`.offset()
+  fun seekToPacketFooter(dataInputStream: NutDataInputStream) {
+    val current = dataInputStream.offset()
     if(current > header.end) {
-      throw IOException("Can not seek backwards at:" + current + " end:" + header.end)
+      throw IOException("Can not seek backwards at:$current end:${header.end}")
     }
     // TODO Fix this to not cast longs to ints
-    `in`.skipBytes((header.end - current).toInt())
+    dataInputStream.skipBytes((header.end - current).toInt())
   }
 
   override fun toString(): String = MoreObjects.toStringHelper(this).add("header", header).add("footer", footer)

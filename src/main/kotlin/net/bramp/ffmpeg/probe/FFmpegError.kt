@@ -9,6 +9,7 @@ import java.io.Serializable
 )
 data class FFmpegError(val code: Int = 0, val string: String = "") : Serializable {
   companion object {
+    @Suppress("ObjectPropertyNaming")
     private const val serialVersionUID = 1L
   }
 }

@@ -28,7 +28,7 @@ public class InputOutputTest {
     when(runFunc.run(argThatHasItem("-version")))
         .thenAnswer(new NewProcessAnswer("avconv-version"));
 
-    ffmpeg = new FFmpeg(runFunc);
+    ffmpeg = new FFmpeg(FFmpeg.DEFAULT_PATH, runFunc);
   }
 
   @Test
@@ -377,7 +377,7 @@ public class InputOutputTest {
     List<String> command =
         new FFmpegBuilder()
             .addExtraArgs("-global", "args")
-            .setVerbosity(FFmpegBuilder.Verbosity.INFO)
+            .setVerbosity(FFmpegBuilder.Verbosity.Info)
             .addInput("input.mp4")
             .addExtraArgs("-input_args", "1")
             .done()

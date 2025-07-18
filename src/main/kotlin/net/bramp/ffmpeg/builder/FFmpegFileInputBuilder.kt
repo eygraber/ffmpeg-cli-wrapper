@@ -14,6 +14,9 @@ class FFmpegFileInputBuilder : AbstractFFmpegInputBuilder<FFmpegFileInputBuilder
   override fun getThis(): FFmpegFileInputBuilder = this
 
   override fun addSourceTarget(pass: Int, args: ImmutableList.Builder<String>) {
+    val filename = filename
+    val uri = uri
+
     check(!(filename != null && uri != null)) { "Only one of filename and uri can be set" }
 
     // Input

@@ -1,5 +1,6 @@
 package net.bramp.ffmpeg.probe
 
+import com.google.gson.annotations.SerializedName
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 
 @SuppressFBWarnings(
@@ -8,17 +9,24 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 )
 data class FFmpegFormat(
   val filename: String = "",
-  val nb_streams: Int = 0,
-  val nb_programs: Int = 0,
-  val format_name: String = "",
-  val format_long_name: String = "",
-  val start_time: Double = 0.0,
+  @SerializedName("nb_streams")
+  val nbStreams: Int = 0,
+  @SerializedName("nb_programs")
+  val nbPrograms: Int = 0,
+  @SerializedName("format_name")
+  val formatName: String = "",
+  @SerializedName("format_long_name")
+  val formatLongName: String = "",
+  @SerializedName("start_time")
+  val startTime: Double = 0.0,
   /** Duration in seconds  */
   val duration: Double = 0.0,
   /** File size in bytes  */
   val size: Long = 0,
   /** Bitrate  */
-  val bit_rate: Long = 0,
-  val probe_score: Int = 0,
+  @SerializedName("bit_rate")
+  val bitRate: Long = 0,
+  @SerializedName("probe_score")
+  val probeScore: Int = 0,
   val tags: Map<String, String>? = null,
 )

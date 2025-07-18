@@ -28,8 +28,8 @@ public class FFmpegAvTest {
   FFmpeg ffmpeg;
 
   @Before
-  public void before() throws IOException {
-    ffmpeg = new FFmpeg(runFunc);
+  public void before() {
+    ffmpeg = new FFmpeg(FFmpeg.DEFAULT_PATH, runFunc);
   }
 
   @Test

@@ -1,11 +1,10 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.base.Ascii
 import com.google.common.base.Preconditions
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.FFmpegUtils
-import net.bramp.ffmpeg.Preconditions.checkNotEmpty
+import net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank
 import net.bramp.ffmpeg.probe.FFmpegProbeResult
 import org.slf4j.LoggerFactory
 import java.net.URI
@@ -23,28 +22,26 @@ class FFmpegBuilder {
    * Log level options: [ffmpeg documentation](https://ffmpeg.org/ffmpeg.html#Generic-options)
    */
   enum class Verbosity {
-    QUIET,
-    PANIC,
-    FATAL,
-    ERROR,
-    WARNING,
-    INFO,
-    VERBOSE,
-    DEBUG,
+    Quiet,
+    Panic,
+    Fatal,
+    Error,
+    Warning,
+    Info,
+    Verbose,
+    Debug,
     ;
 
-    override fun toString(): String {
-      // ffmpeg command line requires these options in lower case
-      return Ascii.toLowerCase(name)
-    }
+    override fun toString(): String = name.lowercase()
   }
 
   // Global Settings
-  private var override = true
+  @Suppress("BooleanPropertyNaming")
+  var overrideOutputFiles = true
   private var pass = 0
   private var passDirectory = ""
   private var passPrefix: String? = null
-  private var verbosity = Verbosity.ERROR
+  private var verbosity = Verbosity.Error
   private var progress: URI? = null
   private var userAgent: String? = null
   private var qscale: Int? = null
@@ -53,14 +50,14 @@ class FFmpegBuilder {
   // Input settings
   private var format: String? = null
   private var startOffset: Long? = null // in millis
-  private var readAtNativeFrameRate = false
+  private var isReadAtNativeFrameRate = false
   internal val inputs: MutableList<AbstractFFmpegInputBuilder<*>> = ArrayList()
   val inputProbes: MutableMap<String, FFmpegProbeResult> = TreeMap()
   private val extraArgs: MutableList<String> = ArrayList()
 
   // Output
   private val outputs: MutableList<AbstractFFmpegOutputBuilder<*>> = ArrayList()
-  private var strict = Strict.NORMAL
+  private var strict = Strict.Normal
 
   // Filters
   private var audioFilter: String? = null
@@ -72,13 +69,10 @@ class FFmpegBuilder {
     return this
   }
 
-  fun overrideOutputFiles(override: Boolean): FFmpegBuilder {
-    this.override = override
+  fun overrideOutputFiles(shouldOverride: Boolean): FFmpegBuilder {
+    this.overrideOutputFiles = shouldOverride
     return this
   }
-
-  val overrideOutputFiles: Boolean
-    get() = override
 
   fun setPass(pass: Int): FFmpegBuilder {
     this.pass = pass
@@ -113,21 +107,21 @@ class FFmpegBuilder {
    */
   @Deprecated("")
   fun readAtNativeFrameRate(): FFmpegBuilder {
-    readAtNativeFrameRate = true
+    isReadAtNativeFrameRate = true
     return this
   }
 
   fun addInput(result: FFmpegProbeResult): FFmpegFileInputBuilder {
-    val filename = result.format!!.filename
+    val filename = requireNotNull(result.format).filename
     return doAddInput(FFmpegFileInputBuilder(this, filename, result))
   }
 
   fun addInput(filename: String): FFmpegFileInputBuilder = doAddInput(FFmpegFileInputBuilder(this, filename))
 
-  fun <T : AbstractFFmpegInputBuilder<T>?> addInput(input: T): FFmpegBuilder = doAddInput(input)!!.done()
+  fun <T : AbstractFFmpegInputBuilder<T>> addInput(input: T): FFmpegBuilder = doAddInput(input).done()
 
-  private fun <T : AbstractFFmpegInputBuilder<T>?> doAddInput(input: T): T {
-    inputs.add(input!!)
+  private fun <T : AbstractFFmpegInputBuilder<T>> doAddInput(input: T): T {
+    inputs.add(input)
     return input
   }
 
@@ -146,9 +140,9 @@ class FFmpegBuilder {
     return addInput(filename)
   }
 
-  fun <T : AbstractFFmpegInputBuilder<T>?> setInput(input: T): FFmpegBuilder {
+  fun <T : AbstractFFmpegInputBuilder<T>> setInput(input: T): FFmpegBuilder {
     clearInputs()
-    inputs.add(input!!)
+    inputs.add(input)
     return this
   }
 
@@ -199,7 +193,7 @@ class FFmpegBuilder {
    */
   @Deprecated("")
   fun setComplexFilter(filter: String?): FFmpegBuilder {
-    complexFilter = checkNotEmpty(filter, "filter must not be empty")
+    complexFilter = checkNotNullEmptyOrBlank(filter, "filter must not be empty")
     return this
   }
 
@@ -210,7 +204,7 @@ class FFmpegBuilder {
    * @return this
    */
   fun setAudioFilter(filter: String?): FFmpegBuilder {
-    audioFilter = checkNotEmpty(filter, "filter must not be empty")
+    audioFilter = checkNotNullEmptyOrBlank(filter, "filter must not be empty")
     return this
   }
 
@@ -221,7 +215,7 @@ class FFmpegBuilder {
    * @return this
    */
   fun setVideoFilter(filter: String?): FFmpegBuilder {
-    videoFilter = checkNotEmpty(filter, "filter must not be empty")
+    videoFilter = checkNotNullEmptyOrBlank(filter, "filter must not be empty")
     return this
   }
 
@@ -231,8 +225,10 @@ class FFmpegBuilder {
    * @param quality the quality between 0 and 9. Where 0 is best.
    * @return FFmpegBuilder
    */
-  fun setVBR(quality: Int?): FFmpegBuilder {
-    Preconditions.checkArgument(quality!! > 0 && quality < 9, "vbr must be between 0 and 9")
+  fun setVBR(quality: Int): FFmpegBuilder {
+    require(quality > 0 && quality < 9) {
+      "vbr must be between 0 and 9"
+    }
     qscale = quality
     return this
   }
@@ -245,7 +241,7 @@ class FFmpegBuilder {
    */
   fun addExtraArgs(vararg values: String): FFmpegBuilder {
     Preconditions.checkArgument(values.isNotEmpty(), "one or more values must be supplied")
-    checkNotEmpty(values[0], "first extra arg may not be empty")
+    checkNotNullEmptyOrBlank(values[0], "first extra arg may not be empty")
     for(value in values) {
       extraArgs.add(value)
     }
@@ -327,37 +323,37 @@ class FFmpegBuilder {
     val args = ImmutableList.builder<String>()
     Preconditions.checkArgument(inputs.isNotEmpty(), "At least one input must be specified")
     Preconditions.checkArgument(outputs.isNotEmpty(), "At least one output must be specified")
-    if(strict != Strict.NORMAL) {
+    if(strict != Strict.Normal) {
       args.add("-strict", strict.toString())
     }
-    args.add(if(override) "-y" else "-n")
+    args.add(if(overrideOutputFiles) "-y" else "-n")
     args.add("-v", verbosity.toString())
-    if(userAgent != null) {
-      args.add("-user_agent", userAgent)
+    userAgent?.let {
+      args.add("-user_agent", it)
     }
-    if(startOffset != null) {
+    startOffset?.let { startOffset ->
       log.warn(
         "Using FFmpegBuilder#setStartOffset is deprecated. Specify it on the inputStream or outputStream instead",
       )
-      args.add("-ss", FFmpegUtils.toTimecode(startOffset!!, TimeUnit.MILLISECONDS))
+      args.add("-ss", FFmpegUtils.toTimecode(startOffset, TimeUnit.MILLISECONDS))
     }
     if(threads > 0) {
       args.add("-threads", threads.toString())
     }
-    if(format != null) {
+    format?.let { format ->
       log.warn(
         "Using FFmpegBuilder#setFormat is deprecated. Specify it on the inputStream or outputStream instead",
       )
       args.add("-f", format)
     }
-    if(readAtNativeFrameRate) {
+    if(isReadAtNativeFrameRate) {
       log.warn(
         "Using FFmpegBuilder#readAtNativeFrameRate is deprecated. Specify it on the inputStream instead",
       )
       args.add("-re")
     }
-    if(progress != null) {
-      args.add("-progress", progress.toString())
+    progress?.let {
+      args.add("-progress", it.toString())
     }
     args.addAll(extraArgs)
     for(input in inputs) {
@@ -365,8 +361,8 @@ class FFmpegBuilder {
     }
     if(pass > 0) {
       args.add("-pass", pass.toString())
-      if(passPrefix != null) {
-        args.add("-passlogfile", passDirectory + passPrefix)
+      passPrefix?.let {
+        args.add("-passlogfile", passDirectory + it)
       }
     }
     if(!Strings.isNullOrEmpty(audioFilter)) {
@@ -381,8 +377,8 @@ class FFmpegBuilder {
       )
       args.add("-filter_complex", complexFilter)
     }
-    if(qscale != null) {
-      args.add("-qscale:a", qscale.toString())
+    qscale?.let {
+      args.add("-qscale:a", it.toString())
     }
     for(output in outputs) {
       args.addAll(output.build(this, pass))

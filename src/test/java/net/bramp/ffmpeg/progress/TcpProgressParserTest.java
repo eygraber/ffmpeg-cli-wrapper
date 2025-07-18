@@ -18,13 +18,12 @@ import org.junit.Test;
 public class TcpProgressParserTest extends AbstractProgressParserTest {
 
   @Override
-  public ProgressParser newParser(ProgressListener listener)
-      throws IOException, URISyntaxException {
+  public ProgressParser newParser(ProgressListener listener) {
     return new TcpProgressParser(listener);
   }
 
   @Test
-  public void testNormal() throws IOException, InterruptedException, URISyntaxException {
+  public void testNormal() throws IOException, InterruptedException {
     parser.start();
 
     Socket client = new Socket(uri.getHost(), uri.getPort());
@@ -43,7 +42,7 @@ public class TcpProgressParserTest extends AbstractProgressParserTest {
     parser.stop();
 
     assertThat(bytes, greaterThan(0L));
-    assertThat(progesses, equalTo(Progresses.allProgresses));
+    assertThat(progresses, equalTo(Progresses.allProgresses));
   }
 
   @Test
@@ -66,7 +65,7 @@ public class TcpProgressParserTest extends AbstractProgressParserTest {
     parser.stop();
 
     assertThat(bytes, greaterThan(0L));
-    assertThat(progesses, equalTo(Progresses.naProgresses));
+    assertThat(progresses, equalTo(Progresses.naProgresses));
   }
 
   @Test
@@ -75,6 +74,6 @@ public class TcpProgressParserTest extends AbstractProgressParserTest {
     new Socket(uri.getHost(), uri.getPort()).close();
     parser.stop();
 
-    assertTrue(progesses.isEmpty());
+    assertTrue(progresses.isEmpty());
   }
 }
