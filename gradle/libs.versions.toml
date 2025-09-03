@@ -18,7 +18,7 @@ modelmapper = "3.2.4"
 nitorcreationsMatchers = "1.3"
 slf4j = "2.0.17"
 spotbugsAnnotations = "4.9.4"
-spotbugsPlugin = "6.2.6"
+spotbugsPlugin = "6.2.7"
 spotlessPlugin = "7.2.1"
 
 [libraries]
