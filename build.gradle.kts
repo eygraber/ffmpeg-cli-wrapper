@@ -6,12 +6,12 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  jacoco
   alias(libs.plugins.abiCompat)
   alias(libs.plugins.detekt)
   alias(libs.plugins.dokka)
   alias(libs.plugins.kotlinJvm)
   alias(libs.plugins.kotlinx.serialization)
+  alias(libs.plugins.kover)
   alias(libs.plugins.maven.publish)
 }
 
@@ -86,16 +86,19 @@ tasks.withType<Detekt>().configureEach {
   }
 }
 
-jacoco {
-  toolVersion = "0.8.14"
-}
-
-tasks.jacocoTestReport {
+kover {
   reports {
-    xml.required.set(true)
-    html.required.set(true)
+    filters {
+      excludes {
+        classes(
+          "*\$Companion",           // Companion objects
+          "*\$Companion\$*",        // Nested companion object classes  
+          "*\$*serializer",         // kotlinx.serialization generated serializers
+          "*\$\$serializer"         // kotlinx.serialization generated serializers
+        )
+      }
+    }
   }
-  dependsOn(tasks.test)
 }
 
 mavenPublishing {

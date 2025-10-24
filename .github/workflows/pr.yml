@@ -40,17 +40,9 @@ jobs:
           name: test-results-jdk${{ matrix.java-version }}
           path: '**/build/test-results/test/TEST-*.xml'
 
-      - name: Publish JaCoCo Coverage Report
+      - name: Publish Kover Coverage Report
         uses: actions/upload-artifact@v5
         if: always()
         with:
-          name: jacoco-report-jdk${{ matrix.java-version }}
-          path: '**/build/reports/jacoco/test/html/*'
-
-      # Consider adding a step to upload Spotbugs reports if desired
-      # - name: Publish Spotbugs Report
-      #   uses: actions/upload-artifact@v4
-      #   if: always()
-      #   with:
-      #     name: spotbugs-report-jdk${{ matrix.java-version }}
-      #     path: '**/build/reports/spotbugs/*.html' # Or XML
+          name: kover-report-jdk${{ matrix.java-version }}
+          path: '**/build/reports/kover/html/*'
