@@ -4,14 +4,10 @@ import net.bramp.ffmpeg.lang.MockProcess
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
 
 /** Tests what happens when using avconv */
-@RunWith(MockitoJUnitRunner::class)
 class FFmpegAvTest {
-
   private val runFunc = ProcessFunction { args ->
     MockProcess(Helper.loadResource("avconv-version"))
   }

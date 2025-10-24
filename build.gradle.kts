@@ -38,7 +38,6 @@ dependencies {
   testImplementation(libs.hamcrest.integration)
   testImplementation(libs.junit)
   testImplementation(libs.logback.classic)
-  testImplementation(libs.mockito.core)
   testImplementation(libs.mockk)
   testImplementation(libs.nitorcreations.matchers)
 
