@@ -91,6 +91,9 @@ class FFprobeBuilderTest {
     )
   }
 
+  // Note: throwsExceptionIfInputIsNull() from Java not needed in Kotlin
+  // because the type system prevents null from being passed to setInput(filename: String)
+
   @Test
   fun throwsExceptionIfNoInputIsGiven() {
     val builder = FFprobeBuilder()
