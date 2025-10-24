@@ -15,12 +15,12 @@ class FractionSerializerTest {
   @Serializable
   data class FractionWrapper(
     @Serializable(with = FractionSerializer::class)
-    val fraction: Fraction,
+    val fraction: Fraction?,
   )
 
   data class TestData(
     val jsonString: String,
-    val fraction: Fraction,
+    val fraction: Fraction?,
   )
 
   @Test
@@ -49,6 +49,13 @@ class FractionSerializerTest {
   }
 
   @Test
+  fun testWriteNull() {
+    val wrapper = FractionWrapper(null)
+    val encoded = json.encodeToString(wrapper)
+    assertThat(encoded, equalTo("""{"fraction":null}"""))
+  }
+
+  @Test
   fun testNumericInput() {
     // Test that numeric inputs (without quotes) work
     val wrapper1 = json.decodeFromString<FractionWrapper>("""{"fraction":"1"}""")
@@ -60,6 +67,9 @@ class FractionSerializerTest {
 
   companion object {
     val readTests = listOf(
+      TestData("null", null),
+      // Note: kotlinx.serialization doesn't support unquoted numeric values for custom serializers
+      // so we only test quoted string values
       TestData("\"1\"", Fraction.getFraction(1, 1)),
       TestData("\"1.0\"", Fraction.getFraction(1, 1)),
       TestData("\"2\"", Fraction.getFraction(2, 1)),

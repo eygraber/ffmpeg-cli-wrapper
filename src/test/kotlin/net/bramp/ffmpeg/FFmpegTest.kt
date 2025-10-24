@@ -3,6 +3,11 @@ package net.bramp.ffmpeg
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import net.bramp.ffmpeg.fixtures.ChannelLayouts
+import net.bramp.ffmpeg.fixtures.Codecs
+import net.bramp.ffmpeg.fixtures.Filters
+import net.bramp.ffmpeg.fixtures.Formats
+import net.bramp.ffmpeg.fixtures.PixelFormats
 import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.lang.MockProcess
 import org.junit.Assert.assertEquals
@@ -41,6 +46,8 @@ class FFmpegTest {
   fun testVersion() {
     assertEquals("ffmpeg version 0.10.9-7:0.10.9-1~raring1", ffmpeg.version())
     assertEquals("ffmpeg version 0.10.9-7:0.10.9-1~raring1", ffmpeg.version())
+
+    verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-version")) }
   }
 
   @Test
@@ -84,32 +91,19 @@ class FFmpegTest {
   @Test
   fun testCodecs() {
     // Run twice, the second should be cached
-    val codecs1 = ffmpeg.codecs()
-    val codecs2 = ffmpeg.codecs()
+    assertEquals(Codecs.CODECS, ffmpeg.codecs())
+    assertEquals(Codecs.CODECS, ffmpeg.codecs())
 
-    // Verify codec parsing works and returns a reasonable number of codecs
-    assertNotNull(codecs1)
-    assertTrue(codecs1!!.size > 400) // ffmpeg has 400+ codecs
-    assertEquals(codecs1, codecs2) // Second call should return cached result
-
-    // Verify codecs was called once (cached on second call)
-    // Note: version() is also called via checkIfFfmpeg()
-    verify(atLeast = 1) { runFunc.run(any()) }
+    verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-codecs")) }
   }
 
   @Test
   fun testFormats() {
     // Run twice, the second should be cached
-    val formats1 = ffmpeg.formats()
-    val formats2 = ffmpeg.formats()
+    assertEquals(Formats.FORMATS, ffmpeg.formats())
+    assertEquals(Formats.FORMATS, ffmpeg.formats())
 
-    // Verify format parsing works and returns a reasonable number of formats
-    assertNotNull(formats1)
-    assertTrue(formats1!!.size > 200) // ffmpeg has 200+ formats
-    assertEquals(formats1, formats2) // Second call should return cached result
-
-    // Verify formats was called once (cached on second call)
-    verify(atLeast = 1) { runFunc.run(any()) }
+    verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-formats")) }
   }
 
   @Test
@@ -130,46 +124,32 @@ class FFmpegTest {
   @Test
   fun testPixelFormat() {
     // Run twice, the second should be cached
-    val pixelFormats1 = ffmpeg.pixelFormats()
-    val pixelFormats2 = ffmpeg.pixelFormats()
+    assertEquals(PixelFormats.PIXEL_FORMATS, ffmpeg.pixelFormats())
+    assertEquals(PixelFormats.PIXEL_FORMATS, ffmpeg.pixelFormats())
 
-    // Verify pixel format parsing works and returns a reasonable number
-    assertNotNull(pixelFormats1)
-    assertTrue(pixelFormats1!!.size > 100) // ffmpeg has 100+ pixel formats
-    assertEquals(pixelFormats1, pixelFormats2) // Second call should return cached result
-
-    // Verify pixelFormats was called once (cached on second call)
-    verify(atLeast = 1) { runFunc.run(any()) }
+    verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-pix_fmts")) }
   }
 
   @Test
   fun testFilters() {
     // Run twice, the second should be cached
-    val filters1 = ffmpeg.filters()
-    val filters2 = ffmpeg.filters()
-    val filters3 = ffmpeg.filters()
+    val filters = ffmpeg.filters()
 
-    // Verify filter parsing works and returns a reasonable number of filters
-    assertNotNull(filters1)
-    assertTrue(filters1!!.size > 200) // ffmpeg has 200+ filters
-    assertEquals(filters1, filters2) // Calls should return cached result
-    assertEquals(filters1, filters3)
+    for(i in filters!!.indices) {
+      assertEquals(Filters.FILTERS[i], filters[i])
+    }
 
-    // Verify filters was called once (cached on subsequent calls)
-    verify(atLeast = 1) { runFunc.run(any()) }
+    assertEquals(Filters.FILTERS, ffmpeg.filters())
+    assertEquals(Filters.FILTERS, ffmpeg.filters())
+
+    verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-filters")) }
   }
 
   @Test
   fun testLayouts() {
-    val layouts1 = ffmpeg.channelLayouts()
-    val layouts2 = ffmpeg.channelLayouts()
+    assertEquals(ChannelLayouts.CHANNEL_LAYOUTS, ffmpeg.channelLayouts())
+    assertEquals(ChannelLayouts.CHANNEL_LAYOUTS, ffmpeg.channelLayouts())
 
-    // Verify channel layout parsing works and returns a reasonable number
-    assertNotNull(layouts1)
-    assertTrue(layouts1!!.size > 10) // ffmpeg has 10+ channel layouts
-    assertEquals(layouts1, layouts2) // Second call should return cached result
-
-    // Verify layouts was called once (cached on second call)
-    verify(atLeast = 1) { runFunc.run(any()) }
+    verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-layouts")) }
   }
 }
