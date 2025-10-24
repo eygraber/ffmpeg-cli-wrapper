@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg
 
-import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.info.ChannelLayout
 import net.bramp.ffmpeg.info.Codec
@@ -15,10 +14,6 @@ import net.bramp.ffmpeg.progress.TcpProgressParser
 import org.apache.commons.lang3.math.Fraction
 import java.io.IOException
 import java.net.URISyntaxException
-import java.util.Collections
-import java.util.regex.Pattern
-import javax.annotation.CheckReturnValue
-import javax.annotation.Nonnull
 
 /**
  * Wrapper around FFmpeg
@@ -30,21 +25,6 @@ class FFmpeg @JvmOverloads constructor(
   path: String = DEFAULT_PATH,
   runFunction: ProcessFunction = RunProcessFunction(),
 ) : FFcommon(path, runFunction) {
-  /** Supported codecs  */
-  private var codecs: List<Codec>? = null
-
-  /** Supported formats  */
-  private var formats: List<Format>? = null
-
-  /** Supported pixel formats  */
-  private var pixelFormats: List<PixelFormat>? = null
-
-  /** Supported filters  */
-  private var filters: List<Filter>? = null
-
-  /** Supported channel layouts  */
-  private var channelLayouts: List<ChannelLayout>? = null
-
   init {
     version()
   }
@@ -71,185 +51,42 @@ class FFmpeg @JvmOverloads constructor(
     require(this.isFfmpeg) { "This binary '$path' is not a supported version of ffmpeg" }
   }
 
-  @Nonnull
-  @Synchronized
   @Throws(IOException::class)
-  fun codecs(): List<Codec>? {
-    checkIfFfmpeg()
-
-    if(this.codecs == null) {
-      val codecs = ArrayList<Codec>()
-
-      val p = runFunc.run(ImmutableList.of(path, "-codecs"))
-      try {
-        wrapInReader(p).forEachLine { line ->
-          val m = codecsRegex.matcher(line)
-          if (m.matches()) {
-            codecs.add(Codec(m.group(2), m.group(3), m.group(1)))
-          }
-        }
-
-        throwOnError(p)
-        this.codecs = ImmutableList.copyOf(codecs)
-      } finally {
-        p.destroy()
-      }
-    }
-
-    return codecs
-  }
-
-  @Nonnull
-  @Synchronized
-  @Throws(IOException::class)
-  fun filters(): List<Filter>? {
-    checkIfFfmpeg()
-
-    if(this.filters == null) {
-      val filters = ArrayList<Filter>()
-
-      val p = runFunc.run(ImmutableList.of(path, "-filters"))
-      try {
-        wrapInReader(p).forEachLine { line ->
-          val m = filtersRegex.matcher(line)
-          if (m.matches()) {
-            // (?<inputpattern>[AVN|]+)->(?<outputpattern>[AVN|]+)\s+(?<description>.*)$
-            filters.add(
-              Filter(
-                isTimelineSupported = m.group("timelinesupport") == "T",
-                isSliceThreading = m.group("slicethreading") == "S",
-                isCommandSupport = m.group("commandsupport") == "C",
-                name = m.group("name"),
-                inputPattern = FilterPattern(m.group("inputpattern")),
-                outputPattern = FilterPattern(m.group("outputpattern")),
-                description = m.group("description"),
-              ),
-            )
-          }
-        }
-
-        throwOnError(p)
-        this.filters = ImmutableList.copyOf(filters)
-      } finally {
-        p.destroy()
-      }
-    }
-
-    return this.filters
-  }
-
-  @Nonnull
-  @Synchronized
-  @Throws(IOException::class)
-  fun formats(): List<Format>? {
-    checkIfFfmpeg()
-
-    if(this.formats == null) {
-      val formats = ArrayList<Format>()
-
-      val p = runFunc.run(ImmutableList.of(path, "-formats"))
-      try {
-        wrapInReader(p).forEachLine { line ->
-          val m = formatsRegex.matcher(line)
-          if (m.matches()) {
-            formats.add(Format(m.group(2), m.group(3), m.group(1)))
-          }
-        }
-
-        throwOnError(p)
-        this.formats = ImmutableList.copyOf(formats)
-      } finally {
-        p.destroy()
-      }
-    }
-    return formats
-  }
-
-  @Synchronized
-  @Throws(IOException::class)
-  fun pixelFormats(): List<PixelFormat>? {
-    checkIfFfmpeg()
-
-    if(this.pixelFormats == null) {
-      val pixelFormats = ArrayList<PixelFormat>()
-
-      val p = runFunc.run(ImmutableList.of(path, "-pix_fmts"))
-      try {
-        wrapInReader(p).forEachLine { line ->
-          val m = pixelFormatsRegex.matcher(line)
-          if (m.matches()) {
-            val flags = m.group(1)
-
-            pixelFormats.add(
-              PixelFormat(
-                name = m.group(2),
-                numberOfComponents = m.group(3).toInt(),
-                bitsPerPixel = m.group(4).toInt(),
-                flags = flags,
-              ),
-            )
-          }
-        }
-
-        throwOnError(p)
-        this.pixelFormats = ImmutableList.copyOf(pixelFormats)
-      } finally {
-        p.destroy()
-      }
-    }
-
-    return pixelFormats
-  }
-
-  @Synchronized
-  @Throws(IOException::class)
-  fun channelLayouts(): List<ChannelLayout>? {
-    checkIfFfmpeg()
-
-    if(this.channelLayouts == null) {
-      val p = runFunc.run(ImmutableList.of(path, "-layouts"))
-
-      try {
-        val r = wrapInReader(p)
-        this.channelLayouts = Collections.unmodifiableList(parseLayouts(r))
-      } finally {
-        p.destroy()
-      }
-    }
-
-    return channelLayouts
-  }
+  fun codecs(): List<Codec> = _codecs
 
   @Throws(IOException::class)
-  fun createProgressParser(listener: ProgressListener): ProgressParser {
-    // TODO In future create the best kind for this OS, unix socket, named pipe, or TCP.
+  fun filters(): List<Filter> = _filters
+
+  @Throws(IOException::class)
+  fun formats(): List<Format> = _formats
+
+  @Throws(IOException::class)
+  fun pixelFormats(): List<PixelFormat> = _pixelFormats
+
+  @Throws(IOException::class)
+  fun channelLayouts(): List<ChannelLayout> = _channelLayouts
+
+  @Throws(IOException::class)
+  fun createProgressParser(listener: ProgressListener): ProgressParser =
+  // TODO In future create the best kind for this OS, unix socket, named pipe, or TCP.
+  // Default to TCP because it is supported across all OSes, and is better than UDP because it
+    // provides good properties such as in-order packets, reliability, error checking, etc.
     try {
-      // Default to TCP because it is supported across all OSes, and is better than UDP because it
-      // provides good properties such as in-order packets, reliability, error checking, etc.
-      return TcpProgressParser(listener)
+      TcpProgressParser(listener)
     }
     catch(e: URISyntaxException) {
       throw IOException(e)
     }
-  }
 
   @Throws(IOException::class)
-  fun runWithBuilder(builder: FFmpegBuilder) {
-    runWithBuilder(builder, null)
-  }
-
-  @Throws(IOException::class)
-  fun runWithBuilder(builder: FFmpegBuilder, listener: ProgressListener?) {
-    if(listener != null) {
-      createProgressParser(listener).use { progressParser ->
+  fun runWithBuilder(builder: FFmpegBuilder, listener: ProgressListener? = null) {
+    when(listener) {
+      null -> super.run(builder.build())
+      else -> createProgressParser(listener).use { progressParser ->
         progressParser.start()
-        // Ensure builder is treated as a new instance if addProgress modifies it and returns a new one
         val finalBuilder = builder.addProgress(progressParser.uri)
         super.run(finalBuilder.build())
       }
-    }
-    else {
-      super.run(builder.build())
     }
   }
 
@@ -262,11 +99,9 @@ class FFmpeg @JvmOverloads constructor(
   @JvmOverloads
   @Throws(IOException::class)
   fun run(builder: FFmpegBuilder, listener: ProgressListener? = null) {
-    if(listener == null) {
-      run(builder.build())
-    }
-    else {
-      createProgressParser(listener).use { progressParser ->
+    when(listener) {
+      null -> run(builder.build())
+      else -> createProgressParser(listener).use { progressParser ->
         progressParser.start()
         val builderWithProgress = builder.addProgress(progressParser.uri)
         run(builderWithProgress.build())
@@ -274,8 +109,117 @@ class FFmpeg @JvmOverloads constructor(
     }
   }
 
-  @CheckReturnValue
   fun builder(): FFmpegBuilder = FFmpegBuilder()
+
+  /** Supported codecs  */
+  @Suppress("ClassOrdering") // These lazy properties are intentionally placed near their accessor methods
+  private val _codecs: List<Codec> by lazy {
+    checkIfFfmpeg()
+    val process = runFunc.run(listOf(path, "-codecs"))
+    try {
+      wrapInReader(process).useLines { lines ->
+        lines.mapNotNull { line ->
+          codecsRegex.matchEntire(line)?.let { match ->
+            Codec(match.groupValues[2], match.groupValues[3], match.groupValues[1])
+          }
+        }.toList()
+      }.also {
+        throwOnError(process)
+      }
+    }
+    finally {
+      process.destroy()
+    }
+  }
+
+  /** Supported filters  */
+  @Suppress("ClassOrdering")
+  private val _filters: List<Filter> by lazy {
+    checkIfFfmpeg()
+    val process = runFunc.run(listOf(path, "-filters"))
+    try {
+      wrapInReader(process).useLines { lines ->
+        lines.mapNotNull { line ->
+          filtersRegex.matchEntire(line)?.let { match ->
+            Filter(
+              isTimelineSupported = match.groups["timelinesupport"]?.value == "T",
+              isSliceThreading = match.groups["slicethreading"]?.value == "S",
+              isCommandSupport = match.groups["commandsupport"]?.value == "C",
+              name = match.groups["name"]?.value ?: "",
+              inputPattern = FilterPattern(match.groups["inputpattern"]?.value ?: ""),
+              outputPattern = FilterPattern(match.groups["outputpattern"]?.value ?: ""),
+              description = match.groups["description"]?.value ?: "",
+            )
+          }
+        }.toList()
+      }.also {
+        throwOnError(process)
+      }
+    }
+    finally {
+      process.destroy()
+    }
+  }
+
+  /** Supported formats  */
+  @Suppress("ClassOrdering")
+  private val _formats: List<Format> by lazy {
+    checkIfFfmpeg()
+    val process = runFunc.run(listOf(path, "-formats"))
+    try {
+      wrapInReader(process).useLines { lines ->
+        lines.mapNotNull { line ->
+          formatsRegex.matchEntire(line)?.let { match ->
+            Format(match.groupValues[2], match.groupValues[3], match.groupValues[1])
+          }
+        }.toList()
+      }.also {
+        throwOnError(process)
+      }
+    }
+    finally {
+      process.destroy()
+    }
+  }
+
+  /** Supported pixel formats  */
+  @Suppress("ClassOrdering")
+  private val _pixelFormats: List<PixelFormat> by lazy {
+    checkIfFfmpeg()
+    val process = runFunc.run(listOf(path, "-pix_fmts"))
+    try {
+      wrapInReader(process).useLines { lines ->
+        lines.mapNotNull { line ->
+          pixelFormatsRegex.matchEntire(line)?.let { match ->
+            PixelFormat(
+              name = match.groupValues[2],
+              numberOfComponents = match.groupValues[3].toInt(),
+              bitsPerPixel = match.groupValues[4].toInt(),
+              flags = match.groupValues[1],
+            )
+          }
+        }.toList()
+      }.also {
+        throwOnError(process)
+      }
+    }
+    finally {
+      process.destroy()
+    }
+  }
+
+  /** Supported channel layouts  */
+  @Suppress("ClassOrdering")
+  private val _channelLayouts: List<ChannelLayout> by lazy {
+    checkIfFfmpeg()
+    val process = runFunc.run(listOf(path, "-layouts"))
+    try {
+      parseLayouts(wrapInReader(process))
+    }
+    finally {
+      process.destroy()
+    }
+  }
 
   companion object {
     const val FFMPEG_COMMAND: String = "ffmpeg"
@@ -329,12 +273,10 @@ class FFmpeg @JvmOverloads constructor(
     const val AUDIO_SAMPLE_48000: Int = 48_000
     const val AUDIO_SAMPLE_96000: Int = 96_000
 
-    val codecsRegex: Pattern =
-      Pattern.compile("^ ([.D][.E][VASD][.I][.L][.S]) (\\S{2,})\\s+(.*)$")
-    val formatsRegex: Pattern = Pattern.compile("^ ([ D][ E]) (\\S+)\\s+(.*)$")
-    val pixelFormatsRegex: Pattern =
-      Pattern.compile("^([.I][.O][.H][.P][.B]) (\\S{2,})\\s+(\\d+)\\s+(\\d+)$")
-    val filtersRegex: Pattern = Pattern.compile(
+    private val codecsRegex = Regex("^ ([.D][.E][VASD][.I][.L][.S]) (\\S{2,})\\s+(.*)$")
+    private val formatsRegex = Regex("^ ([ D][ E]) (\\S+)\\s+(.*)$")
+    private val pixelFormatsRegex = Regex("^([.I][.O][.H][.P][.B]) (\\S{2,})\\s+(\\d+)\\s+(\\d+)$")
+    private val filtersRegex = Regex(
       "^\\s*(?<timelinesupport>[T.])(?<slicethreading>[S.])(?<commandsupport>[C.])\\s(?<name>[A-Za-z0-9_]+)\\s+(?<inputpattern>[AVN|]+)->(?<outputpattern>[AVN|]+)\\s+(?<description>.*)$",
     )
   }

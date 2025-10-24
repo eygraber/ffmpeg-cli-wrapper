@@ -25,13 +25,12 @@ java {
 }
 
 dependencies {
-  implementation(libs.commons.io)
   implementation(libs.commons.lang3)
-  implementation(libs.guava)
   implementation(libs.jsonSugar)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.slf4j.api)
 
+  testImplementation(libs.guava)
   testImplementation(libs.grizzly.http.server)
   testImplementation(libs.hamcrest)
   testImplementation(libs.hamcrest.integration)

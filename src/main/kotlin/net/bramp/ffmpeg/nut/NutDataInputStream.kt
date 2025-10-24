@@ -1,17 +1,42 @@
 package net.bramp.ffmpeg.nut
 
-import com.google.common.io.CountingInputStream
 import net.bramp.ffmpeg.io.CRC32InputStream
 import java.io.DataInput
 import java.io.DataInputStream
+import java.io.FilterInputStream
 import java.io.IOException
 import java.io.InputStream
+
+/** A counting input stream that tracks the number of bytes read */
+private class CountingInputStream(input: InputStream) : FilterInputStream(input) {
+  private var count: Long = 0
+
+  fun getCount(): Long = count
+
+  @Throws(IOException::class)
+  override fun read(): Int {
+    val result = super.read()
+    if(result != -1) {
+      count++
+    }
+    return result
+  }
+
+  @Throws(IOException::class)
+  override fun read(b: ByteArray, off: Int, len: Int): Int {
+    val result = super.read(b, off, len)
+    if(result != -1) {
+      count += result.toLong()
+    }
+    return result
+  }
+}
 
 /** A DataInputStream that implements a couple of custom FFmpeg Nut datatypes.  */
 class NutDataInputStream(inputStream: InputStream) : DataInput {
   val dataInputStream: DataInputStream
   val crc: CRC32InputStream
-  val count: CountingInputStream = CountingInputStream(inputStream)
+  private val count: CountingInputStream = CountingInputStream(inputStream)
 
   // These are for debugging, remove later
   var startCrcRange: Long = 0
@@ -23,12 +48,12 @@ class NutDataInputStream(inputStream: InputStream) : DataInput {
   }
 
   fun resetCRC() {
-    startCrcRange = count.count
+    startCrcRange = count.getCount()
     crc.resetCrc()
   }
 
   fun getCRC(): Long {
-    endCrcRange = count.count
+    endCrcRange = count.getCount()
     return crc.value
   }
 

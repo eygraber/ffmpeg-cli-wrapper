@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.nut
 
-import com.google.common.base.MoreObjects
 import org.apache.commons.lang3.math.Fraction
 import java.io.IOException
 import java.nio.charset.StandardCharsets
@@ -71,26 +70,13 @@ class StreamHeaderPacket : Packet() {
     }
   }
 
-  override fun toString(): String = MoreObjects.toStringHelper(this)
-    .add("header", header)
-    .add("id", id)
-    .add("type", type)
-    .add("fourcc", fourccToString(fourcc))
-    .add("timeBaseId", timeBaseId)
-    .add("msbPtsShift", msbPtsShift)
-    .add("maxPtsDistance", maxPtsDistance)
-    .add("decodeDelay", decodeDelay)
-    .add("flags", flags)
-    .add("codecSpecificData", codecSpecificData)
-    .add("width", width)
-    .add("height", height)
-    .add("sampleWidth", sampleWidth)
-    .add("sampleHeight", sampleHeight)
-    .add("colorspaceType", colorspaceType)
-    .add("sampleRate", sampleRate)
-    .add("channels", channels)
-    .add("footer", footer)
-    .toString()
+  override fun toString(): String =
+    "StreamHeaderPacket(id=$id, type=$type, fourcc=${fourccToString(fourcc)}, " +
+    "timeBaseId=$timeBaseId, msbPtsShift=$msbPtsShift, maxPtsDistance=$maxPtsDistance, " +
+    "decodeDelay=$decodeDelay, flags=$flags, codecSpecificData=${codecSpecificData.contentToString()}, " +
+    "width=$width, height=$height, " +
+    "sampleWidth=$sampleWidth, sampleHeight=$sampleHeight, colorspaceType=$colorspaceType, " +
+    "sampleRate=$sampleRate, channels=$channels)"
 
   companion object {
     const val VIDEO = 0

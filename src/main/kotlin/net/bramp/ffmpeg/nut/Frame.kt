@@ -1,11 +1,9 @@
 package net.bramp.ffmpeg.nut
 
-import com.google.common.base.MoreObjects
 import org.apache.commons.lang3.math.Fraction
 import java.io.EOFException
 import java.io.IOException
 import java.nio.charset.StandardCharsets
-import java.util.Locale
 import java.util.TreeMap
 
 /** A video or audio frame  */
@@ -160,11 +158,8 @@ class Frame {
     input.readFully(data, elision.size, size - elision.size)
   }
 
-  override fun toString(): String = MoreObjects.toStringHelper(this)
-    .add("id", stream.header.id)
-    .add("pts", pts)
-    .add("data", String.format(Locale.ROOT, "(%d bytes)", data.size))
-    .toString()
+  override fun toString(): String =
+    "Frame(id=${stream.header.id}, pts=$pts, data=(${data.size} bytes))"
 
   companion object {
     // TODO Change this to a enum

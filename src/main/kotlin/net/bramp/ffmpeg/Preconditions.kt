@@ -1,14 +1,12 @@
 package net.bramp.ffmpeg
 
-import com.google.common.base.Ascii
-import com.google.common.collect.ImmutableList
 import java.net.URI
 
 // Changed to an object as it's a final class with private constructor and only static methods
 object Preconditions {
 
-  private val rtps: List<String> = ImmutableList.of("rtsp", "rtp", "rtmp")
-  private val udpTcp: List<String> = ImmutableList.of("udp", "tcp")
+  private val rtps: List<String> = listOf("rtsp", "rtp", "rtmp")
+  private val udpTcp: List<String> = listOf("udp", "tcp")
 
   /**
    * Ensures the argument is not null, empty string, or just whitespace.
@@ -37,17 +35,16 @@ object Preconditions {
   @Throws(IllegalArgumentException::class)
   fun checkValidStream(uri: URI): URI {
     val scheme = uri.scheme
-    val lowerScheme = Ascii.toLowerCase(requireNotNull(scheme) { "URI is missing a scheme" })
+    val lowerScheme = requireNotNull(scheme) { "URI is missing a scheme" }.lowercase()
 
-    if(rtps.contains(lowerScheme)) {
-      return uri
+    when {
+      lowerScheme in rtps -> return uri
+      lowerScheme in udpTcp -> {
+        require(uri.port != -1) { "must set port when using udp or tcp scheme" }
+        return uri
+      }
+
+      else -> throw IllegalArgumentException("not a valid output URL, must use rtp/tcp/udp scheme. Found: $lowerScheme")
     }
-
-    if(udpTcp.contains(lowerScheme)) {
-      require(uri.port != -1) { "must set port when using udp or tcp scheme" }
-      return uri
-    }
-
-    throw IllegalArgumentException("not a valid output URL, must use rtp/tcp/udp scheme. Found: $lowerScheme")
   }
 }

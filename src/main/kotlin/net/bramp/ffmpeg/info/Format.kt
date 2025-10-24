@@ -1,9 +1,5 @@
 package net.bramp.ffmpeg.info
 
-import com.google.common.base.Preconditions
-import org.apache.commons.lang3.builder.EqualsBuilder
-import org.apache.commons.lang3.builder.HashCodeBuilder
-
 /**
  * Information about supported Format
  *
@@ -34,18 +30,14 @@ data class Format(
 
   override fun toString(): String = "$name $longName"
 
-  override fun equals(other: Any?): Boolean = EqualsBuilder.reflectionEquals(this, other)
-
-  override fun hashCode(): Int = HashCodeBuilder.reflectionHashCode(this)
-
   companion object {
     private fun canDemux(flags: String): Boolean {
-      Preconditions.checkArgument(flags.length == 2, "Format flags is invalid '%s'", flags)
+      require(flags.length == 2) { "Format flags is invalid '$flags'" }
       return flags[0] == 'D'
     }
 
     private fun canMux(flags: String): Boolean {
-      Preconditions.checkArgument(flags.length == 2, "Format flags is invalid '%s'", flags)
+      require(flags.length == 2) { "Format flags is invalid '$flags'" }
       return flags[1] == 'E'
     }
   }

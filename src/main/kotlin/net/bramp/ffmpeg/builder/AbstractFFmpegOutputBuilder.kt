@@ -1,13 +1,10 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.base.Strings
-import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.options.AudioEncodingOptions
 import net.bramp.ffmpeg.options.EncodingOptions
 import net.bramp.ffmpeg.options.MainEncodingOptions
 import net.bramp.ffmpeg.options.VideoEncodingOptions
 import java.net.URI
-import java.util.regex.Pattern
 
 /** Builds a representation of a single output/encoding setting */
 @Suppress("Deprecation")
@@ -241,73 +238,94 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
     return super.build(parent, pass)
   }
 
-  override fun addGlobalFlags(parent: FFmpegBuilder, args: ImmutableList.Builder<String>) {
+  override fun addGlobalFlags(parent: FFmpegBuilder, args: MutableList<String>) {
     super.addGlobalFlags(parent, args)
-    constantRateFactor?.let { args.add("-crf", formatDecimalInteger(it)) }
-    complexFilter?.let { args.add("-filter_complex", it) }
+    constantRateFactor?.let {
+      args.add("-crf")
+      args.add(formatDecimalInteger(it))
+    }
+    complexFilter?.let {
+      args.add("-filter_complex")
+      args.add(it)
+    }
   }
 
-  override fun addVideoFlags(parent: FFmpegBuilder, args: ImmutableList.Builder<String>) {
+  override fun addVideoFlags(parent: FFmpegBuilder, args: MutableList<String>) {
     super.addVideoFlags(parent, args)
 
     check(videoBitRate <= 0L || videoQuality == null) { "Only one of video_bit_rate and video_quality can be set" }
     if(videoBitRate > 0L) {
-      args.add("-b:v", videoBitRate.toString())
+      args.add("-b:v")
+      args.add(videoBitRate.toString())
     }
-    videoQuality?.let { args.add("-qscale:v", formatDecimalInteger(it)) }
-    if(!Strings.isNullOrEmpty(videoPreset)) {
-      args.add("-vpre", videoPreset)
+    videoQuality?.let {
+      args.add("-qscale:v")
+      args.add(formatDecimalInteger(it))
     }
-    if(!Strings.isNullOrEmpty(videoFilter)) {
+    videoPreset?.takeIf { it.isNotBlank() }?.let {
+      args.add("-vpre")
+      args.add(it)
+    }
+    videoFilter?.takeIf { it.isNotBlank() }?.let {
       check(parent.inputs.size == 1) {
         "Video filter only works with one input, instead use setComplexVideoFilter(..)"
       }
-      args.add("-vf", videoFilter)
+      args.add("-vf")
+      args.add(it)
     }
-    if(!Strings.isNullOrEmpty(videoBitStreamFilter)) {
-      args.add("-bsf:v", videoBitStreamFilter)
+    videoBitStreamFilter?.takeIf { it.isNotBlank() }?.let {
+      args.add("-bsf:v")
+      args.add(it)
     }
-    bFrames?.let { args.add("-bf", it.toString()) }
+    bFrames?.let {
+      args.add("-bf")
+      args.add(it.toString())
+    }
   }
 
-  override fun addAudioFlags(args: ImmutableList.Builder<String>) {
+  override fun addAudioFlags(args: MutableList<String>) {
     super.addAudioFlags(args)
-    if(!Strings.isNullOrEmpty(audioSampleFormat)) {
-      args.add("-sample_fmt", audioSampleFormat)
+    audioSampleFormat?.takeIf { it.isNotBlank() }?.let {
+      args.add("-sample_fmt")
+      args.add(it)
     }
     check(audioBitRate <= 0L || audioQuality == null || !throwWarnings) {
       "Only one of audio_bit_rate and audio_quality can be set"
     }
     if(audioBitRate > 0L) {
-      args.add("-b:a", audioBitRate.toString())
+      args.add("-b:a")
+      args.add(audioBitRate.toString())
     }
-    audioQuality?.let { args.add("-qscale:a", formatDecimalInteger(it)) }
-    if(!Strings.isNullOrEmpty(audioBitStreamFilter)) {
-      args.add("-bsf:a", audioBitStreamFilter)
+    audioQuality?.let {
+      args.add("-qscale:a")
+      args.add(formatDecimalInteger(it))
     }
-    if(!Strings.isNullOrEmpty(audioFilter)) {
-      args.add("-af", audioFilter)
+    audioBitStreamFilter?.takeIf { it.isNotBlank() }?.let {
+      args.add("-bsf:a")
+      args.add(it)
+    }
+    audioFilter?.takeIf { it.isNotBlank() }?.let {
+      args.add("-af")
+      args.add(it)
     }
   }
 
-  override fun addSourceTarget(pass: Int, args: ImmutableList.Builder<String>) {
-    val filename = filename
-    val uri = uri
+  override fun addSourceTarget(pass: Int, args: MutableList<String>) {
     check(filename == null || uri == null) { "Only one of filename and uri can be set" }
     when {
-      pass == 1 -> args.add(DEVNULL) // DEVNULL assumed to be inherited or defined
-      filename != null -> args.add(filename)
+      pass == 1 -> args.add(DEVNULL)
+      filename != null -> args.add(filename!!)
       uri != null -> args.add(uri.toString())
-      else -> assert(false) { "Either filename or uri must be set, or pass must be 1" }
+      else -> error("Either filename or uri must be set, or pass must be 1")
     }
   }
 
   // getThis() is assumed to be inherited from AbstractFFmpegStreamBuilder.kt
 
   companion object {
-    internal val trailingZero: Pattern = Pattern.compile("\\.0*$")
+    private val trailingZero = Regex("\\.0*$")
 
     @JvmStatic
-    fun formatDecimalInteger(d: Double): String = trailingZero.matcher(d.toString()).replaceAll("")
+    fun formatDecimalInteger(d: Double): String = d.toString().replace(trailingZero, "")
   }
 }

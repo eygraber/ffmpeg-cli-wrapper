@@ -1,9 +1,6 @@
 package net.bramp.ffmpeg.info
 
-import com.google.common.base.Preconditions
 import net.bramp.ffmpeg.shared.CodecType
-import org.apache.commons.lang3.builder.EqualsBuilder
-import org.apache.commons.lang3.builder.HashCodeBuilder
 
 /**
  * Information about supported Codecs
@@ -57,66 +54,62 @@ data class Codec(
 
   override fun toString(): String = "$name $longName"
 
-  override fun equals(other: Any?): Boolean = EqualsBuilder.reflectionEquals(this, other)
-
-  override fun hashCode(): Int = HashCodeBuilder.reflectionHashCode(this)
-
   companion object {
     private fun canDecode(flags: String): Boolean {
-      Preconditions.checkArgument(flags.length == 6, "Codec flags is invalid '%s'", flags)
+      require(flags.length == 6) { "Codec flags is invalid '$flags'" }
       return when(flags[0]) {
         'D' -> true
         '.' -> false
-        else -> throw IllegalArgumentException("Invalid decoding value '" + flags[0] + "'")
+        else -> throw IllegalArgumentException("Invalid decoding value '${flags[0]}'")
       }
     }
 
     private fun canEncode(flags: String): Boolean {
-      Preconditions.checkArgument(flags.length == 6, "Codec flags is invalid '%s'", flags)
+      require(flags.length == 6) { "Codec flags is invalid '$flags'" }
       return when(flags[1]) {
         'E' -> true
         '.' -> false
-        else -> throw IllegalArgumentException("Invalid encoding value '" + flags[1] + "'")
+        else -> throw IllegalArgumentException("Invalid encoding value '${flags[1]}'")
       }
     }
 
     private fun codecType(flags: String): CodecType {
-      Preconditions.checkArgument(flags.length == 6, "Codec flags is invalid '%s'", flags)
+      require(flags.length == 6) { "Codec flags is invalid '$flags'" }
       return when(flags[2]) {
         'V' -> CodecType.Video
         'A' -> CodecType.Audio
         'S' -> CodecType.Subtitle
         'D' -> CodecType.Data
         'T' -> CodecType.Attachment
-        else -> throw IllegalArgumentException("Invalid codec type '" + flags[2] + "'")
+        else -> throw IllegalArgumentException("Invalid codec type '${flags[2]}'")
       }
     }
 
     private fun isIntraFrameOnly(flags: String): Boolean {
-      Preconditions.checkArgument(flags.length == 6, "Codec flags is invalid '%s'", flags)
+      require(flags.length == 6) { "Codec flags is invalid '$flags'" }
       return when(flags[3]) {
         'I' -> true
         '.' -> false
-        else -> throw IllegalArgumentException("Invalid encoding value '" + flags[3] + "'")
+        else -> throw IllegalArgumentException("Invalid encoding value '${flags[3]}'")
       }
     }
 
     private fun supportsLossyCompression(flags: String): Boolean {
-      Preconditions.checkArgument(flags.length == 6, "Codec flags is invalid '%s'", flags)
+      require(flags.length == 6) { "Codec flags is invalid '$flags'" }
       return when(flags[4]) {
         'L' -> true
         '.' -> false
-        else -> throw IllegalArgumentException("Invalid lossy compression value '" + flags[4] + "'")
+        else -> throw IllegalArgumentException("Invalid lossy compression value '${flags[4]}'")
       }
     }
 
     private fun supportsLosslessCompression(flags: String): Boolean {
-      Preconditions.checkArgument(flags.length == 6, "Codec flags is invalid '%s'", flags)
+      require(flags.length == 6) { "Codec flags is invalid '$flags'" }
       return when(flags[5]) {
         'S' -> true
         '.' -> false
         else -> throw IllegalArgumentException(
-          "Invalid lossless compression value '" + flags[5] + "'",
+          "Invalid lossless compression value '${flags[5]}'",
         )
       }
     }

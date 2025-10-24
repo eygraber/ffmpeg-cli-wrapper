@@ -1,7 +1,5 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.base.Preconditions
-
 /**
  * Metadata spec, as described in the "map_metadata" section of [Main options](https://www.ffmpeg.org/ffmpeg-all.html#Main-options)
  */
@@ -11,11 +9,8 @@ class MetadataSpecifier private constructor(val spec: String) {
 
   companion object {
     fun checkValidKey(key: String): String {
-      Preconditions.checkArgument(key.isNotEmpty(), "key must not be empty")
-      Preconditions.checkArgument(
-        key.matches("\\w+".toRegex()),
-        "key must only contain letters, numbers or _",
-      )
+      require(key.isNotEmpty()) { "key must not be empty" }
+      require(key.matches("\\w+".toRegex())) { "key must only contain letters, numbers or _" }
       return key
     }
 

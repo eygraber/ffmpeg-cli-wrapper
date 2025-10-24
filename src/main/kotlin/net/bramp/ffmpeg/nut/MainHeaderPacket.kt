@@ -1,9 +1,7 @@
 package net.bramp.ffmpeg.nut
 
-import com.google.common.base.MoreObjects
 import org.apache.commons.lang3.math.Fraction
 import java.io.IOException
-import java.util.Locale
 
 class MainHeaderPacket : Packet() {
   var version: Long = 0
@@ -13,8 +11,8 @@ class MainHeaderPacket : Packet() {
   lateinit var timeBase: Array<Fraction>
   var flags: Long = 0
 
-  val frameCodes: MutableList<FrameCode> = ArrayList()
-  val elision: MutableList<ByteArray> = ArrayList()
+  val frameCodes: MutableList<FrameCode> = mutableListOf()
+  val elision: MutableList<ByteArray> = mutableListOf()
 
   @Throws(IOException::class)
   override fun readBody(dataInputStream: NutDataInputStream) {
@@ -69,7 +67,7 @@ class MainHeaderPacket : Packet() {
         streamId = dataInputStream.readVarInt()
         if(streamId >= streamCount) {
           throw IOException(
-            "Illegal stream id value $streamId must be < $streamCount",
+            "Invalid stream value $streamId, must be < $streamCount"
           )
         }
       }
@@ -106,18 +104,14 @@ class MainHeaderPacket : Packet() {
 
       if(streamId >= streamCount) {
         throw IOException(
-          String.format(Locale.ROOT, "Invalid stream value %d, must be < %d", streamId, streamCount),
+          "Invalid stream value $streamId, must be < $streamCount"
         )
       }
 
       if(count <= 0 || count > 256 - i - (if(i <= 'N'.code) 1 else 0)) {
+        val maxCount = 256 - i - if(i <= 'N'.code) 1 else 0
         throw IOException(
-          String.format(
-            Locale.ROOT,
-            "Invalid count value %d, must be > 0 && < %d",
-            count,
-            256 - i - if(i <= 'N'.code) 1 else 0,
-          ),
+          "Invalid count value $count, must be > 0 && < $maxCount"
         )
       }
 
@@ -181,18 +175,10 @@ class MainHeaderPacket : Packet() {
     }
   }
 
-  override fun toString(): String = MoreObjects.toStringHelper(this)
-    .add("header", header)
-    .add("version", version)
-    .add("minorVersion", minorVersion)
-    .add("streamCount", streamCount)
-    .add("maxDistance", maxDistance)
-    .add("timeBase", timeBase)
-    .add("flags", flags)
-    .add("frameCodes", frameCodes.size)
-    .add("elision", elision)
-    .add("footer", footer)
-    .toString()
+  override fun toString(): String =
+    "MainHeaderPacket(version=$version, minorVersion=$minorVersion, streamCount=$streamCount, " +
+    "maxDistance=$maxDistance, timeBase=${timeBase.contentToString()}, flags=$flags, " +
+    "frameCodes=${frameCodes.size}, elision=${elision.size})"
 
   companion object {
     const val BROADCAST_MODE: Int = 0

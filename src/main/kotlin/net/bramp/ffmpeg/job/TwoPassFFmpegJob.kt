@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.job
 
-import com.google.common.base.Throwables
 import net.bramp.ffmpeg.FFmpeg
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.progress.ProgressListener
@@ -39,7 +38,7 @@ class TwoPassFFmpegJob(
 
   override fun run() {
     state = State.Running
-    try {
+    runCatching {
       try {
         // Two pass
         val shouldOverride = builder.overrideOutputFiles
@@ -47,15 +46,17 @@ class TwoPassFFmpegJob(
         ffmpeg.runWithBuilder(b1, listener)
         val b2 = builder.setPass(2).overrideOutputFiles(shouldOverride)
         ffmpeg.runWithBuilder(b2, listener)
-      } finally {
+      }
+      finally {
         deletePassLog()
       }
-      state = State.Finished
     }
-    catch(t: Throwable) {
-      state = State.Failed
-      Throwables.throwIfUnchecked(t)
-      throw RuntimeException(t)
-    }
+      .onSuccess {
+        state = State.Finished
+      }
+      .onFailure { t ->
+        state = State.Failed
+        throw t
+      }
   }
 }

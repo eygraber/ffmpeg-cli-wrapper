@@ -1,9 +1,5 @@
 package net.bramp.ffmpeg
 
-import com.google.common.base.Preconditions
-import com.google.common.base.Strings
-import com.google.common.collect.ImmutableList
-import com.google.common.io.CharStreams
 import net.bramp.ffmpeg.io.ProcessUtils
 import net.bramp.ffmpeg.probe.FFmpegError
 import net.bramp.ffmpeg.probe.FFmpegProbeResult
@@ -22,7 +18,7 @@ abstract class FFcommon protected constructor(
 ) {
 
   init {
-    Preconditions.checkArgument(!Strings.isNullOrEmpty(path), "path must not be null or empty")
+    require(path.isNotBlank()) { "path must not be null or empty" }
   }
 
   /** Version string */
@@ -79,11 +75,11 @@ abstract class FFcommon protected constructor(
   @Throws(IOException::class)
   fun version(): String {
     if(this.version == null) {
-      val p = runFunc.run(ImmutableList.of(path, "-version"))
+      val p = runFunc.run(listOf(path, "-version"))
       try {
         val r = wrapInReader(p)
         val versionLine = r.readLine()
-        CharStreams.copy(r, CharStreams.nullWriter()) // Throw away rest of the output
+        r.useLines { it.forEach { /* consume remaining lines */ } }
         throwOnError(p) // Check for process error first
 
         // If process didn't error, but versionLine is null, it's an unexpected output
@@ -109,7 +105,7 @@ abstract class FFcommon protected constructor(
    * @param args The arguments to pass to the binary.
    * @return The full path and arguments to execute the binary.
    */
-  fun path(args: List<String>): List<String> = ImmutableList.builder<String>().add(path).addAll(args).build()
+  fun path(args: List<String>): List<String> = listOf(path) + args
 
   /**
    * Runs the binary (ffmpeg) with the supplied args. Blocking until finished.
@@ -122,8 +118,8 @@ abstract class FFcommon protected constructor(
     val p = runFunc.run(path(args))
     try {
       // TODO Move the copy onto a thread, so that FFmpegProgressListener can be on this thread.
-      CharStreams.copy(wrapInReader(p), processOutputStream)
-      CharStreams.copy(wrapErrorInReader(p), processErrorStream)
+      processOutputStream.append(wrapInReader(p).readText())
+      processErrorStream.append(wrapErrorInReader(p).readText())
       throwOnError(p)
     }
     finally {
