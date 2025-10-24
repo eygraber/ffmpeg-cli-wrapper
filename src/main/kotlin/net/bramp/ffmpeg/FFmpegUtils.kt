@@ -4,10 +4,10 @@ import com.google.common.base.CharMatcher
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
-import net.bramp.ffmpeg.serde.FFmpegFrameOrPacketSerializer
-import net.bramp.ffmpeg.serde.FFmpegStreamSideDataSerializer
-import net.bramp.ffmpeg.serde.FractionSerializer
-import net.bramp.ffmpeg.serde.LowercaseEnumSerializer
+import net.bramp.ffmpeg.serialization.FFmpegFrameOrPacketSerializer
+import net.bramp.ffmpeg.serialization.FFmpegStreamSideDataSerializer
+import net.bramp.ffmpeg.serialization.FractionSerializer
+import net.bramp.ffmpeg.serialization.LowercaseEnumSerializer
 import net.bramp.ffmpeg.shared.CodecType
 import java.util.Locale
 import java.util.concurrent.TimeUnit

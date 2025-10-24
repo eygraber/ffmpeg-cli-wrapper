@@ -1,4 +1,4 @@
-package net.bramp.ffmpeg.serde
+package net.bramp.ffmpeg.serialization
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
