@@ -1,7 +1,10 @@
 package net.bramp.ffmpeg.progress
 
 import net.bramp.ffmpeg.Helper.combineResource
-import net.bramp.ffmpeg.fixtures.Progresses
+import net.bramp.ffmpeg.fixtures.allFiles
+import net.bramp.ffmpeg.fixtures.allProgresses
+import net.bramp.ffmpeg.fixtures.naProgressFile
+import net.bramp.ffmpeg.fixtures.naProgresses
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Test
@@ -17,10 +20,10 @@ class StreamProgressParserTest {
 
     val parser = StreamProgressParser(listener)
 
-    val inputStream = combineResource(Progresses.allFiles)
+    val inputStream = combineResource(allFiles)
     parser.processStream(inputStream)
 
-    assertThat(listener.progresses, equalTo(Progresses.allProgresses))
+    assertThat(listener.progresses, equalTo(allProgresses))
   }
 
   @Test
@@ -30,9 +33,9 @@ class StreamProgressParserTest {
 
     val parser = StreamProgressParser(listener)
 
-    val inputStream = combineResource(Progresses.naProgressFile)
+    val inputStream = combineResource(naProgressFile)
     parser.processStream(inputStream)
 
-    assertThat(listener.progresses, equalTo(Progresses.naProgresses))
+    assertThat(listener.progresses, equalTo(naProgresses))
   }
 }

@@ -3,8 +3,7 @@ package net.bramp.ffmpeg.fixtures
 import net.bramp.ffmpeg.info.Filter
 import net.bramp.ffmpeg.info.FilterPattern
 
-object Filters {
-  val FILTERS = listOf(
+val filters = listOf(
     Filter(
       isTimelineSupported = false,
       isSliceThreading = false,
@@ -4451,5 +4450,4 @@ object Filters {
       outputPattern = FilterPattern("|"),
       description = "Buffer video frames, and make them available to the end of the filter graph."
     ),
-  )
-}
+)

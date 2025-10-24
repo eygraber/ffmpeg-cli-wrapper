@@ -2,8 +2,7 @@ package net.bramp.ffmpeg.fixtures
 
 import net.bramp.ffmpeg.info.PixelFormat
 
-object PixelFormats {
-  val PIXEL_FORMATS = listOf(
+val pixelFormats = listOf(
     PixelFormat("yuv420p", 3, 12, "IO..."),
     PixelFormat("yuyv422", 3, 16, "IO..."),
     PixelFormat("rgb24", 3, 24, "IO..."),
@@ -197,5 +196,4 @@ object PixelFormats {
     PixelFormat("yuva444p12le", 4, 48, "IO..."),
     PixelFormat("nv24", 3, 24, "IO..."),
     PixelFormat("nv42", 3, 24, "IO..."),
-  )
-}
+)

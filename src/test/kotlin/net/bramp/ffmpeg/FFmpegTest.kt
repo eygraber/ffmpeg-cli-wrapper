@@ -3,11 +3,11 @@ package net.bramp.ffmpeg
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import net.bramp.ffmpeg.fixtures.ChannelLayouts
-import net.bramp.ffmpeg.fixtures.Codecs
-import net.bramp.ffmpeg.fixtures.Filters
-import net.bramp.ffmpeg.fixtures.Formats
-import net.bramp.ffmpeg.fixtures.PixelFormats
+import net.bramp.ffmpeg.fixtures.channelLayouts
+import net.bramp.ffmpeg.fixtures.codecs
+import net.bramp.ffmpeg.fixtures.filters as fixtureFilters
+import net.bramp.ffmpeg.fixtures.formats
+import net.bramp.ffmpeg.fixtures.pixelFormats
 import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.lang.MockProcess
 import org.junit.Assert.assertEquals
@@ -89,8 +89,8 @@ class FFmpegTest {
   @Test
   fun testCodecs() {
     // Run twice, the second should be cached
-    assertEquals(Codecs.CODECS, ffmpeg.codecs())
-    assertEquals(Codecs.CODECS, ffmpeg.codecs())
+    assertEquals(codecs, ffmpeg.codecs())
+    assertEquals(codecs, ffmpeg.codecs())
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-codecs")) }
   }
@@ -98,8 +98,8 @@ class FFmpegTest {
   @Test
   fun testFormats() {
     // Run twice, the second should be cached
-    assertEquals(Formats.FORMATS, ffmpeg.formats())
-    assertEquals(Formats.FORMATS, ffmpeg.formats())
+    assertEquals(formats, ffmpeg.formats())
+    assertEquals(formats, ffmpeg.formats())
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-formats")) }
   }
@@ -122,8 +122,8 @@ class FFmpegTest {
   @Test
   fun testPixelFormat() {
     // Run twice, the second should be cached
-    assertEquals(PixelFormats.PIXEL_FORMATS, ffmpeg.pixelFormats())
-    assertEquals(PixelFormats.PIXEL_FORMATS, ffmpeg.pixelFormats())
+    assertEquals(pixelFormats, ffmpeg.pixelFormats())
+    assertEquals(pixelFormats, ffmpeg.pixelFormats())
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-pix_fmts")) }
   }
@@ -134,19 +134,19 @@ class FFmpegTest {
     val filters = ffmpeg.filters()
 
     for(i in filters!!.indices) {
-      assertEquals(Filters.FILTERS[i], filters[i])
+      assertEquals(fixtureFilters[i], filters[i])
     }
 
-    assertEquals(Filters.FILTERS, ffmpeg.filters())
-    assertEquals(Filters.FILTERS, ffmpeg.filters())
+    assertEquals(fixtureFilters, ffmpeg.filters())
+    assertEquals(fixtureFilters, ffmpeg.filters())
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-filters")) }
   }
 
   @Test
   fun testLayouts() {
-    assertEquals(ChannelLayouts.CHANNEL_LAYOUTS, ffmpeg.channelLayouts())
-    assertEquals(ChannelLayouts.CHANNEL_LAYOUTS, ffmpeg.channelLayouts())
+    assertEquals(channelLayouts, ffmpeg.channelLayouts())
+    assertEquals(channelLayouts, ffmpeg.channelLayouts())
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-layouts")) }
   }

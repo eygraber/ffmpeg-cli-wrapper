@@ -9,8 +9,7 @@ import net.bramp.ffmpeg.info.Format
  *
  * @author bramp
  */
-object Formats {
-  val FORMATS = listOf(
+val formats = listOf(
     Format("3g2", "3GP2 format", " E"),
     Format("3gp", "3GP format", " E"),
     Format("4xm", "4X Technologies format", "D "),
@@ -219,5 +218,4 @@ object Formats {
     Format("xwma", "Microsoft xWMA", "D "),
     Format("yop", "Psygnosis YOP Format", "D "),
     Format("yuv4mpegpipe", "YUV4MPEG pipe format", "DE"),
-  )
-}
+)

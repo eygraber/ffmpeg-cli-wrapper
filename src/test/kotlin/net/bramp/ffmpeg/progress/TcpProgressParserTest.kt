@@ -2,7 +2,10 @@ package net.bramp.ffmpeg.progress
 
 import com.google.common.io.ByteStreams
 import net.bramp.ffmpeg.Helper.combineResource
-import net.bramp.ffmpeg.fixtures.Progresses
+import net.bramp.ffmpeg.fixtures.allFiles
+import net.bramp.ffmpeg.fixtures.allProgresses
+import net.bramp.ffmpeg.fixtures.naProgressFile
+import net.bramp.ffmpeg.fixtures.naProgresses
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.core.IsEqual.equalTo
@@ -24,7 +27,7 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     val client = Socket(uri.host, uri.port)
     assertTrue("Socket is connected", client.isConnected)
 
-    val inputStream = combineResource(Progresses.allFiles)
+    val inputStream = combineResource(allFiles)
     val outputStream = client.getOutputStream()
 
     val bytes = ByteStreams.copy(inputStream, outputStream)
@@ -37,7 +40,7 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     parser.stop()
 
     assertThat(bytes, greaterThan(0L))
-    assertThat(progresses, equalTo(Progresses.allProgresses))
+    assertThat(progresses, equalTo(allProgresses))
   }
 
   @Test
@@ -48,7 +51,7 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     val client = Socket(uri.host, uri.port)
     assertTrue("Socket is connected", client.isConnected)
 
-    val inputStream = combineResource(Progresses.naProgressFile)
+    val inputStream = combineResource(naProgressFile)
     val outputStream = client.getOutputStream()
 
     val bytes = ByteStreams.copy(inputStream, outputStream)
@@ -61,7 +64,7 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     parser.stop()
 
     assertThat(bytes, greaterThan(0L))
-    assertThat(progresses, equalTo(Progresses.naProgresses))
+    assertThat(progresses, equalTo(naProgresses))
   }
 
   @Test

@@ -2,8 +2,7 @@ package net.bramp.ffmpeg.fixtures
 
 import net.bramp.ffmpeg.info.Codec
 
-object Codecs {
-  val CODECS = listOf(
+val codecs = listOf(
     // Video codecs
     Codec("012v", "Uncompressed 4:2:2 10-bit", "D.VI.S"),
     Codec("4xm", "4X Movie", "D.V.L."),
@@ -495,5 +494,4 @@ object Codecs {
     Codec("vplayer", "VPlayer subtitle", "D.S..."),
     Codec("webvtt", "WebVTT subtitle", "DES..."),
     Codec("xsub", "XSUB", "DES..."),
-  )
-}
+)
