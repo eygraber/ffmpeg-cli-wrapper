@@ -4,8 +4,8 @@ package net.bramp.ffmpeg.progress
 class RecordingProgressListener : ProgressListener {
   val progresses = mutableListOf<Progress>()
 
-  override fun progress(p: Progress) {
-    progresses.add(p)
+  override fun progress(progress: Progress) {
+    progresses.add(progress)
   }
 
   fun reset() {
