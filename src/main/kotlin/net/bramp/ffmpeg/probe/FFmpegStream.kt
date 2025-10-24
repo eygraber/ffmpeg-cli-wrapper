@@ -3,7 +3,7 @@ package net.bramp.ffmpeg.probe
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import net.bramp.ffmpeg.serde.CodecTypeSerializer
+import net.bramp.ffmpeg.serialization.CodecTypeSerializer
 import net.bramp.ffmpeg.shared.CodecType
 import org.apache.commons.lang3.math.Fraction
 

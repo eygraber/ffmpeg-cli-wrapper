@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.serializer
 import net.bramp.ffmpeg.FFmpegUtils
-import net.bramp.ffmpeg.serde.CodecTypeSerializer
+import net.bramp.ffmpeg.serialization.CodecTypeSerializer
 import net.bramp.ffmpeg.shared.CodecType
 
 @Serializable

@@ -1,7 +1,6 @@
-package net.bramp.ffmpeg.serde
+package net.bramp.ffmpeg.serialization
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.apache.commons.lang3.math.Fraction
 import org.hamcrest.CoreMatchers.equalTo

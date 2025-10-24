@@ -1,7 +1,7 @@
 package net.bramp.ffmpeg.probe
 
 import kotlinx.serialization.Serializable
-import net.bramp.ffmpeg.serde.FFmpegProbeResultSerializer
+import net.bramp.ffmpeg.serialization.FFmpegProbeResultSerializer
 
 @Serializable(with = FFmpegProbeResultSerializer::class)
 data class FFmpegProbeResult @JvmOverloads constructor(
