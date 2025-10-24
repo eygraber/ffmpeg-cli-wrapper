@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.progress
 
-import com.google.common.io.ByteStreams
 import net.bramp.ffmpeg.Helper.combineResource
 import net.bramp.ffmpeg.fixtures.allFiles
 import net.bramp.ffmpeg.fixtures.allProgresses
@@ -30,7 +29,7 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     val inputStream = combineResource(allFiles)
     val outputStream = client.getOutputStream()
 
-    val bytes = ByteStreams.copy(inputStream, outputStream)
+    val bytes = inputStream.copyTo(outputStream)
 
     // HACK, but give the TcpProgressParser thread time to actually handle the connection/data
     // before the client is closed, and the parser is stopped.
@@ -54,7 +53,7 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     val inputStream = combineResource(naProgressFile)
     val outputStream = client.getOutputStream()
 
-    val bytes = ByteStreams.copy(inputStream, outputStream)
+    val bytes = inputStream.copyTo(outputStream)
 
     // HACK, but give the TcpProgressParser thread time to actually handle the connection/data
     // before the client is closed, and the parser is stopped.

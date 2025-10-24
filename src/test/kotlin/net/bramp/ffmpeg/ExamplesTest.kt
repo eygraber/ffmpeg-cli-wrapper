@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg
 
-import com.google.common.base.Joiner
 import io.mockk.every
 import io.mockk.mockk
 import net.bramp.ffmpeg.builder.FFmpegBuilder
@@ -66,7 +65,7 @@ class ExamplesTest {
         " -profile:v baseline -deinterlace -preset medium -g 30" +
         " rtmp://a.rtmp.youtube.com/live2/1234-5678"
 
-    val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
+    val actual = ffmpeg.path(builder.build()).joinToString(" ")
 
     assertEquals(expected, actual)
   }
@@ -92,7 +91,7 @@ class ExamplesTest {
         " -qscale:a 5" +
         " output.ogv"
 
-    val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
+    val actual = ffmpeg.path(builder.build()).joinToString(" ")
     assertEquals(expected, actual)
   }
 
@@ -112,7 +111,7 @@ class ExamplesTest {
         " -vframes 1 -vf select='gte(n\\,10)',scale=200:-1" +
         " thumbnail.png"
 
-    val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
+    val actual = ffmpeg.path(builder.build()).joinToString(" ")
     assertEquals(expected, actual)
   }
 
@@ -128,7 +127,7 @@ class ExamplesTest {
 
     val expected = "ffmpeg -y -v error -i rtsp://192.168.1.1:1234/ -f image2 img%03d.jpg"
 
-    val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
+    val actual = ffmpeg.path(builder.build()).joinToString(" ")
     assertEquals(expected, actual)
   }
 
@@ -151,7 +150,7 @@ class ExamplesTest {
 
     val expected = "ffmpeg -y -v error -i image%03d.png -r 24/1 output.mp4"
 
-    val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
+    val actual = ffmpeg.path(builder.build()).joinToString(" ")
     assertEquals(expected, actual)
   }
 
@@ -190,7 +189,7 @@ class ExamplesTest {
         " -shortest" +
         " with-video.mp4"
 
-    val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
+    val actual = ffmpeg.path(builder.build()).joinToString(" ")
     assertEquals(expected, actual)
   }
 
@@ -214,7 +213,7 @@ class ExamplesTest {
         " -tag:v hvc1" +
         " hevc-video.mp4"
 
-    val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
+    val actual = ffmpeg.path(builder.build()).joinToString(" ")
     assertEquals(expected, actual)
   }
 
@@ -239,7 +238,7 @@ class ExamplesTest {
         "-map_channel 0.0.0 left.mp3 " +
         "-map_channel 0.0.1 right.mp3"
 
-    val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
+    val actual = ffmpeg.path(builder.build()).joinToString(" ")
     assertEquals(expected, actual)
   }
 
@@ -278,7 +277,7 @@ class ExamplesTest {
     }
     out.addExtraArgs("-adaptation_sets", "\"id=0,streams=0 id=1,streams=" + streams.joinToString(",") + "\"").done()
 
-    val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
+    val actual = ffmpeg.path(builder.build()).joinToString(" ")
     assertEquals(expected, actual)
   }
 
@@ -303,7 +302,7 @@ class ExamplesTest {
 
     val expected =
       "ffmpeg -y -v error -ss 00:01:00 -i input.mp4 -t 00:01:00 -vcodec copy -acodec copy output.mp4"
-    val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
+    val actual = ffmpeg.path(builder.build()).joinToString(" ")
     assertEquals(expected, actual)
   }
 }

@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.progress
 
-import com.google.common.io.ByteStreams
 import net.bramp.ffmpeg.Helper.loadResource
 import net.bramp.ffmpeg.fixtures.allFiles
 import net.bramp.ffmpeg.fixtures.allProgresses
@@ -32,7 +31,7 @@ class UdpProgressParserTest : AbstractProgressParserTest() {
       // Load each Progress Fixture, and send in a single datagram packet
       for(progressFixture in allFiles) {
         val inputStream = loadResource(progressFixture)
-        val bytes = ByteStreams.toByteArray(inputStream)
+        val bytes = inputStream.readBytes()
 
         val packet = DatagramPacket(bytes, bytes.size, addr, port)
         socket.send(packet)
@@ -58,7 +57,7 @@ class UdpProgressParserTest : AbstractProgressParserTest() {
       // Load each Progress Fixture, and send in a single datagram packet
       for(progressFixture in naProgressFile) {
         val inputStream = loadResource(progressFixture)
-        val bytes = ByteStreams.toByteArray(inputStream)
+        val bytes = inputStream.readBytes()
 
         val packet = DatagramPacket(bytes, bytes.size, addr, port)
         socket.send(packet)
