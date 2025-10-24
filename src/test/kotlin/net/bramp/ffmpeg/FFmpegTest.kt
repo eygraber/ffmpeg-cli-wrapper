@@ -1,12 +1,16 @@
 package net.bramp.ffmpeg
 
-import io.mockk.*
-import net.bramp.ffmpeg.builder.FFmpegBuilder
-import net.bramp.ffmpeg.fixtures.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.lang.MockProcess
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
-import org.junit.Assert.*
 import java.util.concurrent.TimeUnit
 
 class FFmpegTest {
@@ -25,7 +29,7 @@ class FFmpegTest {
     every { runFunc.run(match { list -> list.any { it.contains("toto.mp4") } }) } returns MockProcess(
       null,
       Helper.loadResource("ffmpeg-version"),
-      Helper.loadResource("ffmpeg-no-such-file")
+      Helper.loadResource("ffmpeg-no-such-file"),
     )
     every { runFunc.run(listOf(path, "-filters")) } returns MockProcess(Helper.loadResource("ffmpeg-filters"))
     every { runFunc.run(listOf(path, "-layouts")) } returns MockProcess(Helper.loadResource("ffmpeg-layouts"))

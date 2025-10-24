@@ -29,7 +29,7 @@ class FFmpegBuilderTest {
     val args = FFmpegBuilder()
       .setVerbosity(Verbosity.Debug)
       .setUserAgent(
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36"
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36",
       )
       .setInput("input")
       .setStartOffset(1500, TimeUnit.MILLISECONDS)
@@ -86,9 +86,9 @@ class FFmpegBuilderTest {
         "1",
         "-bsf:a",
         "bar",
-        "output"
+        "output",
       ),
-      args
+      args,
     )
   }
 
@@ -106,7 +106,7 @@ class FFmpegBuilderTest {
 
     assertEquals(
       listOf("-y", "-v", "error", "-i", "input", "-vn", "-an", "-sn", "output"),
-      args
+      args,
     )
   }
 
@@ -133,9 +133,9 @@ class FFmpegBuilderTest {
         "scale='trunc(ow/a/2)*2:320'",
         "-an",
         "-sn",
-        "output"
+        "output",
       ),
-      args
+      args,
     )
   }
 
@@ -161,9 +161,9 @@ class FFmpegBuilderTest {
         "320x240",
         "-vf",
         "scale='trunc(ow/a/2)*2:320'",
-        "output"
+        "output",
       ),
-      args
+      args,
     )
   }
 
@@ -193,7 +193,13 @@ class FFmpegBuilderTest {
   fun testVideoCodecWithEnum() {
     val main = MainEncodingOptions("mp4", 1500L, 2L)
     val audio = AudioEncodingOptions(
-      true, AudioCodec.AAC, 1, AUDIO_SAMPLE_48000, AUDIO_FORMAT_S16, 1, 2.0
+      true,
+      AudioCodec.AAC,
+      1,
+      AUDIO_SAMPLE_48000,
+      AUDIO_FORMAT_S16,
+      1,
+      2.0,
     )
     val video = VideoEncodingOptions(true, VideoCodec.H264, FPS_30, 320, 240, 1, null, null, null)
 
@@ -230,9 +236,9 @@ class FFmpegBuilderTest {
     assertEquals(
       listOf(
         "-y", "-v", "error", "-i", "input", "-s", "320x240", "output1", "-s", "640x480",
-        "output2", "-s", "ntsc", "output3"
+        "output2", "-s", "ntsc", "output3",
       ),
-      args
+      args,
     )
   }
 
@@ -260,9 +266,16 @@ class FFmpegBuilderTest {
 
     assertEquals(
       listOf(
-        "-y", "-v", "error", "-i", "input", "-s", "320x240", "udp://10.1.0.102:1234"
+        "-y",
+        "-v",
+        "error",
+        "-i",
+        "input",
+        "-s",
+        "320x240",
+        "udp://10.1.0.102:1234",
       ),
-      args
+      args,
     )
   }
 
@@ -318,9 +331,9 @@ class FFmpegBuilderTest {
         "title=\"Video\"",
         "-metadata",
         "author=a=b:c",
-        "output"
+        "output",
       ),
-      args
+      args,
     )
   }
 
@@ -373,9 +386,9 @@ class FFmpegBuilderTest {
         "a=b",
         "-metadata:s:m:key:value",
         "a=b",
-        "output"
+        "output",
       ),
-      args
+      args,
     )
   }
 
@@ -394,9 +407,9 @@ class FFmpegBuilderTest {
 
     assertEquals(
       listOf(
-        "-y", "-v", "error", "-a", "b", "-i", "input", "-an", "-sn", "-c", "d", "output"
+        "-y", "-v", "error", "-a", "b", "-i", "input", "-an", "-sn", "-c", "d", "output",
       ),
-      args
+      args,
     )
   }
 
@@ -406,7 +419,7 @@ class FFmpegBuilderTest {
 
     assertEquals(
       listOf("-y", "-v", "error", "-i", "input", "-qscale:a", "2", "output"),
-      args
+      args,
     )
   }
 
@@ -438,7 +451,7 @@ class FFmpegBuilderTest {
 
     assertEquals(
       listOf("-y", "-v", "error", "-i", "input1", "-i", "input2", "output"),
-      args
+      args,
     )
   }
 
@@ -463,9 +476,9 @@ class FFmpegBuilderTest {
         "output.mp4",
         "-vcodec",
         "flv",
-        "output.flv"
+        "output.flv",
       ),
-      args
+      args,
     )
   }
 
@@ -486,9 +499,9 @@ class FFmpegBuilderTest {
     assertEquals(
       listOf(
         "-y", "-v", "error", "-i", "input", "-preset", "a", "-fpre", "b", "-vpre", "c", "-apre",
-        "d", "-spre", "e", "output"
+        "d", "-spre", "e", "output",
       ),
-      args
+      args,
     )
   }
 
@@ -504,7 +517,7 @@ class FFmpegBuilderTest {
 
     assertEquals(
       listOf("-y", "-v", "error", "-threads", "2", "-i", "input", "output"),
-      args
+      args,
     )
   }
 
@@ -520,7 +533,7 @@ class FFmpegBuilderTest {
 
     assertEquals(
       listOf("-y", "-v", "error", "-stream_loop", "2", "-i", "input", "output"),
-      args
+      args,
     )
   }
 
@@ -586,9 +599,9 @@ class FFmpegBuilderTest {
         "flv",
         "-acodec",
         "aac",
-        "rtmp://a.rtmp.youtube.com/live2/XXX"
+        "rtmp://a.rtmp.youtube.com/live2/XXX",
       ),
-      args
+      args,
     )
   }
 
@@ -604,9 +617,16 @@ class FFmpegBuilderTest {
 
     assertEquals(
       listOf(
-        "-strict", "experimental", "-y", "-v", "error", "-i", "input.mp4", "output.mp4"
+        "-strict",
+        "experimental",
+        "-y",
+        "-v",
+        "error",
+        "-i",
+        "input.mp4",
+        "output.mp4",
       ),
-      args
+      args,
     )
   }
 
@@ -647,9 +667,9 @@ class FFmpegBuilderTest {
         "-map",
         "1:0",
         "-shortest",
-        "output.mp4"
+        "output.mp4",
       ),
-      args
+      args,
     )
   }
 
@@ -685,9 +705,9 @@ class FFmpegBuilderTest {
         "desktop",
         "-vcodec",
         "libx264",
-        "video_file_name.mp4"
+        "video_file_name.mp4",
       ),
-      args
+      args,
     )
   }
 
@@ -775,9 +795,9 @@ class FFmpegBuilderTest {
         "5",
         "-adaptation_sets",
         "id=0,streams=0,1,2,3,4 id=1,streams=5",
-        "manifest.mp4"
+        "manifest.mp4",
       ),
-      args
+      args,
     )
   }
 }

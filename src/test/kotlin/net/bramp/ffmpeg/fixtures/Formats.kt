@@ -218,6 +218,6 @@ object Formats {
     Format("xmv", "Microsoft XMV", "D "),
     Format("xwma", "Microsoft xWMA", "D "),
     Format("yop", "Psygnosis YOP Format", "D "),
-    Format("yuv4mpegpipe", "YUV4MPEG pipe format", "DE")
+    Format("yuv4mpegpipe", "YUV4MPEG pipe format", "DE"),
   )
 }

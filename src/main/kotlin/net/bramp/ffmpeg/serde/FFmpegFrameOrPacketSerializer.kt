@@ -50,7 +50,7 @@ object FFmpegFrameOrPacketListSerializer : KSerializer<List<FFmpegFrameOrPacket>
     encoder.encodeSerializableValue(ListSerializer(FFmpegFrameOrPacketSerializer), value)
   }
 
-  override fun deserialize(decoder: Decoder): List<FFmpegFrameOrPacket> {
-    return decoder.decodeSerializableValue(ListSerializer(FFmpegFrameOrPacketSerializer))
-  }
+  override fun deserialize(decoder: Decoder): List<FFmpegFrameOrPacket> = decoder.decodeSerializableValue(
+    ListSerializer(FFmpegFrameOrPacketSerializer),
+  )
 }

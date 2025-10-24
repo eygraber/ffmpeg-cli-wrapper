@@ -17,9 +17,12 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.core.Is.`is`
-import org.junit.*
+import org.junit.AfterClass
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.BeforeClass
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.Timeout
 import org.slf4j.LoggerFactory
 import java.io.IOException
@@ -45,7 +48,7 @@ class FFmpegExecutorTest {
     val builder = FFmpegBuilder()
       .setVerbosity(FFmpegBuilder.Verbosity.Debug)
       .setUserAgent(
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36"
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36",
       )
       .setInput(getWebserverRoot() + Samples.base_big_buck_bunny_720p_1mb)
       .addExtraArgs("-probesize", "1000000")
@@ -244,7 +247,9 @@ class FFmpegExecutorTest {
       MimeType.add("mp4", "video/mp4")
 
       server = HttpServer.createSimpleServer(
-        Samples.TEST_PREFIX, "127.0.0.1", PortRange(10000, 60000)
+        Samples.TEST_PREFIX,
+        "127.0.0.1",
+        PortRange(10000, 60000),
       )
       server.start()
 

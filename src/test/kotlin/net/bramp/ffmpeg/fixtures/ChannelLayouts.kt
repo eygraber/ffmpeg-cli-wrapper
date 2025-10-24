@@ -36,8 +36,6 @@ object ChannelLayouts {
   private val BFL = IndividualChannel("BFL", "bottom front left")
   private val BFR = IndividualChannel("BFR", "bottom front right")
 
-  private fun decomposition(vararg channels: IndividualChannel) = channels.toList()
-
   val CHANNEL_LAYOUTS: List<ChannelLayout> = listOf(
     FL,
     FR,
@@ -99,7 +97,7 @@ object ChannelLayouts {
     StandardChannelLayout("cube", decomposition(FL, FR, BL, BR, TFL, TFR, TBL, TBR)),
     StandardChannelLayout(
       "hexadecagonal",
-      decomposition(FL, FR, FC, BL, BR, BC, SL, SR, TFL, TFC, TFR, TBL, TBC, TBR, WL, WR)
+      decomposition(FL, FR, FC, BL, BR, BC, SL, SR, TFL, TFC, TFR, TBL, TBC, TBR, WL, WR),
     ),
     StandardChannelLayout("downmix", decomposition(DL, DR)),
     StandardChannelLayout(
@@ -128,8 +126,10 @@ object ChannelLayouts {
         TSR,
         BFC,
         BFL,
-        BFR
-      )
-    )
+        BFR,
+      ),
+    ),
   )
+
+  private fun decomposition(vararg channels: IndividualChannel) = channels.toList()
 }

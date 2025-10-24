@@ -4,13 +4,11 @@ import com.google.common.base.Joiner
 import io.mockk.every
 import io.mockk.mockk
 import net.bramp.ffmpeg.builder.FFmpegBuilder
-import net.bramp.ffmpeg.builder.FFmpegOutputBuilder
 import net.bramp.ffmpeg.lang.MockProcess
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
-import java.io.IOException
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
@@ -60,13 +58,13 @@ class ExamplesTest {
 
     val expected =
       "ffmpeg\\win64\\bin\\ffmpeg.exe -y -v error" +
-      " -rtbufsize 1500M -re -f dshow" +
-      " -i video=\"Microsoft Camera Rear\":audio=\"Microphone Array (Realtek High Definition Audio(SST))\"" +
-      " -f flv" +
-      " -vcodec libx264 -pix_fmt yuv420p -s 426x240 -r 30/1 -b:v 2000000" +
-      " -acodec libmp3lame -ar 44100 -b:a 1000000 -bufsize 4000k -maxrate 1000k" +
-      " -profile:v baseline -deinterlace -preset medium -g 30" +
-      " rtmp://a.rtmp.youtube.com/live2/1234-5678"
+        " -rtbufsize 1500M -re -f dshow" +
+        " -i video=\"Microsoft Camera Rear\":audio=\"Microphone Array (Realtek High Definition Audio(SST))\"" +
+        " -f flv" +
+        " -vcodec libx264 -pix_fmt yuv420p -s 426x240 -r 30/1 -b:v 2000000" +
+        " -acodec libmp3lame -ar 44100 -b:a 1000000 -bufsize 4000k -maxrate 1000k" +
+        " -profile:v baseline -deinterlace -preset medium -g 30" +
+        " rtmp://a.rtmp.youtube.com/live2/1234-5678"
 
     val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
 
@@ -87,12 +85,12 @@ class ExamplesTest {
 
     val expected =
       "ffmpeg -y -v error" +
-      " -i input.mkv" +
-      " -vcodec libtheora" +
-      " -acodec libvorbis" +
-      " -qscale:v 7" +
-      " -qscale:a 5" +
-      " output.ogv"
+        " -i input.mkv" +
+        " -vcodec libtheora" +
+        " -acodec libvorbis" +
+        " -qscale:v 7" +
+        " -qscale:a 5" +
+        " output.ogv"
 
     val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
     assertEquals(expected, actual)
@@ -110,9 +108,9 @@ class ExamplesTest {
 
     val expected =
       "ffmpeg -y -v error" +
-      " -i sample.avi" +
-      " -vframes 1 -vf select='gte(n\\,10)',scale=200:-1" +
-      " thumbnail.png"
+        " -i sample.avi" +
+        " -vframes 1 -vf select='gte(n\\,10)',scale=200:-1" +
+        " thumbnail.png"
 
     val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
     assertEquals(expected, actual)
@@ -167,7 +165,7 @@ class ExamplesTest {
       .addOutput("with-video.mp4")
       .setComplexFilter(
         "[1:v]scale=368:207,setpts=PTS-STARTPTS+5/TB [ov]; " +
-        "[0:v][ov] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,5,15)' [v]"
+          "[0:v][ov] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,5,15)' [v]",
       )
       .addExtraArgs("-map", "[v]")
       .addExtraArgs("-map", "0:a")
@@ -180,17 +178,17 @@ class ExamplesTest {
 
     val expected =
       "ffmpeg -y -v error" +
-      " -i original.mp4" +
-      " -i spot.mp4" +
-      " -preset ultrafast" +
-      " -crf 20" +
-      " -filter_complex [1:v]scale=368:207,setpts=PTS-STARTPTS+5/TB [ov]; [0:v][ov] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,5,15)' [v]" +
-      " -vcodec libx264" +
-      " -acodec copy" +
-      " -map [v]" +
-      " -map 0:a" +
-      " -shortest" +
-      " with-video.mp4"
+        " -i original.mp4" +
+        " -i spot.mp4" +
+        " -preset ultrafast" +
+        " -crf 20" +
+        " -filter_complex [1:v]scale=368:207,setpts=PTS-STARTPTS+5/TB [ov]; [0:v][ov] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,5,15)' [v]" +
+        " -vcodec libx264" +
+        " -acodec copy" +
+        " -map [v]" +
+        " -map 0:a" +
+        " -shortest" +
+        " with-video.mp4"
 
     val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
     assertEquals(expected, actual)
@@ -210,11 +208,11 @@ class ExamplesTest {
 
     val expected =
       "ffmpeg -y -v error" +
-      " -i original.mp4" +
-      " -vf select='gte(n\\,10)',scale=200:-1" +
-      " -vcodec libx265" +
-      " -tag:v hvc1" +
-      " hevc-video.mp4"
+        " -i original.mp4" +
+        " -vf select='gte(n\\,10)',scale=200:-1" +
+        " -vcodec libx265" +
+        " -tag:v hvc1" +
+        " hevc-video.mp4"
 
     val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
     assertEquals(expected, actual)
@@ -237,9 +235,9 @@ class ExamplesTest {
 
     val expected =
       "ffmpeg -y -v debug " +
-      "-i input.mp3 " +
-      "-map_channel 0.0.0 left.mp3 " +
-      "-map_channel 0.0.1 right.mp3"
+        "-i input.mp3 " +
+        "-map_channel 0.0.0 left.mp3 " +
+        "-map_channel 0.0.1 right.mp3"
 
     val actual = Joiner.on(" ").join(ffmpeg.path(builder.build()))
     assertEquals(expected, actual)
@@ -250,18 +248,18 @@ class ExamplesTest {
   fun testExample10() {
     val expected =
       "ffmpeg -y -v error" +
-      " -f webm_dash_manifest" +
-      " -i audio.webm" +
-      " -f webm_dash_manifest" +
-      " -i video_1.webm" +
-      " -f webm_dash_manifest" +
-      " -i video_2.webm" +
-      " -f webm_dash_manifest" +
-      " -i video_3.webm" +
-      " -vcodec copy -acodec copy" +
-      " -map 0 -map 1 -map 2 -map 3" +
-      " -adaptation_sets \"id=0,streams=0 id=1,streams=1,2,3\"" +
-      " output.mpd"
+        " -f webm_dash_manifest" +
+        " -i audio.webm" +
+        " -f webm_dash_manifest" +
+        " -i video_1.webm" +
+        " -f webm_dash_manifest" +
+        " -i video_2.webm" +
+        " -f webm_dash_manifest" +
+        " -i video_3.webm" +
+        " -vcodec copy -acodec copy" +
+        " -map 0 -map 1 -map 2 -map 3" +
+        " -adaptation_sets \"id=0,streams=0 id=1,streams=1,2,3\"" +
+        " output.mpd"
 
     val streams = mutableListOf<String>()
     val builder = FFmpegBuilder()

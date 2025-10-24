@@ -28,9 +28,9 @@ class LowercaseEnumSerializer<T : Enum<T>>(
   }
 }
 
-inline fun <reified T : Enum<T>> LowercaseEnumSerializer(): LowercaseEnumSerializer<T> {
-  return LowercaseEnumSerializer(enumValues<T>())
-}
+inline fun <reified T : Enum<T>> LowercaseEnumSerializer(): LowercaseEnumSerializer<T> = LowercaseEnumSerializer(
+  enumValues<T>(),
+)
 
 // Specific serializer for CodecType
 object CodecTypeSerializer : KSerializer<net.bramp.ffmpeg.shared.CodecType> {
@@ -42,7 +42,5 @@ object CodecTypeSerializer : KSerializer<net.bramp.ffmpeg.shared.CodecType> {
     delegate.serialize(encoder, value)
   }
 
-  override fun deserialize(decoder: Decoder): net.bramp.ffmpeg.shared.CodecType {
-    return delegate.deserialize(decoder)
-  }
+  override fun deserialize(decoder: Decoder): net.bramp.ffmpeg.shared.CodecType = delegate.deserialize(decoder)
 }

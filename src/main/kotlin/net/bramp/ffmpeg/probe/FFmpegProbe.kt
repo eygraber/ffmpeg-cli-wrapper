@@ -14,8 +14,6 @@ data class FFmpegProbe(
 ) {
   companion object {
     @JvmStatic
-    fun fromJson(json: String): FFmpegProbe {
-      return FFmpegUtils.json.decodeFromString(serializer<FFmpegProbe>(), json)
-    }
+    fun fromJson(json: String): FFmpegProbe = FFmpegUtils.json.decodeFromString(serializer<FFmpegProbe>(), json)
   }
 }

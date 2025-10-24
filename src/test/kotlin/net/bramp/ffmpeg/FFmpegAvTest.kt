@@ -28,11 +28,11 @@ class FFmpegAvTest {
   fun testVersion() {
     assertEquals(
       "avconv version 11.4, Copyright (c) 2000-2014 the Libav developers",
-      ffmpeg.version()
+      ffmpeg.version(),
     )
     assertEquals(
       "avconv version 11.4, Copyright (c) 2000-2014 the Libav developers",
-      ffmpeg.version()
+      ffmpeg.version(),
     )
   }
 

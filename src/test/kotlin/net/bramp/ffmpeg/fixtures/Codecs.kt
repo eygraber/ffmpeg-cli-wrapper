@@ -11,7 +11,7 @@ object Codecs {
     Codec(
       "a64_multi5",
       "Multicolor charset for Commodore 64, extended with 5th color (colram) (encoders: a64multi5 )",
-      ".EVIL."
+      ".EVIL.",
     ),
     Codec("aasc", "Autodesk RLE", "D.V..S"),
     Codec("agm", "Amuse Graphics Movie", "D.V.L."),

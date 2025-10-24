@@ -1,19 +1,30 @@
 package net.bramp.ffmpeg
 
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import net.bramp.ffmpeg.builder.FFprobeBuilder
 import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.lang.MockProcess
-import net.bramp.ffmpeg.probe.*
+import net.bramp.ffmpeg.probe.FFmpegError
+import net.bramp.ffmpeg.probe.FFmpegFrame
+import net.bramp.ffmpeg.probe.FFmpegProbeResult
 import net.bramp.ffmpeg.shared.CodecType
 import org.apache.commons.lang3.math.Fraction
-import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.endsWith
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.startsWith
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.hasSize
 import org.hamcrest.core.IsNull
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -31,49 +42,59 @@ class FFprobeTest {
     // Default response for any unmatched call (including -version)
     every { runFunc.run(any()) } answers { MockProcess(Helper.loadResource("ffprobe-version")) }
 
-    // Specific responses for sample files  
-    every { runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb) } }) } returns MockProcess(
-      Helper.loadResource(
-        "ffprobe-big_buck_bunny_720p_1mb.mp4"
+    // Specific responses for sample files
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb) } }) } returns
+      MockProcess(
+        Helper.loadResource(
+          "ffprobe-big_buck_bunny_720p_1mb.mp4",
+        ),
       )
-    )
     every { runFunc.run(match { list -> list.any { it.contains(Samples.always_on_my_mind) } }) } returns MockProcess(
-      Helper.loadResource("ffprobe-Always On My Mind [Program Only] - Adelen.mp4")
+      Helper.loadResource("ffprobe-Always On My Mind [Program Only] - Adelen.mp4"),
     )
     every { runFunc.run(match { list -> list.any { it.contains(Samples.start_pts_test) } }) } returns MockProcess(
       Helper.loadResource(
-        "ffprobe-start_pts_test"
-      )
+        "ffprobe-start_pts_test",
+      ),
     )
     every { runFunc.run(match { list -> list.any { it.contains(Samples.divide_by_zero) } }) } returns MockProcess(
       Helper.loadResource(
-        "ffprobe-divide-by-zero"
-      )
+        "ffprobe-divide-by-zero",
+      ),
     )
     every { runFunc.run(match { list -> list.any { it.contains(Samples.book_with_chapters) } }) } returns MockProcess(
-      Helper.loadResource("book_with_chapters.m4b")
+      Helper.loadResource("book_with_chapters.m4b"),
     )
-    every { runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb_with_packets) } }) } returns MockProcess(
-      Helper.loadResource("ffprobe-big_buck_bunny_720p_1mb_packets.mp4")
-    )
-    every { runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb_with_frames) } }) } returns MockProcess(
-      Helper.loadResource(
-        "ffprobe-big_buck_bunny_720p_1mb_frames.mp4"
+    every {
+      runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb_with_packets) } })
+    } returns
+      MockProcess(
+        Helper.loadResource("ffprobe-big_buck_bunny_720p_1mb_packets.mp4"),
       )
-    )
-    every { runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb_with_packets_and_frames) } }) } returns MockProcess(
-      Helper.loadResource("ffprobe-big_buck_bunny_720p_1mb_packets_and_frames.mp4")
+    every {
+      runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb_with_frames) } })
+    } returns
+      MockProcess(
+        Helper.loadResource(
+          "ffprobe-big_buck_bunny_720p_1mb_frames.mp4",
+        ),
+      )
+    every {
+      runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb_with_packets_and_frames) } })
+    } returns MockProcess(
+      Helper.loadResource("ffprobe-big_buck_bunny_720p_1mb_packets_and_frames.mp4"),
     )
     every { runFunc.run(match { list -> list.any { it.contains(Samples.side_data_list) } }) } returns MockProcess(
       Helper.loadResource(
-        "ffprobe-side_data_list"
-      )
+        "ffprobe-side_data_list",
+      ),
     )
-    every { runFunc.run(match { list -> list.any { it.contains(Samples.chapters_with_long_id) } }) } returns MockProcess(
-      Helper.loadResource(
-        "chapters_with_long_id.m4b"
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.chapters_with_long_id) } }) } returns
+      MockProcess(
+        Helper.loadResource(
+          "chapters_with_long_id.m4b",
+        ),
       )
-    )
 
     ffprobe = FFprobe("ffprobe", runFunc)
   }
@@ -128,7 +149,7 @@ class FFprobeTest {
       ffprobe.builder()
         .setInput(Samples.big_buck_bunny_720p_1mb_with_packets)
         .setShowPackets(true)
-        .build()
+        .build(),
     )
     assertThat(info.hasError(), `is`(false))
     assertThat(info.packets!!.size, `is`(381))
@@ -179,7 +200,7 @@ class FFprobeTest {
       ffprobe.builder()
         .setInput(Samples.big_buck_bunny_720p_1mb_with_frames)
         .setShowFrames(true)
-        .build()
+        .build(),
     )
     assertThat(info.hasError(), `is`(false))
     assertThat(info.frames!!.size, `is`(381))
@@ -232,7 +253,7 @@ class FFprobeTest {
         .setInput(Samples.big_buck_bunny_720p_1mb_with_packets_and_frames)
         .setShowPackets(true)
         .setShowFrames(true)
-        .build()
+        .build(),
     )
     assertThat(info.hasError(), `is`(false))
     assertThat(info.packets!!.size, `is`(381))
@@ -352,7 +373,7 @@ class FFprobeTest {
 
     assertThat(
       info.format!!.filename,
-      `is`("c:\\Users\\Bob\\Always On My Mind [Program Only] - Adelén.mp4")
+      `is`("c:\\Users\\Bob\\Always On My Mind [Program Only] - Adelén.mp4"),
     )
   }
 
@@ -415,8 +436,8 @@ class FFprobeTest {
 
     assertNotNull(exception)
     assertNotNull(exception.error)
-    assertNotNull(exception.error!!.string)
-    assertNotEquals(0, exception.error!!.code)
+    assertNotNull(exception.error?.string)
+    assertNotEquals(0, exception.error?.code)
   }
 
   @Test
@@ -427,7 +448,9 @@ class FFprobeTest {
     assertThat(info.streams!![0].sideDataList[0].sideDataType, `is`("Display Matrix"))
     assertThat(
       info.streams!![0].sideDataList[0].displayMatrix,
-      `is`("\n00000000:            0      -65536           0\n00000001:        65536           0           0\n00000002:            0           0  1073741824\n")
+      `is`(
+        "\n00000000:            0      -65536           0\n00000001:        65536           0           0\n00000002:            0           0  1073741824\n",
+      ),
     )
     assertThat(info.streams!![0].sideDataList[0].rotation, `is`(90))
   }
@@ -459,9 +482,9 @@ class FFprobeTest {
           "-show_format",
           "-show_streams",
           "-show_chapters",
-          Samples.always_on_my_mind
-        )
-      )
+          Samples.always_on_my_mind,
+        ),
+      ),
     )
   }
 
@@ -484,9 +507,9 @@ class FFprobeTest {
           "-show_format",
           "-show_streams",
           "-show_chapters",
-          Samples.always_on_my_mind
-        )
-      )
+          Samples.always_on_my_mind,
+        ),
+      ),
     )
   }
 
@@ -509,9 +532,9 @@ class FFprobeTest {
           "-show_format",
           "-show_streams",
           "-show_chapters",
-          Samples.always_on_my_mind
-        )
-      )
+          Samples.always_on_my_mind,
+        ),
+      ),
     )
   }
 
@@ -535,9 +558,9 @@ class FFprobeTest {
           "-show_format",
           "-show_streams",
           "-show_chapters",
-          Samples.always_on_my_mind
-        )
-      )
+          Samples.always_on_my_mind,
+        ),
+      ),
     )
   }
 
@@ -561,9 +584,9 @@ class FFprobeTest {
           "-show_format",
           "-show_streams",
           "-show_chapters",
-          Samples.always_on_my_mind
-        )
-      )
+          Samples.always_on_my_mind,
+        ),
+      ),
     )
   }
 

@@ -1,13 +1,17 @@
 package net.bramp.ffmpeg.info
 
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
 import net.bramp.ffmpeg.FFmpeg
 import net.bramp.ffmpeg.Helper
 import net.bramp.ffmpeg.ProcessFunction
 import net.bramp.ffmpeg.lang.MockProcess
 import net.bramp.ffmpeg.shared.CodecType
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.hasProperty
+import org.hamcrest.Matchers.hasSize
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
@@ -51,9 +55,9 @@ class FFmpegGetInfoTest {
     assertThat(dataCodecs, hasSize(8))
     assertThat(otherCodecs, hasSize(0))
 
-    assertThat(videoCodecs, hasItem<Codec>(hasProperty<Codec>("name", equalTo("h264"))))
-    assertThat(audioCodecs, hasItem<Codec>(hasProperty<Codec>("name", equalTo("aac"))))
-    assertThat(subtitleCodecs, hasItem<Codec>(hasProperty<Codec>("name", equalTo("ssa"))))
-    assertThat(dataCodecs, hasItem<Codec>(hasProperty<Codec>("name", equalTo("bin_data"))))
+    assertThat(videoCodecs, hasItem(hasProperty<Codec>("name", equalTo("h264"))))
+    assertThat(audioCodecs, hasItem(hasProperty<Codec>("name", equalTo("aac"))))
+    assertThat(subtitleCodecs, hasItem(hasProperty<Codec>("name", equalTo("ssa"))))
+    assertThat(dataCodecs, hasItem(hasProperty<Codec>("name", equalTo("bin_data"))))
   }
 }

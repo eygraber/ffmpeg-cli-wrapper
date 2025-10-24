@@ -12,11 +12,11 @@ object FFmpegStreamSideDataSerializer : KSerializer<FFmpegStream.SideData> {
 
   override val descriptor: SerialDescriptor = sideDataSerializer.descriptor
 
-    override fun serialize(encoder: Encoder, value: FFmpegStream.SideData) {
-      encoder.encodeSerializableValue(sideDataSerializer, value)
-    }
+  override fun serialize(encoder: Encoder, value: FFmpegStream.SideData) {
+    encoder.encodeSerializableValue(sideDataSerializer, value)
+  }
 
-    override fun deserialize(decoder: Decoder): FFmpegStream.SideData {
-      return decoder.decodeSerializableValue(sideDataSerializer)
-    }
+  override fun deserialize(decoder: Decoder): FFmpegStream.SideData = decoder.decodeSerializableValue(
+    sideDataSerializer,
+  )
 }

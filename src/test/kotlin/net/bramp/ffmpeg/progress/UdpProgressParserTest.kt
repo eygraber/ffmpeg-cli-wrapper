@@ -15,9 +15,7 @@ import java.net.URISyntaxException
 class UdpProgressParserTest : AbstractProgressParserTest() {
 
   @Throws(IOException::class, URISyntaxException::class)
-  override fun newParser(listener: ProgressListener): ProgressParser {
-    return UdpProgressParser(listener)
-  }
+  override fun newParser(listener: ProgressListener): ProgressParser = UdpProgressParser(listener)
 
   @Test
   @Throws(IOException::class, InterruptedException::class)

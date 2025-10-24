@@ -1,8 +1,7 @@
 package net.bramp.ffmpeg.probe
 
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
-import org.apache.commons.lang3.math.Fraction
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class FFmpegFormat(

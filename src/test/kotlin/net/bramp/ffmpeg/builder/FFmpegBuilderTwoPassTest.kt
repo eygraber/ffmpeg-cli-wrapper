@@ -36,9 +36,9 @@ class FFmpegBuilderTwoPassTest {
           "-b:v",
           "1000000",
           "-an",
-          DEVNULL
-        )
-      )
+          DEVNULL,
+        ),
+      ),
     )
   }
 
@@ -69,9 +69,9 @@ class FFmpegBuilderTwoPassTest {
           "mp4",
           "-b:v",
           "1000000",
-          "output.mp4"
-        )
-      )
+          "output.mp4",
+        ),
+      ),
     )
   }
 

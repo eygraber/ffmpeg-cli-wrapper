@@ -104,8 +104,8 @@ object FFmpegUtils {
     val secs = m.group(3).toDouble()
 
     return TimeUnit.HOURS.toNanos(hours) +
-           TimeUnit.MINUTES.toNanos(mins) +
-           (TimeUnit.SECONDS.toNanos(1) * secs).toLong()
+      TimeUnit.MINUTES.toNanos(mins) +
+      (TimeUnit.SECONDS.toNanos(1) * secs).toLong()
   }
 
   /**

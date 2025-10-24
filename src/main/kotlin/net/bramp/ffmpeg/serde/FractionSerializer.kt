@@ -16,6 +16,7 @@ object FractionSerializer : KSerializer<Fraction> {
     encoder.encodeString(value.toProperString())
   }
 
+  @Suppress("ReturnCount")
   override fun deserialize(decoder: Decoder): Fraction {
     val fractionString = decoder.decodeString().trim()
 

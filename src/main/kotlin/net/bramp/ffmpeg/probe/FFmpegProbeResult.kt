@@ -2,7 +2,7 @@ package net.bramp.ffmpeg.probe
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
+import net.bramp.ffmpeg.serde.FFmpegFrameOrPacketListSerializer
 
 @Serializable
 data class FFmpegProbeResult @JvmOverloads constructor(
@@ -13,14 +13,12 @@ data class FFmpegProbeResult @JvmOverloads constructor(
   var packets: List<FFmpegPacket>? = emptyList(),
   var frames: List<FFmpegFrame>? = emptyList(),
   @SerialName("packets_and_frames")
-  @kotlinx.serialization.Serializable(with = net.bramp.ffmpeg.serde.FFmpegFrameOrPacketListSerializer::class)
-  private var _packetsAndFrames: List<FFmpegFrameOrPacket>? = null,
+  @Serializable(with = FFmpegFrameOrPacketListSerializer::class)
+  private var packetsAndFrames: List<FFmpegFrameOrPacket>? = null,
 ) {
-  fun hasError(): Boolean = error != null
-
   init {
     // If packets_and_frames is present, split it into packets and frames
-    _packetsAndFrames?.let { packetsAndFrames ->
+    packetsAndFrames?.let { packetsAndFrames ->
       val splitPackets = mutableListOf<FFmpegPacket>()
       val splitFrames = mutableListOf<FFmpegFrame>()
 
@@ -39,4 +37,6 @@ data class FFmpegProbeResult @JvmOverloads constructor(
       }
     }
   }
+
+  fun hasError(): Boolean = error != null
 }

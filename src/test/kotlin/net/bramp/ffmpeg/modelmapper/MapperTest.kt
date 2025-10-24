@@ -14,7 +14,7 @@ class MapperTest {
     val main = MainEncodingOptions("mp4", 0L, null)
     val audio = AudioEncodingOptions(false, null, 0, 0, null, 0, 0.0)
     val video = VideoEncodingOptions(
-      true, null, null, 320, 240, 1000, null, "scale='320:trunc(ow/a/2)*2'", null
+      true, null, null, 320, 240, 1000, null, "scale='320:trunc(ow/a/2)*2'", null,
     )
 
     val options = EncodingOptions(main, audio, video)

@@ -14,9 +14,9 @@ import java.util.concurrent.TimeUnit
 
 class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
 
-  override fun getBuilder(): AbstractFFmpegOutputBuilder<*> {
-    return FFmpegBuilder().addInput("input.mp4").done().addHlsOutput("output.m3u8")
-  }
+  override fun getBuilder(): AbstractFFmpegOutputBuilder<*> = FFmpegBuilder().addInput(
+    "input.mp4",
+  ).done().addHlsOutput("output.m3u8")
 
   override fun removeCommon(command: List<String>): List<String> {
     assertEquals("-f", command[0])
@@ -59,9 +59,9 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
         "3",
         "-hls_base_url",
         "test1234/",
-        "output.m3u8"
+        "output.m3u8",
       ),
-      args
+      args,
     )
   }
 
@@ -104,9 +104,9 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
         "3",
         "-hls_base_url",
         "test1234/",
-        "output.m3u8"
+        "output.m3u8",
       ),
-      args
+      args,
     )
   }
 
@@ -208,9 +208,13 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
       command,
       `is`(
         listOf(
-          "-f", "hls", "-hls_segment_filename", "segment%03d.ts", "output.m3u8"
-        )
-      )
+          "-f",
+          "hls",
+          "-hls_segment_filename",
+          "segment%03d.ts",
+          "output.m3u8",
+        ),
+      ),
     )
   }
 
@@ -221,7 +225,8 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
       .build(0)
 
     assertThat(
-      command, `is`(listOf("-f", "hls", "-hls_init_time", "00:00:00.01", "output.m3u8"))
+      command,
+      `is`(listOf("-f", "hls", "-hls_init_time", "00:00:00.01", "output.m3u8")),
     )
   }
 

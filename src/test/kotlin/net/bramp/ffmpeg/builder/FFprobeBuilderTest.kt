@@ -20,8 +20,8 @@ class FFprobeBuilderTest {
         "-show_format",
         "-show_streams",
         "-show_chapters",
-        "input"
-      )
+        "input",
+      ),
     )
   }
 
@@ -46,8 +46,8 @@ class FFprobeBuilderTest {
         "-show_chapters",
         "-show_packets",
         "-show_frames",
-        "input"
-      )
+        "input",
+      ),
     )
   }
 
@@ -62,7 +62,7 @@ class FFprobeBuilderTest {
 
     assertEquals(
       args,
-      listOf("-v", "quiet", "-print_format", "json", "-show_error", "input")
+      listOf("-v", "quiet", "-print_format", "json", "-show_error", "input"),
     )
   }
 
@@ -86,8 +86,8 @@ class FFprobeBuilderTest {
         "-show_error",
         "-user_agent",
         "user agent",
-        "input"
-      )
+        "input",
+      ),
     )
   }
 

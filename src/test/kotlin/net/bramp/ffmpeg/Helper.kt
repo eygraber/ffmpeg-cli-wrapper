@@ -14,7 +14,7 @@ object Helper {
 
   fun loadResource(name: String): InputStream =
     Helper::class.java.getResourceAsStream("fixtures/$name")
-    ?: throw IllegalArgumentException("Resource not found: $name")
+      ?: throw IllegalArgumentException("Resource not found: $name")
 
   /** Loads all resources, and returns one stream containing them all. */
   fun combineResource(names: List<String>): InputStream =
