@@ -15,7 +15,6 @@ kover = "0.9.3"
 logback = "1.5.20"
 mavenPublishPlugin = "0.34.0"
 mockk = "1.14.6"
-modelmapper = "3.2.5"
 slf4j = "2.0.17"
 
 [libraries]
@@ -34,7 +33,6 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 ktlint = { module = "com.pinterest.ktlint:ktlint-bom", version.ref = "ktlint" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-modelmapper = { module = "org.modelmapper:modelmapper", version.ref = "modelmapper" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 
 [plugins]

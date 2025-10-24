@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions
 import com.google.common.base.Strings
 import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.FFmpegUtils
-import net.bramp.ffmpeg.modelmapper.Mapper
 import net.bramp.ffmpeg.options.AudioEncodingOptions
 import net.bramp.ffmpeg.options.EncodingOptions
 import net.bramp.ffmpeg.options.MainEncodingOptions
@@ -85,22 +84,47 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   protected abstract fun getThis(): T
 
   fun useOptions(opts: EncodingOptions): T {
-    Mapper.map(opts, this)
+    useOptions(opts.main)
+    if(opts.audio.isEnabled) {
+      useOptions(opts.audio)
+    }
+    if(opts.video.isEnabled) {
+      useOptions(opts.video)
+    }
     return getThis()
   }
 
   fun useOptions(opts: MainEncodingOptions): T {
-    Mapper.map(opts, this)
+    opts.format?.let { format = it }
+    opts.startOffset?.let { startOffset = it }
+    opts.duration?.let { duration = it }
     return getThis()
   }
 
-  fun useOptions(opts: AudioEncodingOptions): T {
-    Mapper.map(opts, this)
+  open fun useOptions(opts: AudioEncodingOptions): T {
+    audio_enabled = opts.isEnabled
+    opts.codec?.let { audio_codec = it }
+    if(opts.channels > 0) {
+      audio_channels = opts.channels
+    }
+    if(opts.sampleRate > 0) {
+      audio_sample_rate = opts.sampleRate
+    }
     return getThis()
   }
 
-  fun useOptions(opts: VideoEncodingOptions): T {
-    Mapper.map(opts, this)
+  open fun useOptions(opts: VideoEncodingOptions): T {
+    video_enabled = opts.isEnabled
+    opts.codec?.let { video_codec = it }
+    opts.frameRate?.let { video_frame_rate = it }
+    if(opts.width > 0) {
+      video_width = opts.width
+    }
+    if(opts.height > 0) {
+      video_height = opts.height
+    }
+    opts.frames?.let { video_frames = it }
+    opts.preset?.let { preset = it }
     return getThis()
   }
 

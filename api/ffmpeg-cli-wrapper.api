@@ -199,6 +199,10 @@ public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder : net
 	public final fun setVideoPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
 	public final fun setVideoQuality (D)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
 	public final fun setVideoQuality (Ljava/lang/Double;)V
+	public fun useOptions (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public synthetic fun useOptions (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public synthetic fun useOptions (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
 }
 
 public final class net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder$Companion {
@@ -309,10 +313,10 @@ public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
 	public final fun setVideo_pixel_format (Ljava/lang/String;)V
 	public final fun setVideo_size (Ljava/lang/String;)V
 	public final fun setVideo_width (I)V
-	public final fun useOptions (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
 	public final fun useOptions (Lnet/bramp/ffmpeg/options/EncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
 	public final fun useOptions (Lnet/bramp/ffmpeg/options/MainEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun useOptions (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
 }
 
 public final class net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder$Companion {
@@ -1187,24 +1191,6 @@ public final class net/bramp/ffmpeg/job/TwoPassFFmpegJob : net/bramp/ffmpeg/job/
 	public synthetic fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getBuilder ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
 	public fun run ()V
-}
-
-public final class net/bramp/ffmpeg/modelmapper/Mapper {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/modelmapper/Mapper;
-	public final fun map (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;)V
-	public final fun map (Lnet/bramp/ffmpeg/options/EncodingOptions;Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;)V
-	public final fun map (Lnet/bramp/ffmpeg/options/MainEncodingOptions;Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;)V
-	public final fun map (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;)V
-}
-
-public final class net/bramp/ffmpeg/modelmapper/NotDefaultCondition : org/modelmapper/Condition {
-	public static final field Companion Lnet/bramp/ffmpeg/modelmapper/NotDefaultCondition$Companion;
-	public fun <init> ()V
-	public fun applies (Lorg/modelmapper/spi/MappingContext;)Z
-}
-
-public final class net/bramp/ffmpeg/modelmapper/NotDefaultCondition$Companion {
-	public final fun getNotDefault ()Lnet/bramp/ffmpeg/modelmapper/NotDefaultCondition;
 }
 
 public final class net/bramp/ffmpeg/nut/Frame {
@@ -2269,8 +2255,8 @@ public final class net/bramp/ffmpeg/progress/UdpProgressParser : net/bramp/ffmpe
 	public fun stop ()V
 }
 
-public final class net/bramp/ffmpeg/serde/CodecTypeSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serde/CodecTypeSerializer;
+public final class net/bramp/ffmpeg/serialization/CodecTypeSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/CodecTypeSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/shared/CodecType;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
@@ -2278,8 +2264,8 @@ public final class net/bramp/ffmpeg/serde/CodecTypeSerializer : kotlinx/serializ
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/shared/CodecType;)V
 }
 
-public final class net/bramp/ffmpeg/serde/FFmpegFrameOrPacketListSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serde/FFmpegFrameOrPacketListSerializer;
+public final class net/bramp/ffmpeg/serialization/FFmpegFrameOrPacketListSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/FFmpegFrameOrPacketListSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/util/List;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
@@ -2287,8 +2273,8 @@ public final class net/bramp/ffmpeg/serde/FFmpegFrameOrPacketListSerializer : ko
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/util/List;)V
 }
 
-public final class net/bramp/ffmpeg/serde/FFmpegFrameOrPacketSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serde/FFmpegFrameOrPacketSerializer;
+public final class net/bramp/ffmpeg/serialization/FFmpegFrameOrPacketSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/FFmpegFrameOrPacketSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegFrameOrPacket;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
@@ -2296,8 +2282,8 @@ public final class net/bramp/ffmpeg/serde/FFmpegFrameOrPacketSerializer : kotlin
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegFrameOrPacket;)V
 }
 
-public final class net/bramp/ffmpeg/serde/FFmpegProbeResultSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serde/FFmpegProbeResultSerializer;
+public final class net/bramp/ffmpeg/serialization/FFmpegProbeResultSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/FFmpegProbeResultSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
@@ -2305,8 +2291,8 @@ public final class net/bramp/ffmpeg/serde/FFmpegProbeResultSerializer : kotlinx/
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)V
 }
 
-public final class net/bramp/ffmpeg/serde/FFmpegStreamSideDataSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serde/FFmpegStreamSideDataSerializer;
+public final class net/bramp/ffmpeg/serialization/FFmpegStreamSideDataSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/FFmpegStreamSideDataSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
@@ -2314,8 +2300,8 @@ public final class net/bramp/ffmpeg/serde/FFmpegStreamSideDataSerializer : kotli
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;)V
 }
 
-public final class net/bramp/ffmpeg/serde/FractionSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serde/FractionSerializer;
+public final class net/bramp/ffmpeg/serialization/FractionSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/FractionSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lorg/apache/commons/lang3/math/Fraction;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
@@ -2323,7 +2309,7 @@ public final class net/bramp/ffmpeg/serde/FractionSerializer : kotlinx/serializa
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lorg/apache/commons/lang3/math/Fraction;)V
 }
 
-public final class net/bramp/ffmpeg/serde/LowercaseEnumSerializer : kotlinx/serialization/KSerializer {
+public final class net/bramp/ffmpeg/serialization/LowercaseEnumSerializer : kotlinx/serialization/KSerializer {
 	public fun <init> ([Ljava/lang/Enum;)V
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Enum;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
