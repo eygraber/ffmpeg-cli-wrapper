@@ -1,10 +1,9 @@
 package net.bramp.ffmpeg.serialization
 
+import io.kotest.matchers.shouldBe
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.apache.commons.lang3.math.Fraction
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
 class FractionSerializerTest {
@@ -26,7 +25,7 @@ class FractionSerializerTest {
   fun testRead() {
     for(test in readTests) {
       val wrapper = json.decodeFromString<FractionWrapper>("""{"fraction":${test.jsonString}}""")
-      assertThat(wrapper.fraction, equalTo(test.fraction))
+      wrapper.fraction shouldBe test.fraction
     }
   }
 
@@ -34,7 +33,7 @@ class FractionSerializerTest {
   fun testZerosRead() {
     for(test in zerosTests) {
       val wrapper = json.decodeFromString<FractionWrapper>("""{"fraction":${test.jsonString}}""")
-      assertThat(wrapper.fraction, equalTo(test.fraction))
+      wrapper.fraction shouldBe test.fraction
     }
   }
 
@@ -43,7 +42,7 @@ class FractionSerializerTest {
     for(test in writeTests) {
       val wrapper = FractionWrapper(test.fraction)
       val encoded = json.encodeToString(wrapper)
-      assertThat(encoded, equalTo("""{"fraction":${test.jsonString}}"""))
+      encoded shouldBe """{"fraction":${test.jsonString}}"""
     }
   }
 
@@ -51,17 +50,16 @@ class FractionSerializerTest {
   fun testWriteNull() {
     val wrapper = FractionWrapper(null)
     val encoded = json.encodeToString(wrapper)
-    assertThat(encoded, equalTo("""{"fraction":null}"""))
+    encoded shouldBe """{"fraction":null}"""
   }
 
-  @Test
   fun testNumericInput() {
     // Test that numeric inputs (without quotes) work
     val wrapper1 = json.decodeFromString<FractionWrapper>("""{"fraction":"1"}""")
-    assertThat(wrapper1.fraction, equalTo(Fraction.getFraction(1, 1)))
+    wrapper1.fraction shouldBe Fraction.getFraction(1, 1)
 
     val wrapper2 = json.decodeFromString<FractionWrapper>("""{"fraction":"0.5"}""")
-    assertThat(wrapper2.fraction, equalTo(Fraction.getFraction(1, 2)))
+    wrapper2.fraction shouldBe Fraction.getFraction(1, 2)
   }
 
   companion object {

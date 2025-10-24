@@ -1,5 +1,6 @@
 package net.bramp.ffmpeg.builder
 
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.builder.StreamSpecifier.Companion.id
 import net.bramp.ffmpeg.builder.StreamSpecifier.Companion.program
 import net.bramp.ffmpeg.builder.StreamSpecifier.Companion.stream
@@ -11,31 +12,29 @@ import net.bramp.ffmpeg.builder.StreamSpecifierType.Data
 import net.bramp.ffmpeg.builder.StreamSpecifierType.PureVideo
 import net.bramp.ffmpeg.builder.StreamSpecifierType.Subtitle
 import net.bramp.ffmpeg.builder.StreamSpecifierType.Video
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
 class StreamSpecTest {
 
   @Test
   fun testStreamSpec() {
-    assertThat(stream(1).spec(), `is`("1"))
-    assertThat(stream(Video).spec(), `is`("v"))
+    stream(1).spec() shouldBe "1"
+    stream(Video).spec() shouldBe "v"
 
-    assertThat(stream(Video, 1).spec(), `is`("v:1"))
-    assertThat(stream(PureVideo, 1).spec(), `is`("V:1"))
-    assertThat(stream(Audio, 1).spec(), `is`("a:1"))
-    assertThat(stream(Subtitle, 1).spec(), `is`("s:1"))
-    assertThat(stream(Data, 1).spec(), `is`("d:1"))
-    assertThat(stream(Attachment, 1).spec(), `is`("t:1"))
+    stream(Video, 1).spec() shouldBe "v:1"
+    stream(PureVideo, 1).spec() shouldBe "V:1"
+    stream(Audio, 1).spec() shouldBe "a:1"
+    stream(Subtitle, 1).spec() shouldBe "s:1"
+    stream(Data, 1).spec() shouldBe "d:1"
+    stream(Attachment, 1).spec() shouldBe "t:1"
 
-    assertThat(program(1).spec(), `is`("p:1"))
-    assertThat(program(1, 2).spec(), `is`("p:1:2"))
+    program(1).spec() shouldBe "p:1"
+    program(1, 2).spec() shouldBe "p:1:2"
 
-    assertThat(id(1).spec(), `is`("i:1"))
+    id(1).spec() shouldBe "i:1"
 
-    assertThat(tag("key").spec(), `is`("m:key"))
-    assertThat(tag("key", "value").spec(), `is`("m:key:value"))
-    assertThat(usable().spec(), `is`("u"))
+    tag("key").spec() shouldBe "m:key"
+    tag("key", "value").spec() shouldBe "m:key:value"
+    usable().spec() shouldBe "u"
   }
 }

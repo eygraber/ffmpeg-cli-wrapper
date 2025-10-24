@@ -1,7 +1,8 @@
 package net.bramp.ffmpeg
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.lang.MockProcess
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
@@ -22,32 +23,32 @@ class FFmpegAvTest {
   @Test
   @Throws(Exception::class)
   fun testVersion() {
-    assertEquals(
-      "avconv version 11.4, Copyright (c) 2000-2014 the Libav developers",
-      ffmpeg.version(),
-    )
-    assertEquals(
-      "avconv version 11.4, Copyright (c) 2000-2014 the Libav developers",
-      ffmpeg.version(),
-    )
+    ffmpeg.version() shouldBe "avconv version 11.4, Copyright (c) 2000-2014 the Libav developers"
+    ffmpeg.version() shouldBe "avconv version 11.4, Copyright (c) 2000-2014 the Libav developers"
   }
 
   /** We don't support avconv, so all methods should throw an exception. */
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   @Throws(IOException::class)
   fun testProbeVideo() {
-    ffmpeg.run(emptyList())
+    shouldThrow<IllegalArgumentException> {
+      ffmpeg.run(emptyList())
+    }
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   @Throws(IOException::class)
   fun testCodecs() {
-    ffmpeg.codecs()
+    shouldThrow<IllegalArgumentException> {
+      ffmpeg.codecs()
+    }
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   @Throws(IOException::class)
   fun testFormats() {
-    ffmpeg.formats()
+    shouldThrow<IllegalArgumentException> {
+      ffmpeg.formats()
+    }
   }
 }

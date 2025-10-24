@@ -1,5 +1,8 @@
 package net.bramp.ffmpeg
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -8,11 +11,7 @@ import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.lang.MockProcess
 import net.bramp.ffmpeg.shared.CodecType
 import org.apache.commons.lang3.math.Fraction
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.hasSize
-import org.hamcrest.core.Is.`is`
 import org.junit.After
-import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Test
 
@@ -82,8 +81,8 @@ class FFprobeKotlinTest {
     val version1 = ffprobe.version()
     val version2 = ffprobe.version()
 
-    assertThat(version1, `is`("ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers"))
-    assertThat(version2, `is`("ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers"))
+    version1 shouldBe "ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers"
+    version2 shouldBe "ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers"
 
     verify(exactly = 2) { runFunc.run(match { it.contains("-version") }) }
   }
@@ -91,26 +90,26 @@ class FFprobeKotlinTest {
   @Test
   fun `testProbeVideo - should probe video file successfully`() {
     val info = ffprobe.probe(Samples.big_buck_bunny_720p_1mb)
-    assertFalse(info.hasError())
+    info.hasError() shouldBe false
 
-    assertThat(info.streams, hasSize(2))
-    assertThat(info.streams!![0].codecType, `is`(CodecType.Video))
-    assertThat(info.streams!![1].codecType, `is`(CodecType.Audio))
-    assertThat(info.streams!![1].channels, `is`(6))
-    assertThat(info.streams!![1].sampleRate, `is`(48_000))
+    info.streams!! shouldHaveSize 2
+    info.streams!![0].codecType shouldBe CodecType.Video
+    info.streams!![1].codecType shouldBe CodecType.Audio
+    info.streams!![1].channels shouldBe 6
+    info.streams!![1].sampleRate shouldBe 48_000
   }
 
   @Test
   fun `testProbeBookWithChapters - should correctly parse chapters`() {
     val info = ffprobe.probe(Samples.book_with_chapters)
-    assertThat(info.hasError(), `is`(false))
-    assertThat(info.chapters?.size, `is`(24))
+    info.hasError() shouldBe false
+    info.chapters?.size shouldBe 24
 
     val firstChapter = info.chapters!![0]
-    assertThat(firstChapter.timeBase, `is`("1/44100"))
-    assertThat(firstChapter.start, `is`(0L))
-    assertThat(firstChapter.startTime, `is`("0.000000"))
-    assertThat(firstChapter.end, `is`(11_951_309L))
+    firstChapter.timeBase shouldBe "1/44100"
+    firstChapter.start shouldBe 0L
+    firstChapter.startTime shouldBe "0.000000"
+    firstChapter.end shouldBe 11_951_309L
   }
 
   @Test
@@ -121,12 +120,12 @@ class FFprobeKotlinTest {
         .setShowPackets(true),
     )
 
-    assertThat(info.hasError(), `is`(false))
-    assertThat(info.packets?.size, `is`(381))
+    info.hasError() shouldBe false
+    info.packets?.size shouldBe 381
 
     val firstPacket = info.packets!![0]
-    assertThat(firstPacket.codecType, `is`(CodecType.Audio))
-    assertThat(firstPacket.streamIndex, `is`(1))
+    firstPacket.codecType shouldBe CodecType.Audio
+    firstPacket.streamIndex shouldBe 1
   }
 
   @Test
@@ -137,12 +136,12 @@ class FFprobeKotlinTest {
         .setShowFrames(true),
     )
 
-    assertThat(info.hasError(), `is`(false))
-    assertThat(info.frames?.size, `is`(381))
+    info.hasError() shouldBe false
+    info.frames?.size shouldBe 381
 
     val firstFrame = info.frames!![0]
-    assertThat(firstFrame.streamIndex, `is`(1))
-    assertThat(firstFrame.keyFrame, `is`(1))
+    firstFrame.streamIndex shouldBe 1
+    firstFrame.keyFrame shouldBe 1
   }
 
   @Test
@@ -154,17 +153,17 @@ class FFprobeKotlinTest {
         .setShowFrames(true),
     )
 
-    assertThat(info.hasError(), `is`(false))
-    assertThat(info.packets?.size, `is`(381))
-    assertThat(info.frames?.size, `is`(381))
+    info.hasError() shouldBe false
+    info.packets?.size shouldBe 381
+    info.frames?.size shouldBe 381
   }
 
   @Test
   fun `testProbeDivideByZero - should handle 0 by 0 fractions`() {
     val info = ffprobe.probe(Samples.divide_by_zero)
-    assertFalse(info.hasError())
+    info.hasError() shouldBe false
 
-    assertThat(info.streams!![1].codecTimeBase, `is`(Fraction.ZERO))
+    info.streams!![1].codecTimeBase shouldBe Fraction.ZERO
   }
 
   @Test
@@ -246,14 +245,14 @@ class FFprobeKotlinTest {
     val streams = ffprobe.probe(Samples.big_buck_bunny_720p_1mb).streams!!
     val stream = streams[0]
 
-    assertThat(stream.index, `is`(0))
-    assertThat(stream.codecName, `is`("h264"))
-    assertThat(stream.codecType, `is`(CodecType.Video))
-    assertThat(stream.width, `is`(1280))
-    assertThat(stream.height, `is`(720))
-    assertThat(stream.pixFmt, `is`("yuv420p"))
-    assertThat(stream.isAvc, `is`("true"))
-    assertThat(stream.nalLengthSize, `is`("4"))
+    stream.index shouldBe 0
+    stream.codecName shouldBe "h264"
+    stream.codecType shouldBe CodecType.Video
+    stream.width shouldBe 1280
+    stream.height shouldBe 720
+    stream.pixFmt shouldBe "yuv420p"
+    stream.isAvc shouldBe "true"
+    stream.nalLengthSize shouldBe "4"
   }
 
   @Test
@@ -261,13 +260,13 @@ class FFprobeKotlinTest {
     val streams = ffprobe.probe(Samples.big_buck_bunny_720p_1mb).streams!!
     val stream = streams[1]
 
-    assertThat(stream.index, `is`(1))
-    assertThat(stream.codecName, `is`("aac"))
-    assertThat(stream.codecType, `is`(CodecType.Audio))
-    assertThat(stream.sampleFmt, `is`("fltp"))
-    assertThat(stream.sampleRate, `is`(48_000))
-    assertThat(stream.channels, `is`(6))
-    assertThat(stream.channelLayout, `is`("5.1"))
+    stream.index shouldBe 1
+    stream.codecName shouldBe "aac"
+    stream.codecType shouldBe CodecType.Audio
+    stream.sampleFmt shouldBe "fltp"
+    stream.sampleRate shouldBe 48_000
+    stream.channels shouldBe 6
+    stream.channelLayout shouldBe "5.1"
   }
 
   @Test
@@ -275,11 +274,11 @@ class FFprobeKotlinTest {
     val chapters = ffprobe.probe(Samples.book_with_chapters).chapters!!
     val lastChapter = chapters[chapters.size - 1]
 
-    assertThat(chapters.size, `is`(24))
-    assertThat(lastChapter.id, `is`(23L))
-    assertThat(lastChapter.timeBase, `is`("1/44100"))
-    assertThat(lastChapter.start, `is`(237_875_790L))
-    assertThat(lastChapter.end, `is`(248_628_224L))
+    chapters.size shouldBe 24
+    lastChapter.id shouldBe 23L
+    lastChapter.timeBase shouldBe "1/44100"
+    lastChapter.start shouldBe 237_875_790L
+    lastChapter.end shouldBe 248_628_224L
   }
 
   @Test
@@ -291,14 +290,16 @@ class FFprobeKotlinTest {
     ).packets!!
 
     val lastPacket = packets[packets.size - 1]
-    assertThat(lastPacket.codecType, `is`(CodecType.Audio))
-    assertThat(lastPacket.streamIndex, `is`(1))
-    assertThat(lastPacket.pts, `is`(253_952L))
+    lastPacket.codecType shouldBe CodecType.Audio
+    lastPacket.streamIndex shouldBe 1
+    lastPacket.pts shouldBe 253_952L
   }
 
-  @Test(expected = FFmpegException::class)
+  @Test
   fun `testShouldThrowErrorWithoutMock - should throw on nonexistent file`() {
-    val realProbe = FFprobe(FFprobe.DEFAULT_PATH)
-    realProbe.probe("doesnotexist.mp4")
+    shouldThrow<FFmpegException> {
+      val realProbe = FFprobe(FFprobe.DEFAULT_PATH)
+      realProbe.probe("doesnotexist.mp4")
+    }
   }
 }

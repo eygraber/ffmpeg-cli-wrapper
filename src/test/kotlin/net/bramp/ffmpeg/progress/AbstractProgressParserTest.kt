@@ -1,6 +1,7 @@
 package net.bramp.ffmpeg.progress
 
-import org.junit.Assert.assertTrue
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldBeEmpty
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -41,7 +42,7 @@ abstract class AbstractProgressParserTest {
   fun testNoConnection() {
     parser.start()
     parser.stop()
-    assertTrue(progresses.isEmpty())
+    progresses.shouldBeEmpty()
   }
 
   @Test
@@ -50,21 +51,23 @@ abstract class AbstractProgressParserTest {
     parser.start()
     parser.stop()
     parser.stop()
-    assertTrue(progresses.isEmpty())
+    progresses.shouldBeEmpty()
   }
 
-  @Test(expected = IllegalThreadStateException::class)
+  @Test
   @Throws(IOException::class)
   fun testDoubleStart() {
-    parser.start()
-    parser.start()
-    assertTrue(progresses.isEmpty())
+    shouldThrow<IllegalThreadStateException> {
+      parser.start()
+      parser.start()
+    }
+    progresses.shouldBeEmpty()
   }
 
   @Test
   @Throws(IOException::class)
   fun testStopNoStart() {
     parser.stop()
-    assertTrue(progresses.isEmpty())
+    progresses.shouldBeEmpty()
   }
 }

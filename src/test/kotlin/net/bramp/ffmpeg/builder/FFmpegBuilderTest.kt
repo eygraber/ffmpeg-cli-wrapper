@@ -1,5 +1,7 @@
 package net.bramp.ffmpeg.builder
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.FFmpeg.Companion.AUDIO_FORMAT_S16
 import net.bramp.ffmpeg.FFmpeg.Companion.AUDIO_SAMPLE_48000
 import net.bramp.ffmpeg.FFmpeg.Companion.FPS_30
@@ -15,7 +17,6 @@ import net.bramp.ffmpeg.builder.StreamSpecifierType.Video
 import net.bramp.ffmpeg.options.AudioEncodingOptions
 import net.bramp.ffmpeg.options.MainEncodingOptions
 import net.bramp.ffmpeg.options.VideoEncodingOptions
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.net.URI
 import java.util.concurrent.TimeUnit
@@ -49,44 +50,41 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "debug",
-        "-user_agent",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36",
-        "-ss",
-        "00:00:01.5",
-        "-i",
-        "input",
-        "-f",
-        "mp4",
-        "-ss",
-        "00:00:00.5",
-        "-vcodec",
-        "libx264",
-        "-s",
-        "320x240",
-        "-r",
-        "30/1",
-        "-qscale:v",
-        "2",
-        "-bsf:v",
-        "foo",
-        "-acodec",
-        "aac",
-        "-ac",
-        "1",
-        "-ar",
-        "48000",
-        "-qscale:a",
-        "1",
-        "-bsf:a",
-        "bar",
-        "output",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "debug",
+      "-user_agent",
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36",
+      "-ss",
+      "00:00:01.5",
+      "-i",
+      "input",
+      "-f",
+      "mp4",
+      "-ss",
+      "00:00:00.5",
+      "-vcodec",
+      "libx264",
+      "-s",
+      "320x240",
+      "-r",
+      "30/1",
+      "-qscale:v",
+      "2",
+      "-bsf:v",
+      "foo",
+      "-acodec",
+      "aac",
+      "-ac",
+      "1",
+      "-ar",
+      "48000",
+      "-qscale:a",
+      "1",
+      "-bsf:a",
+      "bar",
+      "output",
     )
   }
 
@@ -102,10 +100,7 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf("-y", "-v", "error", "-i", "input", "-vn", "-an", "-sn", "output"),
-      args,
-    )
+    args shouldBe listOf("-y", "-v", "error", "-i", "input", "-vn", "-an", "-sn", "output")
   }
 
   @Test
@@ -120,20 +115,17 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-i",
-        "input",
-        "-vf",
-        "scale='trunc(ow/a/2)*2:320'",
-        "-an",
-        "-sn",
-        "output",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input",
+      "-vf",
+      "scale='trunc(ow/a/2)*2:320'",
+      "-an",
+      "-sn",
+      "output",
     )
   }
 
@@ -148,20 +140,17 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-i",
-        "input",
-        "-s",
-        "320x240",
-        "-vf",
-        "scale='trunc(ow/a/2)*2:320'",
-        "output",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input",
+      "-s",
+      "320x240",
+      "-vf",
+      "scale='trunc(ow/a/2)*2:320'",
+      "output",
     )
   }
 
@@ -181,9 +170,9 @@ class FFmpegBuilderTest {
       .useOptions(video)
       .buildOptions()
 
-    assertEquals(main, options.main)
-    assertEquals(audio, options.audio)
-    assertEquals(video, options.video)
+    options.main shouldBe main
+    options.audio shouldBe audio
+    options.video shouldBe video
   }
 
   /** Tests if all the various encoding options actually get stored and used correctly */
@@ -210,9 +199,9 @@ class FFmpegBuilderTest {
       .useOptions(video)
       .buildOptions()
 
-    assertEquals(main, options.main)
-    assertEquals(audio, options.audio)
-    assertEquals(video, options.video)
+    options.main shouldBe main
+    options.audio shouldBe audio
+    options.video shouldBe video
   }
 
   @Test
@@ -231,25 +220,24 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y", "-v", "error", "-i", "input", "-s", "320x240", "output1", "-s", "640x480",
-        "output2", "-s", "ntsc", "output3",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y", "-v", "error", "-i", "input", "-s", "320x240", "output1", "-s", "640x480",
+      "output2", "-s", "ntsc", "output3",
     )
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun testConflictingVideoSize() {
-    FFmpegBuilder()
-      .setInput("input")
-      .done()
-      .addOutput("output")
-      .setVideoResolution(320, 240)
-      .setVideoResolution("ntsc")
-      .done()
-      .build()
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder()
+        .setInput("input")
+        .done()
+        .addOutput("output")
+        .setVideoResolution(320, 240)
+        .setVideoResolution("ntsc")
+        .done()
+        .build()
+    }
   }
 
   @Test
@@ -262,46 +250,49 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-i",
-        "input",
-        "-s",
-        "320x240",
-        "udp://10.1.0.102:1234",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input",
+      "-s",
+      "320x240",
+      "udp://10.1.0.102:1234",
     )
   }
 
-  @Test(expected = IllegalStateException::class)
+  @Test
   fun testURIAndFilenameOutput() {
-    FFmpegBuilder()
-      .setInput("input")
-      .done()
-      .addOutput(URI.create("udp://10.1.0.102:1234"))
-      .setFilename("filename")
-      .done()
-      .build()
+    shouldThrow<IllegalStateException> {
+      FFmpegBuilder()
+        .setInput("input")
+        .done()
+        .addOutput(URI.create("udp://10.1.0.102:1234"))
+        .setFilename("filename")
+        .done()
+        .build()
+    }
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun testAddEmptyFilename() {
-    FFmpegBuilder().setInput("input").done().addOutput("").done().build()
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder().setInput("input").done().addOutput("").done().build()
+    }
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun testSetEmptyFilename() {
-    FFmpegBuilder()
-      .setInput("input")
-      .done()
-      .addOutput("output")
-      .setFilename("")
-      .done()
-      .build()
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder()
+        .setInput("input")
+        .done()
+        .addOutput("output")
+        .setFilename("")
+        .done()
+        .build()
+    }
   }
 
   @Test
@@ -316,22 +307,19 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-i",
-        "input",
-        "-metadata",
-        "comment=My Comment",
-        "-metadata",
-        "title=\"Video\"",
-        "-metadata",
-        "author=a=b:c",
-        "output",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input",
+      "-metadata",
+      "comment=My Comment",
+      "-metadata",
+      "title=\"Video\"",
+      "-metadata",
+      "author=a=b:c",
+      "output",
     )
   }
 
@@ -355,38 +343,35 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-i",
-        "input",
-        "-metadata",
-        "title=Movie Title",
-        "-metadata:c:0",
-        "author=Bob",
-        "-metadata:p:0",
-        "comment=Awesome",
-        "-metadata:s:0",
-        "copyright=Megacorp",
-        "-metadata:s:v",
-        "framerate=24fps",
-        "-metadata:s:v:0",
-        "artist=Joe",
-        "-metadata:s:a:0",
-        "language=eng",
-        "-metadata:s:s:0",
-        "language=fre",
-        "-metadata:s:u",
-        "year=2010",
-        "-metadata:s:m:key",
-        "a=b",
-        "-metadata:s:m:key:value",
-        "a=b",
-        "output",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input",
+      "-metadata",
+      "title=Movie Title",
+      "-metadata:c:0",
+      "author=Bob",
+      "-metadata:p:0",
+      "comment=Awesome",
+      "-metadata:s:0",
+      "copyright=Megacorp",
+      "-metadata:s:v",
+      "framerate=24fps",
+      "-metadata:s:v:0",
+      "artist=Joe",
+      "-metadata:s:a:0",
+      "language=eng",
+      "-metadata:s:s:0",
+      "language=fre",
+      "-metadata:s:u",
+      "year=2010",
+      "-metadata:s:m:key",
+      "a=b",
+      "-metadata:s:m:key:value",
+      "a=b",
+      "output",
     )
   }
 
@@ -403,11 +388,8 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y", "-v", "error", "-a", "b", "-i", "input", "-an", "-sn", "-c", "d", "output",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y", "-v", "error", "-a", "b", "-i", "input", "-an", "-sn", "-c", "d", "output",
     )
   }
 
@@ -415,25 +397,28 @@ class FFmpegBuilderTest {
   fun testVbr() {
     val args = FFmpegBuilder().setInput("input").done().setVBR(2).addOutput("output").done().build()
 
-    assertEquals(
-      listOf("-y", "-v", "error", "-i", "input", "-qscale:a", "2", "output"),
-      args,
-    )
+    args shouldBe listOf("-y", "-v", "error", "-i", "input", "-qscale:a", "2", "output")
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun testVbrNegativeParam() {
-    FFmpegBuilder().setInput("input").done().setVBR(-3).addOutput("output").done().build()
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder().setInput("input").done().setVBR(-3).addOutput("output").done().build()
+    }
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun testVbrQualityExceedsRange() {
-    FFmpegBuilder().setInput("input").done().setVBR(10).addOutput("output").done().build()
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder().setInput("input").done().setVBR(10).addOutput("output").done().build()
+    }
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun testNothing() {
-    FFmpegBuilder().build()
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder().build()
+    }
   }
 
   @Test
@@ -447,10 +432,7 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf("-y", "-v", "error", "-i", "input1", "-i", "input2", "output"),
-      args,
-    )
+    args shouldBe listOf("-y", "-v", "error", "-i", "input1", "-i", "input2", "output")
   }
 
   @Test
@@ -462,21 +444,18 @@ class FFmpegBuilderTest {
       .addOutput(FFmpegOutputBuilder().setFilename("output.flv").setVideoCodec("flv"))
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-i",
-        "input",
-        "-vcodec",
-        "libx264",
-        "output.mp4",
-        "-vcodec",
-        "flv",
-        "output.flv",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input",
+      "-vcodec",
+      "libx264",
+      "output.mp4",
+      "-vcodec",
+      "flv",
+      "output.flv",
     )
   }
 
@@ -494,12 +473,9 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y", "-v", "error", "-i", "input", "-preset", "a", "-fpre", "b", "-vpre", "c", "-apre",
-        "d", "-spre", "e", "output",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y", "-v", "error", "-i", "input", "-preset", "a", "-fpre", "b", "-vpre", "c", "-apre",
+      "d", "-spre", "e", "output",
     )
   }
 
@@ -513,10 +489,7 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf("-y", "-v", "error", "-threads", "2", "-i", "input", "output"),
-      args,
-    )
+    args shouldBe listOf("-y", "-v", "error", "-threads", "2", "-i", "input", "output")
   }
 
   @Test
@@ -529,20 +502,21 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf("-y", "-v", "error", "-stream_loop", "2", "-i", "input", "output"),
-      args,
-    )
+    args shouldBe listOf("-y", "-v", "error", "-stream_loop", "2", "-i", "input", "output")
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun testZeroThreads() {
-    FFmpegBuilder().setThreads(0)
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder().setThreads(0)
+    }
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun testNegativeNumberOfThreads() {
-    FFmpegBuilder().setThreads(-1)
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder().setThreads(-1)
+    }
   }
 
   @Test
@@ -570,36 +544,33 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "info",
-        "-f",
-        "x11grab",
-        "-s",
-        "1280x720",
-        "-r",
-        "30/1",
-        "-draw_mouse",
-        "0",
-        "-thread_queue_size",
-        "4096",
-        "-i",
-        ":0.0+0,0",
-        "-f",
-        "alsa",
-        "-thread_queue_size",
-        "4096",
-        "-i",
-        "hw:0,1,0",
-        "-f",
-        "flv",
-        "-acodec",
-        "aac",
-        "rtmp://a.rtmp.youtube.com/live2/XXX",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "info",
+      "-f",
+      "x11grab",
+      "-s",
+      "1280x720",
+      "-r",
+      "30/1",
+      "-draw_mouse",
+      "0",
+      "-thread_queue_size",
+      "4096",
+      "-i",
+      ":0.0+0,0",
+      "-f",
+      "alsa",
+      "-thread_queue_size",
+      "4096",
+      "-i",
+      "hw:0,1,0",
+      "-f",
+      "flv",
+      "-acodec",
+      "aac",
+      "rtmp://a.rtmp.youtube.com/live2/XXX",
     )
   }
 
@@ -613,18 +584,15 @@ class FFmpegBuilderTest {
       .setStrict(Strict.Experimental)
       .build()
 
-    assertEquals(
-      listOf(
-        "-strict",
-        "experimental",
-        "-y",
-        "-v",
-        "error",
-        "-i",
-        "input.mp4",
-        "output.mp4",
-      ),
-      args,
+    args shouldBe listOf(
+      "-strict",
+      "experimental",
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input.mp4",
+      "output.mp4",
     )
   }
 
@@ -645,29 +613,26 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-f",
-        "lavfi",
-        "-i",
-        "aevalsrc=0",
-        "-i",
-        "1.mp4",
-        "-vcodec",
-        "copy",
-        "-acodec",
-        "aac",
-        "-map",
-        "0:0",
-        "-map",
-        "1:0",
-        "-shortest",
-        "output.mp4",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-f",
+      "lavfi",
+      "-i",
+      "aevalsrc=0",
+      "-i",
+      "1.mp4",
+      "-vcodec",
+      "copy",
+      "-acodec",
+      "aac",
+      "-map",
+      "0:0",
+      "-map",
+      "1:0",
+      "-shortest",
+      "output.mp4",
     )
   }
 
@@ -686,26 +651,23 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-f",
-        "dshow",
-        "-i",
-        "audio=<device>",
-        "-f",
-        "gdigrab",
-        "-vframes",
-        "30",
-        "-i",
-        "desktop",
-        "-vcodec",
-        "libx264",
-        "video_file_name.mp4",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-f",
+      "dshow",
+      "-i",
+      "audio=<device>",
+      "-f",
+      "gdigrab",
+      "-vframes",
+      "30",
+      "-i",
+      "desktop",
+      "-vcodec",
+      "libx264",
+      "video_file_name.mp4",
     )
   }
 
@@ -744,58 +706,55 @@ class FFmpegBuilderTest {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-f",
-        "webm_dash_manifest",
-        "-i",
-        "video_160x90_250k.webm",
-        "-f",
-        "webm_dash_manifest",
-        "-i",
-        "video_320x180_500k.webm",
-        "-f",
-        "webm_dash_manifest",
-        "-i",
-        "video_640x360_750k.webm",
-        "-f",
-        "webm_dash_manifest",
-        "-i",
-        "video_640x360_1000k.webm",
-        "-f",
-        "webm_dash_manifest",
-        "-i",
-        "video_1280x720_600k.webm",
-        "-f",
-        "webm_dash_manifest",
-        "-i",
-        "audio_128k.webm",
-        "-f",
-        "webm_dash_manifest",
-        "-vcodec",
-        "copy",
-        "-acodec",
-        "copy",
-        "-map",
-        "0",
-        "-map",
-        "1",
-        "-map",
-        "2",
-        "-map",
-        "3",
-        "-map",
-        "4",
-        "-map",
-        "5",
-        "-adaptation_sets",
-        "id=0,streams=0,1,2,3,4 id=1,streams=5",
-        "manifest.mp4",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-f",
+      "webm_dash_manifest",
+      "-i",
+      "video_160x90_250k.webm",
+      "-f",
+      "webm_dash_manifest",
+      "-i",
+      "video_320x180_500k.webm",
+      "-f",
+      "webm_dash_manifest",
+      "-i",
+      "video_640x360_750k.webm",
+      "-f",
+      "webm_dash_manifest",
+      "-i",
+      "video_640x360_1000k.webm",
+      "-f",
+      "webm_dash_manifest",
+      "-i",
+      "video_1280x720_600k.webm",
+      "-f",
+      "webm_dash_manifest",
+      "-i",
+      "audio_128k.webm",
+      "-f",
+      "webm_dash_manifest",
+      "-vcodec",
+      "copy",
+      "-acodec",
+      "copy",
+      "-map",
+      "0",
+      "-map",
+      "1",
+      "-map",
+      "2",
+      "-map",
+      "3",
+      "-map",
+      "4",
+      "-map",
+      "5",
+      "-adaptation_sets",
+      "id=0,streams=0,1,2,3,4 id=1,streams=5",
+      "manifest.mp4",
     )
   }
 }

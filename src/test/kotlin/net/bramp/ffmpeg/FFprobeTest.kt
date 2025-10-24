@@ -1,5 +1,10 @@
 package net.bramp.ffmpeg
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.string.shouldEndWith
+import io.kotest.matchers.string.shouldStartWith
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -12,19 +17,6 @@ import net.bramp.ffmpeg.probe.FFmpegFrame
 import net.bramp.ffmpeg.probe.FFmpegProbeResult
 import net.bramp.ffmpeg.shared.CodecType
 import org.apache.commons.lang3.math.Fraction
-import org.hamcrest.CoreMatchers.endsWith
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.CoreMatchers.startsWith
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.hasSize
-import org.hamcrest.core.IsNull
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertThrows
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -101,46 +93,46 @@ class FFprobeTest {
 
   @Test
   fun testVersion() {
-    assertEquals("ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers", ffprobe.version())
-    assertEquals("ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers", ffprobe.version())
+    ffprobe.version() shouldBe "ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers"
+    ffprobe.version() shouldBe "ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers"
   }
 
   @Test
   fun testProbeVideo() {
     val info = ffprobe.probe(Samples.big_buck_bunny_720p_1mb)
-    assertFalse(info.hasError())
+    info.hasError() shouldBe false
 
-    assertThat(info.streams, hasSize(2))
-    assertThat(info.streams!![0].codecType, `is`(CodecType.Video))
-    assertThat(info.streams!![1].codecType, `is`(CodecType.Audio))
+    info.streams!!.size shouldBe 2
+    info.streams!![0].codecType shouldBe CodecType.Video
+    info.streams!![1].codecType shouldBe CodecType.Audio
 
-    assertThat(info.streams!![1].channels, `is`(6))
-    assertThat(info.streams!![1].sampleRate, `is`(48_000))
+    info.streams!![1].channels shouldBe 6
+    info.streams!![1].sampleRate shouldBe 48_000
 
-    assertThat(info.chapters!!.isEmpty(), `is`(true))
+    info.chapters!!.isEmpty() shouldBe true
   }
 
   @Test
   fun testProbeBookWithChapters() {
     val info = ffprobe.probe(Samples.book_with_chapters)
-    assertThat(info.hasError(), `is`(false))
-    assertThat(info.chapters!!.size, `is`(24))
+    info.hasError() shouldBe false
+    info.chapters!!.size shouldBe 24
 
     val firstChapter = info.chapters!![0]
-    assertThat(firstChapter.timeBase, `is`("1/44100"))
-    assertThat(firstChapter.start, `is`(0L))
-    assertThat(firstChapter.startTime, `is`("0.000000"))
-    assertThat(firstChapter.end, `is`(11_951_309L))
-    assertThat(firstChapter.endTime, `is`("271.004739"))
-    assertThat(firstChapter.tags?.title, `is`("01 - Sammy Jay Makes a Fuss"))
+    firstChapter.timeBase shouldBe "1/44100"
+    firstChapter.start shouldBe 0L
+    firstChapter.startTime shouldBe "0.000000"
+    firstChapter.end shouldBe 11_951_309L
+    firstChapter.endTime shouldBe "271.004739"
+    firstChapter.tags?.title shouldBe "01 - Sammy Jay Makes a Fuss"
 
     val lastChapter = info.chapters!![info.chapters!!.size - 1]
-    assertThat(lastChapter.timeBase, `is`("1/44100"))
-    assertThat(lastChapter.start, `is`(237_875_790L))
-    assertThat(lastChapter.startTime, `is`("5394.008844"))
-    assertThat(lastChapter.end, `is`(248_628_224L))
-    assertThat(lastChapter.endTime, `is`("5637.828209"))
-    assertThat(lastChapter.tags?.title, `is`("24 - Chatterer Has His Turn to Laugh"))
+    lastChapter.timeBase shouldBe "1/44100"
+    lastChapter.start shouldBe 237_875_790L
+    lastChapter.startTime shouldBe "5394.008844"
+    lastChapter.end shouldBe 248_628_224L
+    lastChapter.endTime shouldBe "5637.828209"
+    lastChapter.tags?.title shouldBe "24 - Chatterer Has His Turn to Laugh"
   }
 
   @Test
@@ -151,47 +143,47 @@ class FFprobeTest {
         .setShowPackets(true)
         .build(),
     )
-    assertThat(info.hasError(), `is`(false))
-    assertThat(info.packets!!.size, `is`(381))
+    info.hasError() shouldBe false
+    info.packets!!.size shouldBe 381
 
     val firstPacket = info.packets!![0]
-    assertThat(firstPacket.codecType, `is`(CodecType.Audio))
-    assertThat(firstPacket.streamIndex, `is`(1))
-    assertThat(firstPacket.pts, `is`(0L))
-    assertThat(firstPacket.ptsTime, `is`("0.000000"))
-    assertThat(firstPacket.dts, `is`(0L))
-    assertThat(firstPacket.dtsTime, `is`("0.000000"))
-    assertThat(firstPacket.duration, `is`(1024L))
-    assertThat(firstPacket.durationTime, `is`("0.021333"))
-    assertThat(firstPacket.size, `is`("967"))
-    assertThat(firstPacket.pos, `is`("4261"))
-    assertThat(firstPacket.flags, `is`("K_"))
+    firstPacket.codecType shouldBe CodecType.Audio
+    firstPacket.streamIndex shouldBe 1
+    firstPacket.pts shouldBe 0L
+    firstPacket.ptsTime shouldBe "0.000000"
+    firstPacket.dts shouldBe 0L
+    firstPacket.dtsTime shouldBe "0.000000"
+    firstPacket.duration shouldBe 1024L
+    firstPacket.durationTime shouldBe "0.021333"
+    firstPacket.size shouldBe "967"
+    firstPacket.pos shouldBe "4261"
+    firstPacket.flags shouldBe "K_"
 
     val secondPacket = info.packets!![1]
-    assertThat(secondPacket.codecType, `is`(CodecType.Video))
-    assertThat(secondPacket.streamIndex, `is`(0))
-    assertThat(secondPacket.pts, `is`(0L))
-    assertThat(secondPacket.ptsTime, `is`("0.000000"))
-    assertThat(secondPacket.dts, `is`(0L))
-    assertThat(secondPacket.dtsTime, `is`("0.000000"))
-    assertThat(secondPacket.duration, `is`(512L))
-    assertThat(secondPacket.durationTime, `is`("0.040000"))
-    assertThat(secondPacket.size, `is`("105222"))
-    assertThat(secondPacket.pos, `is`("5228"))
-    assertThat(secondPacket.flags, `is`("K_"))
+    secondPacket.codecType shouldBe CodecType.Video
+    secondPacket.streamIndex shouldBe 0
+    secondPacket.pts shouldBe 0L
+    secondPacket.ptsTime shouldBe "0.000000"
+    secondPacket.dts shouldBe 0L
+    secondPacket.dtsTime shouldBe "0.000000"
+    secondPacket.duration shouldBe 512L
+    secondPacket.durationTime shouldBe "0.040000"
+    secondPacket.size shouldBe "105222"
+    secondPacket.pos shouldBe "5228"
+    secondPacket.flags shouldBe "K_"
 
     val lastPacket = info.packets!![info.packets!!.size - 1]
-    assertThat(lastPacket.codecType, `is`(CodecType.Audio))
-    assertThat(lastPacket.streamIndex, `is`(1))
-    assertThat(lastPacket.pts, `is`(253_952L))
-    assertThat(lastPacket.ptsTime, `is`("5.290667"))
-    assertThat(lastPacket.dts, `is`(253_952L))
-    assertThat(lastPacket.dtsTime, `is`("5.290667"))
-    assertThat(lastPacket.duration, `is`(1024L))
-    assertThat(lastPacket.durationTime, `is`("0.021333"))
-    assertThat(lastPacket.size, `is`("1111"))
-    assertThat(lastPacket.pos, `is`("1054609"))
-    assertThat(lastPacket.flags, `is`("K_"))
+    lastPacket.codecType shouldBe CodecType.Audio
+    lastPacket.streamIndex shouldBe 1
+    lastPacket.pts shouldBe 253_952L
+    lastPacket.ptsTime shouldBe "5.290667"
+    lastPacket.dts shouldBe 253_952L
+    lastPacket.dtsTime shouldBe "5.290667"
+    lastPacket.duration shouldBe 1024L
+    lastPacket.durationTime shouldBe "0.021333"
+    lastPacket.size shouldBe "1111"
+    lastPacket.pos shouldBe "1054609"
+    lastPacket.flags shouldBe "K_"
   }
 
   @Test
@@ -202,45 +194,45 @@ class FFprobeTest {
         .setShowFrames(true)
         .build(),
     )
-    assertThat(info.hasError(), `is`(false))
-    assertThat(info.frames!!.size, `is`(381))
+    info.hasError() shouldBe false
+    info.frames!!.size shouldBe 381
 
     val firstFrame = info.frames!![0]
-    assertThat(firstFrame.streamIndex, `is`(1))
-    assertThat(firstFrame.keyFrame, `is`(1))
-    assertThat(firstFrame.pktPts, `is`(0L))
-    assertThat(firstFrame.pktPtsTime, `is`("0.000000"))
-    assertThat(firstFrame.pktDts, `is`(0L))
-    assertThat(firstFrame.pktDtsTime, `is`("0.000000"))
-    assertThat(firstFrame.bestEffortTimestamp, `is`(0L))
-    assertThat(firstFrame.bestEffortTimestampTime, `is`("0.000000"))
-    assertThat(firstFrame.pktDuration, `is`(1024L))
-    assertThat(firstFrame.pktDurationTime, `is`("0.021333"))
-    assertThat(firstFrame.pktPos, `is`(4261L))
-    assertThat(firstFrame.pktSize, `is`(967L))
-    assertThat(firstFrame.sampleFmt, `is`("fltp"))
-    assertThat(firstFrame.nbSamples, `is`(1024))
-    assertThat(firstFrame.channels, `is`(6))
-    assertThat(firstFrame.channelLayout, `is`("5.1"))
+    firstFrame.streamIndex shouldBe 1
+    firstFrame.keyFrame shouldBe 1
+    firstFrame.pktPts shouldBe 0L
+    firstFrame.pktPtsTime shouldBe "0.000000"
+    firstFrame.pktDts shouldBe 0L
+    firstFrame.pktDtsTime shouldBe "0.000000"
+    firstFrame.bestEffortTimestamp shouldBe 0L
+    firstFrame.bestEffortTimestampTime shouldBe "0.000000"
+    firstFrame.pktDuration shouldBe 1024L
+    firstFrame.pktDurationTime shouldBe "0.021333"
+    firstFrame.pktPos shouldBe 4261L
+    firstFrame.pktSize shouldBe 967L
+    firstFrame.sampleFmt shouldBe "fltp"
+    firstFrame.nbSamples shouldBe 1024
+    firstFrame.channels shouldBe 6
+    firstFrame.channelLayout shouldBe "5.1"
 
     val secondFrame = info.frames!![1]
-    assertThat(secondFrame.mediaType, `is`(CodecType.Video))
-    assertThat(secondFrame.streamIndex, `is`(0))
-    assertThat(secondFrame.keyFrame, `is`(1))
-    assertThat(secondFrame.pktPts, `is`(0L))
-    assertThat(secondFrame.pktPtsTime, `is`("0.000000"))
-    assertThat(secondFrame.pktDts, `is`(0L))
-    assertThat(secondFrame.pktDtsTime, `is`("0.000000"))
-    assertThat(secondFrame.bestEffortTimestamp, `is`(0L))
-    assertThat(secondFrame.bestEffortTimestampTime, `is`("0.000000"))
-    assertThat(secondFrame.pktDuration, `is`(512L))
-    assertThat(secondFrame.pktDurationTime, `is`("0.040000"))
-    assertThat(secondFrame.pktPos, `is`(5228L))
-    assertThat(secondFrame.pktSize, `is`(105_222L))
-    assertThat(secondFrame.sampleFmt, IsNull())
-    assertThat(secondFrame.nbSamples, `is`(0))
-    assertThat(secondFrame.channels, `is`(0))
-    assertThat(secondFrame.channelLayout, IsNull())
+    secondFrame.mediaType shouldBe CodecType.Video
+    secondFrame.streamIndex shouldBe 0
+    secondFrame.keyFrame shouldBe 1
+    secondFrame.pktPts shouldBe 0L
+    secondFrame.pktPtsTime shouldBe "0.000000"
+    secondFrame.pktDts shouldBe 0L
+    secondFrame.pktDtsTime shouldBe "0.000000"
+    secondFrame.bestEffortTimestamp shouldBe 0L
+    secondFrame.bestEffortTimestampTime shouldBe "0.000000"
+    secondFrame.pktDuration shouldBe 512L
+    secondFrame.pktDurationTime shouldBe "0.040000"
+    secondFrame.pktPos shouldBe 5228L
+    secondFrame.pktSize shouldBe 105_222L
+    secondFrame.sampleFmt shouldBe null
+    secondFrame.nbSamples shouldBe 0
+    secondFrame.channels shouldBe 0
+    secondFrame.channelLayout shouldBe null
 
     val lastFrame = info.frames!![info.frames!!.size - 1]
     assertLastFrame(lastFrame)
@@ -255,142 +247,139 @@ class FFprobeTest {
         .setShowFrames(true)
         .build(),
     )
-    assertThat(info.hasError(), `is`(false))
-    assertThat(info.packets!!.size, `is`(381))
-    assertThat(info.frames!!.size, `is`(381))
+    info.hasError() shouldBe false
+    info.packets!!.size shouldBe 381
+    info.frames!!.size shouldBe 381
 
     val firstPacket = info.packets!![0]
-    assertThat(firstPacket.codecType, `is`(CodecType.Audio))
-    assertThat(firstPacket.streamIndex, `is`(1))
-    assertThat(firstPacket.pts, `is`(0L))
-    assertThat(firstPacket.ptsTime, `is`("0.000000"))
-    assertThat(firstPacket.dts, `is`(0L))
-    assertThat(firstPacket.dtsTime, `is`("0.000000"))
-    assertThat(firstPacket.duration, `is`(1024L))
-    assertThat(firstPacket.durationTime, `is`("0.021333"))
-    assertThat(firstPacket.size, `is`("967"))
-    assertThat(firstPacket.pos, `is`("4261"))
-    assertThat(firstPacket.flags, `is`("K_"))
+    firstPacket.codecType shouldBe CodecType.Audio
+    firstPacket.streamIndex shouldBe 1
+    firstPacket.pts shouldBe 0L
+    firstPacket.ptsTime shouldBe "0.000000"
+    firstPacket.dts shouldBe 0L
+    firstPacket.dtsTime shouldBe "0.000000"
+    firstPacket.duration shouldBe 1024L
+    firstPacket.durationTime shouldBe "0.021333"
+    firstPacket.size shouldBe "967"
+    firstPacket.pos shouldBe "4261"
+    firstPacket.flags shouldBe "K_"
 
     val secondPacket = info.packets!![1]
-    assertThat(secondPacket.codecType, `is`(CodecType.Video))
-    assertThat(secondPacket.streamIndex, `is`(0))
-    assertThat(secondPacket.pts, `is`(0L))
-    assertThat(secondPacket.ptsTime, `is`("0.000000"))
-    assertThat(secondPacket.dts, `is`(0L))
-    assertThat(secondPacket.dtsTime, `is`("0.000000"))
-    assertThat(secondPacket.duration, `is`(512L))
-    assertThat(secondPacket.durationTime, `is`("0.040000"))
-    assertThat(secondPacket.size, `is`("105222"))
-    assertThat(secondPacket.pos, `is`("5228"))
-    assertThat(secondPacket.flags, `is`("K_"))
+    secondPacket.codecType shouldBe CodecType.Video
+    secondPacket.streamIndex shouldBe 0
+    secondPacket.pts shouldBe 0L
+    secondPacket.ptsTime shouldBe "0.000000"
+    secondPacket.dts shouldBe 0L
+    secondPacket.dtsTime shouldBe "0.000000"
+    secondPacket.duration shouldBe 512L
+    secondPacket.durationTime shouldBe "0.040000"
+    secondPacket.size shouldBe "105222"
+    secondPacket.pos shouldBe "5228"
+    secondPacket.flags shouldBe "K_"
 
     val lastPacket = info.packets!![info.packets!!.size - 1]
-    assertThat(lastPacket.codecType, `is`(CodecType.Audio))
-    assertThat(lastPacket.streamIndex, `is`(1))
-    assertThat(lastPacket.pts, `is`(253_952L))
-    assertThat(lastPacket.ptsTime, `is`("5.290667"))
-    assertThat(lastPacket.dts, `is`(253_952L))
-    assertThat(lastPacket.dtsTime, `is`("5.290667"))
-    assertThat(lastPacket.duration, `is`(1024L))
-    assertThat(lastPacket.durationTime, `is`("0.021333"))
-    assertThat(lastPacket.size, `is`("1111"))
-    assertThat(lastPacket.pos, `is`("1054609"))
-    assertThat(lastPacket.flags, `is`("K_"))
+    lastPacket.codecType shouldBe CodecType.Audio
+    lastPacket.streamIndex shouldBe 1
+    lastPacket.pts shouldBe 253_952L
+    lastPacket.ptsTime shouldBe "5.290667"
+    lastPacket.dts shouldBe 253_952L
+    lastPacket.dtsTime shouldBe "5.290667"
+    lastPacket.duration shouldBe 1024L
+    lastPacket.durationTime shouldBe "0.021333"
+    lastPacket.size shouldBe "1111"
+    lastPacket.pos shouldBe "1054609"
+    lastPacket.flags shouldBe "K_"
 
     val firstFrame = info.frames!![0]
-    assertThat(firstFrame.streamIndex, `is`(1))
-    assertThat(firstFrame.keyFrame, `is`(1))
-    assertThat(firstFrame.pktPts, `is`(0L))
-    assertThat(firstFrame.pktPtsTime, `is`("0.000000"))
-    assertThat(firstFrame.pktDts, `is`(0L))
-    assertThat(firstFrame.pktDtsTime, `is`("0.000000"))
-    assertThat(firstFrame.bestEffortTimestamp, `is`(0L))
-    assertThat(firstFrame.bestEffortTimestampTime, `is`("0.000000"))
-    assertThat(firstFrame.pktDuration, `is`(1024L))
-    assertThat(firstFrame.pktDurationTime, `is`("0.021333"))
-    assertThat(firstFrame.pktPos, `is`(4261L))
-    assertThat(firstFrame.pktSize, `is`(967L))
-    assertThat(firstFrame.sampleFmt, `is`("fltp"))
-    assertThat(firstFrame.nbSamples, `is`(1024))
-    assertThat(firstFrame.channels, `is`(6))
-    assertThat(firstFrame.channelLayout, `is`("5.1"))
+    firstFrame.streamIndex shouldBe 1
+    firstFrame.keyFrame shouldBe 1
+    firstFrame.pktPts shouldBe 0L
+    firstFrame.pktPtsTime shouldBe "0.000000"
+    firstFrame.pktDts shouldBe 0L
+    firstFrame.pktDtsTime shouldBe "0.000000"
+    firstFrame.bestEffortTimestamp shouldBe 0L
+    firstFrame.bestEffortTimestampTime shouldBe "0.000000"
+    firstFrame.pktDuration shouldBe 1024L
+    firstFrame.pktDurationTime shouldBe "0.021333"
+    firstFrame.pktPos shouldBe 4261L
+    firstFrame.pktSize shouldBe 967L
+    firstFrame.sampleFmt shouldBe "fltp"
+    firstFrame.nbSamples shouldBe 1024
+    firstFrame.channels shouldBe 6
+    firstFrame.channelLayout shouldBe "5.1"
 
     val secondFrame = info.frames!![1]
-    assertThat(secondFrame.mediaType, `is`(CodecType.Video))
-    assertThat(secondFrame.streamIndex, `is`(0))
-    assertThat(secondFrame.keyFrame, `is`(1))
-    assertThat(secondFrame.pktPts, `is`(0L))
-    assertThat(secondFrame.pktPtsTime, `is`("0.000000"))
-    assertThat(secondFrame.pktDts, `is`(0L))
-    assertThat(secondFrame.pktDtsTime, `is`("0.000000"))
-    assertThat(secondFrame.bestEffortTimestamp, `is`(0L))
-    assertThat(secondFrame.bestEffortTimestampTime, `is`("0.000000"))
-    assertThat(secondFrame.pktDuration, `is`(512L))
-    assertThat(secondFrame.pktDurationTime, `is`("0.040000"))
-    assertThat(secondFrame.pktPos, `is`(5228L))
-    assertThat(secondFrame.pktSize, `is`(105_222L))
-    assertThat(secondFrame.sampleFmt, IsNull())
-    assertThat(secondFrame.nbSamples, `is`(0))
-    assertThat(secondFrame.channels, `is`(0))
-    assertThat(secondFrame.channelLayout, IsNull())
+    secondFrame.mediaType shouldBe CodecType.Video
+    secondFrame.streamIndex shouldBe 0
+    secondFrame.keyFrame shouldBe 1
+    secondFrame.pktPts shouldBe 0L
+    secondFrame.pktPtsTime shouldBe "0.000000"
+    secondFrame.pktDts shouldBe 0L
+    secondFrame.pktDtsTime shouldBe "0.000000"
+    secondFrame.bestEffortTimestamp shouldBe 0L
+    secondFrame.bestEffortTimestampTime shouldBe "0.000000"
+    secondFrame.pktDuration shouldBe 512L
+    secondFrame.pktDurationTime shouldBe "0.040000"
+    secondFrame.pktPos shouldBe 5228L
+    secondFrame.pktSize shouldBe 105_222L
+    secondFrame.sampleFmt shouldBe null
+    secondFrame.nbSamples shouldBe 0
+    secondFrame.channels shouldBe 0
+    secondFrame.channelLayout shouldBe null
 
     val lastFrame = info.frames!![info.frames!!.size - 1]
     assertLastFrame(lastFrame)
   }
 
   private fun assertLastFrame(actual: FFmpegFrame) {
-    assertThat(actual.mediaType, `is`(CodecType.Audio))
-    assertThat(actual.streamIndex, `is`(1))
-    assertThat(actual.keyFrame, `is`(1))
-    assertThat(actual.pktPts, `is`(253_952L))
-    assertThat(actual.pktPtsTime, `is`("5.290667"))
-    assertThat(actual.pktDts, `is`(253_952L))
-    assertThat(actual.pktDtsTime, `is`("5.290667"))
-    assertThat(actual.bestEffortTimestamp, `is`(253_952L))
-    assertThat(actual.bestEffortTimestampTime, `is`("5.290667"))
-    assertThat(actual.pktDuration, `is`(1024L))
-    assertThat(actual.pktDurationTime, `is`("0.021333"))
-    assertThat(actual.pktPos, `is`(1_054_609L))
-    assertThat(actual.pktSize, `is`(1111L))
-    assertThat(actual.sampleFmt, `is`("fltp"))
-    assertThat(actual.nbSamples, `is`(1024))
-    assertThat(actual.channels, `is`(6))
-    assertThat(actual.channelLayout, `is`("5.1"))
+    actual.mediaType shouldBe CodecType.Audio
+    actual.streamIndex shouldBe 1
+    actual.keyFrame shouldBe 1
+    actual.pktPts shouldBe 253_952L
+    actual.pktPtsTime shouldBe "5.290667"
+    actual.pktDts shouldBe 253_952L
+    actual.pktDtsTime shouldBe "5.290667"
+    actual.bestEffortTimestamp shouldBe 253_952L
+    actual.bestEffortTimestampTime shouldBe "5.290667"
+    actual.pktDuration shouldBe 1024L
+    actual.pktDurationTime shouldBe "0.021333"
+    actual.pktPos shouldBe 1_054_609L
+    actual.pktSize shouldBe 1111L
+    actual.sampleFmt shouldBe "fltp"
+    actual.nbSamples shouldBe 1024
+    actual.channels shouldBe 6
+    actual.channelLayout shouldBe "5.1"
   }
 
   @Test
   fun testProbeVideo2() {
     val info = ffprobe.probe(Samples.always_on_my_mind)
-    assertFalse(info.hasError())
+    info.hasError() shouldBe false
 
-    assertThat(info.streams, hasSize(2))
-    assertThat(info.streams!![0].codecType, `is`(CodecType.Video))
-    assertThat(info.streams!![1].codecType, `is`(CodecType.Audio))
+    info.streams!!.size shouldBe 2
+    info.streams!![0].codecType shouldBe CodecType.Video
+    info.streams!![1].codecType shouldBe CodecType.Audio
 
-    assertThat(info.streams!![1].channels, `is`(2))
-    assertThat(info.streams!![1].sampleRate, `is`(48_000))
+    info.streams!![1].channels shouldBe 2
+    info.streams!![1].sampleRate shouldBe 48_000
 
-    assertThat(
-      info.format!!.filename,
-      `is`("c:\\Users\\Bob\\Always On My Mind [Program Only] - Adelén.mp4"),
-    )
+    info.format!!.filename shouldBe "c:\\Users\\Bob\\Always On My Mind [Program Only] - Adelén.mp4"
   }
 
   @Test
   fun testProbeStartPts() {
     val info = ffprobe.probe(Samples.start_pts_test)
-    assertFalse(info.hasError())
+    info.hasError() shouldBe false
 
-    assertThat(info.streams!![0].startPts, `is`(8_570_867_078L))
+    info.streams!![0].startPts shouldBe 8_570_867_078L
   }
 
   @Test
   fun testProbeDivideByZero() {
     val info = ffprobe.probe(Samples.divide_by_zero)
-    assertFalse(info.hasError())
+    info.hasError() shouldBe false
 
-    assertThat(info.streams!![1].codecTimeBase, `is`(Fraction.ZERO))
+    info.streams!![1].codecTimeBase shouldBe Fraction.ZERO
   }
 
   @Test
@@ -400,10 +389,10 @@ class FFprobeTest {
     val error = FFmpegError()
     val result = FFmpegProbeResult(error)
 
-    val exception = assertThrows(FFmpegException::class.java) {
+    val exception = shouldThrow<FFmpegException> {
       ffprobe.throwOnError(mockProcess, result)
     }
-    assertEquals(error, exception.error)
+    exception.error shouldBe error
   }
 
   @Test
@@ -411,56 +400,52 @@ class FFprobeTest {
     every { mockProcess.exitValue() } answers { 1 }
 
     val result = FFmpegProbeResult()
-    val exception = assertThrows(FFmpegException::class.java) {
+    val exception = shouldThrow<FFmpegException> {
       ffprobe.throwOnError(mockProcess, result)
     }
-    assertNull(exception.error)
+    exception.error shouldBe null
   }
 
   @Test
   fun shouldThrowOnErrorEvenIfProbeResultIsNull() {
     every { mockProcess.exitValue() } answers { 1 }
 
-    val exception = assertThrows(FFmpegException::class.java) {
+    val exception = shouldThrow<FFmpegException> {
       ffprobe.throwOnError(mockProcess, null)
     }
-    assertNull(exception.error)
+    exception.error shouldBe null
   }
 
   @Test
   fun testShouldThrowErrorWithoutMock() {
     val probe = FFprobe(FFprobe.DEFAULT_PATH)
-    val exception = assertThrows(FFmpegException::class.java) {
+    val exception = shouldThrow<FFmpegException> {
       probe.probe("doesnotexist.mp4")
     }
 
-    assertNotNull(exception)
-    assertNotNull(exception.error)
-    assertNotNull(exception.error?.string)
-    assertNotEquals(0, exception.error?.code)
+    exception shouldNotBe null
+    exception.error shouldNotBe null
+    exception.error?.string shouldNotBe null
+    exception.error?.code shouldNotBe 0
   }
 
   @Test
   fun testProbeSideDataList() {
     val info = ffprobe.probe(Samples.side_data_list)
 
-    assertThat(info.streams!![0].sideDataList.size, `is`(1))
-    assertThat(info.streams!![0].sideDataList[0].sideDataType, `is`("Display Matrix"))
-    assertThat(
-      info.streams!![0].sideDataList[0].displayMatrix,
-      `is`(
-        "\n00000000:            0      -65536           0\n00000001:        65536           0           0\n00000002:            0           0  1073741824\n",
-      ),
-    )
-    assertThat(info.streams!![0].sideDataList[0].rotation, `is`(90))
+    info.streams!![0].sideDataList.size shouldBe 1
+    info.streams!![0].sideDataList[0].sideDataType shouldBe "Display Matrix"
+    info.streams!![0].sideDataList[0].displayMatrix shouldBe
+      "\n00000000:            0      -65536           0\n00000001:        65536           0           0\n00000002:            0           0  1073741824\n"
+    info.streams!![0].sideDataList[0].rotation shouldBe 90
   }
 
   @Test
   fun testChaptersWithLongIds() {
     val info = ffprobe.probe(Samples.chapters_with_long_id)
 
-    assertThat(info.chapters!![0].id, `is`(6_613_449_456_311_024_506L))
-    assertThat(info.chapters!![1].id, `is`(-4_433_436_293_284_298_339L))
+    info.chapters!![0].id shouldBe 6_613_449_456_311_024_506L
+    info.chapters!![1].id shouldBe -4_433_436_293_284_298_339L
   }
 
   @Test
@@ -472,19 +457,14 @@ class FFprobeTest {
 
     val value = Helper.subList(slot.captured, 1)
 
-    assertThat(
-      value,
-      `is`(
-        listOf(
-          "-v", "quiet",
-          "-print_format", "json",
-          "-show_error",
-          "-show_format",
-          "-show_streams",
-          "-show_chapters",
-          Samples.always_on_my_mind,
-        ),
-      ),
+    value shouldBe listOf(
+      "-v", "quiet",
+      "-print_format", "json",
+      "-show_error",
+      "-show_format",
+      "-show_streams",
+      "-show_chapters",
+      Samples.always_on_my_mind,
     )
   }
 
@@ -497,19 +477,14 @@ class FFprobeTest {
 
     val value = Helper.subList(slot.captured, 1)
 
-    assertThat(
-      value,
-      `is`(
-        listOf(
-          "-v", "quiet",
-          "-print_format", "json",
-          "-show_error",
-          "-show_format",
-          "-show_streams",
-          "-show_chapters",
-          Samples.always_on_my_mind,
-        ),
-      ),
+    value shouldBe listOf(
+      "-v", "quiet",
+      "-print_format", "json",
+      "-show_error",
+      "-show_format",
+      "-show_streams",
+      "-show_chapters",
+      Samples.always_on_my_mind,
     )
   }
 
@@ -522,19 +497,14 @@ class FFprobeTest {
 
     val value = Helper.subList(slot.captured, 1)
 
-    assertThat(
-      value,
-      `is`(
-        listOf(
-          "-v", "quiet",
-          "-print_format", "json",
-          "-show_error",
-          "-show_format",
-          "-show_streams",
-          "-show_chapters",
-          Samples.always_on_my_mind,
-        ),
-      ),
+    value shouldBe listOf(
+      "-v", "quiet",
+      "-print_format", "json",
+      "-show_error",
+      "-show_format",
+      "-show_streams",
+      "-show_chapters",
+      Samples.always_on_my_mind,
     )
   }
 
@@ -547,20 +517,15 @@ class FFprobeTest {
 
     val value = Helper.subList(slot.captured, 1)
 
-    assertThat(
-      value,
-      `is`(
-        listOf(
-          "-v", "quiet",
-          "-print_format", "json",
-          "-show_error",
-          "-rw_timeout", "0",
-          "-show_format",
-          "-show_streams",
-          "-show_chapters",
-          Samples.always_on_my_mind,
-        ),
-      ),
+    value shouldBe listOf(
+      "-v", "quiet",
+      "-print_format", "json",
+      "-show_error",
+      "-rw_timeout", "0",
+      "-show_format",
+      "-show_streams",
+      "-show_chapters",
+      Samples.always_on_my_mind,
     )
   }
 
@@ -573,20 +538,15 @@ class FFprobeTest {
 
     val value = Helper.subList(slot.captured, 1)
 
-    assertThat(
-      value,
-      `is`(
-        listOf(
-          "-v", "quiet",
-          "-print_format", "json",
-          "-show_error",
-          "-user_agent", "ffmpeg-cli-wrapper",
-          "-show_format",
-          "-show_streams",
-          "-show_chapters",
-          Samples.always_on_my_mind,
-        ),
-      ),
+    value shouldBe listOf(
+      "-v", "quiet",
+      "-print_format", "json",
+      "-show_error",
+      "-user_agent", "ffmpeg-cli-wrapper",
+      "-show_format",
+      "-show_streams",
+      "-show_chapters",
+      Samples.always_on_my_mind,
     )
   }
 
@@ -594,19 +554,19 @@ class FFprobeTest {
   fun testFullFormatDeserialization() {
     val format = ffprobe.probe(Samples.always_on_my_mind).format!!
 
-    assertThat(format.filename, endsWith("Always On My Mind [Program Only] - Adelén.mp4"))
-    assertEquals(2, format.nbStreams)
-    assertEquals(0, format.nbPrograms)
-    assertEquals("mov,mp4,m4a,3gp,3g2,mj2", format.formatName)
-    assertEquals("QuickTime / MOV", format.formatLongName)
-    assertEquals(0.0, format.startTime ?: 0.0, 0.01)
-    assertEquals(181.632, format.duration ?: 0.0, 0.01)
-    assertEquals(417_127_573, format.size)
-    assertEquals(18_372_426, format.bitRate)
-    assertEquals(100, format.probeScore)
-    assertEquals(4, format.tags?.size)
+    format.filename shouldEndWith "Always On My Mind [Program Only] - Adelén.mp4"
+    format.nbStreams shouldBe 2
+    format.nbPrograms shouldBe 0
+    format.formatName shouldBe "mov,mp4,m4a,3gp,3g2,mj2"
+    format.formatLongName shouldBe "QuickTime / MOV"
+    format.startTime shouldBe 0.0
+    format.duration shouldBe 181.632
+    format.size shouldBe 417_127_573
+    format.bitRate shouldBe 18_372_426
+    format.probeScore shouldBe 100
+    format.tags?.size shouldBe 4
 
-    assertEquals("mp42", format.tags!!["major_brand"])
+    format.tags!!["major_brand"] shouldBe "mp42"
   }
 
   @Test
@@ -614,15 +574,15 @@ class FFprobeTest {
     val chapters = ffprobe.probe(Samples.book_with_chapters).chapters!!
     val chapter = chapters[chapters.size - 1]
 
-    assertEquals(24, chapters.size)
+    chapters.size shouldBe 24
 
-    assertEquals(23, chapter.id)
-    assertEquals("1/44100", chapter.timeBase)
-    assertEquals(237_875_790, chapter.start)
-    assertEquals("5394.008844", chapter.startTime)
-    assertEquals(248_628_224, chapter.end)
-    assertEquals("5637.828209", chapter.endTime)
-    assertEquals("24 - Chatterer Has His Turn to Laugh", chapter.tags?.title)
+    chapter.id shouldBe 23
+    chapter.timeBase shouldBe "1/44100"
+    chapter.start shouldBe 237_875_790
+    chapter.startTime shouldBe "5394.008844"
+    chapter.end shouldBe 248_628_224
+    chapter.endTime shouldBe "5637.828209"
+    chapter.tags?.title shouldBe "24 - Chatterer Has His Turn to Laugh"
   }
 
   @Test
@@ -630,45 +590,45 @@ class FFprobeTest {
     val streams = ffprobe.probe(Samples.big_buck_bunny_720p_1mb).streams!!
     val stream = streams[0]
 
-    assertEquals(0, stream.index)
-    assertEquals("h264", stream.codecName)
-    assertEquals("H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10", stream.codecLongName)
-    assertEquals("Main", stream.profile)
-    assertEquals(CodecType.Video, stream.codecType)
-    assertEquals(Fraction.getFraction(1, 50), stream.codecTimeBase)
-    assertEquals("avc1", stream.codecTagString)
-    assertEquals("0x31637661", stream.codecTag)
-    assertEquals(1280, stream.width)
-    assertEquals(720, stream.height)
-    assertEquals(0, stream.hasBFrames)
-    assertEquals("1:1", stream.sampleAspectRatio)
-    assertEquals("16:9", stream.displayAspectRatio)
-    assertEquals("yuv420p", stream.pixFmt)
-    assertEquals(31, stream.level)
-    assertEquals("left", stream.chromaLocation)
-    assertEquals(1, stream.refs)
-    assertEquals("true", stream.isAvc)
-    assertEquals("4", stream.nalLengthSize)
-    assertEquals("0x1", stream.id)
-    assertEquals(Fraction.getFraction(25, 1), stream.rFrameRate)
-    assertEquals(Fraction.getFraction(25, 1), stream.avgFrameRate)
-    assertEquals(Fraction.getFraction(1, 12_800), stream.timeBase)
-    assertEquals(0, stream.startPts)
-    assertEquals(0.0, stream.startTime ?: 0.0, 0.01)
-    assertEquals(67_584, stream.durationTs)
-    assertEquals(5.28, stream.duration ?: 0.0, 0.01)
-    assertEquals(1_205_959, stream.bitRate)
-    assertEquals(0, stream.maxBitRate)
-    assertEquals(8, stream.bitsPerRawSample)
-    assertEquals(0, stream.bitsPerSample)
-    assertEquals(132, stream.nbFrames)
-    assertNull(stream.sampleFmt)
-    assertEquals(0, stream.sampleRate)
-    assertEquals(0, stream.channels)
-    assertNull(stream.channelLayout)
-    assertEquals(4, stream.tags?.size)
-    assertEquals("und", stream.tags!!["language"])
-    assertEquals(0, stream.sideDataList.size)
+    stream.index shouldBe 0
+    stream.codecName shouldBe "h264"
+    stream.codecLongName shouldBe "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"
+    stream.profile shouldBe "Main"
+    stream.codecType shouldBe CodecType.Video
+    stream.codecTimeBase shouldBe Fraction.getFraction(1, 50)
+    stream.codecTagString shouldBe "avc1"
+    stream.codecTag shouldBe "0x31637661"
+    stream.width shouldBe 1280
+    stream.height shouldBe 720
+    stream.hasBFrames shouldBe 0
+    stream.sampleAspectRatio shouldBe "1:1"
+    stream.displayAspectRatio shouldBe "16:9"
+    stream.pixFmt shouldBe "yuv420p"
+    stream.level shouldBe 31
+    stream.chromaLocation shouldBe "left"
+    stream.refs shouldBe 1
+    stream.isAvc shouldBe "true"
+    stream.nalLengthSize shouldBe "4"
+    stream.id shouldBe "0x1"
+    stream.rFrameRate shouldBe Fraction.getFraction(25, 1)
+    stream.avgFrameRate shouldBe Fraction.getFraction(25, 1)
+    stream.timeBase shouldBe Fraction.getFraction(1, 12_800)
+    stream.startPts shouldBe 0
+    stream.startTime shouldBe 0.0
+    stream.durationTs shouldBe 67_584
+    stream.duration shouldBe 5.28
+    stream.bitRate shouldBe 1_205_959
+    stream.maxBitRate shouldBe 0
+    stream.bitsPerRawSample shouldBe 8
+    stream.bitsPerSample shouldBe 0
+    stream.nbFrames shouldBe 132
+    stream.sampleFmt shouldBe null
+    stream.sampleRate shouldBe 0
+    stream.channels shouldBe 0
+    stream.channelLayout shouldBe null
+    stream.tags?.size shouldBe 4
+    stream.tags!!["language"] shouldBe "und"
+    stream.sideDataList.size shouldBe 0
   }
 
   @Test
@@ -676,45 +636,45 @@ class FFprobeTest {
     val streams = ffprobe.probe(Samples.big_buck_bunny_720p_1mb).streams!!
     val stream = streams[1]
 
-    assertEquals(1, stream.index)
-    assertEquals("aac", stream.codecName)
-    assertEquals("AAC (Advanced Audio Coding)", stream.codecLongName)
-    assertEquals("LC", stream.profile)
-    assertEquals(CodecType.Audio, stream.codecType)
-    assertEquals(Fraction.getFraction(1, 48_000), stream.codecTimeBase)
-    assertEquals("mp4a", stream.codecTagString)
-    assertEquals("0x6134706d", stream.codecTag)
-    assertEquals(0, stream.width)
-    assertEquals(0, stream.height)
-    assertEquals(0, stream.hasBFrames)
-    assertNull(stream.sampleAspectRatio)
-    assertNull(stream.displayAspectRatio)
-    assertNull(stream.pixFmt)
-    assertEquals(0, stream.level)
-    assertNull(stream.chromaLocation)
-    assertEquals(0, stream.refs)
-    assertNull(stream.isAvc)
-    assertNull(stream.nalLengthSize)
-    assertEquals("0x2", stream.id)
-    assertEquals(Fraction.getFraction(0, 1), stream.rFrameRate)
-    assertEquals(Fraction.getFraction(0, 1), stream.avgFrameRate)
-    assertEquals(Fraction.getFraction(1, 48_000), stream.timeBase)
-    assertEquals(0, stream.startPts)
-    assertEquals(0.0, stream.startTime ?: 0.0, 0.01)
-    assertEquals(254_976, stream.durationTs)
-    assertEquals(5.312, stream.duration ?: 0.0, 0.01)
-    assertEquals(384_828, stream.bitRate)
-    assertEquals(400_392, stream.maxBitRate)
-    assertEquals(0, stream.bitsPerRawSample)
-    assertEquals(0, stream.bitsPerSample)
-    assertEquals(249, stream.nbFrames)
-    assertEquals("fltp", stream.sampleFmt)
-    assertEquals(48_000, stream.sampleRate)
-    assertEquals(6, stream.channels)
-    assertEquals("5.1", stream.channelLayout)
-    assertEquals(4, stream.tags?.size)
-    assertEquals("und", stream.tags!!["language"])
-    assertEquals(0, stream.sideDataList.size)
+    stream.index shouldBe 1
+    stream.codecName shouldBe "aac"
+    stream.codecLongName shouldBe "AAC (Advanced Audio Coding)"
+    stream.profile shouldBe "LC"
+    stream.codecType shouldBe CodecType.Audio
+    stream.codecTimeBase shouldBe Fraction.getFraction(1, 48_000)
+    stream.codecTagString shouldBe "mp4a"
+    stream.codecTag shouldBe "0x6134706d"
+    stream.width shouldBe 0
+    stream.height shouldBe 0
+    stream.hasBFrames shouldBe 0
+    stream.sampleAspectRatio shouldBe null
+    stream.displayAspectRatio shouldBe null
+    stream.pixFmt shouldBe null
+    stream.level shouldBe 0
+    stream.chromaLocation shouldBe null
+    stream.refs shouldBe 0
+    stream.isAvc shouldBe null
+    stream.nalLengthSize shouldBe null
+    stream.id shouldBe "0x2"
+    stream.rFrameRate shouldBe Fraction.getFraction(0, 1)
+    stream.avgFrameRate shouldBe Fraction.getFraction(0, 1)
+    stream.timeBase shouldBe Fraction.getFraction(1, 48_000)
+    stream.startPts shouldBe 0
+    stream.startTime shouldBe 0.0
+    stream.durationTs shouldBe 254_976
+    stream.duration shouldBe 5.312
+    stream.bitRate shouldBe 384_828
+    stream.maxBitRate shouldBe 400_392
+    stream.bitsPerRawSample shouldBe 0
+    stream.bitsPerSample shouldBe 0
+    stream.nbFrames shouldBe 249
+    stream.sampleFmt shouldBe "fltp"
+    stream.sampleRate shouldBe 48_000
+    stream.channels shouldBe 6
+    stream.channelLayout shouldBe "5.1"
+    stream.tags?.size shouldBe 4
+    stream.tags!!["language"] shouldBe "und"
+    stream.sideDataList.size shouldBe 0
   }
 
   @Test
@@ -722,10 +682,10 @@ class FFprobeTest {
     val streams = ffprobe.probe(Samples.side_data_list).streams!!
     val sideDataList = streams[0].sideDataList
 
-    assertEquals(1, sideDataList.size)
-    assertEquals("Display Matrix", sideDataList[0].sideDataType)
-    assertEquals(90, sideDataList[0].rotation)
-    assertThat(sideDataList[0].displayMatrix, startsWith("\n00000000:"))
+    sideDataList.size shouldBe 1
+    sideDataList[0].sideDataType shouldBe "Display Matrix"
+    sideDataList[0].rotation shouldBe 90
+    sideDataList[0].displayMatrix shouldStartWith "\n00000000:"
   }
 
   @Test
@@ -733,20 +693,20 @@ class FFprobeTest {
     val streams = ffprobe.probe(Samples.side_data_list).streams!!
     val disposition = streams[0].disposition!!
 
-    assertTrue(disposition.isDefault())
-    assertFalse(disposition.isDub())
-    assertFalse(disposition.isOriginal())
-    assertFalse(disposition.isComment())
-    assertFalse(disposition.isLyrics())
-    assertFalse(disposition.isKaraoke())
-    assertFalse(disposition.isForced())
-    assertFalse(disposition.isHearingImpaired())
-    assertFalse(disposition.isVisualImpaired())
-    assertFalse(disposition.isCleanEffects())
-    assertFalse(disposition.isAttachedPic())
-    assertFalse(disposition.isCaptions())
-    assertFalse(disposition.isDescriptions())
-    assertFalse(disposition.isMetadata())
+    disposition.isDefault() shouldBe true
+    disposition.isDub() shouldBe false
+    disposition.isOriginal() shouldBe false
+    disposition.isComment() shouldBe false
+    disposition.isLyrics() shouldBe false
+    disposition.isKaraoke() shouldBe false
+    disposition.isForced() shouldBe false
+    disposition.isHearingImpaired() shouldBe false
+    disposition.isVisualImpaired() shouldBe false
+    disposition.isCleanEffects() shouldBe false
+    disposition.isAttachedPic() shouldBe false
+    disposition.isCaptions() shouldBe false
+    disposition.isDescriptions() shouldBe false
+    disposition.isMetadata() shouldBe false
   }
 
   @Ignore("Broken until we fix mocking in Kotlin")
@@ -755,24 +715,24 @@ class FFprobeTest {
     val streams = ffprobe.probe(Samples.disposition_all_true).streams!!
     val disposition = streams[0].disposition!!
 
-    assertTrue(disposition.isDefault())
-    assertTrue(disposition.isDub())
-    assertTrue(disposition.isOriginal())
-    assertTrue(disposition.isComment())
-    assertTrue(disposition.isLyrics())
-    assertTrue(disposition.isKaraoke())
-    assertTrue(disposition.isForced())
-    assertTrue(disposition.isHearingImpaired())
-    assertTrue(disposition.isVisualImpaired())
-    assertTrue(disposition.isCleanEffects())
-    assertTrue(disposition.isAttachedPic())
-    assertTrue(disposition.isTimedThumbnails())
-    assertTrue(disposition.isNonDiegetic())
-    assertTrue(disposition.isCaptions())
-    assertTrue(disposition.isDescriptions())
-    assertTrue(disposition.isMetadata())
-    assertTrue(disposition.isDependent())
-    assertTrue(disposition.isStillImage())
+    disposition.isDefault() shouldBe true
+    disposition.isDub() shouldBe true
+    disposition.isOriginal() shouldBe true
+    disposition.isComment() shouldBe true
+    disposition.isLyrics() shouldBe true
+    disposition.isKaraoke() shouldBe true
+    disposition.isForced() shouldBe true
+    disposition.isHearingImpaired() shouldBe true
+    disposition.isVisualImpaired() shouldBe true
+    disposition.isCleanEffects() shouldBe true
+    disposition.isAttachedPic() shouldBe true
+    disposition.isTimedThumbnails() shouldBe true
+    disposition.isNonDiegetic() shouldBe true
+    disposition.isCaptions() shouldBe true
+    disposition.isDescriptions() shouldBe true
+    disposition.isMetadata() shouldBe true
+    disposition.isDependent() shouldBe true
+    disposition.isStillImage() shouldBe true
   }
 
   @Test
@@ -784,17 +744,17 @@ class FFprobeTest {
 
     val packet = packets[packets.size - 1]
 
-    assertEquals(CodecType.Audio, packet.codecType)
-    assertEquals(1, packet.streamIndex)
-    assertEquals(253_952, packet.pts)
-    assertEquals("5.290667", packet.ptsTime)
-    assertEquals(253_952, packet.dts)
-    assertEquals("5.290667", packet.dtsTime)
-    assertEquals(1024, packet.duration)
-    assertEquals("0.021333", packet.durationTime)
-    assertEquals("1111", packet.size)
-    assertEquals("1054609", packet.pos)
-    assertEquals("K_", packet.flags)
+    packet.codecType shouldBe CodecType.Audio
+    packet.streamIndex shouldBe 1
+    packet.pts shouldBe 253_952
+    packet.ptsTime shouldBe "5.290667"
+    packet.dts shouldBe 253_952
+    packet.dtsTime shouldBe "5.290667"
+    packet.duration shouldBe 1024
+    packet.durationTime shouldBe "0.021333"
+    packet.size shouldBe "1111"
+    packet.pos shouldBe "1054609"
+    packet.flags shouldBe "K_"
   }
 
   @Test
@@ -806,22 +766,22 @@ class FFprobeTest {
 
     val frame = frames[frames.size - 1]
 
-    assertEquals(CodecType.Audio, frame.mediaType)
-    assertEquals(1, frame.streamIndex)
-    assertEquals(1, frame.keyFrame)
-    assertEquals(253_952, frame.pktPts)
-    assertEquals("5.290667", frame.pktPtsTime)
-    assertEquals(253_952, frame.pktDts)
-    assertEquals("5.290667", frame.pktDtsTime)
-    assertEquals(253_952, frame.bestEffortTimestamp)
-    assertEquals("5.290667", frame.bestEffortTimestampTime)
-    assertEquals(1024, frame.pktDuration)
-    assertEquals("0.021333", frame.pktDurationTime)
-    assertEquals(1_054_609, frame.pktPos)
-    assertEquals(1111, frame.pktSize)
-    assertEquals("fltp", frame.sampleFmt)
-    assertEquals(1024, frame.nbSamples)
-    assertEquals(6, frame.channels)
-    assertEquals("5.1", frame.channelLayout)
+    frame.mediaType shouldBe CodecType.Audio
+    frame.streamIndex shouldBe 1
+    frame.keyFrame shouldBe 1
+    frame.pktPts shouldBe 253_952
+    frame.pktPtsTime shouldBe "5.290667"
+    frame.pktDts shouldBe 253_952
+    frame.pktDtsTime shouldBe "5.290667"
+    frame.bestEffortTimestamp shouldBe 253_952
+    frame.bestEffortTimestampTime shouldBe "5.290667"
+    frame.pktDuration shouldBe 1024
+    frame.pktDurationTime shouldBe "0.021333"
+    frame.pktPos shouldBe 1_054_609
+    frame.pktSize shouldBe 1111
+    frame.sampleFmt shouldBe "fltp"
+    frame.nbSamples shouldBe 1024
+    frame.channels shouldBe 6
+    frame.channelLayout shouldBe "5.1"
   }
 }

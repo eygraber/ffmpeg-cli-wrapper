@@ -1,10 +1,10 @@
 package net.bramp.ffmpeg
 
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.lang.MockProcess
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -67,7 +67,7 @@ class ExamplesTest {
 
     val actual = ffmpeg.path(builder.build()).joinToString(" ")
 
-    assertEquals(expected, actual)
+    actual shouldBe expected
   }
 
   @Test
@@ -92,7 +92,7 @@ class ExamplesTest {
         " output.ogv"
 
     val actual = ffmpeg.path(builder.build()).joinToString(" ")
-    assertEquals(expected, actual)
+    actual shouldBe expected
   }
 
   @Test
@@ -112,7 +112,7 @@ class ExamplesTest {
         " thumbnail.png"
 
     val actual = ffmpeg.path(builder.build()).joinToString(" ")
-    assertEquals(expected, actual)
+    actual shouldBe expected
   }
 
   // Read from RTSP (IP camera)
@@ -128,7 +128,7 @@ class ExamplesTest {
     val expected = "ffmpeg -y -v error -i rtsp://192.168.1.1:1234/ -f image2 img%03d.jpg"
 
     val actual = ffmpeg.path(builder.build()).joinToString(" ")
-    assertEquals(expected, actual)
+    actual shouldBe expected
   }
 
   // Set the working directory of ffmpeg
@@ -151,7 +151,7 @@ class ExamplesTest {
     val expected = "ffmpeg -y -v error -i image%03d.png -r 24/1 output.mp4"
 
     val actual = ffmpeg.path(builder.build()).joinToString(" ")
-    assertEquals(expected, actual)
+    actual shouldBe expected
   }
 
   @Test
@@ -190,7 +190,7 @@ class ExamplesTest {
         " with-video.mp4"
 
     val actual = ffmpeg.path(builder.build()).joinToString(" ")
-    assertEquals(expected, actual)
+    actual shouldBe expected
   }
 
   // Transcode to iOS HEVC format, with video filter set before output
@@ -214,7 +214,7 @@ class ExamplesTest {
         " hevc-video.mp4"
 
     val actual = ffmpeg.path(builder.build()).joinToString(" ")
-    assertEquals(expected, actual)
+    actual shouldBe expected
   }
 
   // Convert a stereo mp3 into two mono tracks.
@@ -239,7 +239,7 @@ class ExamplesTest {
         "-map_channel 0.0.1 right.mp3"
 
     val actual = ffmpeg.path(builder.build()).joinToString(" ")
-    assertEquals(expected, actual)
+    actual shouldBe expected
   }
 
   // A test with videos added in a loop.
@@ -278,7 +278,7 @@ class ExamplesTest {
     out.addExtraArgs("-adaptation_sets", "\"id=0,streams=0 id=1,streams=" + streams.joinToString(",") + "\"").done()
 
     val actual = ffmpeg.path(builder.build()).joinToString(" ")
-    assertEquals(expected, actual)
+    actual shouldBe expected
   }
 
   // Directly use a Process instead of a FFmpegJob
@@ -303,6 +303,6 @@ class ExamplesTest {
     val expected =
       "ffmpeg -y -v error -ss 00:01:00 -i input.mp4 -t 00:01:00 -vcodec copy -acodec copy output.mp4"
     val actual = ffmpeg.path(builder.build()).joinToString(" ")
-    assertEquals(expected, actual)
+    actual shouldBe expected
   }
 }

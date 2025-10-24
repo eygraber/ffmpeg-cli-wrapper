@@ -1,12 +1,11 @@
 package net.bramp.ffmpeg.progress
 
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.Helper.loadResource
 import net.bramp.ffmpeg.fixtures.allFiles
 import net.bramp.ffmpeg.fixtures.allProgresses
 import net.bramp.ffmpeg.fixtures.naProgressFile
 import net.bramp.ffmpeg.fixtures.naProgresses
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Test
 import java.io.IOException
 import java.net.DatagramPacket
@@ -42,7 +41,7 @@ class UdpProgressParserTest : AbstractProgressParserTest() {
 
     parser.stop()
 
-    assertThat(progresses, equalTo(allProgresses))
+    progresses shouldBe allProgresses
   }
 
   @Test
@@ -68,6 +67,6 @@ class UdpProgressParserTest : AbstractProgressParserTest() {
 
     parser.stop()
 
-    assertThat(progresses, equalTo(naProgresses))
+    progresses shouldBe naProgresses
   }
 }

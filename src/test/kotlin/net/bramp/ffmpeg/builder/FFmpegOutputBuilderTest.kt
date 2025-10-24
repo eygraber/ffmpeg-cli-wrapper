@@ -1,6 +1,6 @@
 package net.bramp.ffmpeg.builder
 
-import org.junit.Assert.assertEquals
+import io.kotest.matchers.shouldBe
 
 class FFmpegOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
 
@@ -9,7 +9,7 @@ class FFmpegOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
   ).done().addOutput("output.mp4")
 
   override fun removeCommon(command: List<String>): List<String> {
-    assertEquals("output.mp4", command[command.size - 1])
+    command[command.size - 1] shouldBe "output.mp4"
     return command.subList(0, command.size - 1)
   }
 }

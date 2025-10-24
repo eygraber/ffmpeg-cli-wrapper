@@ -1,11 +1,8 @@
 package net.bramp.ffmpeg.builder
 
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.FFmpeg
 import net.bramp.ffmpeg.fixtures.Samples
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.Is.`is`
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.IOException
 import java.nio.file.Files
@@ -19,9 +16,9 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
   ).done().addHlsOutput("output.m3u8")
 
   override fun removeCommon(command: List<String>): List<String> {
-    assertEquals("-f", command[0])
-    assertEquals("hls", command[1])
-    assertEquals("output.m3u8", command[command.size - 1])
+    command[0] shouldBe "-f"
+    command[1] shouldBe "hls"
+    command[command.size - 1] shouldBe "output.m3u8"
 
     return command.subList(2, command.size - 1)
   }
@@ -40,28 +37,25 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-i",
-        "input",
-        "-f",
-        "hls",
-        "-hls_time",
-        "00:00:00.005",
-        "-hls_segment_filename",
-        "file%03d.ts",
-        "-hls_init_time",
-        "00:00:00.003",
-        "-hls_list_size",
-        "3",
-        "-hls_base_url",
-        "test1234/",
-        "output.m3u8",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input",
+      "-f",
+      "hls",
+      "-hls_time",
+      "00:00:00.005",
+      "-hls_segment_filename",
+      "file%03d.ts",
+      "-hls_init_time",
+      "00:00:00.003",
+      "-hls_list_size",
+      "3",
+      "-hls_base_url",
+      "test1234/",
+      "output.m3u8",
     )
   }
 
@@ -81,32 +75,29 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
       .done()
       .build()
 
-    assertEquals(
-      listOf(
-        "-y",
-        "-v",
-        "error",
-        "-i",
-        "input",
-        "-f",
-        "hls",
-        "-b:v",
-        "3",
-        "-vf",
-        "TEST",
-        "-hls_time",
-        "00:00:00.005",
-        "-hls_segment_filename",
-        "file%03d.ts",
-        "-hls_init_time",
-        "00:00:00.003",
-        "-hls_list_size",
-        "3",
-        "-hls_base_url",
-        "test1234/",
-        "output.m3u8",
-      ),
-      args,
+    args shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input",
+      "-f",
+      "hls",
+      "-b:v",
+      "3",
+      "-vf",
+      "TEST",
+      "-hls_time",
+      "00:00:00.005",
+      "-hls_segment_filename",
+      "file%03d.ts",
+      "-hls_init_time",
+      "00:00:00.003",
+      "-hls_list_size",
+      "3",
+      "-hls_base_url",
+      "test1234/",
+      "output.m3u8",
     )
   }
 
@@ -135,8 +126,8 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
 
     FFmpeg().run(command)
 
-    assertTrue(Files.exists(manifestFilePath))
-    assertTrue(Files.exists(segmentFilePath))
+    Files.exists(manifestFilePath) shouldBe true
+    Files.exists(segmentFilePath) shouldBe true
   }
 
   @Test
@@ -160,8 +151,8 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
 
     FFmpeg().run(command)
 
-    assertTrue(Files.exists(manifestFilePath))
-    assertTrue(Files.exists(segmentFilePath))
+    Files.exists(manifestFilePath) shouldBe true
+    Files.exists(segmentFilePath) shouldBe true
   }
 
   @Test
@@ -185,8 +176,8 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
 
     FFmpeg().run(command)
 
-    assertTrue(Files.exists(manifestFilePath))
-    assertTrue(Files.exists(segmentFilePath))
+    Files.exists(manifestFilePath) shouldBe true
+    Files.exists(segmentFilePath) shouldBe true
   }
 
   @Test
@@ -195,7 +186,7 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
       .setHlsTime(5, TimeUnit.SECONDS)
       .build(0)
 
-    assertThat(command, `is`(listOf("-f", "hls", "-hls_time", "00:00:05", "output.m3u8")))
+    command shouldBe listOf("-f", "hls", "-hls_time", "00:00:05", "output.m3u8")
   }
 
   @Test
@@ -204,17 +195,12 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
       .setHlsSegmentFileName("segment%03d.ts")
       .build(0)
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-f",
-          "hls",
-          "-hls_segment_filename",
-          "segment%03d.ts",
-          "output.m3u8",
-        ),
-      ),
+    command shouldBe listOf(
+      "-f",
+      "hls",
+      "-hls_segment_filename",
+      "segment%03d.ts",
+      "output.m3u8",
     )
   }
 
@@ -224,10 +210,7 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
       .setHlsInitTime(10, TimeUnit.MILLISECONDS)
       .build(0)
 
-    assertThat(
-      command,
-      `is`(listOf("-f", "hls", "-hls_init_time", "00:00:00.01", "output.m3u8")),
-    )
+    command shouldBe listOf("-f", "hls", "-hls_init_time", "00:00:00.01", "output.m3u8")
   }
 
   @Test
@@ -236,7 +219,7 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
       .setHlsListSize(3)
       .build(0)
 
-    assertThat(command, `is`(listOf("-f", "hls", "-hls_list_size", "3", "output.m3u8")))
+    command shouldBe listOf("-f", "hls", "-hls_list_size", "3", "output.m3u8")
   }
 
   @Test
@@ -245,7 +228,7 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
       .setHlsBaseUrl("/base")
       .build(0)
 
-    assertThat(command, `is`(listOf("-f", "hls", "-hls_base_url", "/base", "output.m3u8")))
+    command shouldBe listOf("-f", "hls", "-hls_base_url", "/base", "output.m3u8")
   }
 
   @Test
@@ -253,6 +236,6 @@ class FFmpegHlsOutputBuilderTest : AbstractFFmpegOutputBuilderTest() {
     val command = getBuilder().setFormat("hls").build(0)
 
     // removeCommon already asserts -f hls and removes that part. Therefore: Expecting no more elements
-    assertEquals(removeCommon(command).size, 0)
+    removeCommon(command).size shouldBe 0
   }
 }
