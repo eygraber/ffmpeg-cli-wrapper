@@ -9,9 +9,9 @@ class FFmpegUtilsTest {
   @Test
   @Suppress("DEPRECATION")
   fun testMillisecondsToString() {
-    assertEquals("00:01:03.123", FFmpegUtils.millisecondsToString(63123))
-    assertEquals("00:01:03", FFmpegUtils.millisecondsToString(63000))
-    assertEquals("01:23:45.678", FFmpegUtils.millisecondsToString(5025678))
+    assertEquals("00:01:03.123", FFmpegUtils.millisecondsToString(63_123))
+    assertEquals("00:01:03", FFmpegUtils.millisecondsToString(63_000))
+    assertEquals("01:23:45.678", FFmpegUtils.millisecondsToString(5_025_678))
     assertEquals("00:00:00", FFmpegUtils.millisecondsToString(0))
     assertEquals("00:00:00.001", FFmpegUtils.millisecondsToString(1))
   }
@@ -41,16 +41,16 @@ class FFmpegUtilsTest {
 
   @Test
   fun testFromTimecode() {
-    assertEquals(63123000000L, FFmpegUtils.fromTimecode("00:01:03.123"))
-    assertEquals(63000000000L, FFmpegUtils.fromTimecode("00:01:03"))
-    assertEquals(5025678000000L, FFmpegUtils.fromTimecode("01:23:45.678"))
+    assertEquals(63_123_000_000L, FFmpegUtils.fromTimecode("00:01:03.123"))
+    assertEquals(63_000_000_000L, FFmpegUtils.fromTimecode("00:01:03"))
+    assertEquals(5_025_678_000_000L, FFmpegUtils.fromTimecode("01:23:45.678"))
     assertEquals(0, FFmpegUtils.fromTimecode("00:00:00"))
   }
 
   @Test
   fun testParseBitrate() {
-    assertEquals(12300, FFmpegUtils.parseBitrate("12.3kbits/s"))
-    assertEquals(1000, FFmpegUtils.parseBitrate("1kbits/s"))
+    assertEquals(12_300, FFmpegUtils.parseBitrate("12.3kbits/s"))
+    assertEquals(1_000, FFmpegUtils.parseBitrate("1kbits/s"))
     assertEquals(123, FFmpegUtils.parseBitrate("0.123kbits/s"))
     assertEquals(-1, FFmpegUtils.parseBitrate("N/A"))
   }

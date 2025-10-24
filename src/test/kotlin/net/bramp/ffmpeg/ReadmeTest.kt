@@ -50,7 +50,7 @@ class ReadmeTest @Throws(IOException::class) constructor() {
       .setAudioChannels(1) // Mono audio
       .setAudioCodec("aac") // using the aac codec
       .setAudioSampleRate(48_000) // at 48KHz
-      .setAudioBitRate(32768) // at 32 kbit/s
+      .setAudioBitRate(32_768) // at 32 kbit/s
       .setVideoCodec("libx264") // Video using x264
       .setVideoFrameRate(24, 1) // at 24 frames per second
       .setVideoResolution(640, 480) // at 640x480 resolution

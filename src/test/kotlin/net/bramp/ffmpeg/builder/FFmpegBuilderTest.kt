@@ -38,7 +38,7 @@ class FFmpegBuilderTest {
       .setStartOffset(500, TimeUnit.MILLISECONDS)
       .setAudioCodec("aac")
       .setAudioChannels(1)
-      .setAudioSampleRate(48000)
+      .setAudioSampleRate(48_000)
       .setAudioBitStreamFilter("bar")
       .setAudioQuality(1.0)
       .setVideoCodec("libx264")
