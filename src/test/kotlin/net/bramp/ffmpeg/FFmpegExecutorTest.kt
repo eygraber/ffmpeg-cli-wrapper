@@ -1,8 +1,5 @@
 package net.bramp.ffmpeg
 
-import com.google.common.io.ByteStreams
-import com.google.common.io.CountingOutputStream
-import com.google.common.net.HostAndPort
 import net.bramp.ffmpeg.FFmpeg.Companion.FPS_30
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.builder.Strict
@@ -26,10 +23,55 @@ import org.junit.Test
 import org.junit.rules.Timeout
 import org.slf4j.LoggerFactory
 import java.io.IOException
+import java.io.OutputStream
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+
+/** Simple counting output stream that counts bytes written */
+private class CountingOutputStream(private val delegate: OutputStream) : OutputStream() {
+  var count: Long = 0
+    private set
+
+  override fun write(b: Int) {
+    delegate.write(b)
+    count++
+  }
+
+  override fun write(b: ByteArray) {
+    delegate.write(b)
+    count += b.size
+  }
+
+  override fun write(b: ByteArray, off: Int, len: Int) {
+    delegate.write(b, off, len)
+    count += len
+  }
+
+  override fun flush() = delegate.flush()
+  override fun close() = delegate.close()
+}
+
+/** Simple null output stream that discards all data */
+private class NullOutputStream : OutputStream() {
+  override fun write(b: Int) {
+    // Discard
+  }
+
+  override fun write(b: ByteArray) {
+    // Discard
+  }
+
+  override fun write(b: ByteArray, off: Int, len: Int) {
+    // Discard
+  }
+}
+
+/** Simple host and port data class */
+private data class HostAndPort(val host: String, val port: Int) {
+  override fun toString() = "$host:$port"
+}
 
 /** Tests actually shelling out ffmpeg and ffprobe. Could be flakey if ffmpeg or ffprobe change. */
 class FFmpegExecutorTest {
@@ -164,8 +206,8 @@ class FFmpegExecutorTest {
     // TODO Add support to the FFmpegJob to export the stream
     val p = ProcessBuilder(newArgs).start()
 
-    val out = CountingOutputStream(ByteStreams.nullOutputStream())
-    ByteStreams.copy(p.inputStream, out)
+    val out = CountingOutputStream(NullOutputStream())
+    p.inputStream.copyTo(out)
 
     assertEquals(0, p.waitFor())
 
@@ -264,7 +306,7 @@ class FFmpegExecutorTest {
 
     private fun getWebserverRoot(): String {
       val net = server.getListener("grizzly")
-      val hp = HostAndPort.fromParts(net.host, net.port)
+      val hp = HostAndPort(net.host, net.port)
       return "http://$hp/"
     }
   }

@@ -1,5 +1,4 @@
 [versions]
-commonsIo = "2.19.0"
 commonsLang3 = "3.17.0"
 detekt = "1.23.8"
 detektEygraber = "1.0.12"
@@ -22,7 +21,6 @@ commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "co
 detektEygraber-formatting = { module = "com.eygraber.detekt.rules:formatting", version.ref = "detektEygraber" }
 detektEygraber-style = { module = "com.eygraber.detekt.rules:style", version.ref = "detektEygraber" }
 grizzly-http-server = { module = "org.glassfish.grizzly:grizzly-http-server", version.ref = "grizzlyHttpServer" }
-guava = { module = "com.google.guava:guava", version.ref = "guava" }
 hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
 hamcrest-integration = { module = "org.hamcrest:hamcrest-integration", version.ref = "hamcrestIntegration" }
 jsonSugar = "com.eygraber:json-sugar:0.7.1"
