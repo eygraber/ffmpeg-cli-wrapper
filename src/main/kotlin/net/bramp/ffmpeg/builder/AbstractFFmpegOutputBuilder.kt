@@ -182,6 +182,26 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
     ),
   )
 
+  override fun useOptions(opts: AudioEncodingOptions): T {
+    super.useOptions(opts)
+    opts.sampleFormat?.let { audioSampleFormat = it }
+    if(opts.bitRate > 0) {
+      audioBitRate = opts.bitRate
+    }
+    opts.quality?.let { audioQuality = it }
+    return getThis()
+  }
+
+  override fun useOptions(opts: VideoEncodingOptions): T {
+    super.useOptions(opts)
+    if(opts.bitRate > 0) {
+      videoBitRate = opts.bitRate
+    }
+    opts.filter?.let { videoFilter = it }
+    opts.preset?.let { videoPreset = it }
+    return getThis()
+  }
+
   override fun build(pass: Int): List<String> {
     checkNotNull(parent) {
       "Can not build without parent being set"

@@ -30,7 +30,6 @@ dependencies {
   implementation(libs.guava)
   implementation(libs.jsonSugar)
   implementation(libs.kotlinx.serialization.json)
-  implementation(libs.modelmapper)
   implementation(libs.slf4j.api)
 
   testImplementation(libs.grizzly.http.server)
