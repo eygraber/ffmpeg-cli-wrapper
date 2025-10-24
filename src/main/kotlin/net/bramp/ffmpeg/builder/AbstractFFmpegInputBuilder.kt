@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.options.EncodingOptions
 import net.bramp.ffmpeg.probe.FFmpegProbeResult
 
@@ -48,13 +47,14 @@ abstract class AbstractFFmpegInputBuilder<T : AbstractFFmpegInputBuilder<T>> :
 
   override fun buildOptions(): EncodingOptions? = null
 
-  override fun addGlobalFlags(parent: FFmpegBuilder, args: ImmutableList.Builder<String>) {
+  override fun addGlobalFlags(parent: FFmpegBuilder, args: MutableList<String>) {
     if(this.isReadAtNativeFrameRate) {
       args.add("-re")
     }
 
     if(this.streamLoop != 0) {
-      args.add("-stream_loop", this.streamLoop.toString())
+      args.add("-stream_loop")
+      args.add(streamLoop.toString())
     }
 
     super.addGlobalFlags(parent, args)

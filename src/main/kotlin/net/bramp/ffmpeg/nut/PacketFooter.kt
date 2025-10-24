@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.nut
 
-import com.google.common.base.MoreObjects
 import java.io.IOException
 
 class PacketFooter {
@@ -18,5 +17,5 @@ class PacketFooter {
     input.resetCRC()
   }
 
-  override fun toString(): String = MoreObjects.toStringHelper(this).add("checksum", checksum).toString()
+  override fun toString(): String = "PacketFooter(checksum=$checksum)"
 }

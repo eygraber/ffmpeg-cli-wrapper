@@ -1,9 +1,6 @@
 package net.bramp.ffmpeg.info
 
 import net.bramp.ffmpeg.shared.CodecType
-import org.apache.commons.lang3.builder.EqualsBuilder
-import org.apache.commons.lang3.builder.HashCodeBuilder
-import java.util.Arrays
 
 data class FilterPattern(
   /**
@@ -21,22 +18,11 @@ data class FilterPattern(
     parseStreams(pattern),
   )
 
-  override fun equals(other: Any?): Boolean = EqualsBuilder.reflectionEquals(this, other)
-
-  override fun toString(): String {
-    if(isSinkOrSource) {
-      return "|"
-    }
-
-    return if(isVariableStreams) {
-      "N"
-    }
-    else {
-      Arrays.toString(streams.toTypedArray())
-    }
+  override fun toString(): String = when {
+    isSinkOrSource -> "|"
+    isVariableStreams -> "N"
+    else -> streams.joinToString(prefix = "[", postfix = "]")
   }
-
-  override fun hashCode(): Int = HashCodeBuilder.reflectionHashCode(this)
 
   companion object {
     private fun parseStreams(pattern: String): List<CodecType> {

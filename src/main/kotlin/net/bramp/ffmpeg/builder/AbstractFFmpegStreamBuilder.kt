@@ -1,14 +1,10 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.base.Preconditions
-import com.google.common.base.Strings
-import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.FFmpegUtils
 import net.bramp.ffmpeg.options.AudioEncodingOptions
 import net.bramp.ffmpeg.options.EncodingOptions
 import net.bramp.ffmpeg.options.MainEncodingOptions
 import net.bramp.ffmpeg.options.VideoEncodingOptions
-import org.apache.commons.lang3.SystemUtils
 import org.apache.commons.lang3.math.Fraction
 import java.net.URI
 import java.util.concurrent.TimeUnit
@@ -72,12 +68,12 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   }
 
   protected constructor(parent: FFmpegBuilder, filename: String) {
-    this.parent = Preconditions.checkNotNull(parent)
+    this.parent = requireNotNull(parent)
     this.filename = net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(filename, "filename must not be empty")
   }
 
   protected constructor(parent: FFmpegBuilder, uri: URI) {
-    this.parent = Preconditions.checkNotNull(parent)
+    this.parent = requireNotNull(parent)
     this.uri = net.bramp.ffmpeg.Preconditions.checkValidStream(uri)
   }
 
@@ -190,7 +186,7 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
 
   fun setVideoFrameRate(frameRate: Fraction): T {
     this.video_enabled = true
-    this.video_frame_rate = Preconditions.checkNotNull(frameRate)
+    this.video_frame_rate = requireNotNull(frameRate)
     return getThis()
   }
 
@@ -301,7 +297,7 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   }
 
   fun setStrict(strict: Strict): T {
-    this.strict = Preconditions.checkNotNull(strict)
+    this.strict = requireNotNull(strict)
     return getThis()
   }
 
@@ -328,10 +324,7 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   fun addExtraArgs(vararg values: String): T {
     require(values.isNotEmpty()) { "one or more values must be supplied" }
     net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank(values[0], "first extra arg may not be empty")
-
-    for(value in values) {
-      extra_args.add(Preconditions.checkNotNull(value))
-    }
+    extra_args.addAll(values)
     return getThis()
   }
 
@@ -347,111 +340,136 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
     return build(parent, pass)
   }
 
-  internal open fun build(parent: FFmpegBuilder, pass: Int): List<String> {
-    val args = ImmutableList.builder<String>()
-    addGlobalFlags(parent, args)
+  internal open fun build(parent: FFmpegBuilder, pass: Int): List<String> = buildList {
+    addGlobalFlags(parent, this)
 
     if(video_enabled) {
-      addVideoFlags(parent, args)
+      addVideoFlags(parent, this)
     }
     else {
-      args.add("-vn")
+      add("-vn")
     }
 
     if(audio_enabled && pass != 1) {
-      addAudioFlags(args)
+      addAudioFlags(this)
     }
     else {
-      args.add("-an")
+      add("-an")
     }
 
     if(subtitle_enabled) {
-      if(!Strings.isNullOrEmpty(subtitle_codec)) {
-        args.add("-scodec", subtitle_codec)
+      subtitle_codec?.takeIf { it.isNotBlank() }?.let {
+        add("-scodec")
+        add(it)
       }
-      if(!Strings.isNullOrEmpty(subtitle_preset)) {
-        args.add("-spre", subtitle_preset)
+      subtitle_preset?.takeIf { it.isNotBlank() }?.let {
+        add("-spre")
+        add(it)
       }
     }
     else {
-      args.add("-sn")
+      add("-sn")
     }
 
-    addFormatArgs(args)
-    args.addAll(extra_args)
-    addSourceTarget(pass, args)
-
-    return args.build()
+    addFormatArgs(this)
+    addAll(extra_args)
+    addSourceTarget(pass, this)
   }
 
-  protected abstract fun addSourceTarget(pass: Int, args: ImmutableList.Builder<String>)
+  protected abstract fun addSourceTarget(pass: Int, args: MutableList<String>)
 
-  protected open fun addGlobalFlags(parent: FFmpegBuilder, args: ImmutableList.Builder<String>) {
+  protected open fun addGlobalFlags(parent: FFmpegBuilder, args: MutableList<String>) {
     if(strict != Strict.Normal) {
-      args.add("-strict", strict.toString().lowercase())
+      args.add("-strict")
+      args.add(strict.toString().lowercase())
     }
-    if(!Strings.isNullOrEmpty(format)) {
-      args.add("-f", format)
+    format?.takeIf { it.isNotBlank() }?.let {
+      args.add("-f")
+      args.add(it)
     }
-    if(!Strings.isNullOrEmpty(preset)) {
-      args.add("-preset", preset)
+    preset?.takeIf { it.isNotBlank() }?.let {
+      args.add("-preset")
+      args.add(it)
     }
-    if(!Strings.isNullOrEmpty(presetFilename)) {
-      args.add("-fpre", presetFilename)
+    presetFilename?.takeIf { it.isNotBlank() }?.let {
+      args.add("-fpre")
+      args.add(it)
     }
-    startOffset?.let { args.add("-ss", FFmpegUtils.toTimecode(it, TimeUnit.MILLISECONDS)) }
-    duration?.let { args.add("-t", FFmpegUtils.toTimecode(it, TimeUnit.MILLISECONDS)) }
+    startOffset?.let {
+      args.add("-ss")
+      args.add(FFmpegUtils.toTimecode(it, TimeUnit.MILLISECONDS))
+    }
+    duration?.let {
+      args.add("-t")
+      args.add(FFmpegUtils.toTimecode(it, TimeUnit.MILLISECONDS))
+    }
     args.addAll(meta_tags)
   }
 
-  protected open fun addAudioFlags(args: ImmutableList.Builder<String>) {
-    if(!Strings.isNullOrEmpty(audio_codec)) {
-      args.add("-acodec", audio_codec)
+  protected open fun addAudioFlags(args: MutableList<String>) {
+    audio_codec?.takeIf { it.isNotBlank() }?.let {
+      args.add("-acodec")
+      args.add(it)
     }
     if(audio_channels > 0) {
-      args.add("-ac", audio_channels.toString())
+      args.add("-ac")
+      args.add(audio_channels.toString())
     }
     if(audio_sample_rate > 0) {
-      args.add("-ar", audio_sample_rate.toString())
+      args.add("-ar")
+      args.add(audio_sample_rate.toString())
     }
-    if(!Strings.isNullOrEmpty(audio_preset)) {
-      args.add("-apre", audio_preset)
+    audio_preset?.takeIf { it.isNotBlank() }?.let {
+      args.add("-apre")
+      args.add(it)
     }
   }
 
-  protected open fun addVideoFlags(parent: FFmpegBuilder, args: ImmutableList.Builder<String>) {
-    video_frames?.let { args.add("-vframes", it.toString()) }
-    if(!Strings.isNullOrEmpty(video_codec)) {
-      args.add("-vcodec", video_codec)
+  protected open fun addVideoFlags(parent: FFmpegBuilder, args: MutableList<String>) {
+    video_frames?.let {
+      args.add("-vframes")
+      args.add(it.toString())
     }
-    if(!Strings.isNullOrEmpty(video_pixel_format)) {
-      args.add("-pix_fmt", video_pixel_format)
+    video_codec?.takeIf { it.isNotBlank() }?.let {
+      args.add("-vcodec")
+      args.add(it)
+    }
+    video_pixel_format?.takeIf { it.isNotBlank() }?.let {
+      args.add("-pix_fmt")
+      args.add(it)
     }
     if(video_copyinkf) {
       args.add("-copyinkf")
     }
-    if(!Strings.isNullOrEmpty(video_movflags)) {
-      args.add("-movflags", video_movflags)
+    video_movflags?.takeIf { it.isNotBlank() }?.let {
+      args.add("-movflags")
+      args.add(it)
     }
 
-    val videoSize = video_size
-    if(videoSize != null) {
+    video_size?.let { videoSize ->
       require(video_width == 0 && video_height == 0) {
         "Can not specific width or height, as well as an abbreviatied video size"
       }
-      args.add("-s", videoSize)
+      args.add("-s")
+      args.add(videoSize)
+    } ?: run {
+      if(video_width != 0 && video_height != 0) {
+        args.add("-s")
+        args.add("${video_width}x${video_height}")
+      }
     }
-    else if(video_width != 0 && video_height != 0) {
-      args.add("-s", "${video_width}x${video_height}")
+
+    video_frame_rate?.let {
+      args.add("-r")
+      args.add(it.toString())
     }
-    video_frame_rate?.let { args.add("-r", it.toString()) }
   }
 
-  protected open fun addFormatArgs(args: ImmutableList.Builder<String>) {}
+  protected open fun addFormatArgs(args: MutableList<String>) {}
 
   companion object {
     @JvmField
-    internal val DEVNULL: String = if(SystemUtils.IS_OS_WINDOWS) "NUL" else "/dev/null"
+    internal val DEVNULL: String = if(System.getProperty("os.name").lowercase().contains("win")) "NUL" else "/dev/null"
 
     @JvmStatic
     internal fun isValidSize(widthOrHeight: Int): Boolean = widthOrHeight > 0 || widthOrHeight == -1

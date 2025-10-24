@@ -1,12 +1,11 @@
 package net.bramp.ffmpeg.progress
 
-import com.google.common.net.InetAddresses
 import java.io.IOException
+import java.net.Inet6Address
 import java.net.InetAddress
 import java.net.URI
 import java.net.URISyntaxException
 import java.util.concurrent.CountDownLatch
-import javax.annotation.CheckReturnValue
 
 abstract class AbstractSocketProgressParser(listener: ProgressListener) : ProgressParser {
   val parser: StreamProgressParser = StreamProgressParser(listener)
@@ -71,17 +70,26 @@ abstract class AbstractSocketProgressParser(listener: ProgressListener) : Progre
      * @return A URI representing the address and port
      * @throws URISyntaxException if the URI is invalid
      */
-    @CheckReturnValue
     @JvmStatic
     @Throws(URISyntaxException::class)
-    fun createUri(scheme: String?, address: InetAddress, port: Int): URI = URI(
-      scheme,
-      null, /* userInfo */
-      InetAddresses.toUriString(address),
-      port,
-      null, /* path */
-      null, /* query */
-      null, /* fragment */
-    )
+    fun createUri(scheme: String?, address: InetAddress, port: Int): URI {
+      // Format IPv6 addresses with brackets, IPv4 without
+      val hostString = if(address is Inet6Address) {
+        "[${address.hostAddress}]"
+      }
+      else {
+        address.hostAddress ?: address.toString()
+      }
+
+      return URI(
+        scheme,
+        null, /* userInfo */
+        hostString,
+        port,
+        null, /* path */
+        null, /* query */
+        null, /* fragment */
+      )
+    }
   }
 }

@@ -1,8 +1,5 @@
 package net.bramp.ffmpeg.info
 
-import org.apache.commons.lang3.builder.EqualsBuilder
-import org.apache.commons.lang3.builder.HashCodeBuilder
-
 data class Filter(
   /** Is timeline editing supported  */
   val isTimelineSupported: Boolean,
@@ -19,10 +16,5 @@ data class Filter(
   /** A short description of the filter  */
   val description: String,
 ) {
-
-  override fun equals(other: Any?): Boolean = EqualsBuilder.reflectionEquals(this, other)
-
   override fun toString(): String = name
-
-  override fun hashCode(): Int = HashCodeBuilder.reflectionHashCode(this)
 }

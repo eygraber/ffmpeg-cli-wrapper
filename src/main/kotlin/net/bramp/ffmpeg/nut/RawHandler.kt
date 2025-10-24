@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.nut
 
-import com.google.common.base.Preconditions
 import net.bramp.ffmpeg.nut.StreamHeaderPacket.Companion.fourccToString
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
@@ -19,7 +18,7 @@ object RawHandler {
 
   fun toBufferedImage(frame: Frame): BufferedImage {
     val header = frame.stream.header
-    Preconditions.checkArgument(header.type == StreamHeaderPacket.VIDEO.toLong())
+    require(header.type == StreamHeaderPacket.VIDEO.toLong())
 
     // DataBufferByte buffer = new DataBufferByte(frame.data, frame.data.length);
     // SampleModel sample = new MultiPixelPackedSampleModel(DataBuffer.TYPE_BYTE,
@@ -49,7 +48,6 @@ object RawHandler {
    * @param header The stream's header.
    * @return The AudioFormat matching this header.
    */
-  @Suppress("UseRequire")
   fun streamToAudioFormat(header: StreamHeaderPacket): AudioFormat {
     require(header.type == StreamHeaderPacket.AUDIO.toLong())
     require(header.fourcc.size == 4) {
@@ -125,7 +123,7 @@ object RawHandler {
 
   fun toAudioInputStream(frame: Frame): AudioInputStream {
     val header = frame.stream.header
-    Preconditions.checkArgument(header.type == StreamHeaderPacket.AUDIO.toLong())
+    require(header.type == StreamHeaderPacket.AUDIO.toLong())
     val format = streamToAudioFormat(header)
     val stream = ByteArrayInputStream(frame.data)
     return AudioInputStream(stream, format, (frame.data.size / format.frameSize).toLong())

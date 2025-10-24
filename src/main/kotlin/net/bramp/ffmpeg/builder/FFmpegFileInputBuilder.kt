@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.probe.FFmpegProbeResult
 
 class FFmpegFileInputBuilder : AbstractFFmpegInputBuilder<FFmpegFileInputBuilder> {
@@ -13,7 +12,7 @@ class FFmpegFileInputBuilder : AbstractFFmpegInputBuilder<FFmpegFileInputBuilder
 
   override fun getThis(): FFmpegFileInputBuilder = this
 
-  override fun addSourceTarget(pass: Int, args: ImmutableList.Builder<String>) {
+  override fun addSourceTarget(pass: Int, args: MutableList<String>) {
     val filename = filename
     val uri = uri
 
@@ -21,10 +20,12 @@ class FFmpegFileInputBuilder : AbstractFFmpegInputBuilder<FFmpegFileInputBuilder
 
     // Input
     if(filename != null) {
-      args.add("-i", filename)
+      args.add("-i")
+      args.add(filename)
     }
     else if(uri != null) {
-      args.add("-i", uri.toString())
+      args.add("-i")
+      args.add(uri.toString())
     }
     else {
       assert(false)

@@ -58,8 +58,8 @@ public final class net/bramp/ffmpeg/FFmpeg : net/bramp/ffmpeg/FFcommon {
 	public final fun run (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;)V
 	public final fun run (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
 	public static synthetic fun run$default (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;ILjava/lang/Object;)V
-	public final fun runWithBuilder (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;)V
 	public final fun runWithBuilder (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+	public static synthetic fun runWithBuilder$default (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;ILjava/lang/Object;)V
 }
 
 public final class net/bramp/ffmpeg/FFmpeg$Companion {
@@ -68,10 +68,6 @@ public final class net/bramp/ffmpeg/FFmpeg$Companion {
 	public final fun getAUDIO_DEPTH_S16 ()Ljava/lang/String;
 	public final fun getAUDIO_DEPTH_S32 ()Ljava/lang/String;
 	public final fun getAUDIO_DEPTH_U8 ()Ljava/lang/String;
-	public final fun getCodecsRegex ()Ljava/util/regex/Pattern;
-	public final fun getFiltersRegex ()Ljava/util/regex/Pattern;
-	public final fun getFormatsRegex ()Ljava/util/regex/Pattern;
-	public final fun getPixelFormatsRegex ()Ljava/util/regex/Pattern;
 }
 
 public final class net/bramp/ffmpeg/FFmpegException : java/io/IOException {
@@ -148,7 +144,7 @@ public final class net/bramp/ffmpeg/RunProcessFunction$Companion {
 public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
 	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
 	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;Ljava/lang/String;)V
-	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/util/List;)V
 	public fun buildOptions ()Lnet/bramp/ffmpeg/options/EncodingOptions;
 	public final fun getProbeResult ()Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
 	public final fun getStreamLoop ()I
@@ -170,10 +166,10 @@ public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder : net
 	public fun <init> ()V
 	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
 	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/net/URI;)V
-	protected fun addAudioFlags (Lcom/google/common/collect/ImmutableList$Builder;)V
-	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lcom/google/common/collect/ImmutableList$Builder;)V
-	protected fun addSourceTarget (ILcom/google/common/collect/ImmutableList$Builder;)V
-	protected fun addVideoFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun addAudioFlags (Ljava/util/List;)V
+	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/util/List;)V
+	protected fun addSourceTarget (ILjava/util/List;)V
+	protected fun addVideoFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/util/List;)V
 	public fun build (I)Ljava/util/List;
 	public fun buildOptions ()Lnet/bramp/ffmpeg/options/EncodingOptions;
 	public static final fun formatDecimalInteger (D)Ljava/lang/String;
@@ -220,14 +216,14 @@ public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
 	protected fun <init> ()V
 	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
 	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/net/URI;)V
-	protected fun addAudioFlags (Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun addAudioFlags (Ljava/util/List;)V
 	public final fun addExtraArgs ([Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	protected fun addFormatArgs (Lcom/google/common/collect/ImmutableList$Builder;)V
-	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected fun addFormatArgs (Ljava/util/List;)V
+	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/util/List;)V
 	public final fun addMetaTag (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
 	public final fun addMetaTag (Lnet/bramp/ffmpeg/builder/MetadataSpecifier;Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	protected abstract fun addSourceTarget (ILcom/google/common/collect/ImmutableList$Builder;)V
-	protected fun addVideoFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lcom/google/common/collect/ImmutableList$Builder;)V
+	protected abstract fun addSourceTarget (ILjava/util/List;)V
+	protected fun addVideoFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/util/List;)V
 	public fun build (I)Ljava/util/List;
 	public abstract fun buildOptions ()Lnet/bramp/ffmpeg/options/EncodingOptions;
 	public final fun disableAudio ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
@@ -1286,7 +1282,6 @@ public final class net/bramp/ffmpeg/nut/MainHeaderPacket$Companion {
 public final class net/bramp/ffmpeg/nut/NutDataInputStream : java/io/DataInput {
 	public fun <init> (Ljava/io/InputStream;)V
 	public final fun getCRC ()J
-	public final fun getCount ()Lcom/google/common/io/CountingInputStream;
 	public final fun getCrc ()Lnet/bramp/ffmpeg/io/CRC32InputStream;
 	public final fun getDataInputStream ()Ljava/io/DataInputStream;
 	public final fun getEndCrcRange ()J

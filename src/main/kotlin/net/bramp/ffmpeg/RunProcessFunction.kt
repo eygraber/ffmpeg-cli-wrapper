@@ -1,7 +1,5 @@
 package net.bramp.ffmpeg
 
-import com.google.common.base.Joiner
-import com.google.common.base.Preconditions
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -20,11 +18,10 @@ class RunProcessFunction : ProcessFunction {
 
   @Throws(IOException::class)
   override fun run(args: List<String>): Process {
-    // args is non-null by type List<String>. If it could be null from Java, use List<String>?
-    Preconditions.checkArgument(args.isNotEmpty(), "No arguments specified")
+    require(args.isNotEmpty()) { "No arguments specified" }
 
     if(LOG.isInfoEnabled) {
-      LOG.info("{}", Joiner.on(" ").join(args))
+      LOG.info("{}", args.joinToString(" "))
     }
 
     val builder = ProcessBuilder(args)

@@ -1,10 +1,8 @@
 package net.bramp.ffmpeg.nut
 
-import com.google.common.base.MoreObjects
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.IOException
-import java.util.Locale
 
 open class Packet {
   enum class StartCode(private val startcode: Long) {
@@ -42,7 +40,7 @@ open class Packet {
         if(c != null) {
           return c.name
         }
-        return String.format(Locale.ROOT, "%X", startcode)
+        return startcode.toString(16).uppercase()
       }
     }
   }
@@ -73,8 +71,7 @@ open class Packet {
     dataInputStream.skipBytes((header.end - current).toInt())
   }
 
-  override fun toString(): String = MoreObjects.toStringHelper(this).add("header", header).add("footer", footer)
-    .toString()
+  override fun toString(): String = "Packet(header=$header, footer=$footer)"
 
   companion object {
     val LOG: Logger = LoggerFactory.getLogger(Packet::class.java)

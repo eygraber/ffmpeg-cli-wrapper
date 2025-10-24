@@ -1,8 +1,6 @@
 package net.bramp.ffmpeg.nut
 
-import com.google.common.base.MoreObjects
 import java.io.IOException
-import java.util.Locale
 
 class PacketHeader {
   var startcode: Long = 0
@@ -20,7 +18,7 @@ class PacketHeader {
       if(checksum.toLong() != expected) {
         // TODO This code path has never been tested.
         throw IOException(
-          String.format(Locale.ROOT, "invalid header checksum %X want %X", expected, checksum),
+          "invalid header checksum ${expected.toString(16).uppercase()} want ${checksum.toString(16).uppercase()}"
         )
       }
     }
@@ -29,12 +27,7 @@ class PacketHeader {
   }
 
   override fun toString(): String {
-    var helper = MoreObjects.toStringHelper(this)
-      .add("startcode", Packet.StartCode.toString(startcode))
-      .add("forwardPtr", forwardPtr)
-    if(forwardPtr > 4096) {
-      helper = helper.add("checksum", checksum)
-    }
-    return helper.toString()
+    val checksumStr = if(forwardPtr > 4096) ", checksum=$checksum" else ""
+    return "PacketHeader(startcode=${Packet.StartCode.toString(startcode)}, forwardPtr=$forwardPtr$checksumStr)"
   }
 }

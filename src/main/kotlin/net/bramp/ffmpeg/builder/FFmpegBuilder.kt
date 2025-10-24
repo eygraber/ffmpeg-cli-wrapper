@@ -1,8 +1,5 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.base.Preconditions
-import com.google.common.base.Strings
-import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.FFmpegUtils
 import net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank
 import net.bramp.ffmpeg.probe.FFmpegProbeResult
@@ -10,7 +7,6 @@ import org.slf4j.LoggerFactory
 import java.net.URI
 import java.util.TreeMap
 import java.util.concurrent.TimeUnit
-import javax.annotation.CheckReturnValue
 
 /**
  * Builds a ffmpeg command line
@@ -147,7 +143,7 @@ class FFmpegBuilder {
   }
 
   fun setThreads(threads: Int): FFmpegBuilder {
-    Preconditions.checkArgument(threads > 0, "threads must be greater than zero")
+    require(threads > 0) { "threads must be greater than zero" }
     this.threads = threads
     return this
   }
@@ -226,7 +222,7 @@ class FFmpegBuilder {
    * @return FFmpegBuilder
    */
   fun setVBR(quality: Int): FFmpegBuilder {
-    require(quality > 0 && quality < 9) {
+    require(quality in 0..9) {
       "vbr must be between 0 and 9"
     }
     qscale = quality
@@ -239,13 +235,10 @@ class FFmpegBuilder {
    * @param values The extra arguments.
    * @return this
    */
-  fun addExtraArgs(vararg values: String): FFmpegBuilder {
-    Preconditions.checkArgument(values.isNotEmpty(), "one or more values must be supplied")
+  fun addExtraArgs(vararg values: String): FFmpegBuilder = apply {
+    require(values.isNotEmpty()) { "one or more values must be supplied" }
     checkNotNullEmptyOrBlank(values[0], "first extra arg may not be empty")
-    for(value in values) {
-      extraArgs.add(value)
-    }
-    return this
+    extraArgs.addAll(values)
   }
 
   /**
@@ -254,11 +247,8 @@ class FFmpegBuilder {
    * @param filename output file path
    * @return A new [FFmpegOutputBuilder]
    */
-  fun addOutput(filename: String): FFmpegOutputBuilder {
-    val output = FFmpegOutputBuilder(this, filename)
-    outputs.add(output)
-    return output
-  }
+  fun addOutput(filename: String): FFmpegOutputBuilder =
+    FFmpegOutputBuilder(this, filename).also { outputs.add(it) }
 
   /**
    * Adds new output file.
@@ -266,11 +256,8 @@ class FFmpegBuilder {
    * @param uri output file uri typically a stream
    * @return A new [FFmpegOutputBuilder]
    */
-  fun addOutput(uri: URI): FFmpegOutputBuilder {
-    val output = FFmpegOutputBuilder(this, uri)
-    outputs.add(output)
-    return output
-  }
+  fun addOutput(uri: URI): FFmpegOutputBuilder =
+    FFmpegOutputBuilder(this, uri).also { outputs.add(it) }
 
   /**
    * Adds new HLS(Http Live Streaming) output file. <br></br>
@@ -284,11 +271,8 @@ class FFmpegBuilder {
    * @param filename output file path
    * @return A new [FFmpegHlsOutputBuilder]
    */
-  fun addHlsOutput(filename: String): FFmpegHlsOutputBuilder {
-    val output = FFmpegHlsOutputBuilder(this, filename)
-    outputs.add(output)
-    return output
-  }
+  fun addHlsOutput(filename: String): FFmpegHlsOutputBuilder =
+    FFmpegHlsOutputBuilder(this, filename).also { outputs.add(it) }
 
   /**
    * Adds an existing FFmpegOutputBuilder. This is similar to calling the other addOuput methods but
@@ -306,9 +290,8 @@ class FFmpegBuilder {
    * @param output FFmpegOutputBuilder to add
    * @return this
    */
-  fun addOutput(output: FFmpegOutputBuilder): FFmpegBuilder {
+  fun addOutput(output: FFmpegOutputBuilder): FFmpegBuilder = apply {
     outputs.add(output)
-    return this
   }
 
   /**
@@ -318,72 +301,98 @@ class FFmpegBuilder {
    */
   fun addStdoutOutput(): FFmpegOutputBuilder = addOutput("-")
 
-  @CheckReturnValue
-  fun build(): List<String> {
-    val args = ImmutableList.builder<String>()
-    Preconditions.checkArgument(inputs.isNotEmpty(), "At least one input must be specified")
-    Preconditions.checkArgument(outputs.isNotEmpty(), "At least one output must be specified")
+  fun build(): List<String> = buildList {
+    require(inputs.isNotEmpty()) { "At least one input must be specified" }
+    require(outputs.isNotEmpty()) { "At least one output must be specified" }
+
     if(strict != Strict.Normal) {
-      args.add("-strict", strict.toString())
+      add("-strict")
+      add(strict.toString())
     }
-    args.add(if(overrideOutputFiles) "-y" else "-n")
-    args.add("-v", verbosity.toString())
+
+    add(if(overrideOutputFiles) "-y" else "-n")
+    add("-v")
+    add(verbosity.toString())
+
     userAgent?.let {
-      args.add("-user_agent", it)
+      add("-user_agent")
+      add(it)
     }
+
     startOffset?.let { startOffset ->
       log.warn(
         "Using FFmpegBuilder#setStartOffset is deprecated. Specify it on the inputStream or outputStream instead",
       )
-      args.add("-ss", FFmpegUtils.toTimecode(startOffset, TimeUnit.MILLISECONDS))
+      add("-ss")
+      add(FFmpegUtils.toTimecode(startOffset, TimeUnit.MILLISECONDS))
     }
+
     if(threads > 0) {
-      args.add("-threads", threads.toString())
+      add("-threads")
+      add(threads.toString())
     }
+
     format?.let { format ->
       log.warn(
         "Using FFmpegBuilder#setFormat is deprecated. Specify it on the inputStream or outputStream instead",
       )
-      args.add("-f", format)
+      add("-f")
+      add(format)
     }
+
     if(isReadAtNativeFrameRate) {
       log.warn(
         "Using FFmpegBuilder#readAtNativeFrameRate is deprecated. Specify it on the inputStream instead",
       )
-      args.add("-re")
+      add("-re")
     }
+
     progress?.let {
-      args.add("-progress", it.toString())
+      add("-progress")
+      add(it.toString())
     }
-    args.addAll(extraArgs)
-    for(input in inputs) {
-      args.addAll(input.build(pass))
+
+    addAll(extraArgs)
+
+    inputs.forEach { input ->
+      addAll(input.build(pass))
     }
+
     if(pass > 0) {
-      args.add("-pass", pass.toString())
+      add("-pass")
+      add(pass.toString())
       passPrefix?.let {
-        args.add("-passlogfile", "$passDirectory$it")
+        add("-passlogfile")
+        add("$passDirectory$it")
       }
     }
-    if(!Strings.isNullOrEmpty(audioFilter)) {
-      args.add("-af", audioFilter)
+
+    audioFilter?.takeIf { it.isNotBlank() }?.let {
+      add("-af")
+      add(it)
     }
-    if(!Strings.isNullOrEmpty(videoFilter)) {
-      args.add("-vf", videoFilter)
+
+    videoFilter?.takeIf { it.isNotBlank() }?.let {
+      add("-vf")
+      add(it)
     }
-    if(!Strings.isNullOrEmpty(complexFilter)) {
+
+    complexFilter?.takeIf { it.isNotBlank() }?.let {
       log.warn(
         "Using FFmpegBuilder#setComplexFilter is deprecated. Specify it on the outputStream instead",
       )
-      args.add("-filter_complex", complexFilter)
+      add("-filter_complex")
+      add(it)
     }
+
     qscale?.let {
-      args.add("-qscale:a", it.toString())
+      add("-qscale:a")
+      add(it.toString())
     }
-    for(output in outputs) {
-      args.addAll(output.build(this, pass))
+
+    outputs.forEach { output ->
+      addAll(output.build(this@FFmpegBuilder, pass))
     }
-    return args.build()
   }
 
   companion object {

@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.job
 
-import com.google.common.base.Throwables
 import net.bramp.ffmpeg.FFmpeg
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.progress.ProgressListener
@@ -20,14 +19,15 @@ class SinglePassFFmpegJob(
 
   override fun run() {
     state = State.Running
-    try {
+    runCatching {
       ffmpeg.runWithBuilder(builder, listener)
-      state = State.Finished
     }
-    catch(t: Throwable) {
-      state = State.Failed
-      Throwables.throwIfUnchecked(t)
-      throw RuntimeException(t)
-    }
+      .onSuccess {
+        state = State.Finished
+      }
+      .onFailure { t ->
+        state = State.Failed
+        throw t
+      }
   }
 }

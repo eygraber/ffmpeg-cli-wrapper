@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg
 
-import com.google.common.base.CharMatcher
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
@@ -9,9 +8,7 @@ import net.bramp.ffmpeg.serialization.FFmpegStreamSideDataSerializer
 import net.bramp.ffmpeg.serialization.FractionSerializer
 import net.bramp.ffmpeg.serialization.LowercaseEnumSerializer
 import net.bramp.ffmpeg.shared.CodecType
-import java.util.Locale
 import java.util.concurrent.TimeUnit
-import java.util.regex.Pattern
 
 /** Helper class with commonly used methods */
 object FFmpegUtils {
@@ -26,9 +23,8 @@ object FFmpegUtils {
     }
   }
 
-  internal val bitrateRegex: Pattern = Pattern.compile("(\\d+(?:\\.\\d+)?)kbits/s")
-  internal val timeRegex: Pattern = Pattern.compile("(\\d+):(\\d+):(\\d+(?:\\.\\d+)?)")
-  internal val zeroMatcher: CharMatcher = CharMatcher.`is`('0')
+  internal val bitrateRegex: Regex = Regex("(\\d+(?:\\.\\d+)?)kbits/s")
+  internal val timeRegex: Regex = Regex("(\\d+):(\\d+):(\\d+(?:\\.\\d+)?)")
 
   /**
    * Convert milliseconds to "hh:mm:ss.ms" String representation.
@@ -72,12 +68,11 @@ object FFmpegUtils {
     minutes -= TimeUnit.HOURS.toMinutes(hours)
 
     return if(ns == 0L) {
-      String.format(Locale.ROOT, "%02d:%02d:%02d", hours, minutes, seconds)
+      "%02d:%02d:%02d".format(hours, minutes, seconds)
     }
     else {
-      zeroMatcher.trimTrailingFrom(
-        String.format(Locale.ROOT, "%02d:%02d:%02d.%09d", hours, minutes, seconds, ns),
-      )
+      val nanoStr = "%09d".format(ns).trimEnd('0').trimEnd('.')
+      "%02d:%02d:%02d.%s".format(hours, minutes, seconds, nanoStr)
     }
   }
 
@@ -96,12 +91,12 @@ object FFmpegUtils {
       return -1L
     }
 
-    val m = timeRegex.matcher(time)
-    require(m.find()) { "invalid time '$time'" }
+    val m = timeRegex.find(time)
+    require(m != null) { "invalid time '$time'" }
 
-    val hours = m.group(1).toLong()
-    val mins = m.group(2).toLong()
-    val secs = m.group(3).toDouble()
+    val hours = m.groups[1]!!.value.toLong()
+    val mins = m.groups[2]!!.value.toLong()
+    val secs = m.groups[3]!!.value.toDouble()
 
     return TimeUnit.HOURS.toNanos(hours) +
       TimeUnit.MINUTES.toNanos(mins) +
@@ -121,9 +116,9 @@ object FFmpegUtils {
     if(bitrate == "N/A") {
       return -1L
     }
-    val m = bitrateRegex.matcher(bitrate)
-    require(m.find()) { "Invalid bitrate '$bitrate'" }
+    val m = bitrateRegex.find(bitrate)
+    require(m != null) { "Invalid bitrate '$bitrate'" }
 
-    return (m.group(1).toFloat() * 1000).toLong()
+    return (m.groups[1]!!.value.toFloat() * 1000).toLong()
   }
 }

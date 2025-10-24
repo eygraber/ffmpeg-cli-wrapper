@@ -18,7 +18,6 @@ mockk = "1.14.6"
 slf4j = "2.0.17"
 
 [libraries]
-commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
 commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang3" }
 detektEygraber-formatting = { module = "com.eygraber.detekt.rules:formatting", version.ref = "detektEygraber" }
 detektEygraber-style = { module = "com.eygraber.detekt.rules:style", version.ref = "detektEygraber" }

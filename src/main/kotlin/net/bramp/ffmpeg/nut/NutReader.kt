@@ -1,11 +1,10 @@
 package net.bramp.ffmpeg.nut
 
-import com.google.common.base.Charsets
 import net.bramp.ffmpeg.nut.Packet.StartCode
 import java.io.EOFException
 import java.io.IOException
 import java.io.InputStream
-import java.util.Locale
+import java.nio.charset.StandardCharsets
 
 /**
  * Demuxer for the FFmpeg Nut file format.
@@ -19,7 +18,7 @@ import java.util.Locale
  */
 class NutReader(inputStream: InputStream, private val listener: NutReaderListener) {
   lateinit var header: MainHeaderPacket
-  val streams: MutableList<Stream> = ArrayList()
+  val streams: MutableList<Stream> = mutableListOf()
   private val dataInputStream: NutDataInputStream = NutDataInputStream(inputStream)
 
   /**
@@ -33,7 +32,7 @@ class NutReader(inputStream: InputStream, private val listener: NutReaderListene
     dataInputStream.readFully(b)
     if(!b.contentEquals(HEADER)) {
       throw IOException(
-        "file_id_string does not match. got: " + String(b, Charsets.ISO_8859_1),
+        "file_id_string does not match. got: " + String(b, StandardCharsets.ISO_8859_1),
       )
     }
   }
@@ -67,14 +66,14 @@ class NutReader(inputStream: InputStream, private val listener: NutReaderListene
           StartCode.Main -> {
             header = MainHeaderPacket()
             if (!StartCode.Main.equalsCode(startcode)) {
-              throw IOException(String.format(Locale.ROOT, "expected main header found: 0x%X", startcode))
+              throw IOException("expected main header found: 0x${startcode.toString(16).uppercase()}")
             }
             header.read(dataInputStream, startcode)
             startcode = dataInputStream.readStartCode()
           }
           StartCode.Stream -> {
             if (!StartCode.Stream.equalsCode(startcode)) {
-              throw IOException(String.format(Locale.ROOT, "expected stream header found: 0x%X", startcode))
+              throw IOException("expected stream header found: 0x${startcode.toString(16).uppercase()}")
             }
             val streamHeader = StreamHeaderPacket()
             streamHeader.read(dataInputStream, startcode)

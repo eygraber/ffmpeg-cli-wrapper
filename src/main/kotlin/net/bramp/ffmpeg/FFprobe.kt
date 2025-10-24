@@ -1,14 +1,11 @@
 package net.bramp.ffmpeg
 
-import com.google.common.base.MoreObjects
-import com.google.common.collect.ImmutableList
 import kotlinx.serialization.serializer
 import net.bramp.ffmpeg.io.LoggingFilterReader
 import net.bramp.ffmpeg.probe.FFmpegProbeResult
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.io.Reader
-import java.util.Objects
 
 class FFprobe(
   private val ffprobePath: String,
@@ -25,7 +22,7 @@ class FFprobe(
    */
   @Throws(IOException::class)
   fun version(): String {
-    val process = function.run(ImmutableList.of(ffprobePath, "-version"))
+    val process = function.run(listOf(ffprobePath, "-version"))
     try {
       return process.inputStream.bufferedReader().use { it.readLine() ?: "" }
     }
@@ -46,9 +43,9 @@ class FFprobe(
    */
   @Throws(IOException::class)
   fun probe(mediaPath: String): FFmpegProbeResult {
-    Objects.requireNonNull(mediaPath, "mediaPath must not be null")
+    requireNotNull(mediaPath) { "mediaPath must not be null" }
 
-    val args = ImmutableList.of(
+    val args = listOf(
       ffprobePath,
       "-v",
       "quiet",
@@ -74,23 +71,24 @@ class FFprobe(
    */
   @Throws(IOException::class)
   fun probe(mediaPath: String, userAgent: String?): FFmpegProbeResult {
-    Objects.requireNonNull(mediaPath, "mediaPath must not be null")
+    requireNotNull(mediaPath) { "mediaPath must not be null" }
 
-    val args = ImmutableList.builder<String>()
-      .add(ffprobePath)
-      .add("-v", "quiet")
-      .add("-print_format", "json")
-      .add("-show_error")
-      .apply {
-        if(userAgent != null) {
-          add("-user_agent", userAgent)
-        }
+    val args = buildList {
+      add(ffprobePath)
+      add("-v")
+      add("quiet")
+      add("-print_format")
+      add("json")
+      add("-show_error")
+      if(userAgent != null) {
+        add("-user_agent")
+        add(userAgent)
       }
-      .add("-show_format")
-      .add("-show_streams")
-      .add("-show_chapters")
-      .add(mediaPath)
-      .build()
+      add("-show_format")
+      add("-show_streams")
+      add("-show_chapters")
+      add(mediaPath)
+    }
 
     return probe(args)
   }
@@ -106,28 +104,25 @@ class FFprobe(
    */
   @Throws(IOException::class)
   fun probe(mediaPath: String, userAgent: String?, vararg extraArgs: String): FFmpegProbeResult {
-    Objects.requireNonNull(mediaPath, "mediaPath must not be null")
+    requireNotNull(mediaPath) { "mediaPath must not be null" }
 
-    val args = ImmutableList.builder<String>()
-      .add(ffprobePath)
-      .add("-v", "quiet")
-      .add("-print_format", "json")
-      .add("-show_error")
-      .apply {
-        if(userAgent != null) {
-          add("-user_agent", userAgent)
-        }
+    val args = buildList {
+      add(ffprobePath)
+      add("-v")
+      add("quiet")
+      add("-print_format")
+      add("json")
+      add("-show_error")
+      if(userAgent != null) {
+        add("-user_agent")
+        add(userAgent)
       }
-      .apply {
-        for(arg in extraArgs) {
-          add(arg)
-        }
-      }
-      .add("-show_format")
-      .add("-show_streams")
-      .add("-show_chapters")
-      .add(mediaPath)
-      .build()
+      addAll(extraArgs)
+      add("-show_format")
+      add("-show_streams")
+      add("-show_chapters")
+      add(mediaPath)
+    }
 
     return probe(args)
   }
@@ -144,7 +139,7 @@ class FFprobe(
   fun probe(arguments: List<String>): FFmpegProbeResult {
     // Prepend ffprobePath if it's not already the first argument
     val fullArgs = if(arguments.isEmpty() || arguments[0] != ffprobePath) {
-      ImmutableList.builder<String>().add(ffprobePath).addAll(arguments).build()
+      listOf(ffprobePath) + arguments
     }
     else {
       arguments
@@ -197,10 +192,7 @@ class FFprobe(
    */
   @Throws(IOException::class)
   fun probe(builder: net.bramp.ffmpeg.builder.FFprobeBuilder): FFmpegProbeResult {
-    val args = ImmutableList.builder<String>()
-      .add(ffprobePath)
-      .addAll(builder.build())
-      .build()
+    val args = listOf(ffprobePath) + builder.build()
     return probe(args)
   }
 
@@ -235,9 +227,7 @@ class FFprobe(
     }
   }
 
-  override fun toString(): String = MoreObjects.toStringHelper(this)
-    .add("ffprobe_path", ffprobePath)
-    .toString()
+  override fun toString(): String = "FFprobe(ffprobe_path=$ffprobePath)"
 
   fun builder(): net.bramp.ffmpeg.builder.FFprobeBuilder = net.bramp.ffmpeg.builder.FFprobeBuilder()
 

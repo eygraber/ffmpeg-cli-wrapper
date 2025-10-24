@@ -5,6 +5,7 @@ import net.bramp.ffmpeg.probe.FFmpegStream
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+@Suppress("MultilineRawStringIndentation")
 class SideDataSerializerTest {
 
   private val json = Json { ignoreUnknownKeys = true }

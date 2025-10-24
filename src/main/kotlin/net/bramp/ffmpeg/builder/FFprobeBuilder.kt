@@ -1,8 +1,6 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank
-import javax.annotation.CheckReturnValue
 
 /** Builds a ffprobe command line  */
 class FFprobeBuilder {
@@ -61,25 +59,29 @@ class FFprobeBuilder {
     return this
   }
 
-  @CheckReturnValue
   fun build(): List<String> {
-    val args = ImmutableList.builder<String>()
     val input = input
     checkNotNull(input) {
       "Input must be specified"
     }
 
-    args.add("-v", "quiet").add("-print_format", "json").add("-show_error")
-    userAgent?.let {
-      args.add("-user_agent", it)
+    return buildList {
+      add("-v")
+      add("quiet")
+      add("-print_format")
+      add("json")
+      add("-show_error")
+      userAgent?.let {
+        add("-user_agent")
+        add(it)
+      }
+      addAll(extraArgs)
+      if(isShowFormat) add("-show_format")
+      if(isShowStreams) add("-show_streams")
+      if(isShowChapters) add("-show_chapters")
+      if(isShowPackets) add("-show_packets")
+      if(isShowFrames) add("-show_frames")
+      add(input)
     }
-    args.addAll(extraArgs)
-    if(isShowFormat) args.add("-show_format")
-    if(isShowStreams) args.add("-show_streams")
-    if(isShowChapters) args.add("-show_chapters")
-    if(isShowPackets) args.add("-show_packets")
-    if(isShowFrames) args.add("-show_frames")
-    args.add(input)
-    return args.build()
   }
 }

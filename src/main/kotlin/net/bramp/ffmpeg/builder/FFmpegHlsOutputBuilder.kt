@@ -1,10 +1,8 @@
 package net.bramp.ffmpeg.builder
 
-import com.google.common.collect.ImmutableList
 import net.bramp.ffmpeg.FFmpegUtils.toTimecode
 import net.bramp.ffmpeg.Preconditions.checkNotNullEmptyOrBlank
 import java.util.concurrent.TimeUnit
-import javax.annotation.CheckReturnValue
 
 class FFmpegHlsOutputBuilder(parent: FFmpegBuilder, filename: String) :
   AbstractFFmpegOutputBuilder<FFmpegHlsOutputBuilder>(parent, filename) {
@@ -73,7 +71,7 @@ class FFmpegHlsOutputBuilder(parent: FFmpegBuilder, filename: String) :
    * @return [FFmpegHlsOutputBuilder]
    */
   fun setHlsListSize(size: Int): FFmpegHlsOutputBuilder {
-    com.google.common.base.Preconditions.checkArgument(size >= 0, "Size cannot be less than 0.")
+    require(size >= 0) { "Size cannot be less than 0." }
     hlsListSize = size
     return this
   }
@@ -93,29 +91,33 @@ class FFmpegHlsOutputBuilder(parent: FFmpegBuilder, filename: String) :
     return this
   }
 
-  override fun addFormatArgs(args: ImmutableList.Builder<String>) {
+  override fun addFormatArgs(args: MutableList<String>) {
     super.addFormatArgs(args)
     hlsTime?.let {
-      args.add("-hls_time", toTimecode(it, TimeUnit.MILLISECONDS))
+      args.add("-hls_time")
+      args.add(toTimecode(it, TimeUnit.MILLISECONDS))
     }
 
-    if(!hlsSegmentFilename.isNullOrEmpty()) {
-      args.add("-hls_segment_filename", hlsSegmentFilename)
+    hlsSegmentFilename?.takeUnless { it.isEmpty() }?.let {
+      args.add("-hls_segment_filename")
+      args.add(it)
     }
 
     hlsInitTime?.let {
-      args.add("-hls_init_time", toTimecode(it, TimeUnit.MILLISECONDS))
+      args.add("-hls_init_time")
+      args.add(toTimecode(it, TimeUnit.MILLISECONDS))
     }
 
     hlsListSize?.let {
-      args.add("-hls_list_size", it.toString())
+      args.add("-hls_list_size")
+      args.add(it.toString())
     }
 
-    if(!hlsBaseUrl.isNullOrEmpty()) {
-      args.add("-hls_base_url", hlsBaseUrl)
+    hlsBaseUrl?.takeUnless { it.isEmpty() }?.let {
+      args.add("-hls_base_url")
+      args.add(it)
     }
   }
 
-  @CheckReturnValue
   override fun getThis(): FFmpegHlsOutputBuilder = this
 }
