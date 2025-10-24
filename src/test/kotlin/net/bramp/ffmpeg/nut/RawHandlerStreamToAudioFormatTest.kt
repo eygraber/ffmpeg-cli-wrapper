@@ -1,8 +1,7 @@
 package net.bramp.ffmpeg.nut
 
+import io.kotest.matchers.shouldBe
 import org.apache.commons.lang3.math.Fraction
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -34,7 +33,7 @@ class RawHandlerStreamToAudioFormatTest(
     val format = RawHandler.streamToAudioFormat(stream)
 
     // Compare strings since AudioFormat does not have a good equalsCode(..) method.
-    assertThat(format.toString(), equalTo(expected.toString()))
+    format.toString() shouldBe expected.toString()
   }
 
   companion object {

@@ -1,7 +1,7 @@
 package net.bramp.ffmpeg.builder
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldBe
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -15,7 +15,7 @@ class FormatDecimalIntegerTest(
   @Test
   fun formatDecimalInteger() {
     val got = AbstractFFmpegOutputBuilder.formatDecimalInteger(input)
-    assertThat(got, equalTo(expected))
+    got shouldBe expected
   }
 
   companion object {

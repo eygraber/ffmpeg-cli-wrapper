@@ -1,5 +1,7 @@
 package net.bramp.ffmpeg
 
+import io.kotest.assertions.throwables.shouldNotThrow
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -10,8 +12,6 @@ import net.bramp.ffmpeg.fixtures.formats
 import net.bramp.ffmpeg.fixtures.pixelFormats
 import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.lang.MockProcess
-import org.junit.Assert.assertEquals
-import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.TimeUnit
@@ -42,8 +42,8 @@ class FFmpegTest {
 
   @Test
   fun testVersion() {
-    assertEquals("ffmpeg version 0.10.9-7:0.10.9-1~raring1", ffmpeg.version())
-    assertEquals("ffmpeg version 0.10.9-7:0.10.9-1~raring1", ffmpeg.version())
+    ffmpeg.version() shouldBe "ffmpeg version 0.10.9-7:0.10.9-1~raring1"
+    ffmpeg.version() shouldBe "ffmpeg version 0.10.9-7:0.10.9-1~raring1"
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-version")) }
   }
@@ -59,11 +59,8 @@ class FFmpegTest {
       .addOutput(Samples.output_mp4)
       .done()
 
-    try {
+    shouldNotThrow<Throwable> {
       localFfmpeg.runWithBuilder(builder)
-    }
-    catch(t: Throwable) {
-      fail("${t.javaClass.simpleName} was thrown")
     }
   }
 
@@ -78,19 +75,16 @@ class FFmpegTest {
       .addOutput(Samples.output_mp4)
       .done()
 
-    try {
+    shouldNotThrow<Throwable> {
       localFfmpeg.runWithBuilder(builder)
-    }
-    catch(t: Throwable) {
-      fail("${t.javaClass.simpleName} was thrown")
     }
   }
 
   @Test
   fun testCodecs() {
     // Run twice, the second should be cached
-    assertEquals(codecs, ffmpeg.codecs())
-    assertEquals(codecs, ffmpeg.codecs())
+    ffmpeg.codecs() shouldBe codecs
+    ffmpeg.codecs() shouldBe codecs
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-codecs")) }
   }
@@ -98,8 +92,8 @@ class FFmpegTest {
   @Test
   fun testFormats() {
     // Run twice, the second should be cached
-    assertEquals(formats, ffmpeg.formats())
-    assertEquals(formats, ffmpeg.formats())
+    ffmpeg.formats() shouldBe formats
+    ffmpeg.formats() shouldBe formats
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-formats")) }
   }
@@ -122,8 +116,8 @@ class FFmpegTest {
   @Test
   fun testPixelFormat() {
     // Run twice, the second should be cached
-    assertEquals(pixelFormats, ffmpeg.pixelFormats())
-    assertEquals(pixelFormats, ffmpeg.pixelFormats())
+    ffmpeg.pixelFormats() shouldBe pixelFormats
+    ffmpeg.pixelFormats() shouldBe pixelFormats
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-pix_fmts")) }
   }
@@ -134,19 +128,19 @@ class FFmpegTest {
     val filters = ffmpeg.filters()
 
     for(i in filters!!.indices) {
-      assertEquals(fixtureFilters[i], filters[i])
+      filters[i] shouldBe fixtureFilters[i]
     }
 
-    assertEquals(fixtureFilters, ffmpeg.filters())
-    assertEquals(fixtureFilters, ffmpeg.filters())
+    ffmpeg.filters() shouldBe fixtureFilters
+    ffmpeg.filters() shouldBe fixtureFilters
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-filters")) }
   }
 
   @Test
   fun testLayouts() {
-    assertEquals(channelLayouts, ffmpeg.channelLayouts())
-    assertEquals(channelLayouts, ffmpeg.channelLayouts())
+    ffmpeg.channelLayouts() shouldBe channelLayouts
+    ffmpeg.channelLayouts() shouldBe channelLayouts
 
     verify(exactly = 1) { runFunc.run(listOf(FFmpeg.DEFAULT_PATH, "-layouts")) }
   }

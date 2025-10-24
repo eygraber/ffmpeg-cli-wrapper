@@ -1,14 +1,13 @@
 package net.bramp.ffmpeg.progress
 
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.comparables.shouldBeGreaterThan
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.Helper.combineResource
 import net.bramp.ffmpeg.fixtures.allFiles
 import net.bramp.ffmpeg.fixtures.allProgresses
 import net.bramp.ffmpeg.fixtures.naProgressFile
 import net.bramp.ffmpeg.fixtures.naProgresses
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.greaterThan
-import org.hamcrest.core.IsEqual.equalTo
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.IOException
 import java.net.Socket
@@ -24,7 +23,7 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     parser.start()
 
     val client = Socket(uri.host, uri.port)
-    assertTrue("Socket is connected", client.isConnected)
+    client.isConnected shouldBe true
 
     val inputStream = combineResource(allFiles)
     val outputStream = client.getOutputStream()
@@ -38,8 +37,8 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     client.close()
     parser.stop()
 
-    assertThat(bytes, greaterThan(0L))
-    assertThat(progresses, equalTo(allProgresses))
+    bytes shouldBeGreaterThan 0L
+    progresses shouldBe allProgresses
   }
 
   @Test
@@ -48,7 +47,7 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     parser.start()
 
     val client = Socket(uri.host, uri.port)
-    assertTrue("Socket is connected", client.isConnected)
+    client.isConnected shouldBe true
 
     val inputStream = combineResource(naProgressFile)
     val outputStream = client.getOutputStream()
@@ -62,8 +61,8 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     client.close()
     parser.stop()
 
-    assertThat(bytes, greaterThan(0L))
-    assertThat(progresses, equalTo(naProgresses))
+    bytes shouldBeGreaterThan 0L
+    progresses shouldBe naProgresses
   }
 
   @Test
@@ -73,6 +72,6 @@ class TcpProgressParserTest : AbstractProgressParserTest() {
     Socket(uri.host, uri.port).close()
     parser.stop()
 
-    assertTrue(progresses.isEmpty())
+    progresses.shouldBeEmpty()
   }
 }

@@ -1,7 +1,6 @@
 package net.bramp.ffmpeg.builder
 
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.Is.`is`
+import io.kotest.matchers.shouldBe
 import org.junit.Test
 
 abstract class AbstractFFmpegInputBuilderTest : AbstractFFmpegStreamBuilderTest() {
@@ -11,20 +10,20 @@ abstract class AbstractFFmpegInputBuilderTest : AbstractFFmpegStreamBuilderTest(
   fun testReadAtNativeFrameRate() {
     val command = getBuilder().readAtNativeFrameRate().build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-re")))
+    removeCommon(command) shouldBe listOf("-re")
   }
 
   @Test
   fun testSetStreamLoopInfinit() {
     val command = getBuilder().setStreamLoop(-1).build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-stream_loop", "-1")))
+    removeCommon(command) shouldBe listOf("-stream_loop", "-1")
   }
 
   @Test
   fun testSetStreamLoopCounter() {
     val command = getBuilder().setStreamLoop(2).build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-stream_loop", "2")))
+    removeCommon(command) shouldBe listOf("-stream_loop", "2")
   }
 }

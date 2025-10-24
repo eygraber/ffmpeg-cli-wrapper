@@ -31,9 +31,8 @@ dependencies {
   implementation(libs.slf4j.api)
 
   testImplementation(libs.grizzly.http.server)
-  testImplementation(libs.hamcrest)
-  testImplementation(libs.hamcrest.integration)
   testImplementation(libs.junit)
+  testImplementation(libs.kotest.assertions.core)
   testImplementation(libs.logback.classic)
   testImplementation(libs.mockk)
 

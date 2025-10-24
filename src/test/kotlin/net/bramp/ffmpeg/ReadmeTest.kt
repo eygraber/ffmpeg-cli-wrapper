@@ -1,14 +1,12 @@
 package net.bramp.ffmpeg
 
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.builder.Strict
 import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.job.FFmpegJob
 import net.bramp.ffmpeg.progress.Progress
 import net.bramp.ffmpeg.progress.ProgressListener
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.Is.`is`
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.io.IOException
 import java.util.*
@@ -89,16 +87,8 @@ class ReadmeTest @Throws(IOException::class) constructor() {
       stream.height,
     )
 
-    assertThat(
-      line1,
-      `is`(
-        "File: 'src/test/resources/net/bramp/ffmpeg/samples/big_buck_bunny_720p_1mb.mp4' ; Format: 'QuickTime / MOV' ; Duration: 5.312s",
-      ),
-    )
-    assertThat(
-      line2,
-      `is`("Codec: 'H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10' ; Width: 1280px ; Height: 720px"),
-    )
+    line1 shouldBe "File: 'src/test/resources/net/bramp/ffmpeg/samples/big_buck_bunny_720p_1mb.mp4' ; Format: 'QuickTime / MOV' ; Duration: 5.312s"
+    line2 shouldBe "Codec: 'H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10' ; Width: 1280px ; Height: 720px"
   }
 
   @Test
@@ -142,6 +132,6 @@ class ReadmeTest @Throws(IOException::class) constructor() {
 
     job.run()
 
-    assertEquals(FFmpegJob.State.Finished, job.state)
+    job.state shouldBe FFmpegJob.State.Finished
   }
 }

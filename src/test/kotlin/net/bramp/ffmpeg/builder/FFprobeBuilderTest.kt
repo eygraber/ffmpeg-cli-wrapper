@@ -1,7 +1,7 @@
 package net.bramp.ffmpeg.builder
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThrows
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
 import org.junit.Test
 
 class FFprobeBuilderTest {
@@ -9,19 +9,16 @@ class FFprobeBuilderTest {
   fun testDefaultFFprobeConfiguration() {
     val args = FFprobeBuilder().setInput("input").build()
 
-    assertEquals(
-      args,
-      listOf(
-        "-v",
-        "quiet",
-        "-print_format",
-        "json",
-        "-show_error",
-        "-show_format",
-        "-show_streams",
-        "-show_chapters",
-        "input",
-      ),
+    args shouldBe listOf(
+      "-v",
+      "quiet",
+      "-print_format",
+      "json",
+      "-show_error",
+      "-show_format",
+      "-show_streams",
+      "-show_chapters",
+      "input",
     )
   }
 
@@ -33,21 +30,18 @@ class FFprobeBuilderTest {
       .setShowFrames(true)
       .build()
 
-    assertEquals(
-      args,
-      listOf(
-        "-v",
-        "quiet",
-        "-print_format",
-        "json",
-        "-show_error",
-        "-show_format",
-        "-show_streams",
-        "-show_chapters",
-        "-show_packets",
-        "-show_frames",
-        "input",
-      ),
+    args shouldBe listOf(
+      "-v",
+      "quiet",
+      "-print_format",
+      "json",
+      "-show_error",
+      "-show_format",
+      "-show_streams",
+      "-show_chapters",
+      "-show_packets",
+      "-show_frames",
+      "input",
     )
   }
 
@@ -60,10 +54,7 @@ class FFprobeBuilderTest {
       .setShowFormat(false)
       .build()
 
-    assertEquals(
-      args,
-      listOf("-v", "quiet", "-print_format", "json", "-show_error", "input"),
-    )
+    args shouldBe listOf("-v", "quiet", "-print_format", "json", "-show_error", "input")
   }
 
   @Test
@@ -76,18 +67,15 @@ class FFprobeBuilderTest {
       .setUserAgent("user agent")
       .build()
 
-    assertEquals(
-      args,
-      listOf(
-        "-v",
-        "quiet",
-        "-print_format",
-        "json",
-        "-show_error",
-        "-user_agent",
-        "user agent",
-        "input",
-      ),
+    args shouldBe listOf(
+      "-v",
+      "quiet",
+      "-print_format",
+      "json",
+      "-show_error",
+      "-user_agent",
+      "user agent",
+      "input",
     )
   }
 
@@ -97,6 +85,6 @@ class FFprobeBuilderTest {
   @Test
   fun throwsExceptionIfNoInputIsGiven() {
     val builder = FFprobeBuilder()
-    assertThrows(IllegalStateException::class.java) { builder.build() }
+    shouldThrow<IllegalStateException> { builder.build() }
   }
 }

@@ -1,10 +1,11 @@
 package net.bramp.ffmpeg
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.lang.MockProcess
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -28,20 +29,16 @@ class FFprobeAvTest {
   @Test
   @Throws(Exception::class)
   fun testVersion() {
-    assertEquals(
-      "avprobe version 11.4, Copyright (c) 2007-2014 the Libav developers",
-      ffprobe.version(),
-    )
-    assertEquals(
-      "avprobe version 11.4, Copyright (c) 2007-2014 the Libav developers",
-      ffprobe.version(),
-    )
+    ffprobe.version() shouldBe "avprobe version 11.4, Copyright (c) 2007-2014 the Libav developers"
+    ffprobe.version() shouldBe "avprobe version 11.4, Copyright (c) 2007-2014 the Libav developers"
   }
 
   @Ignore("avprobe detection not implemented")
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   @Throws(IOException::class)
   fun testProbeVideo() {
-    ffprobe.probe(Samples.big_buck_bunny_720p_1mb)
+    shouldThrow<IllegalArgumentException> {
+      ffprobe.probe(Samples.big_buck_bunny_720p_1mb)
+    }
   }
 }

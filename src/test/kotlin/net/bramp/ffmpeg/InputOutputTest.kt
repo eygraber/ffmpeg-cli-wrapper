@@ -1,11 +1,10 @@
 package net.bramp.ffmpeg
 
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.lang.MockProcess
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
@@ -34,10 +33,7 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(listOf("-y", "-v", "error", "-f", "mp4", "-i", "input.mp4", "output.mp4")),
-    )
+    command shouldBe listOf("-y", "-v", "error", "-f", "mp4", "-i", "input.mp4", "output.mp4")
   }
 
   @Test
@@ -53,24 +49,19 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "error",
-          "-f",
-          "mp4",
-          "-i",
-          "input.mp4",
-          "-f",
-          "matroschka",
-          "-i",
-          "input.mkv",
-          "output.mp4",
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-f",
+      "mp4",
+      "-i",
+      "input.mp4",
+      "-f",
+      "matroschka",
+      "-i",
+      "input.mkv",
+      "output.mp4",
     )
   }
 
@@ -84,20 +75,15 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "error",
-          "-ss",
-          "00:00:10",
-          "-i",
-          "input.mp4",
-          "output.mp4",
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-ss",
+      "00:00:10",
+      "-i",
+      "input.mp4",
+      "output.mp4",
     )
   }
 
@@ -111,20 +97,15 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "error",
-          "-i",
-          "input.mp4",
-          "-ss",
-          "00:00:10",
-          "output.mp4",
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input.mp4",
+      "-ss",
+      "00:00:10",
+      "output.mp4",
     )
   }
 
@@ -139,22 +120,17 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "error",
-          "-ss",
-          "00:00:01",
-          "-i",
-          "input.mp4",
-          "-ss",
-          "00:00:10",
-          "output.mp4",
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-ss",
+      "00:00:01",
+      "-i",
+      "input.mp4",
+      "-ss",
+      "00:00:10",
+      "output.mp4",
     )
   }
 
@@ -168,10 +144,7 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(listOf("-y", "-v", "error", "-re", "-i", "input.mp4", "output.mp4")),
-    )
+    command shouldBe listOf("-y", "-v", "error", "-re", "-i", "input.mp4", "output.mp4")
   }
 
   @Test
@@ -187,22 +160,17 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "error",
-          "-re",
-          "-i",
-          "input.mp4",
-          "-re",
-          "-i",
-          "input.mkv",
-          "output.mp4",
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-re",
+      "-i",
+      "input.mp4",
+      "-re",
+      "-i",
+      "input.mkv",
+      "output.mp4",
     )
   }
 
@@ -218,24 +186,19 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "error",
-          "-i",
-          "input.mp4",
-          "-vcodec",
-          "libx264",
-          "-acodec",
-          "aac",
-          "-scodec",
-          "vtt",
-          "output.mp4",
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input.mp4",
+      "-vcodec",
+      "libx264",
+      "-acodec",
+      "aac",
+      "-scodec",
+      "vtt",
+      "output.mp4",
     )
   }
 
@@ -251,24 +214,19 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "error",
-          "-vcodec",
-          "libx264",
-          "-acodec",
-          "aac",
-          "-scodec",
-          "vtt",
-          "-i",
-          "input.mp4",
-          "output.mp4",
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-vcodec",
+      "libx264",
+      "-acodec",
+      "aac",
+      "-scodec",
+      "vtt",
+      "-i",
+      "input.mp4",
+      "output.mp4",
     )
   }
 
@@ -282,10 +240,7 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(listOf("-y", "-v", "error", "-vn", "-i", "input.mp4", "output.mp4")),
-    )
+    command shouldBe listOf("-y", "-v", "error", "-vn", "-i", "input.mp4", "output.mp4")
   }
 
   @Test
@@ -298,10 +253,7 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(listOf("-y", "-v", "error", "-i", "input.mp4", "-vn", "output.mp4")),
-    )
+    command shouldBe listOf("-y", "-v", "error", "-i", "input.mp4", "-vn", "output.mp4")
   }
 
   @Test
@@ -314,10 +266,7 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(listOf("-y", "-v", "error", "-an", "-i", "input.mp4", "output.mp4")),
-    )
+    command shouldBe listOf("-y", "-v", "error", "-an", "-i", "input.mp4", "output.mp4")
   }
 
   @Test
@@ -330,10 +279,7 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(listOf("-y", "-v", "error", "-i", "input.mp4", "-an", "output.mp4")),
-    )
+    command shouldBe listOf("-y", "-v", "error", "-i", "input.mp4", "-an", "output.mp4")
   }
 
   @Test
@@ -346,10 +292,7 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(listOf("-y", "-v", "error", "-sn", "-i", "input.mp4", "output.mp4")),
-    )
+    command shouldBe listOf("-y", "-v", "error", "-sn", "-i", "input.mp4", "output.mp4")
   }
 
   @Test
@@ -362,10 +305,7 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(listOf("-y", "-v", "error", "-i", "input.mp4", "-sn", "output.mp4")),
-    )
+    command shouldBe listOf("-y", "-v", "error", "-i", "input.mp4", "-sn", "output.mp4")
   }
 
   @Test
@@ -381,24 +321,19 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "error",
-          "-t",
-          "10",
-          "-i",
-          "input.mp4",
-          "-t",
-          "20",
-          "-i",
-          "input.mkv",
-          "output.mp4",
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-t",
+      "10",
+      "-i",
+      "input.mp4",
+      "-t",
+      "20",
+      "-i",
+      "input.mkv",
+      "output.mp4",
     )
   }
 
@@ -421,31 +356,26 @@ class InputOutputTest {
       .done()
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "info",
-          "-global",
-          "args",
-          "-input_args",
-          "1",
-          "-i",
-          "input.mp4",
-          "-input_args",
-          "2",
-          "-i",
-          "input.mkv",
-          "-output_args",
-          "1",
-          "output.mp4",
-          "-output_args",
-          "2",
-          "output.mkv",
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "info",
+      "-global",
+      "args",
+      "-input_args",
+      "1",
+      "-i",
+      "input.mp4",
+      "-input_args",
+      "2",
+      "-i",
+      "input.mkv",
+      "-output_args",
+      "1",
+      "output.mp4",
+      "-output_args",
+      "2",
+      "output.mkv",
     )
   }
 }

@@ -1,9 +1,7 @@
 package net.bramp.ffmpeg.builder
 
+import io.kotest.matchers.shouldBe
 import org.apache.commons.lang3.math.Fraction
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.Is.`is`
-import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
@@ -18,7 +16,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setFormat("mp4")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-f", "mp4")))
+    removeCommon(command) shouldBe listOf("-f", "mp4")
   }
 
   @Test
@@ -27,7 +25,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setStartOffset(10, TimeUnit.SECONDS)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-ss", "00:00:10")))
+    removeCommon(command) shouldBe listOf("-ss", "00:00:10")
   }
 
   @Test
@@ -36,7 +34,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setDuration(5, TimeUnit.SECONDS)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-t", "00:00:05")))
+    removeCommon(command) shouldBe listOf("-t", "00:00:05")
   }
 
   @Test
@@ -45,7 +43,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.addMetaTag("key", "value")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-metadata", "key=value")))
+    removeCommon(command) shouldBe listOf("-metadata", "key=value")
   }
 
   @Test
@@ -54,7 +52,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.addMetaTag(MetadataSpecifier.stream(1), "key", "value")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-metadata:s:1", "key=value")))
+    removeCommon(command) shouldBe listOf("-metadata:s:1", "key=value")
   }
 
   @Test
@@ -63,7 +61,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.disableAudio()
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-an")))
+    removeCommon(command) shouldBe listOf("-an")
   }
 
   @Test
@@ -72,7 +70,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setAudioCodec("acc")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-acodec", "acc")))
+    removeCommon(command) shouldBe listOf("-acodec", "acc")
   }
 
   @Test
@@ -81,7 +79,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setAudioChannels(7)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-ac", "7")))
+    removeCommon(command) shouldBe listOf("-ac", "7")
   }
 
   @Test
@@ -90,7 +88,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setAudioSampleRate(44_100)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-ar", "44100")))
+    removeCommon(command) shouldBe listOf("-ar", "44100")
   }
 
   @Test
@@ -99,7 +97,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setAudioPreset("ac")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-apre", "ac")))
+    removeCommon(command) shouldBe listOf("-apre", "ac")
   }
 
   @Test
@@ -108,7 +106,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.disableVideo()
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-vn")))
+    removeCommon(command) shouldBe listOf("-vn")
   }
 
   @Test
@@ -117,7 +115,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoCodec("libx264")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-vcodec", "libx264")))
+    removeCommon(command) shouldBe listOf("-vcodec", "libx264")
   }
 
   @Test
@@ -126,7 +124,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoCopyInkf(true)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-copyinkf")))
+    removeCommon(command) shouldBe listOf("-copyinkf")
   }
 
   @Test
@@ -135,7 +133,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoFrameRate(1.0 / 60.0)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-r", "1/60")))
+    removeCommon(command) shouldBe listOf("-r", "1/60")
   }
 
   @Test
@@ -144,7 +142,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoFrameRate(Fraction.ONE_THIRD)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-r", "1/3")))
+    removeCommon(command) shouldBe listOf("-r", "1/3")
   }
 
   @Test
@@ -153,7 +151,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoFrameRate(30, 1)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-r", "30/1")))
+    removeCommon(command) shouldBe listOf("-r", "30/1")
   }
 
   @Test
@@ -162,7 +160,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoWidth(1920)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(emptyList()))
+    removeCommon(command) shouldBe emptyList()
   }
 
   @Test
@@ -171,7 +169,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoHeight(1080)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(emptyList()))
+    removeCommon(command) shouldBe emptyList()
   }
 
   @Test
@@ -180,7 +178,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoWidth(1920).setVideoHeight(1080)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-s", "1920x1080")))
+    removeCommon(command) shouldBe listOf("-s", "1920x1080")
   }
 
   @Test
@@ -189,7 +187,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoResolution("1920x1080")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-s", "1920x1080")))
+    removeCommon(command) shouldBe listOf("-s", "1920x1080")
   }
 
   @Test
@@ -198,7 +196,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoMovFlags("mov")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-movflags", "mov")))
+    removeCommon(command) shouldBe listOf("-movflags", "mov")
   }
 
   @Test
@@ -207,7 +205,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setFrames(30)
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-vframes", "30")))
+    removeCommon(command) shouldBe listOf("-vframes", "30")
   }
 
   @Test
@@ -216,7 +214,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setVideoPixelFormat("yuv420")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-pix_fmt", "yuv420")))
+    removeCommon(command) shouldBe listOf("-pix_fmt", "yuv420")
   }
 
   @Test
@@ -225,7 +223,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.disableSubtitle()
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-sn")))
+    removeCommon(command) shouldBe listOf("-sn")
   }
 
   @Test
@@ -234,7 +232,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setSubtitlePreset("ac")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-spre", "ac")))
+    removeCommon(command) shouldBe listOf("-spre", "ac")
   }
 
   @Test
@@ -243,7 +241,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setSubtitleCodec("vtt")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-scodec", "vtt")))
+    removeCommon(command) shouldBe listOf("-scodec", "vtt")
   }
 
   @Test
@@ -252,7 +250,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setPreset("pre")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-preset", "pre")))
+    removeCommon(command) shouldBe listOf("-preset", "pre")
   }
 
   @Test
@@ -261,7 +259,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setPresetFilename("pre.txt")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-fpre", "pre.txt")))
+    removeCommon(command) shouldBe listOf("-fpre", "pre.txt")
   }
 
   @Test
@@ -270,7 +268,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.setStrict(Strict.Strict)
     val command = builder.build(0)
 
-    assertEquals("strict", command[command.indexOf("-strict") + 1])
+    command[command.indexOf("-strict") + 1] shouldBe "strict"
   }
 
   @Test
@@ -279,6 +277,6 @@ abstract class AbstractFFmpegStreamBuilderTest {
     builder.addExtraArgs("-some", "args")
     val command = builder.build(0)
 
-    assertThat(removeCommon(command), `is`(listOf("-some", "args")))
+    removeCommon(command) shouldBe listOf("-some", "args")
   }
 }

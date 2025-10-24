@@ -1,5 +1,6 @@
 package net.bramp.ffmpeg
 
+import io.kotest.assertions.throwables.shouldThrow
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -7,9 +8,11 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized::class)
 class PreconditionsCheckInvalidNotEmptyTest(private val input: String?) {
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun testUri() {
-    Preconditions.checkNotNullEmptyOrBlank(input, "test must throw exception")
+    shouldThrow<IllegalArgumentException> {
+      Preconditions.checkNotNullEmptyOrBlank(input, "test must throw exception")
+    }
   }
 
   companion object {

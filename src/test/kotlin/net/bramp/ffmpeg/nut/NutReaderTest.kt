@@ -1,9 +1,9 @@
 package net.bramp.ffmpeg.nut
 
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.FFmpeg
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.fixtures.Samples
-import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.Timeout
@@ -103,7 +103,7 @@ class NutReaderTest {
       },
     ).read()
 
-    assertEquals(0, p.waitFor())
+    p.waitFor() shouldBe 0
   }
 
   companion object {

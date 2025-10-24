@@ -1,5 +1,7 @@
 package net.bramp.ffmpeg
 
+import io.kotest.matchers.comparables.shouldBeGreaterThanOrEqualTo
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.FFmpeg.Companion.FPS_30
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.builder.Strict
@@ -10,13 +12,7 @@ import net.bramp.ffmpeg.progress.RecordingProgressListener
 import org.glassfish.grizzly.PortRange
 import org.glassfish.grizzly.http.server.HttpServer
 import org.glassfish.grizzly.http.util.MimeType
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.greaterThanOrEqualTo
-import org.hamcrest.Matchers.hasSize
-import org.hamcrest.core.Is.`is`
 import org.junit.AfterClass
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
@@ -120,14 +116,14 @@ class FFmpegExecutorTest {
     val job = ffExecutor.createJob(builder)
     runAndWait(job)
 
-    assertEquals(FFmpegJob.State.Finished, job.state)
+    job.state shouldBe FFmpegJob.State.Finished
   }
 
   @Test
   @Throws(InterruptedException::class, ExecutionException::class, IOException::class)
   fun testTwoPass() {
     val input = ffprobe.probe(Samples.big_buck_bunny_720p_1mb)
-    assertFalse(input.hasError())
+    input.hasError() shouldBe false
 
     val builder = FFmpegBuilder()
       .setInput(input)
@@ -145,7 +141,7 @@ class FFmpegExecutorTest {
     val job = ffExecutor.createTwoPassJob(builder)
     runAndWait(job)
 
-    assertEquals(FFmpegJob.State.Finished, job.state)
+    job.state shouldBe FFmpegJob.State.Finished
   }
 
   @Test
@@ -165,7 +161,7 @@ class FFmpegExecutorTest {
     val job = ffExecutor.createJob(builder)
     runAndWait(job)
 
-    assertEquals(FFmpegJob.State.Finished, job.state)
+    job.state shouldBe FFmpegJob.State.Finished
   }
 
   @Test
@@ -186,7 +182,7 @@ class FFmpegExecutorTest {
     val job = ffExecutor.createJob(builder)
     runAndWait(job)
 
-    assertEquals(FFmpegJob.State.Finished, job.state)
+    job.state shouldBe FFmpegJob.State.Finished
   }
 
   /** Test if addStdoutOutput() actually works, and the output can be correctly captured. */
@@ -209,10 +205,10 @@ class FFmpegExecutorTest {
     val out = CountingOutputStream(NullOutputStream())
     p.inputStream.copyTo(out)
 
-    assertEquals(0, p.waitFor())
+    p.waitFor() shouldBe 0
 
     // This is perhaps fragile, but one byte per audio sample
-    assertEquals(254_976, out.count)
+    out.count shouldBe 254_976
   }
 
   @Test
@@ -220,7 +216,7 @@ class FFmpegExecutorTest {
   fun testProgress() {
     val input = ffprobe.probe(Samples.big_buck_bunny_720p_1mb)
 
-    assertFalse(input.hasError())
+    input.hasError() shouldBe false
 
     val builder = FFmpegBuilder()
       .setInput(input)
@@ -235,14 +231,14 @@ class FFmpegExecutorTest {
     val job = ffExecutor.createJob(builder, listener)
     runAndWait(job)
 
-    assertEquals(FFmpegJob.State.Finished, job.state)
+    job.state shouldBe FFmpegJob.State.Finished
 
     val progresses = listener.progresses
 
     // Since the results of ffmpeg are not predictable, test for the bare minimum.
-    assertThat(progresses, hasSize(greaterThanOrEqualTo(2)))
-    assertThat(progresses[0].status, `is`(Progress.Status.Continue))
-    assertThat(progresses[progresses.size - 1].status, `is`(Progress.Status.End))
+    progresses.size shouldBeGreaterThanOrEqualTo 2
+    progresses[0].status shouldBe Progress.Status.Continue
+    progresses[progresses.size - 1].status shouldBe Progress.Status.End
   }
 
   @Test

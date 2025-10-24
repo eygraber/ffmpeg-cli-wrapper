@@ -1,5 +1,6 @@
 package net.bramp.ffmpeg
 
+import io.kotest.assertions.throwables.shouldThrow
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -10,9 +11,11 @@ class PreconditionsCheckInvalidStreamTest(url: String) {
 
   private val uri: URI = URI.create(url)
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun testUri() {
-    Preconditions.checkValidStream(uri)
+    shouldThrow<IllegalArgumentException> {
+      Preconditions.checkValidStream(uri)
+    }
   }
 
   companion object {

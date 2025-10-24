@@ -1,8 +1,8 @@
 package net.bramp.ffmpeg.builder
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.builder.AbstractFFmpegStreamBuilder.Companion.DEVNULL
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.Is.`is`
 import org.junit.Test
 
 class FFmpegBuilderTwoPassTest {
@@ -19,26 +19,21 @@ class FFmpegBuilderTwoPassTest {
       .setPass(1)
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "error",
-          "-an",
-          "-i",
-          "input.mp4",
-          "-pass",
-          "1",
-          "-f",
-          "mp4",
-          "-b:v",
-          "1000000",
-          "-an",
-          DEVNULL,
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-an",
+      "-i",
+      "input.mp4",
+      "-pass",
+      "1",
+      "-f",
+      "mp4",
+      "-b:v",
+      "1000000",
+      "-an",
+      DEVNULL,
     )
   }
 
@@ -54,72 +49,75 @@ class FFmpegBuilderTwoPassTest {
       .setPass(2)
       .build()
 
-    assertThat(
-      command,
-      `is`(
-        listOf(
-          "-y",
-          "-v",
-          "error",
-          "-i",
-          "input.mp4",
-          "-pass",
-          "2",
-          "-f",
-          "mp4",
-          "-b:v",
-          "1000000",
-          "output.mp4",
-        ),
-      ),
+    command shouldBe listOf(
+      "-y",
+      "-v",
+      "error",
+      "-i",
+      "input.mp4",
+      "-pass",
+      "2",
+      "-f",
+      "mp4",
+      "-b:v",
+      "1000000",
+      "output.mp4",
     )
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun firstPassNoBitrate() {
-    FFmpegBuilder()
-      .addInput("input.mp4")
-      .done()
-      .addOutput("output.mp4")
-      .setFormat("mp4")
-      .done()
-      .setPass(1)
-      .build()
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder()
+        .addInput("input.mp4")
+        .done()
+        .addOutput("output.mp4")
+        .setFormat("mp4")
+        .done()
+        .setPass(1)
+        .build()
+    }
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun secondPassNoBitrate() {
-    FFmpegBuilder()
-      .addInput("input.mp4")
-      .done()
-      .addOutput("output.mp4")
-      .setFormat("mp4")
-      .done()
-      .setPass(2)
-      .build()
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder()
+        .addInput("input.mp4")
+        .done()
+        .addOutput("output.mp4")
+        .setFormat("mp4")
+        .done()
+        .setPass(2)
+        .build()
+    }
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun firstPassNoFormat() {
-    FFmpegBuilder()
-      .addInput("input.mp4")
-      .done()
-      .addOutput("output.mp4")
-      .setVideoBitRate(1_000_000)
-      .done()
-      .setPass(1)
-      .build()
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder()
+        .addInput("input.mp4")
+        .done()
+        .addOutput("output.mp4")
+        .setVideoBitRate(1_000_000)
+        .done()
+        .setPass(1)
+        .build()
+    }
   }
 
-  @Test(expected = IllegalArgumentException::class)
+  @Test
   fun secondPassNoFormat() {
-    FFmpegBuilder()
-      .addInput("input.mp4")
-      .done()
-      .addOutput("output.mp4")
-      .setVideoBitRate(1_000_000)
-      .done()
-      .setPass(2)
-      .build()
+    shouldThrow<IllegalArgumentException> {
+      FFmpegBuilder()
+        .addInput("input.mp4")
+        .done()
+        .addOutput("output.mp4")
+        .setVideoBitRate(1_000_000)
+        .done()
+        .setPass(2)
+        .build()
+    }
   }
 }

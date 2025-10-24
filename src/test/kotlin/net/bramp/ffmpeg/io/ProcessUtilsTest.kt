@@ -1,8 +1,8 @@
 package net.bramp.ffmpeg.io
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
 import net.bramp.ffmpeg.FFmpeg
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThrows
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -30,7 +30,7 @@ class ProcessUtilsTest {
 
     val exitValue = ProcessUtils.waitForWithTimeout(process, 5, TimeUnit.SECONDS)
 
-    assertEquals(0, exitValue)
+    exitValue shouldBe 0
   }
 
   @Test
@@ -53,7 +53,7 @@ class ProcessUtilsTest {
     )
     val process = processBuilder.start()
 
-    assertThrows(TimeoutException::class.java) {
+    shouldThrow<TimeoutException> {
       ProcessUtils.waitForWithTimeout(process, 1, TimeUnit.MILLISECONDS)
     }
 
