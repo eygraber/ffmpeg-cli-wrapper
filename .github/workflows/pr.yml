@@ -34,14 +34,14 @@ jobs:
         run: ./gradlew build --scan
 
       - name: Publish Test Results (JUnit)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: always()
         with:
           name: test-results-jdk${{ matrix.java-version }}
           path: '**/build/test-results/test/TEST-*.xml'
 
       - name: Publish JaCoCo Coverage Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: always()
         with:
           name: jacoco-report-jdk${{ matrix.java-version }}
