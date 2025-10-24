@@ -1,31 +1,25 @@
 package net.bramp.ffmpeg
 
-import net.bramp.ffmpeg.FFmpegTest.Companion.argThatHasItem
+import io.mockk.every
+import io.mockk.mockk
 import net.bramp.ffmpeg.builder.FFmpegBuilder
-import net.bramp.ffmpeg.lang.NewProcessAnswer
+import net.bramp.ffmpeg.lang.MockProcess
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-@RunWith(MockitoJUnitRunner::class)
 class InputOutputTest {
-  @Mock
   private lateinit var runFunc: ProcessFunction
-
   private lateinit var ffmpeg: FFmpeg
 
   @Before
   @Throws(IOException::class)
   fun before() {
-    `when`(runFunc.run(argThatHasItem("-version")))
-      .thenAnswer(NewProcessAnswer("avconv-version"))
+    runFunc = mockk()
+    every { runFunc.run(match { it.contains("-version") }) } returns MockProcess(Helper.loadResource("avconv-version"))
 
     ffmpeg = FFmpeg(FFmpeg.DEFAULT_PATH, runFunc)
   }

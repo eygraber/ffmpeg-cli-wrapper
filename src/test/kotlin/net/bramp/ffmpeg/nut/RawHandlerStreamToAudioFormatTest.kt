@@ -19,10 +19,10 @@ class RawHandlerStreamToAudioFormatTest(
   private val expected: AudioFormat,
 ) {
   private val stream: StreamHeaderPacket = StreamHeaderPacket().apply {
-    type = StreamHeaderPacket.AUDIO
+    type = StreamHeaderPacket.AUDIO.toLong()
     this.fourcc = fourcc.toByteArray(StandardCharsets.ISO_8859_1)
     sampleRate = Fraction.getFraction(sampleRateNum, sampleRateDenom)
-    setChannels(channels)
+    this.channels = channels
   }
 
   @Test

@@ -10,7 +10,7 @@ abstract class AbstractFFmpegOutputBuilderTest : AbstractFFmpegStreamBuilderTest
 
   @Test
   fun testConstantRateFactor() {
-    val command = getBuilder().setConstantRateFactor(5).build(0)
+    val command = getBuilder().setConstantRateFactor(5.0).build(0)
 
     assertThat(removeCommon(command), `is`(listOf("-crf", "5")))
   }
@@ -31,7 +31,7 @@ abstract class AbstractFFmpegOutputBuilderTest : AbstractFFmpegStreamBuilderTest
 
   @Test
   fun testAudioQuality() {
-    val command = getBuilder().setAudioQuality(5).build(0)
+    val command = getBuilder().setAudioQuality(5.0).build(0)
 
     assertThat(removeCommon(command), `is`(listOf("-qscale:a", "5")))
   }
@@ -52,7 +52,7 @@ abstract class AbstractFFmpegOutputBuilderTest : AbstractFFmpegStreamBuilderTest
 
   @Test
   fun testSetVideoQuality() {
-    val command = getBuilder().setVideoQuality(20).build(0)
+    val command = getBuilder().setVideoQuality(20.0).build(0)
 
     assertThat(removeCommon(command), `is`(listOf("-qscale:v", "20")))
   }

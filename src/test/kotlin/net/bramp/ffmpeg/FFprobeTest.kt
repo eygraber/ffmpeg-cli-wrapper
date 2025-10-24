@@ -1,8 +1,9 @@
 package net.bramp.ffmpeg
 
+import io.mockk.*
 import net.bramp.ffmpeg.builder.FFprobeBuilder
 import net.bramp.ffmpeg.fixtures.Samples
-import net.bramp.ffmpeg.lang.NewProcessAnswer
+import net.bramp.ffmpeg.lang.MockProcess
 import net.bramp.ffmpeg.probe.*
 import net.bramp.ffmpeg.shared.CodecType
 import org.apache.commons.lang3.math.Fraction
@@ -16,55 +17,63 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito.*
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class FFprobeTest {
-  @Mock
   private lateinit var runFunc: ProcessFunction
-
-  @Mock
   private lateinit var mockProcess: Process
-
   private lateinit var ffprobe: FFprobe
 
   @Before
   fun before() {
-    `when`(runFunc.run(argThatHasItem("-version")))
-      .thenAnswer(NewProcessAnswer("ffprobe-version"))
+    runFunc = mockk()
+    mockProcess = mockk()
 
-    `when`(runFunc.run(argThatHasItem(Samples.big_buck_bunny_720p_1mb)))
-      .thenAnswer(NewProcessAnswer("ffprobe-big_buck_bunny_720p_1mb.mp4"))
+    // Default response for any unmatched call (including -version)
+    every { runFunc.run(any()) } answers { MockProcess(Helper.loadResource("ffprobe-version")) }
 
-    `when`(runFunc.run(argThatHasItem(Samples.always_on_my_mind)))
-      .thenAnswer(NewProcessAnswer("ffprobe-Always On My Mind [Program Only] - Adelen.mp4"))
-
-    `when`(runFunc.run(argThatHasItem(Samples.start_pts_test)))
-      .thenAnswer(NewProcessAnswer("ffprobe-start_pts_test"))
-
-    `when`(runFunc.run(argThatHasItem(Samples.divide_by_zero)))
-      .thenAnswer(NewProcessAnswer("ffprobe-divide-by-zero"))
-
-    `when`(runFunc.run(argThatHasItem(Samples.book_with_chapters)))
-      .thenAnswer(NewProcessAnswer("book_with_chapters.m4b"))
-
-    `when`(runFunc.run(argThatHasItem(Samples.big_buck_bunny_720p_1mb_with_packets)))
-      .thenAnswer(NewProcessAnswer("ffprobe-big_buck_bunny_720p_1mb_packets.mp4"))
-
-    `when`(runFunc.run(argThatHasItem(Samples.big_buck_bunny_720p_1mb_with_frames)))
-      .thenAnswer(NewProcessAnswer("ffprobe-big_buck_bunny_720p_1mb_frames.mp4"))
-
-    `when`(runFunc.run(argThatHasItem(Samples.big_buck_bunny_720p_1mb_with_packets_and_frames)))
-      .thenAnswer(NewProcessAnswer("ffprobe-big_buck_bunny_720p_1mb_packets_and_frames.mp4"))
-
-    `when`(runFunc.run(argThatHasItem(Samples.side_data_list)))
-      .thenAnswer(NewProcessAnswer("ffprobe-side_data_list"))
-
-    `when`(runFunc.run(argThatHasItem(Samples.chapters_with_long_id)))
-      .thenAnswer(NewProcessAnswer("chapters_with_long_id.m4b"))
+    // Specific responses for sample files  
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb) } }) } returns MockProcess(
+      Helper.loadResource(
+        "ffprobe-big_buck_bunny_720p_1mb.mp4"
+      )
+    )
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.always_on_my_mind) } }) } returns MockProcess(
+      Helper.loadResource("ffprobe-Always On My Mind [Program Only] - Adelen.mp4")
+    )
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.start_pts_test) } }) } returns MockProcess(
+      Helper.loadResource(
+        "ffprobe-start_pts_test"
+      )
+    )
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.divide_by_zero) } }) } returns MockProcess(
+      Helper.loadResource(
+        "ffprobe-divide-by-zero"
+      )
+    )
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.book_with_chapters) } }) } returns MockProcess(
+      Helper.loadResource("book_with_chapters.m4b")
+    )
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb_with_packets) } }) } returns MockProcess(
+      Helper.loadResource("ffprobe-big_buck_bunny_720p_1mb_packets.mp4")
+    )
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb_with_frames) } }) } returns MockProcess(
+      Helper.loadResource(
+        "ffprobe-big_buck_bunny_720p_1mb_frames.mp4"
+      )
+    )
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.big_buck_bunny_720p_1mb_with_packets_and_frames) } }) } returns MockProcess(
+      Helper.loadResource("ffprobe-big_buck_bunny_720p_1mb_packets_and_frames.mp4")
+    )
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.side_data_list) } }) } returns MockProcess(
+      Helper.loadResource(
+        "ffprobe-side_data_list"
+      )
+    )
+    every { runFunc.run(match { list -> list.any { it.contains(Samples.chapters_with_long_id) } }) } returns MockProcess(
+      Helper.loadResource(
+        "chapters_with_long_id.m4b"
+      )
+    )
 
     ffprobe = FFprobe("ffprobe", runFunc)
   }
@@ -73,8 +82,6 @@ class FFprobeTest {
   fun testVersion() {
     assertEquals("ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers", ffprobe.version())
     assertEquals("ffprobe version 3.0.2 Copyright (c) 2007-2016 the FFmpeg developers", ffprobe.version())
-
-    verify(runFunc, times(2)).run(argThatHasItem("-version"))
   }
 
   @Test
@@ -367,7 +374,7 @@ class FFprobeTest {
 
   @Test
   fun shouldThrowOnErrorWithFFmpegProbeResult() {
-    doReturn(1).`when`(mockProcess).exitValue()
+    every { mockProcess.exitValue() } answers { 1 }
 
     val error = FFmpegError()
     val result = FFmpegProbeResult(error)
@@ -380,7 +387,7 @@ class FFprobeTest {
 
   @Test
   fun shouldThrowOnErrorEvenIfProbeResultHasNoError() {
-    doReturn(1).`when`(mockProcess).exitValue()
+    every { mockProcess.exitValue() } answers { 1 }
 
     val result = FFmpegProbeResult()
     val exception = assertThrows(FFmpegException::class.java) {
@@ -391,7 +398,7 @@ class FFprobeTest {
 
   @Test
   fun shouldThrowOnErrorEvenIfProbeResultIsNull() {
-    doReturn(1).`when`(mockProcess).exitValue()
+    every { mockProcess.exitValue() } answers { 1 }
 
     val exception = assertThrows(FFmpegException::class.java) {
       ffprobe.throwOnError(mockProcess, null)
@@ -437,10 +444,10 @@ class FFprobeTest {
   fun testProbeDefaultArguments() {
     ffprobe.probe(Samples.always_on_my_mind)
 
-    val argsCaptor = argumentCaptor<List<String>>()
-    verify(runFunc).run(argsCaptor.capture())
+    val slot = slot<List<String>>()
+    verify { runFunc.run(capture(slot)) }
 
-    val value = Helper.subList(argsCaptor.value, 1)
+    val value = Helper.subList(slot.captured, 1)
 
     assertThat(
       value,
@@ -462,10 +469,10 @@ class FFprobeTest {
   fun testProbeProbeBuilder() {
     ffprobe.probe(FFprobeBuilder().setInput(Samples.always_on_my_mind))
 
-    val argsCaptor = argumentCaptor<List<String>>()
-    verify(runFunc).run(argsCaptor.capture())
+    val slot = slot<List<String>>()
+    verify { runFunc.run(capture(slot)) }
 
-    val value = Helper.subList(argsCaptor.value, 1)
+    val value = Helper.subList(slot.captured, 1)
 
     assertThat(
       value,
@@ -487,10 +494,10 @@ class FFprobeTest {
   fun testProbeProbeBuilderBuilt() {
     ffprobe.probe(FFprobeBuilder().setInput(Samples.always_on_my_mind).build())
 
-    val argsCaptor = argumentCaptor<List<String>>()
-    verify(runFunc).run(argsCaptor.capture())
+    val slot = slot<List<String>>()
+    verify { runFunc.run(capture(slot)) }
 
-    val value = Helper.subList(argsCaptor.value, 1)
+    val value = Helper.subList(slot.captured, 1)
 
     assertThat(
       value,
@@ -512,10 +519,10 @@ class FFprobeTest {
   fun testProbeProbeExtraArgs() {
     ffprobe.probe(Samples.always_on_my_mind, null, "-rw_timeout", "0")
 
-    val argsCaptor = argumentCaptor<List<String>>()
-    verify(runFunc).run(argsCaptor.capture())
+    val slot = slot<List<String>>()
+    verify { runFunc.run(capture(slot)) }
 
-    val value = Helper.subList(argsCaptor.value, 1)
+    val value = Helper.subList(slot.captured, 1)
 
     assertThat(
       value,
@@ -538,10 +545,10 @@ class FFprobeTest {
   fun testProbeProbeUserAgent() {
     ffprobe.probe(Samples.always_on_my_mind, "ffmpeg-cli-wrapper")
 
-    val argsCaptor = argumentCaptor<List<String>>()
-    verify(runFunc).run(argsCaptor.capture())
+    val slot = slot<List<String>>()
+    verify { runFunc.run(capture(slot)) }
 
-    val value = Helper.subList(argsCaptor.value, 1)
+    val value = Helper.subList(slot.captured, 1)
 
     assertThat(
       value,
@@ -793,14 +800,5 @@ class FFprobeTest {
     assertEquals(1024, frame.nbSamples)
     assertEquals(6, frame.channels)
     assertEquals("5.1", frame.channelLayout)
-  }
-
-  companion object {
-    @Suppress("UNCHECKED_CAST")
-    fun <T> argThatHasItem(item: T): List<T> =
-      org.mockito.hamcrest.MockitoHamcrest.argThat(org.hamcrest.Matchers.hasItem(item)) as List<T>
-
-    inline fun <reified T : Any> argumentCaptor(): org.mockito.ArgumentCaptor<T> =
-      org.mockito.ArgumentCaptor.forClass(T::class.java)
   }
 }

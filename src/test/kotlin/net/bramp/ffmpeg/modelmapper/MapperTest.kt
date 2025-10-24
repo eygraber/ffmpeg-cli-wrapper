@@ -21,7 +21,7 @@ class MapperTest {
 
     val mappedObj = FFmpegOutputBuilder()
 
-    Mapper.INSTANCE.map(options, mappedObj)
+    Mapper.map(options, mappedObj)
 
     // TODO Add actual test!
   }

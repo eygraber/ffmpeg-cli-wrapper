@@ -13,7 +13,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
   protected abstract fun removeCommon(command: List<String>): List<String>
 
   @Test
-  fun testSetFormat() {
+  open fun testSetFormat() {
     val builder = getBuilder()
     builder.setFormat("mp4")
     val command = builder.build(0)

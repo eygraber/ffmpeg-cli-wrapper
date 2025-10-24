@@ -75,7 +75,7 @@ class ReadmeTest @Throws(IOException::class) constructor() {
     val line1 = String.format(
       locale,
       "File: '%s' ; Format: '%s' ; Duration: %.3fs",
-      format.filename,
+      format!!.filename,
       format.formatLongName,
       format.duration
     )
@@ -118,7 +118,7 @@ class ReadmeTest @Throws(IOException::class) constructor() {
       builder,
       object : ProgressListener {
         // Using the FFmpegProbeResult determine the duration of the input
-        val durationNs = input.format.duration * TimeUnit.SECONDS.toNanos(1)
+        val durationNs = (input.format!!.duration ?: 0.0) * TimeUnit.SECONDS.toNanos(1)
 
         override fun progress(progress: Progress) {
           val percentage = progress.outTimeNs / durationNs
@@ -132,7 +132,7 @@ class ReadmeTest @Throws(IOException::class) constructor() {
               progress.status,
               progress.frame,
               FFmpegUtils.toTimecode(progress.outTimeNs, TimeUnit.NANOSECONDS),
-              progress.fps.doubleValue(),
+              progress.fps?.toDouble() ?: 0.0,
               progress.speed
             )
           )

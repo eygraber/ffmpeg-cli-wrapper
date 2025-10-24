@@ -1,34 +1,32 @@
 package net.bramp.ffmpeg
 
 import com.google.common.base.Joiner
+import io.mockk.every
+import io.mockk.mockk
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.builder.FFmpegOutputBuilder
-import net.bramp.ffmpeg.lang.NewProcessAnswer
+import net.bramp.ffmpeg.lang.MockProcess
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
+import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
 /**
  * Ensures the examples in the Examples on github continue to work.
  * https://github.com/bramp/ffmpeg-cli-wrapper/wiki/Random-Examples
  */
-@RunWith(MockitoJUnitRunner::class)
 class ExamplesTest {
 
-  @Mock lateinit var runFunc: ProcessFunction
+  lateinit var runFunc: ProcessFunction
   lateinit var ffmpeg: FFmpeg
 
   @Before
   fun before() {
-    `when`(runFunc.run(FFmpegTest.argThatHasItem("-version")))
-      .thenAnswer(NewProcessAnswer("ffmpeg-version"))
+    runFunc = mockk()
+    every { runFunc.run(any()) } answers { MockProcess(Helper.loadResource("ffmpeg-version") as InputStream) }
     ffmpeg = FFmpeg("ffmpeg", runFunc)
   }
 
@@ -54,7 +52,7 @@ class ExamplesTest {
       .setVideoPixelFormat("yuv420p")
       .setVideoResolution(426, 240)
       .setVideoBitRate(2_000_000)
-      .setVideoFrameRate(30)
+      .setVideoFrameRate(30.0)
       .addExtraArgs("-deinterlace")
       .addExtraArgs("-preset", "medium")
       .addExtraArgs("-g", "30")
@@ -175,7 +173,7 @@ class ExamplesTest {
       .addExtraArgs("-map", "0:a")
       .setVideoCodec("libx264")
       .setPreset("ultrafast")
-      .setConstantRateFactor(20)
+      .setConstantRateFactor(20.0)
       .setAudioCodec("copy")
       .addExtraArgs("-shortest")
       .done()
@@ -269,8 +267,8 @@ class ExamplesTest {
     val builder = FFmpegBuilder()
     builder.addInput("audio.webm").setFormat("webm_dash_manifest")
     for(i in 1..3) {
-      builder.addInput("video_${'$'}i.webm").setFormat("webm_dash_manifest")
-      streams.add("${'$'}i")
+      builder.addInput("video_$i.webm").setFormat("webm_dash_manifest")
+      streams.add("$i")
     }
     val out = builder
       .addOutput("output.mpd")
