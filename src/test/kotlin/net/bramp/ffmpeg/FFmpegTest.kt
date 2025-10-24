@@ -11,8 +11,6 @@ import net.bramp.ffmpeg.fixtures.PixelFormats
 import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.lang.MockProcess
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test

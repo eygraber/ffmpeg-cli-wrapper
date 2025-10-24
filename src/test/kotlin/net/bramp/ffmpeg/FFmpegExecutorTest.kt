@@ -61,7 +61,7 @@ class FFmpegExecutorTest {
       .setStartOffset(500, TimeUnit.MILLISECONDS)
       .setAudioCodec("aac")
       .setAudioChannels(1)
-      .setAudioSampleRate(48000)
+      .setAudioSampleRate(48_000)
       .setAudioBitStreamFilter("chomp")
       .setAudioFilter("aecho=0.8:0.88:6:0.4")
       .setAudioQuality(1.0)
@@ -170,7 +170,7 @@ class FFmpegExecutorTest {
     assertEquals(0, p.waitFor())
 
     // This is perhaps fragile, but one byte per audio sample
-    assertEquals(254976, out.count)
+    assertEquals(254_976, out.count)
   }
 
   @Test
@@ -218,7 +218,7 @@ class FFmpegExecutorTest {
       .addExtraArgs("-shortest")
       .setAudioCodec("aac")
       .setAudioSampleRate(48_000)
-      .setAudioBitRate(32768)
+      .setAudioBitRate(32_768)
       .setVideoCodec("libx264")
       .setVideoFrameRate(24, 1)
       .setVideoResolution(640, 480)
@@ -249,7 +249,7 @@ class FFmpegExecutorTest {
       server = HttpServer.createSimpleServer(
         Samples.TEST_PREFIX,
         "127.0.0.1",
-        PortRange(10000, 60000),
+        PortRange(10_000, 60_000),
       )
       server.start()
 

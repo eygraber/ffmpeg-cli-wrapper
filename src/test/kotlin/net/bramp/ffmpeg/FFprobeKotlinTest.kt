@@ -110,7 +110,7 @@ class FFprobeKotlinTest {
     assertThat(firstChapter.timeBase, `is`("1/44100"))
     assertThat(firstChapter.start, `is`(0L))
     assertThat(firstChapter.startTime, `is`("0.000000"))
-    assertThat(firstChapter.end, `is`(11951309L))
+    assertThat(firstChapter.end, `is`(11_951_309L))
   }
 
   @Test
@@ -265,7 +265,7 @@ class FFprobeKotlinTest {
     assertThat(stream.codecName, `is`("aac"))
     assertThat(stream.codecType, `is`(CodecType.Audio))
     assertThat(stream.sampleFmt, `is`("fltp"))
-    assertThat(stream.sampleRate, `is`(48000))
+    assertThat(stream.sampleRate, `is`(48_000))
     assertThat(stream.channels, `is`(6))
     assertThat(stream.channelLayout, `is`("5.1"))
   }
@@ -278,8 +278,8 @@ class FFprobeKotlinTest {
     assertThat(chapters.size, `is`(24))
     assertThat(lastChapter.id, `is`(23L))
     assertThat(lastChapter.timeBase, `is`("1/44100"))
-    assertThat(lastChapter.start, `is`(237875790L))
-    assertThat(lastChapter.end, `is`(248628224L))
+    assertThat(lastChapter.start, `is`(237_875_790L))
+    assertThat(lastChapter.end, `is`(248_628_224L))
   }
 
   @Test
@@ -293,7 +293,7 @@ class FFprobeKotlinTest {
     val lastPacket = packets[packets.size - 1]
     assertThat(lastPacket.codecType, `is`(CodecType.Audio))
     assertThat(lastPacket.streamIndex, `is`(1))
-    assertThat(lastPacket.pts, `is`(253952L))
+    assertThat(lastPacket.pts, `is`(253_952L))
   }
 
   @Test(expected = FFmpegException::class)

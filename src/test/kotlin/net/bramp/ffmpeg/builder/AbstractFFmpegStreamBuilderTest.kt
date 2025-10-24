@@ -87,7 +87,7 @@ abstract class AbstractFFmpegStreamBuilderTest {
   @Test
   fun testSetAudioSampleRate() {
     val builder = getBuilder()
-    builder.setAudioSampleRate(44100)
+    builder.setAudioSampleRate(44_100)
     val command = builder.build(0)
 
     assertThat(removeCommon(command), `is`(listOf("-ar", "44100")))
