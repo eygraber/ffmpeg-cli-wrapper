@@ -1578,13 +1578,6 @@ public final class net/bramp/ffmpeg/probe/FFmpegChapter {
 	public final fun getTags ()Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;
 	public final fun getTimeBase ()Ljava/lang/String;
 	public fun hashCode ()I
-	public final fun setEnd (J)V
-	public final fun setEndTime (Ljava/lang/String;)V
-	public final fun setId (J)V
-	public final fun setStart (J)V
-	public final fun setStartTime (Ljava/lang/String;)V
-	public final fun setTags (Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;)V
-	public final fun setTimeBase (Ljava/lang/String;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1614,7 +1607,6 @@ public final class net/bramp/ffmpeg/probe/FFmpegChapterTag {
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getTitle ()Ljava/lang/String;
 	public fun hashCode ()I
-	public final fun setTitle (Ljava/lang/String;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1696,24 +1688,6 @@ public final class net/bramp/ffmpeg/probe/FFmpegDisposition {
 	public final fun isStillImage ()Z
 	public final fun isTimedThumbnails ()Z
 	public final fun isVisualImpaired ()Z
-	public final fun setAttachedPic (I)V
-	public final fun setCaptions (I)V
-	public final fun setCleanEffects (I)V
-	public final fun setComment (I)V
-	public final fun setDefault (I)V
-	public final fun setDependent (I)V
-	public final fun setDescriptions (I)V
-	public final fun setDub (I)V
-	public final fun setForced (I)V
-	public final fun setHearingImpaired (I)V
-	public final fun setKaraoke (I)V
-	public final fun setLyrics (I)V
-	public final fun setMetadata (I)V
-	public final fun setNonDiegetic (I)V
-	public final fun setOriginal (I)V
-	public final fun setStillImage (I)V
-	public final fun setTimedThumbnails (I)V
-	public final fun setVisualImpaired (I)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1745,8 +1719,6 @@ public final class net/bramp/ffmpeg/probe/FFmpegError {
 	public final fun getCode ()I
 	public final fun getString ()Ljava/lang/String;
 	public fun hashCode ()I
-	public final fun setCode (I)V
-	public final fun setString (Ljava/lang/String;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1796,17 +1768,6 @@ public final class net/bramp/ffmpeg/probe/FFmpegFormat {
 	public final fun getStartTime ()Ljava/lang/Double;
 	public final fun getTags ()Ljava/util/Map;
 	public fun hashCode ()I
-	public final fun setBitRate (J)V
-	public final fun setDuration (Ljava/lang/Double;)V
-	public final fun setFilename (Ljava/lang/String;)V
-	public final fun setFormatLongName (Ljava/lang/String;)V
-	public final fun setFormatName (Ljava/lang/String;)V
-	public final fun setNbPrograms (I)V
-	public final fun setNbStreams (I)V
-	public final fun setProbeScore (I)V
-	public final fun setSize (J)V
-	public final fun setStartTime (Ljava/lang/Double;)V
-	public final fun setTags (Ljava/util/Map;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1901,39 +1862,6 @@ public final class net/bramp/ffmpeg/probe/FFmpegFrame : net/bramp/ffmpeg/probe/F
 	public final fun getType ()Ljava/lang/String;
 	public final fun getWidth ()I
 	public fun hashCode ()I
-	public final fun setBestEffortTimestamp (J)V
-	public final fun setBestEffortTimestampTime (Ljava/lang/String;)V
-	public final fun setChannelLayout (Ljava/lang/String;)V
-	public final fun setChannels (I)V
-	public final fun setChromaLocation (Ljava/lang/String;)V
-	public final fun setCodedPictureNumber (J)V
-	public final fun setColorPrimaries (Ljava/lang/String;)V
-	public final fun setColorRange (Ljava/lang/String;)V
-	public final fun setColorSpace (Ljava/lang/String;)V
-	public final fun setColorTransfer (Ljava/lang/String;)V
-	public final fun setDisplayPictureNumber (J)V
-	public final fun setHeight (I)V
-	public final fun setInterlacedFrame (I)V
-	public final fun setKeyFrame (I)V
-	public final fun setMediaType (Lnet/bramp/ffmpeg/shared/CodecType;)V
-	public final fun setNbSamples (I)V
-	public final fun setPictType (Ljava/lang/String;)V
-	public final fun setPixFmt (Ljava/lang/String;)V
-	public final fun setPktDts (J)V
-	public final fun setPktDtsTime (Ljava/lang/String;)V
-	public final fun setPktDuration (J)V
-	public final fun setPktDurationTime (Ljava/lang/String;)V
-	public final fun setPktPos (J)V
-	public final fun setPktPts (J)V
-	public final fun setPktPtsTime (Ljava/lang/String;)V
-	public final fun setPktSize (J)V
-	public final fun setRepeatPict (I)V
-	public final fun setSampleAspectRatio (Ljava/lang/String;)V
-	public final fun setSampleFmt (Ljava/lang/String;)V
-	public final fun setStreamIndex (I)V
-	public final fun setTopFieldFirst (I)V
-	public final fun setType (Ljava/lang/String;)V
-	public final fun setWidth (I)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1990,18 +1918,6 @@ public final class net/bramp/ffmpeg/probe/FFmpegPacket : net/bramp/ffmpeg/probe/
 	public final fun getStreamIndex ()I
 	public final fun getType ()Ljava/lang/String;
 	public fun hashCode ()I
-	public final fun setCodecType (Lnet/bramp/ffmpeg/shared/CodecType;)V
-	public final fun setDts (J)V
-	public final fun setDtsTime (Ljava/lang/String;)V
-	public final fun setDuration (J)V
-	public final fun setDurationTime (Ljava/lang/String;)V
-	public final fun setFlags (Ljava/lang/String;)V
-	public final fun setPos (Ljava/lang/String;)V
-	public final fun setPts (J)V
-	public final fun setPtsTime (Ljava/lang/String;)V
-	public final fun setSize (Ljava/lang/String;)V
-	public final fun setStreamIndex (I)V
-	public final fun setType (Ljava/lang/String;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2039,10 +1955,6 @@ public final class net/bramp/ffmpeg/probe/FFmpegProbe {
 	public final fun getFormat ()Lnet/bramp/ffmpeg/probe/FFmpegFormat;
 	public final fun getStreams ()Ljava/util/List;
 	public fun hashCode ()I
-	public final fun setChapters (Ljava/util/List;)V
-	public final fun setError (Lnet/bramp/ffmpeg/probe/FFmpegError;)V
-	public final fun setFormat (Lnet/bramp/ffmpeg/probe/FFmpegFormat;)V
-	public final fun setStreams (Ljava/util/List;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2071,16 +1983,15 @@ public final class net/bramp/ffmpeg/probe/FFmpegProbeResult {
 	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;)V
 	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
 	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
-	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
-	public synthetic fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lnet/bramp/ffmpeg/probe/FFmpegError;
 	public final fun component2 ()Lnet/bramp/ffmpeg/probe/FFmpegFormat;
 	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()Ljava/util/List;
 	public final fun component5 ()Ljava/util/List;
 	public final fun component6 ()Ljava/util/List;
-	public final fun copy (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public final fun copy (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChapters ()Ljava/util/List;
 	public final fun getError ()Lnet/bramp/ffmpeg/probe/FFmpegError;
@@ -2090,24 +2001,7 @@ public final class net/bramp/ffmpeg/probe/FFmpegProbeResult {
 	public final fun getStreams ()Ljava/util/List;
 	public final fun hasError ()Z
 	public fun hashCode ()I
-	public final fun setChapters (Ljava/util/List;)V
-	public final fun setError (Lnet/bramp/ffmpeg/probe/FFmpegError;)V
-	public final fun setFormat (Lnet/bramp/ffmpeg/probe/FFmpegFormat;)V
-	public final fun setFrames (Ljava/util/List;)V
-	public final fun setPackets (Ljava/util/List;)V
-	public final fun setStreams (Ljava/util/List;)V
 	public fun toString ()Ljava/lang/String;
-}
-
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegProbeResult$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegProbeResult$$serializer;
-	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
-	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class net/bramp/ffmpeg/probe/FFmpegProbeResult$Companion {
@@ -2221,55 +2115,6 @@ public final class net/bramp/ffmpeg/probe/FFmpegStream {
 	public final fun getWidth ()I
 	public fun hashCode ()I
 	public final fun isAvc ()Ljava/lang/String;
-	public final fun setAvc (Ljava/lang/String;)V
-	public final fun setAvgFrameRate (Lorg/apache/commons/lang3/math/Fraction;)V
-	public final fun setBitRate (J)V
-	public final fun setBitsPerRawSample (I)V
-	public final fun setBitsPerSample (I)V
-	public final fun setChannelLayout (Ljava/lang/String;)V
-	public final fun setChannels (I)V
-	public final fun setChromaLocation (Ljava/lang/String;)V
-	public final fun setCodecLongName (Ljava/lang/String;)V
-	public final fun setCodecName (Ljava/lang/String;)V
-	public final fun setCodecTag (Ljava/lang/String;)V
-	public final fun setCodecTagString (Ljava/lang/String;)V
-	public final fun setCodecTimeBase (Lorg/apache/commons/lang3/math/Fraction;)V
-	public final fun setCodecType (Lnet/bramp/ffmpeg/shared/CodecType;)V
-	public final fun setCodedHeight (Ljava/lang/Integer;)V
-	public final fun setCodedWidth (Ljava/lang/Integer;)V
-	public final fun setColorPrimaries (Ljava/lang/String;)V
-	public final fun setColorRange (Ljava/lang/String;)V
-	public final fun setColorSpace (Ljava/lang/String;)V
-	public final fun setColorTransfer (Ljava/lang/String;)V
-	public final fun setDisplayAspectRatio (Ljava/lang/String;)V
-	public final fun setDisposition (Lnet/bramp/ffmpeg/probe/FFmpegDisposition;)V
-	public final fun setDuration (Ljava/lang/Double;)V
-	public final fun setDurationTs (J)V
-	public final fun setFieldOrder (Ljava/lang/String;)V
-	public final fun setHasBFrames (I)V
-	public final fun setHeight (I)V
-	public final fun setId (Ljava/lang/String;)V
-	public final fun setIndex (I)V
-	public final fun setLevel (I)V
-	public final fun setMaxBitRate (J)V
-	public final fun setNalLengthSize (Ljava/lang/String;)V
-	public final fun setNbFrames (J)V
-	public final fun setNbReadFrames (Ljava/lang/Long;)V
-	public final fun setNbReadPackets (Ljava/lang/Long;)V
-	public final fun setPixFmt (Ljava/lang/String;)V
-	public final fun setProfile (Ljava/lang/String;)V
-	public final fun setRFrameRate (Lorg/apache/commons/lang3/math/Fraction;)V
-	public final fun setRefs (I)V
-	public final fun setSampleAspectRatio (Ljava/lang/String;)V
-	public final fun setSampleFmt (Ljava/lang/String;)V
-	public final fun setSampleRate (I)V
-	public final fun setSideDataList (Ljava/util/List;)V
-	public final fun setStartPts (J)V
-	public final fun setStartTime (Ljava/lang/Double;)V
-	public final fun setTags (Ljava/util/Map;)V
-	public final fun setTimeBase (Lorg/apache/commons/lang3/math/Fraction;)V
-	public final fun setTimecode (Ljava/lang/String;)V
-	public final fun setWidth (I)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2303,9 +2148,6 @@ public final class net/bramp/ffmpeg/probe/FFmpegStream$SideData {
 	public final fun getRotation ()I
 	public final fun getSideDataType ()Ljava/lang/String;
 	public fun hashCode ()I
-	public final fun setDisplayMatrix (Ljava/lang/String;)V
-	public final fun setRotation (I)V
-	public final fun setSideDataType (Ljava/lang/String;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -2452,6 +2294,15 @@ public final class net/bramp/ffmpeg/serde/FFmpegFrameOrPacketSerializer : kotlin
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegFrameOrPacket;)V
+}
+
+public final class net/bramp/ffmpeg/serde/FFmpegProbeResultSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/serde/FFmpegProbeResultSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)V
 }
 
 public final class net/bramp/ffmpeg/serde/FFmpegStreamSideDataSerializer : kotlinx/serialization/KSerializer {
