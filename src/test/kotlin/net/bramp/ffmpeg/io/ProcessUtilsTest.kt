@@ -24,7 +24,7 @@ class ProcessUtilsTest {
       "libx264",
       "-t",
       "1",
-      "output.mp4"
+      "output.mp4",
     )
     val process = processBuilder.start()
 
@@ -49,7 +49,7 @@ class ProcessUtilsTest {
       "libx264",
       "-t",
       "10",
-      "output.mp4"
+      "output.mp4",
     )
     val process = processBuilder.start()
 

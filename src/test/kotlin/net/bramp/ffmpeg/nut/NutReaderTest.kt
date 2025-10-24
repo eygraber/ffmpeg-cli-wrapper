@@ -8,9 +8,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.Timeout
 import org.slf4j.LoggerFactory
-import java.awt.image.BufferedImage
 import java.io.File
 import java.io.IOException
+import java.util.Locale
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeUnit
 import javax.imageio.ImageIO
@@ -20,11 +20,6 @@ import javax.sound.sampled.SourceDataLine
 
 // TODO fix "invalid packet checksum" when running test
 class NutReaderTest {
-
-  companion object {
-    private val LOG = LoggerFactory.getLogger(NutReaderTest::class.java)
-  }
-
   private val OUTPUT_AUDIO = false
   private val OUTPUT_IMAGES = false
 
@@ -95,7 +90,7 @@ class NutReaderTest {
             }
 
             try {
-              ImageIO.write(img, "png", File(String.format("test-%08d.png", frame.pts)))
+              ImageIO.write(img, "png", File(String.format(Locale.ROOT, "test-%08d.png", frame.pts)))
             }
             catch(e: IOException) {
               LOG.error("Failed to write png", e)
@@ -105,9 +100,13 @@ class NutReaderTest {
             line?.write(frame.data, 0, frame.data.size)
           }
         }
-      }
+      },
     ).read()
 
     assertEquals(0, p.waitFor())
+  }
+
+  companion object {
+    private val LOG = LoggerFactory.getLogger(NutReaderTest::class.java)
   }
 }

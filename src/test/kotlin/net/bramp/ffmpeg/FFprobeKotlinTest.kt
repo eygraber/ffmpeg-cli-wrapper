@@ -1,17 +1,18 @@
 package net.bramp.ffmpeg
 
-import io.mockk.*
-import net.bramp.ffmpeg.Helper
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.lang.MockProcess
-import net.bramp.ffmpeg.probe.*
 import net.bramp.ffmpeg.shared.CodecType
 import org.apache.commons.lang3.math.Fraction
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.hasSize
 import org.hamcrest.core.Is.`is`
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Test
 
@@ -38,9 +39,11 @@ class FFprobeKotlinTest {
     }
 
     every {
-      runFunc.run(match {
-        it.contains(Samples.big_buck_bunny_720p_1mb) && !it.contains("packets") && !it.contains("frames")
-      })
+      runFunc.run(
+        match {
+          it.contains(Samples.big_buck_bunny_720p_1mb) && !it.contains("packets") && !it.contains("frames")
+        },
+      )
     } answers {
       MockProcess(Helper.loadResource("ffprobe-big_buck_bunny_720p_1mb.mp4"))
     }
@@ -115,7 +118,7 @@ class FFprobeKotlinTest {
     val info = ffprobe.probe(
       ffprobe.builder()
         .setInput(Samples.big_buck_bunny_720p_1mb_with_packets)
-        .setShowPackets(true)
+        .setShowPackets(true),
     )
 
     assertThat(info.hasError(), `is`(false))
@@ -131,7 +134,7 @@ class FFprobeKotlinTest {
     val info = ffprobe.probe(
       ffprobe.builder()
         .setInput(Samples.big_buck_bunny_720p_1mb_with_frames)
-        .setShowFrames(true)
+        .setShowFrames(true),
     )
 
     assertThat(info.hasError(), `is`(false))
@@ -148,7 +151,7 @@ class FFprobeKotlinTest {
       ffprobe.builder()
         .setInput(Samples.big_buck_bunny_720p_1mb_with_packets_and_frames)
         .setShowPackets(true)
-        .setShowFrames(true)
+        .setShowFrames(true),
     )
 
     assertThat(info.hasError(), `is`(false))
@@ -169,12 +172,14 @@ class FFprobeKotlinTest {
     ffprobe.probe(Samples.always_on_my_mind)
 
     verify(atLeast = 1) {
-      runFunc.run(match { args ->
-        args.contains("-show_format") &&
-        args.contains("-show_streams") &&
-        args.contains("-show_chapters") &&
-        args.contains(Samples.always_on_my_mind)
-      })
+      runFunc.run(
+        match { args ->
+          args.contains("-show_format") &&
+          args.contains("-show_streams") &&
+          args.contains("-show_chapters") &&
+          args.contains(Samples.always_on_my_mind)
+        },
+      )
     }
   }
 
@@ -183,11 +188,13 @@ class FFprobeKotlinTest {
     ffprobe.probe(ffprobe.builder().setInput(Samples.always_on_my_mind))
 
     verify(atLeast = 1) {
-      runFunc.run(match { args ->
-        args.contains("-show_format") &&
-        args.contains("-show_streams") &&
-        args.contains(Samples.always_on_my_mind)
-      })
+      runFunc.run(
+        match { args ->
+          args.contains("-show_format") &&
+          args.contains("-show_streams") &&
+          args.contains(Samples.always_on_my_mind)
+        },
+      )
     }
   }
 
@@ -196,9 +203,11 @@ class FFprobeKotlinTest {
     ffprobe.probe(ffprobe.builder().setInput(Samples.always_on_my_mind).build())
 
     verify(atLeast = 1) {
-      runFunc.run(match { args ->
-        args.contains(Samples.always_on_my_mind)
-      })
+      runFunc.run(
+        match { args ->
+          args.contains(Samples.always_on_my_mind)
+        },
+      )
     }
   }
 
@@ -207,11 +216,13 @@ class FFprobeKotlinTest {
     ffprobe.probe(Samples.always_on_my_mind, null, "-rw_timeout", "0")
 
     verify(atLeast = 1) {
-      runFunc.run(match { args ->
-        args.contains("-rw_timeout") &&
-        args.contains("0") &&
-        args.contains(Samples.always_on_my_mind)
-      })
+      runFunc.run(
+        match { args ->
+          args.contains("-rw_timeout") &&
+          args.contains("0") &&
+          args.contains(Samples.always_on_my_mind)
+        },
+      )
     }
   }
 
@@ -220,11 +231,13 @@ class FFprobeKotlinTest {
     ffprobe.probe(Samples.always_on_my_mind, "ffmpeg-cli-wrapper")
 
     verify(atLeast = 1) {
-      runFunc.run(match { args ->
-        args.contains("-user_agent") &&
-        args.contains("ffmpeg-cli-wrapper") &&
-        args.contains(Samples.always_on_my_mind)
-      })
+      runFunc.run(
+        match { args ->
+          args.contains("-user_agent") &&
+          args.contains("ffmpeg-cli-wrapper") &&
+          args.contains(Samples.always_on_my_mind)
+        },
+      )
     }
   }
 
@@ -274,7 +287,7 @@ class FFprobeKotlinTest {
     val packets = ffprobe.probe(
       ffprobe.builder()
         .setShowPackets(true)
-        .setInput(Samples.big_buck_bunny_720p_1mb_with_packets)
+        .setInput(Samples.big_buck_bunny_720p_1mb_with_packets),
     ).packets!!
 
     val lastPacket = packets[packets.size - 1]

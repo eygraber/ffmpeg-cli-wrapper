@@ -4,8 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.serializer
 import net.bramp.ffmpeg.FFmpegUtils
-import net.bramp.ffmpeg.shared.CodecType
 import net.bramp.ffmpeg.serde.CodecTypeSerializer
+import net.bramp.ffmpeg.shared.CodecType
 
 @Serializable
 data class FFmpegPacket(
@@ -22,10 +22,8 @@ data class FFmpegPacket(
   var pos: String? = null,
   @SerialName("flags") var flags: String? = null,
 ) : FFmpegFrameOrPacket {
-    companion object {
-        @JvmStatic
-        fun fromJson(json: String): FFmpegPacket {
-          return FFmpegUtils.json.decodeFromString(serializer<FFmpegPacket>(), json)
-        }
-    }
+  companion object {
+    @JvmStatic
+    fun fromJson(json: String): FFmpegPacket = FFmpegUtils.json.decodeFromString(serializer<FFmpegPacket>(), json)
+  }
 }

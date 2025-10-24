@@ -6,7 +6,6 @@ import kotlinx.serialization.serializer
 import net.bramp.ffmpeg.io.LoggingFilterReader
 import net.bramp.ffmpeg.probe.FFmpegProbeResult
 import org.slf4j.LoggerFactory
-import java.io.BufferedReader
 import java.io.IOException
 import java.io.Reader
 import java.util.Objects
@@ -141,6 +140,7 @@ class FFprobe(
    * @throws IOException If the process fails to start.
    */
   @Throws(IOException::class)
+  @Suppress("ThrowsCount")
   fun probe(arguments: List<String>): FFmpegProbeResult {
     // Prepend ffprobePath if it's not already the first argument
     val fullArgs = if(arguments.isEmpty() || arguments[0] != ffprobePath) {
@@ -246,6 +246,7 @@ class FFprobe(
     const val FFPROBE_COMMAND: String = "ffprobe"
 
     @JvmField
+    @Suppress("ObjectPropertyNaming")
     val DEFAULT_PATH: String = System.getenv("FFPROBE") ?: FFPROBE_COMMAND
   }
 }

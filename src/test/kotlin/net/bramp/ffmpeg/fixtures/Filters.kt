@@ -5,8 +5,24 @@ import net.bramp.ffmpeg.info.FilterPattern
 
 object Filters {
   val FILTERS = listOf(
-    Filter(false, false, false, "abench", FilterPattern("A"), FilterPattern("A"), "Benchmark part of a filtergraph."),
-    Filter(false, false, true, "acompressor", FilterPattern("A"), FilterPattern("A"), "Audio compressor."),
+    Filter(
+      isTimelineSupported = false,
+      isSliceThreading = false,
+      isCommandSupport = false,
+      name = "abench",
+      inputPattern = FilterPattern("A"),
+      outputPattern = FilterPattern("A"),
+      description = "Benchmark part of a filtergraph."
+    ),
+    Filter(
+      isTimelineSupported = false,
+      isSliceThreading = false,
+      isCommandSupport = true,
+      name = "acompressor",
+      inputPattern = FilterPattern("A"),
+      outputPattern = FilterPattern("A"),
+      description = "Audio compressor."
+    ),
     // ... ADD THE REST OF THE FILTERS FROM THE JAVA VERSION ...
   )
 }

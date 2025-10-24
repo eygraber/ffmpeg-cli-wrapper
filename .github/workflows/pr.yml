@@ -31,7 +31,7 @@ jobs:
           gradle-version: wrapper
 
       - name: Build with Gradle
-        run: ./gradlew build --scan
+        run: ./gradlew build koverHtmlReport --scan
 
       - name: Publish Test Results (JUnit)
         uses: actions/upload-artifact@v5

@@ -4,8 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.serializer
 import net.bramp.ffmpeg.FFmpegUtils
-import net.bramp.ffmpeg.shared.CodecType
 import net.bramp.ffmpeg.serde.CodecTypeSerializer
+import net.bramp.ffmpeg.shared.CodecType
 
 @Serializable
 data class FFmpegFrame(
@@ -23,30 +23,28 @@ data class FFmpegFrame(
   @SerialName("pkt_duration_time") var pktDurationTime: String? = null,
   @SerialName("pkt_pos") var pktPos: Long = 0,
   @SerialName("pkt_size") var pktSize: Long = 0,
-    var width: Int = 0,
-    var height: Int = 0,
-    @SerialName("pix_fmt") var pixFmt: String? = null,
-    @SerialName("sample_aspect_ratio") var sampleAspectRatio: String? = null,
-    @SerialName("pict_type") var pictType: String? = null,
-    @SerialName("coded_picture_number") var codedPictureNumber: Long = 0,
-    @SerialName("display_picture_number") var displayPictureNumber: Long = 0,
-    @SerialName("interlaced_frame") var interlacedFrame: Int = 0,
-    @SerialName("top_field_first") var topFieldFirst: Int = 0,
-    @SerialName("repeat_pict") var repeatPict: Int = 0,
-    @SerialName("color_range") var colorRange: String? = null,
-    @SerialName("color_space") var colorSpace: String? = null,
-    @SerialName("color_primaries") var colorPrimaries: String? = null,
-    @SerialName("color_transfer") var colorTransfer: String? = null,
-    @SerialName("chroma_location") var chromaLocation: String? = null,
+  var width: Int = 0,
+  var height: Int = 0,
+  @SerialName("pix_fmt") var pixFmt: String? = null,
+  @SerialName("sample_aspect_ratio") var sampleAspectRatio: String? = null,
+  @SerialName("pict_type") var pictType: String? = null,
+  @SerialName("coded_picture_number") var codedPictureNumber: Long = 0,
+  @SerialName("display_picture_number") var displayPictureNumber: Long = 0,
+  @SerialName("interlaced_frame") var interlacedFrame: Int = 0,
+  @SerialName("top_field_first") var topFieldFirst: Int = 0,
+  @SerialName("repeat_pict") var repeatPict: Int = 0,
+  @SerialName("color_range") var colorRange: String? = null,
+  @SerialName("color_space") var colorSpace: String? = null,
+  @SerialName("color_primaries") var colorPrimaries: String? = null,
+  @SerialName("color_transfer") var colorTransfer: String? = null,
+  @SerialName("chroma_location") var chromaLocation: String? = null,
   @SerialName("sample_fmt") var sampleFmt: String? = null,
   @SerialName("nb_samples") var nbSamples: Int = 0,
   var channels: Int = 0,
   @SerialName("channel_layout") var channelLayout: String? = null,
 ) : FFmpegFrameOrPacket {
-    companion object {
-        @JvmStatic
-        fun fromJson(json: String): FFmpegFrame {
-          return FFmpegUtils.json.decodeFromString(serializer<FFmpegFrame>(), json)
-        }
-    }
+  companion object {
+    @JvmStatic
+    fun fromJson(json: String): FFmpegFrame = FFmpegUtils.json.decodeFromString(serializer<FFmpegFrame>(), json)
+  }
 }

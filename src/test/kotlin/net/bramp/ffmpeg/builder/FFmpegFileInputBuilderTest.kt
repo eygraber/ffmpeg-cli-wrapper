@@ -6,9 +6,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class FFmpegFileInputBuilderTest : AbstractFFmpegInputBuilderTest() {
-  override fun getBuilder(): AbstractFFmpegInputBuilder<*> {
-    return FFmpegBuilder().addInput("input.mp4")
-  }
+  override fun getBuilder(): AbstractFFmpegInputBuilder<*> = FFmpegBuilder().addInput("input.mp4")
 
   override fun removeCommon(command: List<String>): List<String> {
     assertEquals(command[command.size - 1], "input.mp4")

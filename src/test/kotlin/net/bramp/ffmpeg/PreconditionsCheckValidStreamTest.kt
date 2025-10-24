@@ -29,7 +29,7 @@ class PreconditionsCheckValidStreamTest(url: String) {
       "rtsp://localhost:8888/live.sdp?tcp",
 
       // Some others
-      "UDP://10.1.0.102:1234"
+      "UDP://10.1.0.102:1234",
     )
   }
 }

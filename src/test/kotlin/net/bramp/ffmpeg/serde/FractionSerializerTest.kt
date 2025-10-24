@@ -23,33 +23,6 @@ class FractionSerializerTest {
     val fraction: Fraction,
   )
 
-  companion object {
-    val readTests = listOf(
-      TestData("\"1\"", Fraction.getFraction(1, 1)),
-      TestData("\"1.0\"", Fraction.getFraction(1, 1)),
-      TestData("\"2\"", Fraction.getFraction(2, 1)),
-      TestData("\"0.5\"", Fraction.getFraction(1, 2)),
-      TestData("\"1/2\"", Fraction.getFraction(1, 2)),
-      TestData("\"1 1/2\"", Fraction.getFraction(1, 1, 2))
-    )
-
-    // Divide by zero
-    val zerosTests = listOf(
-      TestData("\"0/0\"", Fraction.ZERO),
-      TestData("\"1/0\"", Fraction.ZERO),
-      TestData("\"2/0\"", Fraction.ZERO),
-      TestData("\"100/0\"", Fraction.ZERO)
-    )
-
-    val writeTests = listOf(
-      TestData("\"0\"", Fraction.ZERO),
-      TestData("\"1\"", Fraction.getFraction(1, 1)),
-      TestData("\"2\"", Fraction.getFraction(2, 1)),
-      TestData("\"1/2\"", Fraction.getFraction(1, 2)),
-      TestData("\"1 1/2\"", Fraction.getFraction(1, 1, 2))
-    )
-  }
-
   @Test
   fun testRead() {
     for(test in readTests) {
@@ -83,5 +56,32 @@ class FractionSerializerTest {
 
     val wrapper2 = json.decodeFromString<FractionWrapper>("""{"fraction":"0.5"}""")
     assertThat(wrapper2.fraction, equalTo(Fraction.getFraction(1, 2)))
+  }
+
+  companion object {
+    val readTests = listOf(
+      TestData("\"1\"", Fraction.getFraction(1, 1)),
+      TestData("\"1.0\"", Fraction.getFraction(1, 1)),
+      TestData("\"2\"", Fraction.getFraction(2, 1)),
+      TestData("\"0.5\"", Fraction.getFraction(1, 2)),
+      TestData("\"1/2\"", Fraction.getFraction(1, 2)),
+      TestData("\"1 1/2\"", Fraction.getFraction(1, 1, 2)),
+    )
+
+    // Divide by zero
+    val zerosTests = listOf(
+      TestData("\"0/0\"", Fraction.ZERO),
+      TestData("\"1/0\"", Fraction.ZERO),
+      TestData("\"2/0\"", Fraction.ZERO),
+      TestData("\"100/0\"", Fraction.ZERO),
+    )
+
+    val writeTests = listOf(
+      TestData("\"0\"", Fraction.ZERO),
+      TestData("\"1\"", Fraction.getFraction(1, 1)),
+      TestData("\"2\"", Fraction.getFraction(2, 1)),
+      TestData("\"1/2\"", Fraction.getFraction(1, 2)),
+      TestData("\"1 1/2\"", Fraction.getFraction(1, 1, 2)),
+    )
   }
 }

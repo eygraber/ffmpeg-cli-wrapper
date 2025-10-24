@@ -87,10 +87,10 @@ kover {
     filters {
       excludes {
         classes(
-          "*\$Companion",           // Companion objects
-          "*\$Companion\$*",        // Nested companion object classes  
-          "*\$*serializer",         // kotlinx.serialization generated serializers
-          "*\$\$serializer"         // kotlinx.serialization generated serializers
+          "*\$Companion", // Companion objects
+          "*\$Companion\$*", // Nested companion object classes
+          "*\$*serializer", // kotlinx.serialization generated serializers
+          "*\$\$serializer", // kotlinx.serialization generated serializers
         )
       }
     }

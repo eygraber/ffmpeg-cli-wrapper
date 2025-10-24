@@ -30,7 +30,7 @@ class FormatDecimalIntegerTest(
       arrayOf(1.10, "1.1"),
       arrayOf(1.001, "1.001"),
       arrayOf(100.0, "100"),
-      arrayOf(100.01, "100.01")
+      arrayOf(100.01, "100.01"),
     )
   }
 }

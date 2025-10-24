@@ -14,9 +14,7 @@ import java.net.URISyntaxException
 
 class TcpProgressParserTest : AbstractProgressParserTest() {
 
-  override fun newParser(listener: ProgressListener): ProgressParser {
-    return TcpProgressParser(listener)
-  }
+  override fun newParser(listener: ProgressListener): ProgressParser = TcpProgressParser(listener)
 
   @Test
   @Throws(IOException::class, InterruptedException::class)

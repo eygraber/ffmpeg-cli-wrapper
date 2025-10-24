@@ -1,6 +1,7 @@
 package net.bramp.ffmpeg
 
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
 import net.bramp.ffmpeg.fixtures.Samples
 import net.bramp.ffmpeg.lang.MockProcess
 import org.junit.Assert.assertEquals
@@ -29,11 +30,11 @@ class FFprobeAvTest {
   fun testVersion() {
     assertEquals(
       "avprobe version 11.4, Copyright (c) 2007-2014 the Libav developers",
-      ffprobe.version()
+      ffprobe.version(),
     )
     assertEquals(
       "avprobe version 11.4, Copyright (c) 2007-2014 the Libav developers",
-      ffprobe.version()
+      ffprobe.version(),
     )
   }
 

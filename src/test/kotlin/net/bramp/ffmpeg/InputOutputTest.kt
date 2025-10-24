@@ -36,7 +36,7 @@ class InputOutputTest {
 
     assertThat(
       command,
-      `is`(listOf("-y", "-v", "error", "-f", "mp4", "-i", "input.mp4", "output.mp4"))
+      `is`(listOf("-y", "-v", "error", "-f", "mp4", "-i", "input.mp4", "output.mp4")),
     )
   }
 
@@ -68,9 +68,9 @@ class InputOutputTest {
           "matroschka",
           "-i",
           "input.mkv",
-          "output.mp4"
-        )
-      )
+          "output.mp4",
+        ),
+      ),
     )
   }
 
@@ -88,9 +88,16 @@ class InputOutputTest {
       command,
       `is`(
         listOf(
-          "-y", "-v", "error", "-ss", "00:00:10", "-i", "input.mp4", "output.mp4"
-        )
-      )
+          "-y",
+          "-v",
+          "error",
+          "-ss",
+          "00:00:10",
+          "-i",
+          "input.mp4",
+          "output.mp4",
+        ),
+      ),
     )
   }
 
@@ -108,9 +115,16 @@ class InputOutputTest {
       command,
       `is`(
         listOf(
-          "-y", "-v", "error", "-i", "input.mp4", "-ss", "00:00:10", "output.mp4"
-        )
-      )
+          "-y",
+          "-v",
+          "error",
+          "-i",
+          "input.mp4",
+          "-ss",
+          "00:00:10",
+          "output.mp4",
+        ),
+      ),
     )
   }
 
@@ -138,9 +152,9 @@ class InputOutputTest {
           "input.mp4",
           "-ss",
           "00:00:10",
-          "output.mp4"
-        )
-      )
+          "output.mp4",
+        ),
+      ),
     )
   }
 
@@ -155,7 +169,8 @@ class InputOutputTest {
       .build()
 
     assertThat(
-      command, `is`(listOf("-y", "-v", "error", "-re", "-i", "input.mp4", "output.mp4"))
+      command,
+      `is`(listOf("-y", "-v", "error", "-re", "-i", "input.mp4", "output.mp4")),
     )
   }
 
@@ -185,9 +200,9 @@ class InputOutputTest {
           "-re",
           "-i",
           "input.mkv",
-          "output.mp4"
-        )
-      )
+          "output.mp4",
+        ),
+      ),
     )
   }
 
@@ -218,9 +233,9 @@ class InputOutputTest {
           "aac",
           "-scodec",
           "vtt",
-          "output.mp4"
-        )
-      )
+          "output.mp4",
+        ),
+      ),
     )
   }
 
@@ -251,9 +266,9 @@ class InputOutputTest {
           "vtt",
           "-i",
           "input.mp4",
-          "output.mp4"
-        )
-      )
+          "output.mp4",
+        ),
+      ),
     )
   }
 
@@ -268,7 +283,8 @@ class InputOutputTest {
       .build()
 
     assertThat(
-      command, `is`(listOf("-y", "-v", "error", "-vn", "-i", "input.mp4", "output.mp4"))
+      command,
+      `is`(listOf("-y", "-v", "error", "-vn", "-i", "input.mp4", "output.mp4")),
     )
   }
 
@@ -283,7 +299,8 @@ class InputOutputTest {
       .build()
 
     assertThat(
-      command, `is`(listOf("-y", "-v", "error", "-i", "input.mp4", "-vn", "output.mp4"))
+      command,
+      `is`(listOf("-y", "-v", "error", "-i", "input.mp4", "-vn", "output.mp4")),
     )
   }
 
@@ -298,7 +315,8 @@ class InputOutputTest {
       .build()
 
     assertThat(
-      command, `is`(listOf("-y", "-v", "error", "-an", "-i", "input.mp4", "output.mp4"))
+      command,
+      `is`(listOf("-y", "-v", "error", "-an", "-i", "input.mp4", "output.mp4")),
     )
   }
 
@@ -313,7 +331,8 @@ class InputOutputTest {
       .build()
 
     assertThat(
-      command, `is`(listOf("-y", "-v", "error", "-i", "input.mp4", "-an", "output.mp4"))
+      command,
+      `is`(listOf("-y", "-v", "error", "-i", "input.mp4", "-an", "output.mp4")),
     )
   }
 
@@ -328,7 +347,8 @@ class InputOutputTest {
       .build()
 
     assertThat(
-      command, `is`(listOf("-y", "-v", "error", "-sn", "-i", "input.mp4", "output.mp4"))
+      command,
+      `is`(listOf("-y", "-v", "error", "-sn", "-i", "input.mp4", "output.mp4")),
     )
   }
 
@@ -343,7 +363,8 @@ class InputOutputTest {
       .build()
 
     assertThat(
-      command, `is`(listOf("-y", "-v", "error", "-i", "input.mp4", "-sn", "output.mp4"))
+      command,
+      `is`(listOf("-y", "-v", "error", "-i", "input.mp4", "-sn", "output.mp4")),
     )
   }
 
@@ -375,9 +396,9 @@ class InputOutputTest {
           "20",
           "-i",
           "input.mkv",
-          "output.mp4"
-        )
-      )
+          "output.mp4",
+        ),
+      ),
     )
   }
 
@@ -422,9 +443,9 @@ class InputOutputTest {
           "output.mp4",
           "-output_args",
           "2",
-          "output.mkv"
-        )
-      )
+          "output.mkv",
+        ),
+      ),
     )
   }
 }

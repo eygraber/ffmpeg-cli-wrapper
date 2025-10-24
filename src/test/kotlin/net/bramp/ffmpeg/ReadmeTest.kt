@@ -77,7 +77,7 @@ class ReadmeTest @Throws(IOException::class) constructor() {
       "File: '%s' ; Format: '%s' ; Duration: %.3fs",
       format!!.filename,
       format.formatLongName,
-      format.duration
+      format.duration,
     )
 
     val stream = probeResult.streams!![0]
@@ -86,18 +86,18 @@ class ReadmeTest @Throws(IOException::class) constructor() {
       "Codec: '%s' ; Width: %dpx ; Height: %dpx",
       stream.codecLongName,
       stream.width,
-      stream.height
+      stream.height,
     )
 
     assertThat(
       line1,
       `is`(
-        "File: 'src/test/resources/net/bramp/ffmpeg/samples/big_buck_bunny_720p_1mb.mp4' ; Format: 'QuickTime / MOV' ; Duration: 5.312s"
-      )
+        "File: 'src/test/resources/net/bramp/ffmpeg/samples/big_buck_bunny_720p_1mb.mp4' ; Format: 'QuickTime / MOV' ; Duration: 5.312s",
+      ),
     )
     assertThat(
       line2,
-      `is`("Codec: 'H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10' ; Width: 1280px ; Height: 720px")
+      `is`("Codec: 'H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10' ; Width: 1280px ; Height: 720px"),
     )
   }
 
@@ -133,11 +133,11 @@ class ReadmeTest @Throws(IOException::class) constructor() {
               progress.frame,
               FFmpegUtils.toTimecode(progress.outTimeNs, TimeUnit.NANOSECONDS),
               progress.fps?.toDouble() ?: 0.0,
-              progress.speed
-            )
+              progress.speed,
+            ),
           )
         }
-      }
+      },
     )
 
     job.run()

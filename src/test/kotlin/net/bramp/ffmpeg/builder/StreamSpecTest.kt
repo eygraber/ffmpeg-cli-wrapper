@@ -5,7 +5,12 @@ import net.bramp.ffmpeg.builder.StreamSpecifier.Companion.program
 import net.bramp.ffmpeg.builder.StreamSpecifier.Companion.stream
 import net.bramp.ffmpeg.builder.StreamSpecifier.Companion.tag
 import net.bramp.ffmpeg.builder.StreamSpecifier.Companion.usable
-import net.bramp.ffmpeg.builder.StreamSpecifierType.*
+import net.bramp.ffmpeg.builder.StreamSpecifierType.Attachment
+import net.bramp.ffmpeg.builder.StreamSpecifierType.Audio
+import net.bramp.ffmpeg.builder.StreamSpecifierType.Data
+import net.bramp.ffmpeg.builder.StreamSpecifierType.PureVideo
+import net.bramp.ffmpeg.builder.StreamSpecifierType.Subtitle
+import net.bramp.ffmpeg.builder.StreamSpecifierType.Video
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test

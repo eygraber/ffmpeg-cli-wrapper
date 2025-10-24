@@ -3,8 +3,8 @@ package net.bramp.ffmpeg.probe
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import net.bramp.ffmpeg.shared.CodecType
 import net.bramp.ffmpeg.serde.CodecTypeSerializer
+import net.bramp.ffmpeg.shared.CodecType
 import org.apache.commons.lang3.math.Fraction
 
 @Serializable
@@ -59,10 +59,10 @@ data class FFmpegStream(
   var tags: Map<String, String>? = null,
   @SerialName("side_data_list") var sideDataList: List<SideData> = emptyList(),
 ) {
-    @Serializable
-    data class SideData(
-      @SerialName("side_data_type") var sideDataType: String? = null,
-      @SerialName("displaymatrix") var displayMatrix: String? = null,
-      var rotation: Int = 0,
-    )
+  @Serializable
+  data class SideData(
+    @SerialName("side_data_type") var sideDataType: String? = null,
+    @SerialName("displaymatrix") var displayMatrix: String? = null,
+    var rotation: Int = 0,
+  )
 }
