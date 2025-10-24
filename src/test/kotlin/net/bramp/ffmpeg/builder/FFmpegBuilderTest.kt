@@ -1,6 +1,5 @@
 package net.bramp.ffmpeg.builder
 
-import com.nitorcreations.Matchers.reflectEquals
 import net.bramp.ffmpeg.FFmpeg.Companion.AUDIO_FORMAT_S16
 import net.bramp.ffmpeg.FFmpeg.Companion.AUDIO_SAMPLE_48000
 import net.bramp.ffmpeg.FFmpeg.Companion.FPS_30
@@ -16,7 +15,6 @@ import net.bramp.ffmpeg.builder.StreamSpecifierType.Video
 import net.bramp.ffmpeg.options.AudioEncodingOptions
 import net.bramp.ffmpeg.options.MainEncodingOptions
 import net.bramp.ffmpeg.options.VideoEncodingOptions
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.net.URI
@@ -183,9 +181,9 @@ class FFmpegBuilderTest {
       .useOptions(video)
       .buildOptions()
 
-    assertThat(main, reflectEquals(options.main))
-    assertThat(audio, reflectEquals(options.audio))
-    assertThat(video, reflectEquals(options.video))
+    assertEquals(main, options.main)
+    assertEquals(audio, options.audio)
+    assertEquals(video, options.video)
   }
 
   /** Tests if all the various encoding options actually get stored and used correctly */
@@ -212,9 +210,9 @@ class FFmpegBuilderTest {
       .useOptions(video)
       .buildOptions()
 
-    assertThat(main, reflectEquals(options.main))
-    assertThat(audio, reflectEquals(options.audio))
-    assertThat(video, reflectEquals(options.video))
+    assertEquals(main, options.main)
+    assertEquals(audio, options.audio)
+    assertEquals(video, options.video)
   }
 
   @Test
