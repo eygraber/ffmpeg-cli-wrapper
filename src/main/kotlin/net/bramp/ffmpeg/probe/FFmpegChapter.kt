@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FFmpegChapter(
-  var id: Long = 0,
-  @SerialName("time_base") var timeBase: String? = null,
-  var start: Long = 0,
-  @SerialName("start_time") var startTime: String? = null,
-  var end: Long = 0,
-  @SerialName("end_time") var endTime: String? = null,
-  var tags: FFmpegChapterTag? = null,
+  val id: Long = 0,
+  @SerialName("time_base") val timeBase: String? = null,
+  val start: Long = 0,
+  @SerialName("start_time") val startTime: String? = null,
+  val end: Long = 0,
+  @SerialName("end_time") val endTime: String? = null,
+  val tags: FFmpegChapterTag? = null,
 )

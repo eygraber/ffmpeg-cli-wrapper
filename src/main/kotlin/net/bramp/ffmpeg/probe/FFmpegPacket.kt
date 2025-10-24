@@ -9,18 +9,18 @@ import net.bramp.ffmpeg.shared.CodecType
 
 @Serializable
 data class FFmpegPacket(
-  var type: String? = null, // "packet" in packets_and_frames format
-  @SerialName("codec_type") @Serializable(with = CodecTypeSerializer::class) var codecType: CodecType? = null,
-  @SerialName("stream_index") var streamIndex: Int = 0,
-  var pts: Long = 0,
-  @SerialName("pts_time") var ptsTime: String? = null,
-  var dts: Long = 0,
-  @SerialName("dts_time") var dtsTime: String? = null,
-  var duration: Long = 0,
-  @SerialName("duration_time") var durationTime: String? = null,
-  var size: String? = null,
-  var pos: String? = null,
-  @SerialName("flags") var flags: String? = null,
+  val type: String? = null, // "packet" in packets_and_frames format
+  @SerialName("codec_type") @Serializable(with = CodecTypeSerializer::class) val codecType: CodecType? = null,
+  @SerialName("stream_index") val streamIndex: Int = 0,
+  val pts: Long = 0,
+  @SerialName("pts_time") val ptsTime: String? = null,
+  val dts: Long = 0,
+  @SerialName("dts_time") val dtsTime: String? = null,
+  val duration: Long = 0,
+  @SerialName("duration_time") val durationTime: String? = null,
+  val size: String? = null,
+  val pos: String? = null,
+  @SerialName("flags") val flags: String? = null,
 ) : FFmpegFrameOrPacket {
   companion object {
     @JvmStatic

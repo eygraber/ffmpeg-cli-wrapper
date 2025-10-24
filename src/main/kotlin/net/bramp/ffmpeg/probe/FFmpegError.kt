@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FFmpegError(
-  var code: Int = 0,
-  var string: String? = null,
+  val code: Int = 0,
+  val string: String? = null,
 )

@@ -7,10 +7,10 @@ import java.util.ArrayList
 
 @Serializable
 data class FFmpegProbe(
-  var error: FFmpegError? = null,
-  var format: FFmpegFormat? = null,
-  var streams: List<FFmpegStream> = ArrayList(),
-  var chapters: List<FFmpegChapter> = ArrayList(),
+  val error: FFmpegError? = null,
+  val format: FFmpegFormat? = null,
+  val streams: List<FFmpegStream> = ArrayList(),
+  val chapters: List<FFmpegChapter> = ArrayList(),
 ) {
   companion object {
     @JvmStatic
