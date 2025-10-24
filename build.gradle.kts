@@ -39,7 +39,6 @@ dependencies {
   testImplementation(libs.junit)
   testImplementation(libs.logback.classic)
   testImplementation(libs.mockk)
-  testImplementation(libs.nitorcreations.matchers)
 
   detektPlugins(libs.detektEygraber.formatting)
   detektPlugins(libs.detektEygraber.style)
