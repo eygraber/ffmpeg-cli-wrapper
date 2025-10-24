@@ -44,10 +44,6 @@ dependencies {
 
   detektPlugins(libs.detektEygraber.formatting)
   detektPlugins(libs.detektEygraber.style)
-
-  compileOnly(libs.errorprone.annotations)
-  compileOnly(libs.findbugs.annotations)
-  compileOnly(libs.spotbugs.annotations)
 }
 
 tasks.withType<KotlinCompile>().configureEach {
