@@ -3,7 +3,7 @@ package net.bramp.ffmpeg
 import com.google.common.io.ByteStreams
 import com.google.common.io.CountingOutputStream
 import com.google.common.net.HostAndPort
-import net.bramp.ffmpeg.FFmpeg.FPS_30
+import net.bramp.ffmpeg.FFmpeg.Companion.FPS_30
 import net.bramp.ffmpeg.builder.FFmpegBuilder
 import net.bramp.ffmpeg.builder.Strict
 import net.bramp.ffmpeg.fixtures.Samples
@@ -61,14 +61,14 @@ class FFmpegExecutorTest {
       .setAudioSampleRate(48000)
       .setAudioBitStreamFilter("chomp")
       .setAudioFilter("aecho=0.8:0.88:6:0.4")
-      .setAudioQuality(1)
+      .setAudioQuality(1.0)
       .setVideoCodec("libx264")
       .setVideoFrameRate(FPS_30)
       .setVideoResolution(320, 240)
       // .setVideoFilter("scale=320:trunc(ow/a/2)*2")
       // .setVideoPixelFormat("yuv420p")
       // .setVideoBitStreamFilter("noise")
-      .setVideoQuality(2)
+      .setVideoQuality(2.0)
       .setStrict(Strict.Experimental)
       .done()
 

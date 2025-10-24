@@ -1,6 +1,6 @@
 package net.bramp.ffmpeg.builder
 
-import net.bramp.ffmpeg.builder.AbstractFFmpegStreamBuilder.DEVNULL
+import net.bramp.ffmpeg.builder.AbstractFFmpegStreamBuilder.Companion.DEVNULL
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.junit.Test

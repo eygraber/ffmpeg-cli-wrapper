@@ -1,33 +1,26 @@
 package net.bramp.ffmpeg.info
 
+import io.mockk.*
 import net.bramp.ffmpeg.FFmpeg
-import net.bramp.ffmpeg.FFmpegTest.Companion.argThatHasItem
+import net.bramp.ffmpeg.Helper
 import net.bramp.ffmpeg.ProcessFunction
-import net.bramp.ffmpeg.lang.NewProcessAnswer
+import net.bramp.ffmpeg.lang.MockProcess
 import net.bramp.ffmpeg.shared.CodecType
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
 
-@RunWith(MockitoJUnitRunner::class)
 class FFmpegGetInfoTest {
-  @Mock
   private lateinit var runFunc: ProcessFunction
 
   @Before
   @Throws(IOException::class)
   fun before() {
-    `when`(runFunc.run(argThatHasItem("-version")))
-      .thenAnswer(NewProcessAnswer("ffmpeg-version"))
-
-    `when`(runFunc.run(argThatHasItem("-codecs")))
-      .thenAnswer(NewProcessAnswer("ffmpeg-codecs"))
+    runFunc = mockk()
+    every { runFunc.run(match { it.contains("-version") }) } returns MockProcess(Helper.loadResource("ffmpeg-version"))
+    every { runFunc.run(match { it.contains("-codecs") }) } returns MockProcess(Helper.loadResource("ffmpeg-codecs"))
   }
 
   @Test
@@ -42,7 +35,7 @@ class FFmpegGetInfoTest {
     val ffmpeg = FFmpeg("ffmpeg", runFunc)
     ffmpeg.codecs()
 
-    for(codec in ffmpeg.codecs()) {
+    for(codec in ffmpeg.codecs() ?: emptyList()) {
       when(codec.type) {
         CodecType.Video -> videoCodecs.add(codec)
         CodecType.Audio -> audioCodecs.add(codec)
@@ -58,9 +51,9 @@ class FFmpegGetInfoTest {
     assertThat(dataCodecs, hasSize(8))
     assertThat(otherCodecs, hasSize(0))
 
-    assertThat(videoCodecs, hasItem(hasProperty("name", equalTo("h264"))))
-    assertThat(audioCodecs, hasItem(hasProperty("name", equalTo("aac"))))
-    assertThat(subtitleCodecs, hasItem(hasProperty("name", equalTo("ssa"))))
-    assertThat(dataCodecs, hasItem(hasProperty("name", equalTo("bin_data"))))
+    assertThat(videoCodecs, hasItem<Codec>(hasProperty<Codec>("name", equalTo("h264"))))
+    assertThat(audioCodecs, hasItem<Codec>(hasProperty<Codec>("name", equalTo("aac"))))
+    assertThat(subtitleCodecs, hasItem<Codec>(hasProperty<Codec>("name", equalTo("ssa"))))
+    assertThat(dataCodecs, hasItem<Codec>(hasProperty<Codec>("name", equalTo("bin_data"))))
   }
 }

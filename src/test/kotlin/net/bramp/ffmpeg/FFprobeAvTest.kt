@@ -1,32 +1,25 @@
 package net.bramp.ffmpeg
 
-import net.bramp.ffmpeg.FFmpegTest.Companion.argThatHasItem
+import io.mockk.*
 import net.bramp.ffmpeg.fixtures.Samples
-import net.bramp.ffmpeg.lang.NewProcessAnswer
+import net.bramp.ffmpeg.lang.MockProcess
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.junit.MockitoJUnitRunner
 import java.io.IOException
 
 /** Tests what happens when using avprobe */
-@RunWith(MockitoJUnitRunner::class)
 class FFprobeAvTest {
 
-  @Mock
   private lateinit var runFunc: ProcessFunction
-
   private lateinit var ffprobe: FFprobe
 
   @Before
   @Throws(IOException::class)
   fun before() {
-    `when`(runFunc.run(argThatHasItem("-version")))
-      .thenAnswer(NewProcessAnswer("avprobe-version"))
+    runFunc = mockk()
+    every { runFunc.run(any()) } answers { MockProcess(Helper.loadResource("avprobe-version")) }
 
     ffprobe = FFprobe("ffprobe", runFunc)
   }
