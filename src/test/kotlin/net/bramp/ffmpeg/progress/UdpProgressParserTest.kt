@@ -2,7 +2,10 @@ package net.bramp.ffmpeg.progress
 
 import com.google.common.io.ByteStreams
 import net.bramp.ffmpeg.Helper.loadResource
-import net.bramp.ffmpeg.fixtures.Progresses
+import net.bramp.ffmpeg.fixtures.allFiles
+import net.bramp.ffmpeg.fixtures.allProgresses
+import net.bramp.ffmpeg.fixtures.naProgressFile
+import net.bramp.ffmpeg.fixtures.naProgresses
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Test
@@ -27,7 +30,7 @@ class UdpProgressParserTest : AbstractProgressParserTest() {
 
     DatagramSocket().use { socket ->
       // Load each Progress Fixture, and send in a single datagram packet
-      for(progressFixture in Progresses.allFiles) {
+      for(progressFixture in allFiles) {
         val inputStream = loadResource(progressFixture)
         val bytes = ByteStreams.toByteArray(inputStream)
 
@@ -40,7 +43,7 @@ class UdpProgressParserTest : AbstractProgressParserTest() {
 
     parser.stop()
 
-    assertThat(progresses, equalTo(Progresses.allProgresses))
+    assertThat(progresses, equalTo(allProgresses))
   }
 
   @Test
@@ -53,7 +56,7 @@ class UdpProgressParserTest : AbstractProgressParserTest() {
 
     DatagramSocket().use { socket ->
       // Load each Progress Fixture, and send in a single datagram packet
-      for(progressFixture in Progresses.naProgressFile) {
+      for(progressFixture in naProgressFile) {
         val inputStream = loadResource(progressFixture)
         val bytes = ByteStreams.toByteArray(inputStream)
 
@@ -66,6 +69,6 @@ class UdpProgressParserTest : AbstractProgressParserTest() {
 
     parser.stop()
 
-    assertThat(progresses, equalTo(Progresses.naProgresses))
+    assertThat(progresses, equalTo(naProgresses))
   }
 }
