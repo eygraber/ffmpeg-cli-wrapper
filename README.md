@@ -7,12 +7,12 @@ by Andrew Brampton ([bramp.net](https://bramp.net)) (c) 2013-2024
 A fluent interface for running FFmpeg from Java.
 
 ![Java](https://img.shields.io/badge/Java-8+-brightgreen.svg)
-[![PR Checks](https://github.com/bramp/ffmpeg-cli-wrapper/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/bramp/ffmpeg-cli-wrapper/actions/workflows/pr-checks.yml)
-[![Coverage Status](https://img.shields.io/coveralls/bramp/ffmpeg-cli-wrapper.svg)](https://coveralls.io/github/bramp/ffmpeg-cli-wrapper)
-[![Maven Central](https://img.shields.io/maven-central/v/net.bramp.ffmpeg/ffmpeg.svg)](http://mvnrepository.com/artifact/net.bramp.ffmpeg/ffmpeg)
-[![Libraries.io](https://img.shields.io/librariesio/github/bramp/ffmpeg-cli-wrapper.svg)](https://libraries.io/github/bramp/ffmpeg-cli-wrapper)
+[![PR Checks](https://github.com/eygraber/ffmpeg-cli-wrapper/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/eygraber/ffmpeg-cli-wrapper/actions/workflows/pr-checks.yml)
+[![Coverage Status](https://img.shields.io/coveralls/eygraber/ffmpeg-cli-wrapper.svg)](https://coveralls.io/github/eygraber/ffmpeg-cli-wrapper)
+[![Maven Central](https://img.shields.io/maven-central/v/com.eygraber/ffmpeg-cli-wrapper.svg)](http://mvnrepository.com/artifact/com.eygraber/ffmpeg-cli-wrapper)
+[![Libraries.io](https://img.shields.io/librariesio/github/eygraber/ffmpeg-cli-wrapper.svg)](https://libraries.io/github/eygraber/ffmpeg-cli-wrapper)
 
-[GitHub](https://github.com/bramp/ffmpeg-cli-wrapper) | [API docs](https://bramp.github.io/ffmpeg-cli-wrapper/)
+[GitHub](https://github.com/eygraber/ffmpeg-cli-wrapper) | [API docs](https://bramp.github.io/ffmpeg-cli-wrapper/)
 
 ## Install
 
@@ -28,7 +28,21 @@ For Gradle (Groovy DSL, `build.gradle`):
 implementation 'com.eygraber:ffmpeg-cli-wrapper:0.9.0'
 ```
 
-The latest release version can be found on [Maven Central](http://mvnrepository.com/artifact/com.eygraber/ffmpeg).
+The latest release version can be found
+on [Maven Central](http://mvnrepository.com/artifact/com.eygraber/ffmpeg-cli-wrapper).
+
+## Migrating from Java Version
+
+**Note:** This library has been rewritten in Kotlin. If you're migrating from the older Java version (
+`net.bramp.ffmpeg:ffmpeg`), please see the [Migration Guide](MIGRATION.md) for detailed instructions on updating your
+code.
+
+Key changes:
+
+- Package name changed from `net.bramp.ffmpeg` to `net.bramp.ffmpeg.kotlin`
+- New Kotlin DSL for more idiomatic Kotlin code
+- Builder pattern still supported for backward compatibility
+- Improved null safety and type safety
 
 ## Usage
 
@@ -134,6 +148,87 @@ FFmpegJob job = executor.createJob(builder, new ProgressListener() {
 job.run();
 ```
 
+## Kotlin DSL
+
+For Kotlin users, a more idiomatic DSL is available that provides a cleaner and more concise syntax. The DSL is fully
+compatible with the existing builders.
+
+### Basic Usage
+
+```kotlin
+val ffmpeg = FFmpeg()
+val ffprobe = FFprobe()
+val executor = FFmpegExecutor(ffmpeg, ffprobe)
+
+// Execute immediately
+executor.run {
+  input("input.mp4")
+  output("output.mp4") {
+    videoCodec = "libx264"
+    videoResolution(640, 480)
+    audioCodec = "aac"
+    audioChannels = 2
+  }
+}
+```
+
+### More Examples
+
+```kotlin
+// Two-pass encoding
+executor.runTwoPass {
+  input("input.mp4")
+  output("output.mp4") {
+    videoCodec = "libx264"
+    videoBitRate = 2_000_000
+    audioCodec = "aac"
+  }
+}
+
+// Multiple outputs
+executor.run {
+  input("input.mp4")
+  
+  output("hd.mp4") {
+    videoCodec = "libx264"
+    videoResolution(1920, 1080)
+    videoBitRate = 5_000_000
+  }
+  
+  output("sd.mp4") {
+    videoCodec = "libx264"
+    videoResolution(640, 480)
+    videoBitRate = 1_000_000
+  }
+}
+
+// HLS streaming
+executor.run {
+  input("input.mp4")
+  hlsOutput("stream.m3u8") {
+    hlsTime(10, TimeUnit.SECONDS)
+    hlsSegmentFilename = "segment%03d.ts"
+    videoCodec = "libx264"
+  }
+}
+
+// FFprobe with DSL
+val result = ffprobe.probe {
+  input = "input.mp4"
+  showFormat = true
+  showStreams = true
+}
+```
+
+For comprehensive documentation on the Kotlin DSL, see [DSL.md](DSL.md).
+
+## Documentation
+
+- **[README.md](README.md)** - This file, basic usage and examples
+- **[DSL.md](DSL.md)** - Comprehensive Kotlin DSL documentation
+- **[MIGRATION.md](MIGRATION.md)** - Migration guide from Java to Kotlin version
+- **[API docs](https://bramp.github.io/ffmpeg-cli-wrapper/)** - Full API documentation
+
 ## Building & Contributing
 
 If you wish to make changes, then building is simple with Gradle:
@@ -157,7 +252,7 @@ FFmpeg from a PPA, or using the static build. More information [here](http://ask
 
 ## Get involved
 
-We welcome contributions. Please check the [issue tracker](https://github.com/bramp/ffmpeg-cli-wrapper/issues).
+We welcome contributions. Please check the [issue tracker](https://github.com/eygraber/ffmpeg-cli-wrapper/issues).
 If you see something you wish to work on, please either comment on the issue, or just send a pull
 request. Want to work on something else, then just open a issue, and we can discuss! We appreciate
 documentation improvements, code cleanup, or new features. Please be mindful that all work is done
