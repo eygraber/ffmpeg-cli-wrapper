@@ -30,6 +30,9 @@ jobs:
         with:
           gradle-version: wrapper
 
+      - name: Run ktlint
+        run: ./format --no-format
+
       - name: Build with Gradle
         run: ./gradlew build koverHtmlReport --scan
 
