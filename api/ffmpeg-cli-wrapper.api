@@ -1,24 +1,24 @@
-public abstract class net/bramp/ffmpeg/FFcommon {
-	protected fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/ProcessFunction;)V
-	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/ProcessFunction;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+public abstract class net/bramp/ffmpeg/kotlin/FFcommon {
+	protected fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/ProcessFunction;)V
+	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/ProcessFunction;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getPath ()Ljava/lang/String;
 	public final fun getProcessErrorStream ()Ljava/lang/Appendable;
 	public final fun getProcessOutputStream ()Ljava/lang/Appendable;
-	protected final fun getRunFunc ()Lnet/bramp/ffmpeg/ProcessFunction;
+	protected final fun getRunFunc ()Lnet/bramp/ffmpeg/kotlin/ProcessFunction;
 	public final fun getVersion ()Ljava/lang/String;
 	public final fun path (Ljava/util/List;)Ljava/util/List;
 	public fun run (Ljava/util/List;)V
 	public final fun setProcessErrorStream (Ljava/lang/Appendable;)V
 	public final fun setProcessOutputStream (Ljava/lang/Appendable;)V
 	protected final fun throwOnError (Ljava/lang/Process;)V
-	protected final fun throwOnError (Ljava/lang/Process;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)V
+	protected final fun throwOnError (Ljava/lang/Process;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;)V
 	public final fun version ()Ljava/lang/String;
 	protected final fun wrapErrorInReader (Ljava/lang/Process;)Ljava/io/BufferedReader;
 	protected final fun wrapInReader (Ljava/io/InputStream;)Ljava/io/BufferedReader;
 	protected final fun wrapInReader (Ljava/lang/Process;)Ljava/io/BufferedReader;
 }
 
-public final class net/bramp/ffmpeg/FFmpeg : net/bramp/ffmpeg/FFcommon {
+public final class net/bramp/ffmpeg/kotlin/FFmpeg : net/bramp/ffmpeg/kotlin/FFcommon {
 	public static final field AUDIO_FORMAT_DBL Ljava/lang/String;
 	public static final field AUDIO_FORMAT_FLT Ljava/lang/String;
 	public static final field AUDIO_FORMAT_S16 Ljava/lang/String;
@@ -35,7 +35,7 @@ public final class net/bramp/ffmpeg/FFmpeg : net/bramp/ffmpeg/FFcommon {
 	public static final field AUDIO_SAMPLE_8000 I
 	public static final field AUDIO_SAMPLE_96000 I
 	public static final field AUDIO_STEREO I
-	public static final field Companion Lnet/bramp/ffmpeg/FFmpeg$Companion;
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/FFmpeg$Companion;
 	public static final field DEFAULT_PATH Ljava/lang/String;
 	public static final field FFMPEG_COMMAND Ljava/lang/String;
 	public static final field FPS_23_976 Lorg/apache/commons/lang3/math/Fraction;
@@ -44,25 +44,25 @@ public final class net/bramp/ffmpeg/FFmpeg : net/bramp/ffmpeg/FFcommon {
 	public static final field FPS_30 Lorg/apache/commons/lang3/math/Fraction;
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/ProcessFunction;)V
-	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/ProcessFunction;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun builder ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/ProcessFunction;)V
+	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/ProcessFunction;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun builder ()Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
 	public final fun channelLayouts ()Ljava/util/List;
 	public final fun codecs ()Ljava/util/List;
-	public final fun createProgressParser (Lnet/bramp/ffmpeg/progress/ProgressListener;)Lnet/bramp/ffmpeg/progress/ProgressParser;
+	public final fun createProgressParser (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)Lnet/bramp/ffmpeg/kotlin/progress/ProgressParser;
 	public final fun filters ()Ljava/util/List;
 	public final fun formats ()Ljava/util/List;
 	public final fun isFfmpeg ()Z
 	public final fun pixelFormats ()Ljava/util/List;
 	public fun run (Ljava/util/List;)V
-	public final fun run (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;)V
-	public final fun run (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
-	public static synthetic fun run$default (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;ILjava/lang/Object;)V
-	public final fun runWithBuilder (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
-	public static synthetic fun runWithBuilder$default (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;ILjava/lang/Object;)V
+	public final fun run (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;)V
+	public final fun run (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)V
+	public static synthetic fun run$default (Lnet/bramp/ffmpeg/kotlin/FFmpeg;Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;ILjava/lang/Object;)V
+	public final fun runWithBuilder (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)V
+	public static synthetic fun runWithBuilder$default (Lnet/bramp/ffmpeg/kotlin/FFmpeg;Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;ILjava/lang/Object;)V
 }
 
-public final class net/bramp/ffmpeg/FFmpeg$Companion {
+public final class net/bramp/ffmpeg/kotlin/FFmpeg$Companion {
 	public final fun getAUDIO_DEPTH_DBL ()Ljava/lang/String;
 	public final fun getAUDIO_DEPTH_FLT ()Ljava/lang/String;
 	public final fun getAUDIO_DEPTH_S16 ()Ljava/lang/String;
@@ -70,26 +70,26 @@ public final class net/bramp/ffmpeg/FFmpeg$Companion {
 	public final fun getAUDIO_DEPTH_U8 ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/FFmpegException : java/io/IOException {
-	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegError;)V
-	public final fun getError ()Lnet/bramp/ffmpeg/probe/FFmpegError;
+public final class net/bramp/ffmpeg/kotlin/FFmpegException : java/io/IOException {
+	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;)V
+	public final fun getError ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;
 }
 
-public final class net/bramp/ffmpeg/FFmpegExecutor {
+public final class net/bramp/ffmpeg/kotlin/FFmpegExecutor {
 	public fun <init> ()V
-	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;)V
-	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/FFprobe;)V
-	public synthetic fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/FFprobe;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun createJob (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;)Lnet/bramp/ffmpeg/job/FFmpegJob;
-	public final fun createJob (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)Lnet/bramp/ffmpeg/job/FFmpegJob;
-	public final fun createTwoPassJob (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;)Lnet/bramp/ffmpeg/job/FFmpegJob;
-	public final fun createTwoPassJob (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)Lnet/bramp/ffmpeg/job/FFmpegJob;
-	public final fun getFfmpeg ()Lnet/bramp/ffmpeg/FFmpeg;
-	public final fun getFfprobe ()Lnet/bramp/ffmpeg/FFprobe;
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/FFmpeg;)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/FFmpeg;Lnet/bramp/ffmpeg/kotlin/FFprobe;)V
+	public synthetic fun <init> (Lnet/bramp/ffmpeg/kotlin/FFmpeg;Lnet/bramp/ffmpeg/kotlin/FFprobe;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun createJob (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;)Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob;
+	public final fun createJob (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob;
+	public final fun createTwoPassJob (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;)Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob;
+	public final fun createTwoPassJob (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob;
+	public final fun getFfmpeg ()Lnet/bramp/ffmpeg/kotlin/FFmpeg;
+	public final fun getFfprobe ()Lnet/bramp/ffmpeg/kotlin/FFprobe;
 }
 
-public final class net/bramp/ffmpeg/FFmpegUtils {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/FFmpegUtils;
+public final class net/bramp/ffmpeg/kotlin/FFmpegUtils {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/FFmpegUtils;
 	public static final fun fromTimecode (Ljava/lang/String;)J
 	public final fun getJson ()Lkotlinx/serialization/json/Json;
 	public static final fun millisecondsToString (J)Ljava/lang/String;
@@ -97,63 +97,63 @@ public final class net/bramp/ffmpeg/FFmpegUtils {
 	public static final fun toTimecode (JLjava/util/concurrent/TimeUnit;)Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/FFprobe {
-	public static final field Companion Lnet/bramp/ffmpeg/FFprobe$Companion;
+public final class net/bramp/ffmpeg/kotlin/FFprobe {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/FFprobe$Companion;
 	public static final field DEFAULT_PATH Ljava/lang/String;
 	public static final field FFPROBE_COMMAND Ljava/lang/String;
 	public fun <init> (Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/ProcessFunction;)V
-	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/ProcessFunction;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun builder ()Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
-	public final fun probe (Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
-	public final fun probe (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
-	public final fun probe (Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
-	public final fun probe (Ljava/util/List;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
-	public final fun probe (Lnet/bramp/ffmpeg/builder/FFprobeBuilder;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/ProcessFunction;)V
+	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/ProcessFunction;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun builder ()Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;
+	public final fun probe (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;
+	public final fun probe (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;
+	public final fun probe (Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;
+	public final fun probe (Ljava/util/List;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;
+	public final fun probe (Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;
 	public final fun throwOnError (I)V
-	public final fun throwOnError (Ljava/lang/Process;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)V
+	public final fun throwOnError (Ljava/lang/Process;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;)V
 	public fun toString ()Ljava/lang/String;
 	public final fun version ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/FFprobe$Companion {
+public final class net/bramp/ffmpeg/kotlin/FFprobe$Companion {
 }
 
-public final class net/bramp/ffmpeg/Preconditions {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/Preconditions;
+public final class net/bramp/ffmpeg/kotlin/Preconditions {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/Preconditions;
 	public static final fun checkNotNullEmptyOrBlank (Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/String;
 	public static final fun checkValidStream (Ljava/net/URI;)Ljava/net/URI;
 }
 
-public abstract interface class net/bramp/ffmpeg/ProcessFunction {
+public abstract interface class net/bramp/ffmpeg/kotlin/ProcessFunction {
 	public abstract fun run (Ljava/util/List;)Ljava/lang/Process;
 }
 
-public final class net/bramp/ffmpeg/RunProcessFunction : net/bramp/ffmpeg/ProcessFunction {
-	public static final field Companion Lnet/bramp/ffmpeg/RunProcessFunction$Companion;
+public final class net/bramp/ffmpeg/kotlin/RunProcessFunction : net/bramp/ffmpeg/kotlin/ProcessFunction {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/RunProcessFunction$Companion;
 	public fun <init> ()V
 	public final fun getWorkingDirectory ()Ljava/io/File;
 	public fun run (Ljava/util/List;)Ljava/lang/Process;
-	public final fun setWorkingDirectory (Ljava/io/File;)Lnet/bramp/ffmpeg/RunProcessFunction;
-	public final fun setWorkingDirectory (Ljava/lang/String;)Lnet/bramp/ffmpeg/RunProcessFunction;
+	public final fun setWorkingDirectory (Ljava/io/File;)Lnet/bramp/ffmpeg/kotlin/RunProcessFunction;
+	public final fun setWorkingDirectory (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/RunProcessFunction;
 }
 
-public final class net/bramp/ffmpeg/RunProcessFunction$Companion {
+public final class net/bramp/ffmpeg/kotlin/RunProcessFunction$Companion {
 }
 
-public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
-	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
-	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;Ljava/lang/String;)V
-	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/util/List;)V
-	public fun buildOptions ()Lnet/bramp/ffmpeg/options/EncodingOptions;
-	public final fun getProbeResult ()Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+public abstract class net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegInputBuilder : net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder {
+	protected fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/lang/String;)V
+	protected fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;Ljava/lang/String;)V
+	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/util/List;)V
+	public fun buildOptions ()Lnet/bramp/ffmpeg/kotlin/options/EncodingOptions;
+	public final fun getProbeResult ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;
 	public final fun getStreamLoop ()I
-	public final fun readAtNativeFrameRate ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;
-	public final fun setStreamLoop (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;
+	public final fun readAtNativeFrameRate ()Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegInputBuilder;
+	public final fun setStreamLoop (I)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegInputBuilder;
 }
 
-public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
-	public static final field Companion Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder$Companion;
+public abstract class net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder : net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder$Companion;
 	public field audioBitRate J
 	public field audioBitStreamFilter Ljava/lang/String;
 	public field audioFilter Ljava/lang/String;
@@ -164,72 +164,72 @@ public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder : net
 	public field videoFilter Ljava/lang/String;
 	public field videoPreset Ljava/lang/String;
 	public fun <init> ()V
-	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
-	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/net/URI;)V
+	protected fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/lang/String;)V
+	protected fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/net/URI;)V
 	protected fun addAudioFlags (Ljava/util/List;)V
-	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/util/List;)V
+	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/util/List;)V
 	protected fun addSourceTarget (ILjava/util/List;)V
-	protected fun addVideoFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/util/List;)V
+	protected fun addVideoFlags (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/util/List;)V
 	public fun build (I)Ljava/util/List;
-	public fun buildOptions ()Lnet/bramp/ffmpeg/options/EncodingOptions;
+	public fun buildOptions ()Lnet/bramp/ffmpeg/kotlin/options/EncodingOptions;
 	public static final fun formatDecimalInteger (D)Ljava/lang/String;
 	public final fun getAudioQuality ()Ljava/lang/Double;
 	protected final fun getBFrames ()Ljava/lang/Integer;
 	public final fun getConstantRateFactor ()Ljava/lang/Double;
 	public final fun getVideoQuality ()Ljava/lang/Double;
-	public final fun setAudioBitDepth (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public final fun setAudioBitRate (J)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public final fun setAudioBitStreamFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public final fun setAudioFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public final fun setAudioQuality (D)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public final fun setAudioBitDepth (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public final fun setAudioBitRate (J)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public final fun setAudioBitStreamFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public final fun setAudioFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public final fun setAudioQuality (D)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
 	public final fun setAudioQuality (Ljava/lang/Double;)V
-	public final fun setAudioSampleFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public final fun setBFrames (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public final fun setAudioSampleFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public final fun setBFrames (I)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
 	protected final fun setBFrames (Ljava/lang/Integer;)V
-	public final fun setComplexFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public final fun setConstantRateFactor (D)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public final fun setComplexFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public final fun setConstantRateFactor (D)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
 	public final fun setConstantRateFactor (Ljava/lang/Double;)V
-	public final fun setVideoBitRate (J)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public final fun setVideoBitStreamFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public final fun setVideoFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public final fun setVideoPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public final fun setVideoQuality (D)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
+	public final fun setVideoBitRate (J)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public final fun setVideoBitStreamFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public final fun setVideoFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public final fun setVideoPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public final fun setVideoQuality (D)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
 	public final fun setVideoQuality (Ljava/lang/Double;)V
-	public fun useOptions (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public synthetic fun useOptions (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public fun useOptions (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder;
-	public synthetic fun useOptions (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public synthetic fun useOptions (Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder;
+	public synthetic fun useOptions (Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 }
 
-public final class net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder$Companion {
+public final class net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder$Companion {
 	public final fun formatDecimalInteger (D)Ljava/lang/String;
 }
 
-public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
-	public static final field Companion Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder$Companion;
+public abstract class net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder$Companion;
 	public field filename Ljava/lang/String;
 	public field format Ljava/lang/String;
 	public field preset Ljava/lang/String;
 	public field presetFilename Ljava/lang/String;
-	public field strict Lnet/bramp/ffmpeg/builder/Strict;
+	public field strict Lnet/bramp/ffmpeg/kotlin/builder/Strict;
 	public field targetSize J
 	protected fun <init> ()V
-	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
-	protected fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/net/URI;)V
+	protected fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/lang/String;)V
+	protected fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/net/URI;)V
 	protected fun addAudioFlags (Ljava/util/List;)V
-	public final fun addExtraArgs ([Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public final fun addExtraArgs ([Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	protected fun addFormatArgs (Ljava/util/List;)V
-	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/util/List;)V
-	public final fun addMetaTag (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun addMetaTag (Lnet/bramp/ffmpeg/builder/MetadataSpecifier;Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	protected fun addGlobalFlags (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/util/List;)V
+	public final fun addMetaTag (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun addMetaTag (Lnet/bramp/ffmpeg/kotlin/builder/MetadataSpecifier;Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	protected abstract fun addSourceTarget (ILjava/util/List;)V
-	protected fun addVideoFlags (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/util/List;)V
+	protected fun addVideoFlags (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/util/List;)V
 	public fun build (I)Ljava/util/List;
-	public abstract fun buildOptions ()Lnet/bramp/ffmpeg/options/EncodingOptions;
-	public final fun disableAudio ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun disableSubtitle ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun disableVideo ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun done ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public abstract fun buildOptions ()Lnet/bramp/ffmpeg/kotlin/options/EncodingOptions;
+	public final fun disableAudio ()Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun disableSubtitle ()Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun disableVideo ()Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun done ()Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
 	public final fun getAudio_channels ()I
 	public final fun getAudio_codec ()Ljava/lang/String;
 	public final fun getAudio_enabled ()Z
@@ -238,13 +238,13 @@ public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
 	public final fun getDuration ()Ljava/lang/Long;
 	public final fun getExtra_args ()Ljava/util/List;
 	public final fun getMeta_tags ()Ljava/util/List;
-	public final fun getParent ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public final fun getParent ()Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
 	public final fun getPass_padding_bitrate ()J
 	public final fun getStartOffset ()Ljava/lang/Long;
 	public final fun getSubtitle_codec ()Ljava/lang/String;
 	public final fun getSubtitle_enabled ()Z
 	public final fun getSubtitle_preset ()Ljava/lang/String;
-	protected abstract fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	protected abstract fun getThis ()Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun getThrowWarnings ()Z
 	public final fun getUri ()Ljava/net/URI;
 	public final fun getVideo_codec ()Ljava/lang/String;
@@ -258,47 +258,47 @@ public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
 	public final fun getVideo_size ()Ljava/lang/String;
 	public final fun getVideo_width ()I
 	public static final fun isValidSize$ffmpeg_cli_wrapper (I)Z
-	public final fun setAudioChannels (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setAudioCodec (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setAudioPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setAudioSampleRate (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public final fun setAudioChannels (I)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setAudioCodec (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setAudioPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setAudioSampleRate (I)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun setAudio_channels (I)V
 	public final fun setAudio_codec (Ljava/lang/String;)V
 	public final fun setAudio_enabled (Z)V
 	public final fun setAudio_preset (Ljava/lang/String;)V
 	public final fun setAudio_sample_rate (I)V
-	public final fun setDuration (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public final fun setDuration (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun setDuration (Ljava/lang/Long;)V
-	public final fun setFilename (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setFrames (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setPassPaddingBitrate (J)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public final fun setFilename (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setFrames (I)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setPassPaddingBitrate (J)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun setPass_padding_bitrate (J)V
-	public final fun setPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setPresetFilename (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setStartOffset (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public final fun setPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setPresetFilename (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setStartOffset (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun setStartOffset (Ljava/lang/Long;)V
-	public final fun setStrict (Lnet/bramp/ffmpeg/builder/Strict;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setSubtitleCodec (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setSubtitlePreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public final fun setStrict (Lnet/bramp/ffmpeg/kotlin/builder/Strict;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setSubtitleCodec (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setSubtitlePreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun setSubtitle_codec (Ljava/lang/String;)V
 	public final fun setSubtitle_enabled (Z)V
 	public final fun setSubtitle_preset (Ljava/lang/String;)V
-	public final fun setTargetSize (J)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public final fun setTargetSize (J)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun setThrowWarnings (Z)V
-	public final fun setUri (Ljava/net/URI;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public final fun setUri (Ljava/net/URI;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun setUri (Ljava/net/URI;)V
-	public final fun setVideoCodec (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setVideoCopyInkf (Z)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setVideoFrameRate (D)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setVideoFrameRate (II)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setVideoFrameRate (Lorg/apache/commons/lang3/math/Fraction;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setVideoHeight (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setVideoMovFlags (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setVideoPixelFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setVideoResolution (II)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setVideoResolution (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun setVideoWidth (I)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoCodec (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoCopyInkf (Z)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoFrameRate (D)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoFrameRate (II)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoFrameRate (Lorg/apache/commons/lang3/math/Fraction;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoHeight (I)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoMovFlags (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoPixelFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoResolution (II)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoResolution (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun setVideoWidth (I)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun setVideo_codec (Ljava/lang/String;)V
 	public final fun setVideo_copyinkf (Z)V
 	public final fun setVideo_enabled (Z)V
@@ -309,16 +309,16 @@ public abstract class net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder {
 	public final fun setVideo_pixel_format (Ljava/lang/String;)V
 	public final fun setVideo_size (Ljava/lang/String;)V
 	public final fun setVideo_width (I)V
-	public fun useOptions (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun useOptions (Lnet/bramp/ffmpeg/options/EncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public final fun useOptions (Lnet/bramp/ffmpeg/options/MainEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public fun useOptions (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun useOptions (Lnet/bramp/ffmpeg/kotlin/options/EncodingOptions;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public final fun useOptions (Lnet/bramp/ffmpeg/kotlin/options/MainEncodingOptions;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public fun useOptions (Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 }
 
-public final class net/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder$Companion {
+public final class net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder$Companion {
 }
 
-public final class net/bramp/ffmpeg/builder/AudioCodec {
+public final class net/bramp/ffmpeg/kotlin/builder/AudioCodec {
 	public static final field AAC Ljava/lang/String;
 	public static final field AAC_LATM Ljava/lang/String;
 	public static final field AC3 Ljava/lang/String;
@@ -428,7 +428,7 @@ public final class net/bramp/ffmpeg/builder/AudioCodec {
 	public static final field IAC Ljava/lang/String;
 	public static final field ILBC Ljava/lang/String;
 	public static final field IMC Ljava/lang/String;
-	public static final field INSTANCE Lnet/bramp/ffmpeg/builder/AudioCodec;
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/builder/AudioCodec;
 	public static final field INTERPLAYACM Ljava/lang/String;
 	public static final field INTERPLAY_DPCM Ljava/lang/String;
 	public static final field MACE3 Ljava/lang/String;
@@ -529,168 +529,168 @@ public final class net/bramp/ffmpeg/builder/AudioCodec {
 	public static final field XMA2 Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/builder/FFmpegBuilder {
-	public static final field Companion Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Companion;
+public final class net/bramp/ffmpeg/kotlin/builder/FFmpegBuilder {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Companion;
 	public fun <init> ()V
-	public final fun addExtraArgs ([Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun addHlsOutput (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
-	public final fun addInput (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegFileInputBuilder;
-	public final fun addInput (Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun addInput (Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)Lnet/bramp/ffmpeg/builder/FFmpegFileInputBuilder;
-	public final fun addOutput (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegOutputBuilder;
-	public final fun addOutput (Ljava/net/URI;)Lnet/bramp/ffmpeg/builder/FFmpegOutputBuilder;
-	public final fun addOutput (Lnet/bramp/ffmpeg/builder/FFmpegOutputBuilder;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun addProgress (Ljava/net/URI;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun addStdoutOutput ()Lnet/bramp/ffmpeg/builder/FFmpegOutputBuilder;
+	public final fun addExtraArgs ([Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun addHlsOutput (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegHlsOutputBuilder;
+	public final fun addInput (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegFileInputBuilder;
+	public final fun addInput (Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegInputBuilder;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun addInput (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegFileInputBuilder;
+	public final fun addOutput (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegOutputBuilder;
+	public final fun addOutput (Ljava/net/URI;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegOutputBuilder;
+	public final fun addOutput (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegOutputBuilder;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun addProgress (Ljava/net/URI;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun addStdoutOutput ()Lnet/bramp/ffmpeg/kotlin/builder/FFmpegOutputBuilder;
 	public final fun build ()Ljava/util/List;
 	public final fun getInputProbes ()Ljava/util/Map;
 	public final fun getOverrideOutputFiles ()Z
-	public final fun overrideOutputFiles (Z)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun readAtNativeFrameRate ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setAudioFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setComplexFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setInput (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegFileInputBuilder;
-	public final fun setInput (Lnet/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setInput (Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)Lnet/bramp/ffmpeg/builder/FFmpegFileInputBuilder;
+	public final fun overrideOutputFiles (Z)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun readAtNativeFrameRate ()Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setAudioFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setComplexFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setInput (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegFileInputBuilder;
+	public final fun setInput (Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegInputBuilder;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setInput (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegFileInputBuilder;
 	public final fun setOverrideOutputFiles (Z)V
-	public final fun setPass (I)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setPassDirectory (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setPassPrefix (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setStartOffset (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setStrict (Lnet/bramp/ffmpeg/builder/Strict;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setThreads (I)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setUserAgent (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setVBR (I)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setVerbosity (Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
-	public final fun setVideoFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+	public final fun setPass (I)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setPassDirectory (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setPassPrefix (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setStartOffset (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setStrict (Lnet/bramp/ffmpeg/kotlin/builder/Strict;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setThreads (I)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setUserAgent (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setVBR (I)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setVerbosity (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
+	public final fun setVideoFilter (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
 }
 
-public final class net/bramp/ffmpeg/builder/FFmpegBuilder$Companion {
+public final class net/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Companion {
 }
 
-public final class net/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity : java/lang/Enum {
-	public static final field Debug Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
-	public static final field Error Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
-	public static final field Fatal Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
-	public static final field Info Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
-	public static final field Panic Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
-	public static final field Quiet Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
-	public static final field Verbose Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
-	public static final field Warning Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+public final class net/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity : java/lang/Enum {
+	public static final field Debug Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
+	public static final field Error Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
+	public static final field Fatal Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
+	public static final field Info Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
+	public static final field Panic Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
+	public static final field Quiet Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
+	public static final field Verbose Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
+	public static final field Warning Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun toString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
-	public static fun values ()[Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
+	public static fun values ()[Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
 }
 
-public final class net/bramp/ffmpeg/builder/FFmpegFileInputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegInputBuilder {
-	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
-	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)V
-	public synthetic fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+public final class net/bramp/ffmpeg/kotlin/builder/FFmpegFileInputBuilder : net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegInputBuilder {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/lang/String;)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;)V
+	public synthetic fun getThis ()Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 }
 
-public final class net/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder {
+public final class net/bramp/ffmpeg/kotlin/builder/FFmpegHlsOutputBuilder : net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder {
 	public field hlsBaseUrl Ljava/lang/String;
-	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Ljava/lang/String;)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Ljava/lang/String;)V
 	public final fun getHlsInitTime ()Ljava/lang/Long;
 	public final fun getHlsListSize ()Ljava/lang/Integer;
 	public final fun getHlsSegmentFilename ()Ljava/lang/String;
 	public final fun getHlsTime ()Ljava/lang/Long;
-	public synthetic fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public synthetic fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
-	public fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
-	public final fun setHlsBaseUrl (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
-	public final fun setHlsInitTime (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public synthetic fun getThis ()Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public synthetic fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
+	public fun setFormat (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegHlsOutputBuilder;
+	public final fun setHlsBaseUrl (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegHlsOutputBuilder;
+	public final fun setHlsInitTime (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegHlsOutputBuilder;
 	public final fun setHlsInitTime (Ljava/lang/Long;)V
-	public final fun setHlsListSize (I)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public final fun setHlsListSize (I)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegHlsOutputBuilder;
 	public final fun setHlsListSize (Ljava/lang/Integer;)V
-	public final fun setHlsSegmentFileName (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public final fun setHlsSegmentFileName (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegHlsOutputBuilder;
 	public final fun setHlsSegmentFilename (Ljava/lang/String;)V
-	public final fun setHlsTime (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;
+	public final fun setHlsTime (JLjava/util/concurrent/TimeUnit;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegHlsOutputBuilder;
 	public final fun setHlsTime (Ljava/lang/Long;)V
 }
 
-public final class net/bramp/ffmpeg/builder/FFmpegOutputBuilder : net/bramp/ffmpeg/builder/AbstractFFmpegOutputBuilder {
+public final class net/bramp/ffmpeg/kotlin/builder/FFmpegOutputBuilder : net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegOutputBuilder {
 	public fun <init> ()V
-	public synthetic fun getThis ()Lnet/bramp/ffmpeg/builder/AbstractFFmpegStreamBuilder;
+	public synthetic fun getThis ()Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 }
 
-public final class net/bramp/ffmpeg/builder/FFprobeBuilder {
+public final class net/bramp/ffmpeg/kotlin/builder/FFprobeBuilder {
 	public fun <init> ()V
-	public final fun addExtraArgs ([Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+	public final fun addExtraArgs ([Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;
 	public final fun build ()Ljava/util/List;
-	public final fun setInput (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
-	public final fun setShowChapters (Z)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
-	public final fun setShowFormat (Z)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
-	public final fun setShowFrames (Z)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
-	public final fun setShowPackets (Z)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
-	public final fun setShowStreams (Z)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
-	public final fun setUserAgent (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+	public final fun setInput (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;
+	public final fun setShowChapters (Z)Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;
+	public final fun setShowFormat (Z)Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;
+	public final fun setShowFrames (Z)Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;
+	public final fun setShowPackets (Z)Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;
+	public final fun setShowStreams (Z)Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;
+	public final fun setUserAgent (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;
 }
 
-public final class net/bramp/ffmpeg/builder/MetadataSpecifier {
-	public static final field Companion Lnet/bramp/ffmpeg/builder/MetadataSpecifier$Companion;
+public final class net/bramp/ffmpeg/kotlin/builder/MetadataSpecifier {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/builder/MetadataSpecifier$Companion;
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/builder/StreamSpecifier;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getSpec ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/builder/MetadataSpecifier$Companion {
-	public final fun chapter (I)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
+public final class net/bramp/ffmpeg/kotlin/builder/MetadataSpecifier$Companion {
+	public final fun chapter (I)Lnet/bramp/ffmpeg/kotlin/builder/MetadataSpecifier;
 	public final fun checkValidKey (Ljava/lang/String;)Ljava/lang/String;
-	public final fun global ()Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
-	public final fun program (I)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
-	public final fun stream (I)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
-	public final fun stream (Lnet/bramp/ffmpeg/builder/StreamSpecifier;)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
-	public final fun stream (Lnet/bramp/ffmpeg/builder/StreamSpecifierType;)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
-	public final fun stream (Lnet/bramp/ffmpeg/builder/StreamSpecifierType;I)Lnet/bramp/ffmpeg/builder/MetadataSpecifier;
+	public final fun global ()Lnet/bramp/ffmpeg/kotlin/builder/MetadataSpecifier;
+	public final fun program (I)Lnet/bramp/ffmpeg/kotlin/builder/MetadataSpecifier;
+	public final fun stream (I)Lnet/bramp/ffmpeg/kotlin/builder/MetadataSpecifier;
+	public final fun stream (Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;)Lnet/bramp/ffmpeg/kotlin/builder/MetadataSpecifier;
+	public final fun stream (Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;)Lnet/bramp/ffmpeg/kotlin/builder/MetadataSpecifier;
+	public final fun stream (Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;I)Lnet/bramp/ffmpeg/kotlin/builder/MetadataSpecifier;
 }
 
-public final class net/bramp/ffmpeg/builder/StreamSpecifier {
-	public static final field Companion Lnet/bramp/ffmpeg/builder/StreamSpecifier$Companion;
+public final class net/bramp/ffmpeg/kotlin/builder/StreamSpecifier {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier$Companion;
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun spec ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/builder/StreamSpecifier$Companion {
-	public final fun id (I)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
-	public final fun program (I)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
-	public final fun program (II)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
-	public final fun stream (I)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
-	public final fun stream (Lnet/bramp/ffmpeg/builder/StreamSpecifierType;)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
-	public final fun stream (Lnet/bramp/ffmpeg/builder/StreamSpecifierType;I)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
-	public final fun tag (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
-	public final fun tag (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/StreamSpecifier;
-	public final fun usable ()Lnet/bramp/ffmpeg/builder/StreamSpecifier;
+public final class net/bramp/ffmpeg/kotlin/builder/StreamSpecifier$Companion {
+	public final fun id (I)Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;
+	public final fun program (I)Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;
+	public final fun program (II)Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;
+	public final fun stream (I)Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;
+	public final fun stream (Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;)Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;
+	public final fun stream (Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;I)Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;
+	public final fun tag (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;
+	public final fun tag (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;
+	public final fun usable ()Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifier;
 }
 
-public final class net/bramp/ffmpeg/builder/StreamSpecifierType : java/lang/Enum {
-	public static final field Attachment Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
-	public static final field Audio Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
-	public static final field Data Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
-	public static final field PureVideo Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
-	public static final field Subtitle Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
-	public static final field Video Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
+public final class net/bramp/ffmpeg/kotlin/builder/StreamSpecifierType : java/lang/Enum {
+	public static final field Attachment Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;
+	public static final field Audio Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;
+	public static final field Data Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;
+	public static final field PureVideo Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;
+	public static final field Subtitle Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;
+	public static final field Video Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun toString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
-	public static fun values ()[Lnet/bramp/ffmpeg/builder/StreamSpecifierType;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;
+	public static fun values ()[Lnet/bramp/ffmpeg/kotlin/builder/StreamSpecifierType;
 }
 
-public final class net/bramp/ffmpeg/builder/Strict : java/lang/Enum {
-	public static final field Experimental Lnet/bramp/ffmpeg/builder/Strict;
-	public static final field Normal Lnet/bramp/ffmpeg/builder/Strict;
-	public static final field Strict Lnet/bramp/ffmpeg/builder/Strict;
-	public static final field Unofficial Lnet/bramp/ffmpeg/builder/Strict;
-	public static final field Very Lnet/bramp/ffmpeg/builder/Strict;
+public final class net/bramp/ffmpeg/kotlin/builder/Strict : java/lang/Enum {
+	public static final field Experimental Lnet/bramp/ffmpeg/kotlin/builder/Strict;
+	public static final field Normal Lnet/bramp/ffmpeg/kotlin/builder/Strict;
+	public static final field Strict Lnet/bramp/ffmpeg/kotlin/builder/Strict;
+	public static final field Unofficial Lnet/bramp/ffmpeg/kotlin/builder/Strict;
+	public static final field Very Lnet/bramp/ffmpeg/kotlin/builder/Strict;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun toString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/builder/Strict;
-	public static fun values ()[Lnet/bramp/ffmpeg/builder/Strict;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/Strict;
+	public static fun values ()[Lnet/bramp/ffmpeg/kotlin/builder/Strict;
 }
 
-public final class net/bramp/ffmpeg/builder/VideoCodec {
+public final class net/bramp/ffmpeg/kotlin/builder/VideoCodec {
 	public static final field A64_MULTI Ljava/lang/String;
 	public static final field A64_MULTI5 Ljava/lang/String;
 	public static final field AASC Ljava/lang/String;
@@ -791,7 +791,7 @@ public final class net/bramp/ffmpeg/builder/VideoCodec {
 	public static final field INDEO3 Ljava/lang/String;
 	public static final field INDEO4 Ljava/lang/String;
 	public static final field INDEO5 Ljava/lang/String;
-	public static final field INSTANCE Lnet/bramp/ffmpeg/builder/VideoCodec;
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/builder/VideoCodec;
 	public static final field INTERPLAYVIDEO Ljava/lang/String;
 	public static final field IPU Ljava/lang/String;
 	public static final field JPEG2000 Ljava/lang/String;
@@ -968,19 +968,19 @@ public final class net/bramp/ffmpeg/builder/VideoCodec {
 	public static final field ZMBV Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/dsl/ExtensionsKt {
+public final class net/bramp/ffmpeg/kotlin/dsl/ExtensionsKt {
 	public static final fun buildFFmpegCommand (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
 	public static final fun buildFFprobeCommand (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
-	public static final fun job (Lnet/bramp/ffmpeg/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/job/FFmpegJob;
-	public static final fun job (Lnet/bramp/ffmpeg/FFmpegExecutor;Lnet/bramp/ffmpeg/progress/ProgressListener;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/job/FFmpegJob;
-	public static final fun probe (Lnet/bramp/ffmpeg/FFprobe;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
-	public static final fun run (Lnet/bramp/ffmpeg/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)V
-	public static final fun runTwoPass (Lnet/bramp/ffmpeg/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)V
-	public static final fun twoPassJob (Lnet/bramp/ffmpeg/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/job/FFmpegJob;
-	public static final fun twoPassJob (Lnet/bramp/ffmpeg/FFmpegExecutor;Lnet/bramp/ffmpeg/progress/ProgressListener;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/job/FFmpegJob;
+	public static final fun job (Lnet/bramp/ffmpeg/kotlin/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob;
+	public static final fun job (Lnet/bramp/ffmpeg/kotlin/FFmpegExecutor;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob;
+	public static final fun probe (Lnet/bramp/ffmpeg/kotlin/FFprobe;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;
+	public static final fun run (Lnet/bramp/ffmpeg/kotlin/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)V
+	public static final fun runTwoPass (Lnet/bramp/ffmpeg/kotlin/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)V
+	public static final fun twoPassJob (Lnet/bramp/ffmpeg/kotlin/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob;
+	public static final fun twoPassJob (Lnet/bramp/ffmpeg/kotlin/FFmpegExecutor;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob;
 }
 
-public final class net/bramp/ffmpeg/dsl/FFmpegDsl {
+public final class net/bramp/ffmpeg/kotlin/dsl/FFmpegDsl {
 	public fun <init> ()V
 	public final fun extraArgs ([Ljava/lang/String;)V
 	public final fun getAudioFilter ()Ljava/lang/String;
@@ -988,46 +988,46 @@ public final class net/bramp/ffmpeg/dsl/FFmpegDsl {
 	public final fun getPass ()I
 	public final fun getPassDirectory ()Ljava/lang/String;
 	public final fun getPassPrefix ()Ljava/lang/String;
-	public final fun getStrict ()Lnet/bramp/ffmpeg/builder/Strict;
+	public final fun getStrict ()Lnet/bramp/ffmpeg/kotlin/builder/Strict;
 	public final fun getThreads ()I
 	public final fun getUserAgent ()Ljava/lang/String;
-	public final fun getVerbosity ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public final fun getVerbosity ()Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;
 	public final fun getVideoFilter ()Ljava/lang/String;
 	public final fun hlsOutput (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun hlsOutput$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun hlsOutput$default (Lnet/bramp/ffmpeg/kotlin/dsl/FFmpegDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun input (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public final fun input (Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun input$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static synthetic fun input$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun input (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun input$default (Lnet/bramp/ffmpeg/kotlin/dsl/FFmpegDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun input$default (Lnet/bramp/ffmpeg/kotlin/dsl/FFmpegDsl;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun output (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun output (Ljava/net/URI;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun output$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static synthetic fun output$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Ljava/net/URI;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun output$default (Lnet/bramp/ffmpeg/kotlin/dsl/FFmpegDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun output$default (Lnet/bramp/ffmpeg/kotlin/dsl/FFmpegDsl;Ljava/net/URI;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun progress (Ljava/net/URI;)V
 	public final fun setAudioFilter (Ljava/lang/String;)V
 	public final fun setOverrideOutputFiles (Z)V
 	public final fun setPass (I)V
 	public final fun setPassDirectory (Ljava/lang/String;)V
 	public final fun setPassPrefix (Ljava/lang/String;)V
-	public final fun setStrict (Lnet/bramp/ffmpeg/builder/Strict;)V
+	public final fun setStrict (Lnet/bramp/ffmpeg/kotlin/builder/Strict;)V
 	public final fun setThreads (I)V
 	public final fun setUserAgent (Ljava/lang/String;)V
-	public final fun setVerbosity (Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;)V
+	public final fun setVerbosity (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder$Verbosity;)V
 	public final fun setVideoFilter (Ljava/lang/String;)V
 	public final fun stdoutOutput (Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun stdoutOutput$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun stdoutOutput$default (Lnet/bramp/ffmpeg/kotlin/dsl/FFmpegDsl;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun vbr (I)V
 }
 
-public final class net/bramp/ffmpeg/dsl/FFmpegDslKt {
-	public static final fun execute (Lnet/bramp/ffmpeg/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)V
-	public static final fun ffmpeg (Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+public final class net/bramp/ffmpeg/kotlin/dsl/FFmpegDslKt {
+	public static final fun execute (Lnet/bramp/ffmpeg/kotlin/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)V
+	public static final fun ffmpeg (Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
 }
 
-public abstract interface annotation class net/bramp/ffmpeg/dsl/FFmpegDslMarker : java/lang/annotation/Annotation {
+public abstract interface annotation class net/bramp/ffmpeg/kotlin/dsl/FFmpegDslMarker : java/lang/annotation/Annotation {
 }
 
-public final class net/bramp/ffmpeg/dsl/FFprobeDsl {
+public final class net/bramp/ffmpeg/kotlin/dsl/FFprobeDsl {
 	public fun <init> ()V
 	public final fun extraArgs ([Ljava/lang/String;)V
 	public final fun getInput ()Ljava/lang/String;
@@ -1046,12 +1046,12 @@ public final class net/bramp/ffmpeg/dsl/FFprobeDsl {
 	public final fun setUserAgent (Ljava/lang/String;)V
 }
 
-public final class net/bramp/ffmpeg/dsl/FFprobeDslKt {
-	public static final fun ffprobe (Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+public final class net/bramp/ffmpeg/kotlin/dsl/FFprobeDslKt {
+	public static final fun ffprobe (Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/kotlin/builder/FFprobeBuilder;
 }
 
-public final class net/bramp/ffmpeg/dsl/HlsOutputDsl {
-	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;)V
+public final class net/bramp/ffmpeg/kotlin/dsl/HlsOutputDsl {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegHlsOutputBuilder;)V
 	public final fun disableAudio ()V
 	public final fun disableVideo ()V
 	public final fun duration (JLjava/util/concurrent/TimeUnit;)V
@@ -1086,8 +1086,8 @@ public final class net/bramp/ffmpeg/dsl/HlsOutputDsl {
 	public final fun videoResolution (II)V
 }
 
-public final class net/bramp/ffmpeg/dsl/InputDsl {
-	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegFileInputBuilder;)V
+public final class net/bramp/ffmpeg/kotlin/dsl/InputDsl {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegFileInputBuilder;)V
 	public final fun duration (JLjava/util/concurrent/TimeUnit;)V
 	public final fun extraArgs ([Ljava/lang/String;)V
 	public final fun getFormat ()Ljava/lang/String;
@@ -1101,8 +1101,8 @@ public final class net/bramp/ffmpeg/dsl/InputDsl {
 	public final fun videoResolution (II)V
 }
 
-public final class net/bramp/ffmpeg/dsl/OutputDsl {
-	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegOutputBuilder;)V
+public final class net/bramp/ffmpeg/kotlin/dsl/OutputDsl {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/builder/FFmpegOutputBuilder;)V
 	public final fun disableAudio ()V
 	public final fun disableSubtitle ()V
 	public final fun disableVideo ()V
@@ -1124,7 +1124,7 @@ public final class net/bramp/ffmpeg/dsl/OutputDsl {
 	public final fun getFrames ()Ljava/lang/Integer;
 	public final fun getPreset ()Ljava/lang/String;
 	public final fun getPresetFilename ()Ljava/lang/String;
-	public final fun getStrict ()Lnet/bramp/ffmpeg/builder/Strict;
+	public final fun getStrict ()Lnet/bramp/ffmpeg/kotlin/builder/Strict;
 	public final fun getSubtitleCodec ()Ljava/lang/String;
 	public final fun getSubtitlePreset ()Ljava/lang/String;
 	public final fun getTargetSize ()J
@@ -1155,7 +1155,7 @@ public final class net/bramp/ffmpeg/dsl/OutputDsl {
 	public final fun setFrames (Ljava/lang/Integer;)V
 	public final fun setPreset (Ljava/lang/String;)V
 	public final fun setPresetFilename (Ljava/lang/String;)V
-	public final fun setStrict (Lnet/bramp/ffmpeg/builder/Strict;)V
+	public final fun setStrict (Lnet/bramp/ffmpeg/kotlin/builder/Strict;)V
 	public final fun setSubtitleCodec (Ljava/lang/String;)V
 	public final fun setSubtitlePreset (Ljava/lang/String;)V
 	public final fun setTargetSize (J)V
@@ -1176,30 +1176,30 @@ public final class net/bramp/ffmpeg/dsl/OutputDsl {
 	public final fun videoResolution (Ljava/lang/String;)V
 }
 
-public abstract interface class net/bramp/ffmpeg/info/ChannelLayout {
+public abstract interface class net/bramp/ffmpeg/kotlin/info/ChannelLayout {
 	public abstract fun getName ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/info/Codec {
-	public static final field Companion Lnet/bramp/ffmpeg/info/Codec$Companion;
+public final class net/bramp/ffmpeg/kotlin/info/Codec {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/info/Codec$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZZLnet/bramp/ffmpeg/shared/CodecType;ZZZ)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZZLnet/bramp/ffmpeg/kotlin/shared/CodecType;ZZZ)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Z
 	public final fun component4 ()Z
-	public final fun component5 ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public final fun component5 ()Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 	public final fun component6 ()Z
 	public final fun component7 ()Z
 	public final fun component8 ()Z
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;ZZLnet/bramp/ffmpeg/shared/CodecType;ZZZ)Lnet/bramp/ffmpeg/info/Codec;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/info/Codec;Ljava/lang/String;Ljava/lang/String;ZZLnet/bramp/ffmpeg/shared/CodecType;ZZZILjava/lang/Object;)Lnet/bramp/ffmpeg/info/Codec;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ZZLnet/bramp/ffmpeg/kotlin/shared/CodecType;ZZZ)Lnet/bramp/ffmpeg/kotlin/info/Codec;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/info/Codec;Ljava/lang/String;Ljava/lang/String;ZZLnet/bramp/ffmpeg/kotlin/shared/CodecType;ZZZILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/info/Codec;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCanDecode ()Z
 	public final fun getCanEncode ()Z
 	public final fun getLongName ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
-	public final fun getType ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public final fun getType ()Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 	public fun hashCode ()I
 	public final fun isIntraFrameOnly ()Z
 	public final fun isLosslessCompressionSupported ()Z
@@ -1207,25 +1207,25 @@ public final class net/bramp/ffmpeg/info/Codec {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/info/Codec$Companion {
+public final class net/bramp/ffmpeg/kotlin/info/Codec$Companion {
 }
 
-public final class net/bramp/ffmpeg/info/Filter {
-	public fun <init> (ZZZLjava/lang/String;Lnet/bramp/ffmpeg/info/FilterPattern;Lnet/bramp/ffmpeg/info/FilterPattern;Ljava/lang/String;)V
+public final class net/bramp/ffmpeg/kotlin/info/Filter {
+	public fun <init> (ZZZLjava/lang/String;Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;Ljava/lang/String;)V
 	public final fun component1 ()Z
 	public final fun component2 ()Z
 	public final fun component3 ()Z
 	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Lnet/bramp/ffmpeg/info/FilterPattern;
-	public final fun component6 ()Lnet/bramp/ffmpeg/info/FilterPattern;
+	public final fun component5 ()Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;
+	public final fun component6 ()Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;
 	public final fun component7 ()Ljava/lang/String;
-	public final fun copy (ZZZLjava/lang/String;Lnet/bramp/ffmpeg/info/FilterPattern;Lnet/bramp/ffmpeg/info/FilterPattern;Ljava/lang/String;)Lnet/bramp/ffmpeg/info/Filter;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/info/Filter;ZZZLjava/lang/String;Lnet/bramp/ffmpeg/info/FilterPattern;Lnet/bramp/ffmpeg/info/FilterPattern;Ljava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/info/Filter;
+	public final fun copy (ZZZLjava/lang/String;Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/info/Filter;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/info/Filter;ZZZLjava/lang/String;Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;Ljava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/info/Filter;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDescription ()Ljava/lang/String;
-	public final fun getInputPattern ()Lnet/bramp/ffmpeg/info/FilterPattern;
+	public final fun getInputPattern ()Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;
 	public final fun getName ()Ljava/lang/String;
-	public final fun getOutputPattern ()Lnet/bramp/ffmpeg/info/FilterPattern;
+	public final fun getOutputPattern ()Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;
 	public fun hashCode ()I
 	public final fun isCommandSupport ()Z
 	public final fun isSliceThreading ()Z
@@ -1233,15 +1233,15 @@ public final class net/bramp/ffmpeg/info/Filter {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/info/FilterPattern {
-	public static final field Companion Lnet/bramp/ffmpeg/info/FilterPattern$Companion;
+public final class net/bramp/ffmpeg/kotlin/info/FilterPattern {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/info/FilterPattern$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> (ZZLjava/util/List;)V
 	public final fun component1 ()Z
 	public final fun component2 ()Z
 	public final fun component3 ()Ljava/util/List;
-	public final fun copy (ZZLjava/util/List;)Lnet/bramp/ffmpeg/info/FilterPattern;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/info/FilterPattern;ZZLjava/util/List;ILjava/lang/Object;)Lnet/bramp/ffmpeg/info/FilterPattern;
+	public final fun copy (ZZLjava/util/List;)Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;ZZLjava/util/List;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/info/FilterPattern;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getStreams ()Ljava/util/List;
 	public fun hashCode ()I
@@ -1250,19 +1250,19 @@ public final class net/bramp/ffmpeg/info/FilterPattern {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/info/FilterPattern$Companion {
+public final class net/bramp/ffmpeg/kotlin/info/FilterPattern$Companion {
 }
 
-public final class net/bramp/ffmpeg/info/Format {
-	public static final field Companion Lnet/bramp/ffmpeg/info/Format$Companion;
+public final class net/bramp/ffmpeg/kotlin/info/Format {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/info/Format$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZZ)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Z
 	public final fun component4 ()Z
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;ZZ)Lnet/bramp/ffmpeg/info/Format;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/info/Format;Ljava/lang/String;Ljava/lang/String;ZZILjava/lang/Object;)Lnet/bramp/ffmpeg/info/Format;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ZZ)Lnet/bramp/ffmpeg/kotlin/info/Format;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/info/Format;Ljava/lang/String;Ljava/lang/String;ZZILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/info/Format;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCanDemux ()Z
 	public final fun getCanMux ()Z
@@ -1272,15 +1272,15 @@ public final class net/bramp/ffmpeg/info/Format {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/info/Format$Companion {
+public final class net/bramp/ffmpeg/kotlin/info/Format$Companion {
 }
 
-public final class net/bramp/ffmpeg/info/IndividualChannel : net/bramp/ffmpeg/info/ChannelLayout {
+public final class net/bramp/ffmpeg/kotlin/info/IndividualChannel : net/bramp/ffmpeg/kotlin/info/ChannelLayout {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/info/IndividualChannel;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/info/IndividualChannel;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/info/IndividualChannel;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/info/IndividualChannel;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/info/IndividualChannel;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/info/IndividualChannel;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDescription ()Ljava/lang/String;
 	public fun getName ()Ljava/lang/String;
@@ -1288,12 +1288,12 @@ public final class net/bramp/ffmpeg/info/IndividualChannel : net/bramp/ffmpeg/in
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/info/InfoParser {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/info/InfoParser;
+public final class net/bramp/ffmpeg/kotlin/info/InfoParser {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/info/InfoParser;
 	public final fun parseLayouts (Ljava/io/BufferedReader;)Ljava/util/List;
 }
 
-public final class net/bramp/ffmpeg/info/PixelFormat {
+public final class net/bramp/ffmpeg/kotlin/info/PixelFormat {
 	public fun <init> (Ljava/lang/String;IILjava/lang/String;)V
 	public fun <init> (Ljava/lang/String;IIZZZZZ)V
 	public final fun component1 ()Ljava/lang/String;
@@ -1304,8 +1304,8 @@ public final class net/bramp/ffmpeg/info/PixelFormat {
 	public final fun component6 ()Z
 	public final fun component7 ()Z
 	public final fun component8 ()Z
-	public final fun copy (Ljava/lang/String;IIZZZZZ)Lnet/bramp/ffmpeg/info/PixelFormat;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/info/PixelFormat;Ljava/lang/String;IIZZZZZILjava/lang/Object;)Lnet/bramp/ffmpeg/info/PixelFormat;
+	public final fun copy (Ljava/lang/String;IIZZZZZ)Lnet/bramp/ffmpeg/kotlin/info/PixelFormat;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/info/PixelFormat;Ljava/lang/String;IIZZZZZILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/info/PixelFormat;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBitsPerPixel ()I
 	public final fun getCanDecode ()Z
@@ -1319,12 +1319,12 @@ public final class net/bramp/ffmpeg/info/PixelFormat {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/info/StandardChannelLayout : net/bramp/ffmpeg/info/ChannelLayout {
+public final class net/bramp/ffmpeg/kotlin/info/StandardChannelLayout : net/bramp/ffmpeg/kotlin/info/ChannelLayout {
 	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/util/List;
-	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lnet/bramp/ffmpeg/info/StandardChannelLayout;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/info/StandardChannelLayout;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lnet/bramp/ffmpeg/info/StandardChannelLayout;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lnet/bramp/ffmpeg/kotlin/info/StandardChannelLayout;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/info/StandardChannelLayout;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/info/StandardChannelLayout;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDecomposition ()Ljava/util/List;
 	public fun getName ()Ljava/lang/String;
@@ -1332,7 +1332,7 @@ public final class net/bramp/ffmpeg/info/StandardChannelLayout : net/bramp/ffmpe
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/io/CRC32InputStream : java/io/FilterInputStream {
+public final class net/bramp/ffmpeg/kotlin/io/CRC32InputStream : java/io/FilterInputStream {
 	public fun <init> (Ljava/io/InputStream;)V
 	public final fun getValue ()J
 	public fun mark (I)Ljava/lang/Void;
@@ -1347,8 +1347,8 @@ public final class net/bramp/ffmpeg/io/CRC32InputStream : java/io/FilterInputStr
 	public fun skip (J)J
 }
 
-public final class net/bramp/ffmpeg/io/LoggingFilterReader : java/io/FilterReader {
-	public static final field Companion Lnet/bramp/ffmpeg/io/LoggingFilterReader$Companion;
+public final class net/bramp/ffmpeg/kotlin/io/LoggingFilterReader : java/io/FilterReader {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/io/LoggingFilterReader$Companion;
 	public static final field LOG_CHAR C
 	public fun <init> (Ljava/io/Reader;Lorg/slf4j/Logger;)V
 	public final fun getBuffer ()Ljava/lang/StringBuilder;
@@ -1357,48 +1357,48 @@ public final class net/bramp/ffmpeg/io/LoggingFilterReader : java/io/FilterReade
 	public fun read ([CII)I
 }
 
-public final class net/bramp/ffmpeg/io/LoggingFilterReader$Companion {
+public final class net/bramp/ffmpeg/kotlin/io/LoggingFilterReader$Companion {
 }
 
-public final class net/bramp/ffmpeg/io/ProcessUtils {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/io/ProcessUtils;
+public final class net/bramp/ffmpeg/kotlin/io/ProcessUtils {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/io/ProcessUtils;
 	public final fun waitForWithTimeout (Ljava/lang/Process;JLjava/util/concurrent/TimeUnit;)I
 }
 
-public abstract class net/bramp/ffmpeg/job/FFmpegJob : java/lang/Runnable {
-	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
-	public final fun getFfmpeg ()Lnet/bramp/ffmpeg/FFmpeg;
-	public final fun getListener ()Lnet/bramp/ffmpeg/progress/ProgressListener;
-	public final fun getState ()Lnet/bramp/ffmpeg/job/FFmpegJob$State;
-	public final fun setState (Lnet/bramp/ffmpeg/job/FFmpegJob$State;)V
+public abstract class net/bramp/ffmpeg/kotlin/job/FFmpegJob : java/lang/Runnable {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/FFmpeg;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)V
+	public final fun getFfmpeg ()Lnet/bramp/ffmpeg/kotlin/FFmpeg;
+	public final fun getListener ()Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;
+	public final fun getState ()Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob$State;
+	public final fun setState (Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob$State;)V
 }
 
-public final class net/bramp/ffmpeg/job/FFmpegJob$State : java/lang/Enum {
-	public static final field Failed Lnet/bramp/ffmpeg/job/FFmpegJob$State;
-	public static final field Finished Lnet/bramp/ffmpeg/job/FFmpegJob$State;
-	public static final field Running Lnet/bramp/ffmpeg/job/FFmpegJob$State;
-	public static final field Waiting Lnet/bramp/ffmpeg/job/FFmpegJob$State;
+public final class net/bramp/ffmpeg/kotlin/job/FFmpegJob$State : java/lang/Enum {
+	public static final field Failed Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob$State;
+	public static final field Finished Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob$State;
+	public static final field Running Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob$State;
+	public static final field Waiting Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob$State;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/job/FFmpegJob$State;
-	public static fun values ()[Lnet/bramp/ffmpeg/job/FFmpegJob$State;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob$State;
+	public static fun values ()[Lnet/bramp/ffmpeg/kotlin/job/FFmpegJob$State;
 }
 
-public final class net/bramp/ffmpeg/job/SinglePassFFmpegJob : net/bramp/ffmpeg/job/FFmpegJob {
-	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
-	public synthetic fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getBuilder ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+public final class net/bramp/ffmpeg/kotlin/job/SinglePassFFmpegJob : net/bramp/ffmpeg/kotlin/job/FFmpegJob {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/FFmpeg;Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)V
+	public synthetic fun <init> (Lnet/bramp/ffmpeg/kotlin/FFmpeg;Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getBuilder ()Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
 	public fun run ()V
 }
 
-public final class net/bramp/ffmpeg/job/TwoPassFFmpegJob : net/bramp/ffmpeg/job/FFmpegJob {
-	public fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;)V
-	public synthetic fun <init> (Lnet/bramp/ffmpeg/FFmpeg;Lnet/bramp/ffmpeg/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/progress/ProgressListener;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getBuilder ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+public final class net/bramp/ffmpeg/kotlin/job/TwoPassFFmpegJob : net/bramp/ffmpeg/kotlin/job/FFmpegJob {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/FFmpeg;Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)V
+	public synthetic fun <init> (Lnet/bramp/ffmpeg/kotlin/FFmpeg;Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getBuilder ()Lnet/bramp/ffmpeg/kotlin/builder/FFmpegBuilder;
 	public fun run ()V
 }
 
-public final class net/bramp/ffmpeg/nut/Frame {
-	public static final field Companion Lnet/bramp/ffmpeg/nut/Frame$Companion;
+public final class net/bramp/ffmpeg/kotlin/nut/Frame {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/nut/Frame$Companion;
 	public static final field FLAG_CHECKSUM J
 	public static final field FLAG_CODED J
 	public static final field FLAG_CODED_PTS J
@@ -1412,28 +1412,28 @@ public final class net/bramp/ffmpeg/nut/Frame {
 	public static final field FLAG_SM_DATA J
 	public static final field FLAG_STREAM_ID J
 	public field data [B
-	public field stream Lnet/bramp/ffmpeg/nut/Stream;
+	public field stream Lnet/bramp/ffmpeg/kotlin/nut/Stream;
 	public fun <init> ()V
 	public final fun getData ()[B
 	public final fun getFlags ()J
 	public final fun getMetaData ()Ljava/util/Map;
 	public final fun getPts ()J
 	public final fun getSideData ()Ljava/util/Map;
-	public final fun getStream ()Lnet/bramp/ffmpeg/nut/Stream;
-	public final fun read (Lnet/bramp/ffmpeg/nut/NutReader;Lnet/bramp/ffmpeg/nut/NutDataInputStream;I)V
+	public final fun getStream ()Lnet/bramp/ffmpeg/kotlin/nut/Stream;
+	public final fun read (Lnet/bramp/ffmpeg/kotlin/nut/NutReader;Lnet/bramp/ffmpeg/kotlin/nut/NutDataInputStream;I)V
 	public final fun setData ([B)V
 	public final fun setFlags (J)V
 	public final fun setMetaData (Ljava/util/Map;)V
 	public final fun setPts (J)V
 	public final fun setSideData (Ljava/util/Map;)V
-	public final fun setStream (Lnet/bramp/ffmpeg/nut/Stream;)V
+	public final fun setStream (Lnet/bramp/ffmpeg/kotlin/nut/Stream;)V
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/nut/Frame$Companion {
+public final class net/bramp/ffmpeg/kotlin/nut/Frame$Companion {
 }
 
-public final class net/bramp/ffmpeg/nut/FrameCode {
+public final class net/bramp/ffmpeg/kotlin/nut/FrameCode {
 	public fun <init> ()V
 	public final fun getDataSizeLsb ()I
 	public final fun getDataSizeMul ()I
@@ -1454,17 +1454,17 @@ public final class net/bramp/ffmpeg/nut/FrameCode {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/nut/IndexPacket {
+public final class net/bramp/ffmpeg/kotlin/nut/IndexPacket {
 	public fun <init> ()V
 }
 
-public final class net/bramp/ffmpeg/nut/InfoPacket {
+public final class net/bramp/ffmpeg/kotlin/nut/InfoPacket {
 	public fun <init> ()V
 }
 
-public final class net/bramp/ffmpeg/nut/MainHeaderPacket : net/bramp/ffmpeg/nut/Packet {
+public final class net/bramp/ffmpeg/kotlin/nut/MainHeaderPacket : net/bramp/ffmpeg/kotlin/nut/Packet {
 	public static final field BROADCAST_MODE I
-	public static final field Companion Lnet/bramp/ffmpeg/nut/MainHeaderPacket$Companion;
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/nut/MainHeaderPacket$Companion;
 	public field timeBase [Lorg/apache/commons/lang3/math/Fraction;
 	public fun <init> ()V
 	public final fun getElision ()Ljava/util/List;
@@ -1484,13 +1484,13 @@ public final class net/bramp/ffmpeg/nut/MainHeaderPacket : net/bramp/ffmpeg/nut/
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/nut/MainHeaderPacket$Companion {
+public final class net/bramp/ffmpeg/kotlin/nut/MainHeaderPacket$Companion {
 }
 
-public final class net/bramp/ffmpeg/nut/NutDataInputStream : java/io/DataInput {
+public final class net/bramp/ffmpeg/kotlin/nut/NutDataInputStream : java/io/DataInput {
 	public fun <init> (Ljava/io/InputStream;)V
 	public final fun getCRC ()J
-	public final fun getCrc ()Lnet/bramp/ffmpeg/io/CRC32InputStream;
+	public final fun getCrc ()Lnet/bramp/ffmpeg/kotlin/io/CRC32InputStream;
 	public final fun getDataInputStream ()Ljava/io/DataInputStream;
 	public final fun getEndCrcRange ()J
 	public final fun getStartCrcRange ()J
@@ -1520,76 +1520,76 @@ public final class net/bramp/ffmpeg/nut/NutDataInputStream : java/io/DataInput {
 	public fun skipBytes (I)I
 }
 
-public final class net/bramp/ffmpeg/nut/NutReader {
-	public static final field Companion Lnet/bramp/ffmpeg/nut/NutReader$Companion;
-	public field header Lnet/bramp/ffmpeg/nut/MainHeaderPacket;
-	public fun <init> (Ljava/io/InputStream;Lnet/bramp/ffmpeg/nut/NutReaderListener;)V
-	public final fun getHeader ()Lnet/bramp/ffmpeg/nut/MainHeaderPacket;
+public final class net/bramp/ffmpeg/kotlin/nut/NutReader {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/nut/NutReader$Companion;
+	public field header Lnet/bramp/ffmpeg/kotlin/nut/MainHeaderPacket;
+	public fun <init> (Ljava/io/InputStream;Lnet/bramp/ffmpeg/kotlin/nut/NutReaderListener;)V
+	public final fun getHeader ()Lnet/bramp/ffmpeg/kotlin/nut/MainHeaderPacket;
 	public final fun getStreams ()Ljava/util/List;
 	public final fun read ()V
-	public final fun setHeader (Lnet/bramp/ffmpeg/nut/MainHeaderPacket;)V
+	public final fun setHeader (Lnet/bramp/ffmpeg/kotlin/nut/MainHeaderPacket;)V
 }
 
-public final class net/bramp/ffmpeg/nut/NutReader$Companion {
+public final class net/bramp/ffmpeg/kotlin/nut/NutReader$Companion {
 	public final fun getHEADER ()[B
 	public final fun isKnownStartcode (J)Z
 }
 
-public abstract interface class net/bramp/ffmpeg/nut/NutReaderListener {
-	public abstract fun frame (Lnet/bramp/ffmpeg/nut/Frame;)V
-	public abstract fun stream (Lnet/bramp/ffmpeg/nut/Stream;)V
+public abstract interface class net/bramp/ffmpeg/kotlin/nut/NutReaderListener {
+	public abstract fun frame (Lnet/bramp/ffmpeg/kotlin/nut/Frame;)V
+	public abstract fun stream (Lnet/bramp/ffmpeg/kotlin/nut/Stream;)V
 }
 
-public class net/bramp/ffmpeg/nut/Packet {
-	public static final field Companion Lnet/bramp/ffmpeg/nut/Packet$Companion;
+public class net/bramp/ffmpeg/kotlin/nut/Packet {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/nut/Packet$Companion;
 	public fun <init> ()V
-	public final fun getFooter ()Lnet/bramp/ffmpeg/nut/PacketFooter;
-	public final fun getHeader ()Lnet/bramp/ffmpeg/nut/PacketHeader;
-	public final fun read (Lnet/bramp/ffmpeg/nut/NutDataInputStream;J)V
-	protected fun readBody (Lnet/bramp/ffmpeg/nut/NutDataInputStream;)V
-	public final fun seekToPacketFooter (Lnet/bramp/ffmpeg/nut/NutDataInputStream;)V
+	public final fun getFooter ()Lnet/bramp/ffmpeg/kotlin/nut/PacketFooter;
+	public final fun getHeader ()Lnet/bramp/ffmpeg/kotlin/nut/PacketHeader;
+	public final fun read (Lnet/bramp/ffmpeg/kotlin/nut/NutDataInputStream;J)V
+	protected fun readBody (Lnet/bramp/ffmpeg/kotlin/nut/NutDataInputStream;)V
+	public final fun seekToPacketFooter (Lnet/bramp/ffmpeg/kotlin/nut/NutDataInputStream;)V
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/nut/Packet$Companion {
+public final class net/bramp/ffmpeg/kotlin/nut/Packet$Companion {
 	public final fun getLOG ()Lorg/slf4j/Logger;
 }
 
-public final class net/bramp/ffmpeg/nut/Packet$StartCode : java/lang/Enum {
-	public static final field Companion Lnet/bramp/ffmpeg/nut/Packet$StartCode$Companion;
-	public static final field Index Lnet/bramp/ffmpeg/nut/Packet$StartCode;
-	public static final field Info Lnet/bramp/ffmpeg/nut/Packet$StartCode;
-	public static final field Main Lnet/bramp/ffmpeg/nut/Packet$StartCode;
-	public static final field Stream Lnet/bramp/ffmpeg/nut/Packet$StartCode;
-	public static final field SyncPoint Lnet/bramp/ffmpeg/nut/Packet$StartCode;
+public final class net/bramp/ffmpeg/kotlin/nut/Packet$StartCode : java/lang/Enum {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/nut/Packet$StartCode$Companion;
+	public static final field Index Lnet/bramp/ffmpeg/kotlin/nut/Packet$StartCode;
+	public static final field Info Lnet/bramp/ffmpeg/kotlin/nut/Packet$StartCode;
+	public static final field Main Lnet/bramp/ffmpeg/kotlin/nut/Packet$StartCode;
+	public static final field Stream Lnet/bramp/ffmpeg/kotlin/nut/Packet$StartCode;
+	public static final field SyncPoint Lnet/bramp/ffmpeg/kotlin/nut/Packet$StartCode;
 	public final fun equalsCode (J)Z
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun value ()J
-	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/nut/Packet$StartCode;
-	public static fun values ()[Lnet/bramp/ffmpeg/nut/Packet$StartCode;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/nut/Packet$StartCode;
+	public static fun values ()[Lnet/bramp/ffmpeg/kotlin/nut/Packet$StartCode;
 }
 
-public final class net/bramp/ffmpeg/nut/Packet$StartCode$Companion {
+public final class net/bramp/ffmpeg/kotlin/nut/Packet$StartCode$Companion {
 	public final fun isPossibleStartcode (J)Z
-	public final fun of (J)Lnet/bramp/ffmpeg/nut/Packet$StartCode;
+	public final fun of (J)Lnet/bramp/ffmpeg/kotlin/nut/Packet$StartCode;
 	public final fun toString (J)Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/nut/PacketFooter {
+public final class net/bramp/ffmpeg/kotlin/nut/PacketFooter {
 	public fun <init> ()V
 	public final fun getChecksum ()I
-	public final fun read (Lnet/bramp/ffmpeg/nut/NutDataInputStream;)V
+	public final fun read (Lnet/bramp/ffmpeg/kotlin/nut/NutDataInputStream;)V
 	public final fun setChecksum (I)V
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/nut/PacketHeader {
+public final class net/bramp/ffmpeg/kotlin/nut/PacketHeader {
 	public fun <init> ()V
 	public final fun getChecksum ()I
 	public final fun getEnd ()J
 	public final fun getForwardPtr ()J
 	public final fun getStartcode ()J
-	public final fun read (Lnet/bramp/ffmpeg/nut/NutDataInputStream;J)V
+	public final fun read (Lnet/bramp/ffmpeg/kotlin/nut/NutDataInputStream;J)V
 	public final fun setChecksum (I)V
 	public final fun setEnd (J)V
 	public final fun setForwardPtr (J)V
@@ -1597,24 +1597,24 @@ public final class net/bramp/ffmpeg/nut/PacketHeader {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/nut/RawHandler {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/nut/RawHandler;
-	public final fun streamToAudioFormat (Lnet/bramp/ffmpeg/nut/StreamHeaderPacket;)Ljavax/sound/sampled/AudioFormat;
-	public final fun toAudioInputStream (Lnet/bramp/ffmpeg/nut/Frame;)Ljavax/sound/sampled/AudioInputStream;
-	public final fun toBufferedImage (Lnet/bramp/ffmpeg/nut/Frame;)Ljava/awt/image/BufferedImage;
+public final class net/bramp/ffmpeg/kotlin/nut/RawHandler {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/nut/RawHandler;
+	public final fun streamToAudioFormat (Lnet/bramp/ffmpeg/kotlin/nut/StreamHeaderPacket;)Ljavax/sound/sampled/AudioFormat;
+	public final fun toAudioInputStream (Lnet/bramp/ffmpeg/kotlin/nut/Frame;)Ljavax/sound/sampled/AudioInputStream;
+	public final fun toBufferedImage (Lnet/bramp/ffmpeg/kotlin/nut/Frame;)Ljava/awt/image/BufferedImage;
 }
 
-public final class net/bramp/ffmpeg/nut/Stream {
-	public fun <init> (Lnet/bramp/ffmpeg/nut/MainHeaderPacket;Lnet/bramp/ffmpeg/nut/StreamHeaderPacket;)V
-	public final fun getHeader ()Lnet/bramp/ffmpeg/nut/StreamHeaderPacket;
+public final class net/bramp/ffmpeg/kotlin/nut/Stream {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/nut/MainHeaderPacket;Lnet/bramp/ffmpeg/kotlin/nut/StreamHeaderPacket;)V
+	public final fun getHeader ()Lnet/bramp/ffmpeg/kotlin/nut/StreamHeaderPacket;
 	public final fun getLastPts ()J
 	public final fun getTimeBase ()Lorg/apache/commons/lang3/math/Fraction;
 	public final fun setLastPts (J)V
 }
 
-public final class net/bramp/ffmpeg/nut/StreamHeaderPacket : net/bramp/ffmpeg/nut/Packet {
+public final class net/bramp/ffmpeg/kotlin/nut/StreamHeaderPacket : net/bramp/ffmpeg/kotlin/nut/Packet {
 	public static final field AUDIO I
-	public static final field Companion Lnet/bramp/ffmpeg/nut/StreamHeaderPacket$Companion;
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/nut/StreamHeaderPacket$Companion;
 	public static final field SUBTITLE I
 	public static final field USER_DATA I
 	public static final field VIDEO I
@@ -1656,15 +1656,15 @@ public final class net/bramp/ffmpeg/nut/StreamHeaderPacket : net/bramp/ffmpeg/nu
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/nut/StreamHeaderPacket$Companion {
+public final class net/bramp/ffmpeg/kotlin/nut/StreamHeaderPacket$Companion {
 	public final fun fourccToString ([B)Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/nut/SyncPointPacket {
+public final class net/bramp/ffmpeg/kotlin/nut/SyncPointPacket {
 	public fun <init> ()V
 }
 
-public final class net/bramp/ffmpeg/options/AudioEncodingOptions {
+public final class net/bramp/ffmpeg/kotlin/options/AudioEncodingOptions {
 	public fun <init> (ZLjava/lang/String;IILjava/lang/String;JLjava/lang/Double;)V
 	public final fun component1 ()Z
 	public final fun component2 ()Ljava/lang/String;
@@ -1673,8 +1673,8 @@ public final class net/bramp/ffmpeg/options/AudioEncodingOptions {
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()J
 	public final fun component7 ()Ljava/lang/Double;
-	public final fun copy (ZLjava/lang/String;IILjava/lang/String;JLjava/lang/Double;)Lnet/bramp/ffmpeg/options/AudioEncodingOptions;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/options/AudioEncodingOptions;ZLjava/lang/String;IILjava/lang/String;JLjava/lang/Double;ILjava/lang/Object;)Lnet/bramp/ffmpeg/options/AudioEncodingOptions;
+	public final fun copy (ZLjava/lang/String;IILjava/lang/String;JLjava/lang/Double;)Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;ZLjava/lang/String;IILjava/lang/String;JLjava/lang/Double;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBitRate ()J
 	public final fun getChannels ()I
@@ -1687,28 +1687,28 @@ public final class net/bramp/ffmpeg/options/AudioEncodingOptions {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/options/EncodingOptions {
-	public fun <init> (Lnet/bramp/ffmpeg/options/MainEncodingOptions;Lnet/bramp/ffmpeg/options/AudioEncodingOptions;Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)V
-	public final fun component1 ()Lnet/bramp/ffmpeg/options/MainEncodingOptions;
-	public final fun component2 ()Lnet/bramp/ffmpeg/options/AudioEncodingOptions;
-	public final fun component3 ()Lnet/bramp/ffmpeg/options/VideoEncodingOptions;
-	public final fun copy (Lnet/bramp/ffmpeg/options/MainEncodingOptions;Lnet/bramp/ffmpeg/options/AudioEncodingOptions;Lnet/bramp/ffmpeg/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/options/EncodingOptions;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/options/EncodingOptions;Lnet/bramp/ffmpeg/options/MainEncodingOptions;Lnet/bramp/ffmpeg/options/AudioEncodingOptions;Lnet/bramp/ffmpeg/options/VideoEncodingOptions;ILjava/lang/Object;)Lnet/bramp/ffmpeg/options/EncodingOptions;
+public final class net/bramp/ffmpeg/kotlin/options/EncodingOptions {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/options/MainEncodingOptions;Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;)V
+	public final fun component1 ()Lnet/bramp/ffmpeg/kotlin/options/MainEncodingOptions;
+	public final fun component2 ()Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;
+	public final fun component3 ()Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;
+	public final fun copy (Lnet/bramp/ffmpeg/kotlin/options/MainEncodingOptions;Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;)Lnet/bramp/ffmpeg/kotlin/options/EncodingOptions;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/options/EncodingOptions;Lnet/bramp/ffmpeg/kotlin/options/MainEncodingOptions;Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/options/EncodingOptions;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAudio ()Lnet/bramp/ffmpeg/options/AudioEncodingOptions;
-	public final fun getMain ()Lnet/bramp/ffmpeg/options/MainEncodingOptions;
-	public final fun getVideo ()Lnet/bramp/ffmpeg/options/VideoEncodingOptions;
+	public final fun getAudio ()Lnet/bramp/ffmpeg/kotlin/options/AudioEncodingOptions;
+	public final fun getMain ()Lnet/bramp/ffmpeg/kotlin/options/MainEncodingOptions;
+	public final fun getVideo ()Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/options/MainEncodingOptions {
+public final class net/bramp/ffmpeg/kotlin/options/MainEncodingOptions {
 	public fun <init> (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/Long;
 	public final fun component3 ()Ljava/lang/Long;
-	public final fun copy (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;)Lnet/bramp/ffmpeg/options/MainEncodingOptions;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/options/MainEncodingOptions;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;ILjava/lang/Object;)Lnet/bramp/ffmpeg/options/MainEncodingOptions;
+	public final fun copy (Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;)Lnet/bramp/ffmpeg/kotlin/options/MainEncodingOptions;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/options/MainEncodingOptions;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/options/MainEncodingOptions;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDuration ()Ljava/lang/Long;
 	public final fun getFormat ()Ljava/lang/String;
@@ -1717,7 +1717,7 @@ public final class net/bramp/ffmpeg/options/MainEncodingOptions {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/options/VideoEncodingOptions {
+public final class net/bramp/ffmpeg/kotlin/options/VideoEncodingOptions {
 	public fun <init> (ZLjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;IIJLjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Z
 	public final fun component2 ()Ljava/lang/String;
@@ -1728,8 +1728,8 @@ public final class net/bramp/ffmpeg/options/VideoEncodingOptions {
 	public final fun component7 ()Ljava/lang/Integer;
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()Ljava/lang/String;
-	public final fun copy (ZLjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;IIJLjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/options/VideoEncodingOptions;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/options/VideoEncodingOptions;ZLjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;IIJLjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/options/VideoEncodingOptions;
+	public final fun copy (ZLjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;IIJLjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;ZLjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;IIJLjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/options/VideoEncodingOptions;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBitRate ()J
 	public final fun getCodec ()Ljava/lang/String;
@@ -1744,78 +1744,78 @@ public final class net/bramp/ffmpeg/options/VideoEncodingOptions {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegChapter {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegChapter$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegChapter {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapter$Companion;
 	public fun <init> ()V
-	public fun <init> (JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;)V
-	public synthetic fun <init> (JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;)V
+	public synthetic fun <init> (JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()J
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()J
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()J
 	public final fun component6 ()Ljava/lang/String;
-	public final fun component7 ()Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;
-	public final fun copy (JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;)Lnet/bramp/ffmpeg/probe/FFmpegChapter;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegChapter;JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;ILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegChapter;
+	public final fun component7 ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;
+	public final fun copy (JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapter;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapter;JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapter;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEnd ()J
 	public final fun getEndTime ()Ljava/lang/String;
 	public final fun getId ()J
 	public final fun getStart ()J
 	public final fun getStartTime ()Ljava/lang/String;
-	public final fun getTags ()Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;
+	public final fun getTags ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;
 	public final fun getTimeBase ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegChapter$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegChapter$$serializer;
+public final synthetic class net/bramp/ffmpeg/kotlin/probe/FFmpegChapter$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapter$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegChapter;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapter;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegChapter;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapter;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegChapter$Companion {
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegChapter$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegChapterTag {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegChapterTag$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag$Companion;
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;Ljava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;
+	public final fun copy (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;Ljava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getTitle ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegChapterTag$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegChapterTag$$serializer;
+public final synthetic class net/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegChapterTag;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegChapterTag$Companion {
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegChapterTag$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegDisposition {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegDisposition$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegDisposition {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition$Companion;
 	public fun <init> ()V
 	public fun <init> (IIIIIIIIIIIIIIIIII)V
 	public synthetic fun <init> (IIIIIIIIIIIIIIIIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1837,8 +1837,8 @@ public final class net/bramp/ffmpeg/probe/FFmpegDisposition {
 	public final fun component7 ()I
 	public final fun component8 ()I
 	public final fun component9 ()I
-	public final fun copy (IIIIIIIIIIIIIIIIII)Lnet/bramp/ffmpeg/probe/FFmpegDisposition;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegDisposition;IIIIIIIIIIIIIIIIIIILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegDisposition;
+	public final fun copy (IIIIIIIIIIIIIIIIII)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;IIIIIIIIIIIIIIIIIIILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAttachedPic ()I
 	public final fun getCaptions ()I
@@ -1880,30 +1880,30 @@ public final class net/bramp/ffmpeg/probe/FFmpegDisposition {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegDisposition$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegDisposition$$serializer;
+public final synthetic class net/bramp/ffmpeg/kotlin/probe/FFmpegDisposition$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegDisposition;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegDisposition;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegDisposition$Companion {
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegDisposition$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegError {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegError$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegError {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError$Companion;
 	public fun <init> ()V
 	public fun <init> (ILjava/lang/String;)V
 	public synthetic fun <init> (ILjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (ILjava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegError;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegError;ILjava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegError;
+	public final fun copy (ILjava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;ILjava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getString ()Ljava/lang/String;
@@ -1911,23 +1911,23 @@ public final class net/bramp/ffmpeg/probe/FFmpegError {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegError$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegError$$serializer;
+public final synthetic class net/bramp/ffmpeg/kotlin/probe/FFmpegError$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegError;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegError;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegError$Companion {
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegError$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegFormat {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegFormat$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegFormat {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat$Companion;
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/Double;JJILjava/util/Map;)V
 	public synthetic fun <init> (Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/Double;JJILjava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1942,8 +1942,8 @@ public final class net/bramp/ffmpeg/probe/FFmpegFormat {
 	public final fun component7 ()Ljava/lang/Double;
 	public final fun component8 ()J
 	public final fun component9 ()J
-	public final fun copy (Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/Double;JJILjava/util/Map;)Lnet/bramp/ffmpeg/probe/FFmpegFormat;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/Double;JJILjava/util/Map;ILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegFormat;
+	public final fun copy (Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/Double;JJILjava/util/Map;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/lang/Double;Ljava/lang/Double;JJILjava/util/Map;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBitRate ()J
 	public final fun getDuration ()Ljava/lang/Double;
@@ -1960,26 +1960,26 @@ public final class net/bramp/ffmpeg/probe/FFmpegFormat {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegFormat$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegFormat$$serializer;
+public final synthetic class net/bramp/ffmpeg/kotlin/probe/FFmpegFormat$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegFormat;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegFormat;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegFormat$Companion {
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegFormat$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegFrame : net/bramp/ffmpeg/probe/FFmpegFrameOrPacket {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegFrame$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegFrame : net/bramp/ffmpeg/kotlin/probe/FFmpegFrameOrPacket {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrame$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;IIJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JJIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JJIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;IIJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JJIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JJIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;IIJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JJIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JJIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;IIJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JJIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JJIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ljava/lang/String;
 	public final fun component11 ()J
@@ -1991,7 +1991,7 @@ public final class net/bramp/ffmpeg/probe/FFmpegFrame : net/bramp/ffmpeg/probe/F
 	public final fun component17 ()Ljava/lang/String;
 	public final fun component18 ()Ljava/lang/String;
 	public final fun component19 ()Ljava/lang/String;
-	public final fun component2 ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public final fun component2 ()Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 	public final fun component20 ()J
 	public final fun component21 ()J
 	public final fun component22 ()I
@@ -2013,10 +2013,10 @@ public final class net/bramp/ffmpeg/probe/FFmpegFrame : net/bramp/ffmpeg/probe/F
 	public final fun component7 ()J
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()J
-	public final fun copy (Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;IIJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JJIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JJIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegFrame;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegFrame;Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;IIJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JJIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JJIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;IILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegFrame;
+	public final fun copy (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;IIJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JJIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JJIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrame;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrame;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;IIJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JLjava/lang/String;JJIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JJIIILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;IILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrame;
 	public fun equals (Ljava/lang/Object;)Z
-	public static final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegFrame;
+	public static final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrame;
 	public final fun getBestEffortTimestamp ()J
 	public final fun getBestEffortTimestampTime ()Ljava/lang/String;
 	public final fun getChannelLayout ()Ljava/lang/String;
@@ -2031,7 +2031,7 @@ public final class net/bramp/ffmpeg/probe/FFmpegFrame : net/bramp/ffmpeg/probe/F
 	public final fun getHeight ()I
 	public final fun getInterlacedFrame ()I
 	public final fun getKeyFrame ()I
-	public final fun getMediaType ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public final fun getMediaType ()Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 	public final fun getNbSamples ()I
 	public final fun getPictType ()Ljava/lang/String;
 	public final fun getPixFmt ()Ljava/lang/String;
@@ -2054,35 +2054,35 @@ public final class net/bramp/ffmpeg/probe/FFmpegFrame : net/bramp/ffmpeg/probe/F
 	public fun toString ()Ljava/lang/String;
 }
 
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegFrame$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegFrame$$serializer;
+public final synthetic class net/bramp/ffmpeg/kotlin/probe/FFmpegFrame$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrame$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegFrame;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrame;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegFrame;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrame;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegFrame$Companion {
-	public final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegFrame;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegFrame$Companion {
+	public final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrame;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public abstract interface class net/bramp/ffmpeg/probe/FFmpegFrameOrPacket {
+public abstract interface class net/bramp/ffmpeg/kotlin/probe/FFmpegFrameOrPacket {
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegPacket : net/bramp/ffmpeg/probe/FFmpegFrameOrPacket {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegPacket$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegPacket : net/bramp/ffmpeg/kotlin/probe/FFmpegFrameOrPacket {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegPacket$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;IJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;IJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;IJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;IJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ljava/lang/String;
 	public final fun component11 ()Ljava/lang/String;
 	public final fun component12 ()Ljava/lang/String;
-	public final fun component2 ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public final fun component2 ()Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 	public final fun component3 ()I
 	public final fun component4 ()J
 	public final fun component5 ()Ljava/lang/String;
@@ -2090,11 +2090,11 @@ public final class net/bramp/ffmpeg/probe/FFmpegPacket : net/bramp/ffmpeg/probe/
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()J
 	public final fun component9 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;IJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegPacket;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegPacket;Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;IJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegPacket;
+	public final fun copy (Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;IJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegPacket;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegPacket;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;IJLjava/lang/String;JLjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegPacket;
 	public fun equals (Ljava/lang/Object;)Z
-	public static final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegPacket;
-	public final fun getCodecType ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public static final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegPacket;
+	public final fun getCodecType ()Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 	public final fun getDts ()J
 	public final fun getDtsTime ()Ljava/lang/String;
 	public final fun getDuration ()J
@@ -2110,81 +2110,81 @@ public final class net/bramp/ffmpeg/probe/FFmpegPacket : net/bramp/ffmpeg/probe/
 	public fun toString ()Ljava/lang/String;
 }
 
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegPacket$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegPacket$$serializer;
+public final synthetic class net/bramp/ffmpeg/kotlin/probe/FFmpegPacket$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/probe/FFmpegPacket$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegPacket;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegPacket;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegPacket;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegPacket;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegPacket$Companion {
-	public final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegPacket;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegPacket$Companion {
+	public final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegPacket;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegProbe {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegProbe$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegProbe {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbe$Companion;
 	public fun <init> ()V
-	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;)V
-	public synthetic fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Lnet/bramp/ffmpeg/probe/FFmpegError;
-	public final fun component2 ()Lnet/bramp/ffmpeg/probe/FFmpegFormat;
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;
+	public final fun component2 ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;
 	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()Ljava/util/List;
-	public final fun copy (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;)Lnet/bramp/ffmpeg/probe/FFmpegProbe;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegProbe;Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegProbe;
+	public final fun copy (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbe;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbe;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbe;
 	public fun equals (Ljava/lang/Object;)Z
-	public static final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegProbe;
+	public static final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbe;
 	public final fun getChapters ()Ljava/util/List;
-	public final fun getError ()Lnet/bramp/ffmpeg/probe/FFmpegError;
-	public final fun getFormat ()Lnet/bramp/ffmpeg/probe/FFmpegFormat;
+	public final fun getError ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;
+	public final fun getFormat ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;
 	public final fun getStreams ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegProbe$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegProbe$$serializer;
+public final synthetic class net/bramp/ffmpeg/kotlin/probe/FFmpegProbe$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbe$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegProbe;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbe;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegProbe;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbe;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegProbe$Companion {
-	public final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/probe/FFmpegProbe;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegProbe$Companion {
+	public final fun fromJson (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbe;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegProbeResult {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegProbeResult$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult$Companion;
 	public fun <init> ()V
-	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;)V
-	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;)V
-	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;)V
-	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;)V
-	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
-	public fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
-	public synthetic fun <init> (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Lnet/bramp/ffmpeg/probe/FFmpegError;
-	public final fun component2 ()Lnet/bramp/ffmpeg/probe/FFmpegFormat;
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;
+	public final fun component2 ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;
 	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()Ljava/util/List;
 	public final fun component5 ()Ljava/util/List;
 	public final fun component6 ()Ljava/util/List;
-	public final fun copy (Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;Lnet/bramp/ffmpeg/probe/FFmpegError;Lnet/bramp/ffmpeg/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public final fun copy (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChapters ()Ljava/util/List;
-	public final fun getError ()Lnet/bramp/ffmpeg/probe/FFmpegError;
-	public final fun getFormat ()Lnet/bramp/ffmpeg/probe/FFmpegFormat;
+	public final fun getError ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegError;
+	public final fun getFormat ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFormat;
 	public final fun getFrames ()Ljava/util/List;
 	public final fun getPackets ()Ljava/util/List;
 	public final fun getStreams ()Ljava/util/List;
@@ -2193,15 +2193,15 @@ public final class net/bramp/ffmpeg/probe/FFmpegProbeResult {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegProbeResult$Companion {
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegStream {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegStream$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegStream {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$Companion;
 	public fun <init> ()V
-	public fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;Lorg/apache/commons/lang3/math/Fraction;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Integer;Ljava/lang/Integer;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;JLjava/lang/Double;JLjava/lang/Double;JJILjava/lang/String;Ljava/lang/String;IJLjava/lang/Long;Ljava/lang/Long;IILjava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegDisposition;Ljava/util/Map;Ljava/util/List;)V
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;Lorg/apache/commons/lang3/math/Fraction;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Integer;Ljava/lang/Integer;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;JLjava/lang/Double;JLjava/lang/Double;JJILjava/lang/String;Ljava/lang/String;IJLjava/lang/Long;Ljava/lang/Long;IILjava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegDisposition;Ljava/util/Map;Ljava/util/List;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;Lorg/apache/commons/lang3/math/Fraction;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Integer;Ljava/lang/Integer;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;JLjava/lang/Double;JLjava/lang/Double;JJILjava/lang/String;Ljava/lang/String;IJLjava/lang/Long;Ljava/lang/Long;IILjava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;Ljava/util/Map;Ljava/util/List;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;Lorg/apache/commons/lang3/math/Fraction;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Integer;Ljava/lang/Integer;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;JLjava/lang/Double;JLjava/lang/Double;JJILjava/lang/String;Ljava/lang/String;IJLjava/lang/Long;Ljava/lang/Long;IILjava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;Ljava/util/Map;Ljava/util/List;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun component10 ()I
 	public final fun component11 ()Ljava/lang/Integer;
@@ -2243,16 +2243,16 @@ public final class net/bramp/ffmpeg/probe/FFmpegStream {
 	public final fun component44 ()I
 	public final fun component45 ()Ljava/lang/String;
 	public final fun component46 ()Ljava/lang/String;
-	public final fun component47 ()Lnet/bramp/ffmpeg/probe/FFmpegDisposition;
+	public final fun component47 ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;
 	public final fun component48 ()Ljava/util/Map;
 	public final fun component49 ()Ljava/util/List;
-	public final fun component5 ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public final fun component5 ()Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 	public final fun component6 ()Lorg/apache/commons/lang3/math/Fraction;
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()I
-	public final fun copy (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;Lorg/apache/commons/lang3/math/Fraction;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Integer;Ljava/lang/Integer;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;JLjava/lang/Double;JLjava/lang/Double;JJILjava/lang/String;Ljava/lang/String;IJLjava/lang/Long;Ljava/lang/Long;IILjava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegDisposition;Ljava/util/Map;Ljava/util/List;)Lnet/bramp/ffmpeg/probe/FFmpegStream;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegStream;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/shared/CodecType;Lorg/apache/commons/lang3/math/Fraction;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Integer;Ljava/lang/Integer;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;JLjava/lang/Double;JLjava/lang/Double;JJILjava/lang/String;Ljava/lang/String;IJLjava/lang/Long;Ljava/lang/Long;IILjava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/probe/FFmpegDisposition;Ljava/util/Map;Ljava/util/List;IILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegStream;
+	public final fun copy (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;Lorg/apache/commons/lang3/math/Fraction;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Integer;Ljava/lang/Integer;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;JLjava/lang/Double;JLjava/lang/Double;JJILjava/lang/String;Ljava/lang/String;IJLjava/lang/Long;Ljava/lang/Long;IILjava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;Ljava/util/Map;Ljava/util/List;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;Lorg/apache/commons/lang3/math/Fraction;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Integer;Ljava/lang/Integer;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;Lorg/apache/commons/lang3/math/Fraction;JLjava/lang/Double;JLjava/lang/Double;JJILjava/lang/String;Ljava/lang/String;IJLjava/lang/Long;Ljava/lang/Long;IILjava/lang/String;Ljava/lang/String;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;Ljava/util/Map;Ljava/util/List;IILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAvgFrameRate ()Lorg/apache/commons/lang3/math/Fraction;
 	public final fun getBitRate ()J
@@ -2266,7 +2266,7 @@ public final class net/bramp/ffmpeg/probe/FFmpegStream {
 	public final fun getCodecTag ()Ljava/lang/String;
 	public final fun getCodecTagString ()Ljava/lang/String;
 	public final fun getCodecTimeBase ()Lorg/apache/commons/lang3/math/Fraction;
-	public final fun getCodecType ()Lnet/bramp/ffmpeg/shared/CodecType;
+	public final fun getCodecType ()Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 	public final fun getCodedHeight ()Ljava/lang/Integer;
 	public final fun getCodedWidth ()Ljava/lang/Integer;
 	public final fun getColorPrimaries ()Ljava/lang/String;
@@ -2274,7 +2274,7 @@ public final class net/bramp/ffmpeg/probe/FFmpegStream {
 	public final fun getColorSpace ()Ljava/lang/String;
 	public final fun getColorTransfer ()Ljava/lang/String;
 	public final fun getDisplayAspectRatio ()Ljava/lang/String;
-	public final fun getDisposition ()Lnet/bramp/ffmpeg/probe/FFmpegDisposition;
+	public final fun getDisposition ()Lnet/bramp/ffmpeg/kotlin/probe/FFmpegDisposition;
 	public final fun getDuration ()Ljava/lang/Double;
 	public final fun getDurationTs ()J
 	public final fun getFieldOrder ()Ljava/lang/String;
@@ -2307,31 +2307,31 @@ public final class net/bramp/ffmpeg/probe/FFmpegStream {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegStream$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegStream$$serializer;
+public final synthetic class net/bramp/ffmpeg/kotlin/probe/FFmpegStream$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegStream;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegStream;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegStream$Companion {
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegStream$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegStream$SideData {
-	public static final field Companion Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData$Companion;
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData$Companion;
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;I)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()I
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;I)Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Object;)Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;I)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDisplayMatrix ()Ljava/lang/String;
 	public final fun getRotation ()I
@@ -2340,42 +2340,42 @@ public final class net/bramp/ffmpeg/probe/FFmpegStream$SideData {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final synthetic class net/bramp/ffmpeg/probe/FFmpegStream$SideData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData$$serializer;
+public final synthetic class net/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData;
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;)V
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class net/bramp/ffmpeg/probe/FFmpegStream$SideData$Companion {
+public final class net/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public abstract class net/bramp/ffmpeg/progress/AbstractSocketProgressParser : net/bramp/ffmpeg/progress/ProgressParser {
-	public static final field Companion Lnet/bramp/ffmpeg/progress/AbstractSocketProgressParser$Companion;
-	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+public abstract class net/bramp/ffmpeg/kotlin/progress/AbstractSocketProgressParser : net/bramp/ffmpeg/kotlin/progress/ProgressParser {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/progress/AbstractSocketProgressParser$Companion;
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)V
 	public fun close ()V
 	public static final fun createUri (Ljava/lang/String;Ljava/net/InetAddress;I)Ljava/net/URI;
-	public final fun getParser ()Lnet/bramp/ffmpeg/progress/StreamProgressParser;
+	public final fun getParser ()Lnet/bramp/ffmpeg/kotlin/progress/StreamProgressParser;
 	protected abstract fun getRunnable (Ljava/util/concurrent/CountDownLatch;)Ljava/lang/Runnable;
 	protected abstract fun getThreadName ()Ljava/lang/String;
 	public fun start ()V
 	public fun stop ()V
 }
 
-public final class net/bramp/ffmpeg/progress/AbstractSocketProgressParser$Companion {
+public final class net/bramp/ffmpeg/kotlin/progress/AbstractSocketProgressParser$Companion {
 	public final fun createUri (Ljava/lang/String;Ljava/net/InetAddress;I)Ljava/net/URI;
 }
 
-public final class net/bramp/ffmpeg/progress/Progress {
-	public static final field Companion Lnet/bramp/ffmpeg/progress/Progress$Companion;
+public final class net/bramp/ffmpeg/kotlin/progress/Progress {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/progress/Progress$Companion;
 	public fun <init> ()V
-	public fun <init> (JLorg/apache/commons/lang3/math/Fraction;JJJJJFLnet/bramp/ffmpeg/progress/Progress$Status;)V
-	public synthetic fun <init> (JLorg/apache/commons/lang3/math/Fraction;JJJJJFLnet/bramp/ffmpeg/progress/Progress$Status;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (JLorg/apache/commons/lang3/math/Fraction;JJJJJFLnet/bramp/ffmpeg/kotlin/progress/Progress$Status;)V
+	public synthetic fun <init> (JLorg/apache/commons/lang3/math/Fraction;JJJJJFLnet/bramp/ffmpeg/kotlin/progress/Progress$Status;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()J
 	public final fun component2 ()Lorg/apache/commons/lang3/math/Fraction;
 	public final fun component3 ()J
@@ -2384,9 +2384,9 @@ public final class net/bramp/ffmpeg/progress/Progress {
 	public final fun component6 ()J
 	public final fun component7 ()J
 	public final fun component8 ()F
-	public final fun component9 ()Lnet/bramp/ffmpeg/progress/Progress$Status;
-	public final fun copy (JLorg/apache/commons/lang3/math/Fraction;JJJJJFLnet/bramp/ffmpeg/progress/Progress$Status;)Lnet/bramp/ffmpeg/progress/Progress;
-	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/progress/Progress;JLorg/apache/commons/lang3/math/Fraction;JJJJJFLnet/bramp/ffmpeg/progress/Progress$Status;ILjava/lang/Object;)Lnet/bramp/ffmpeg/progress/Progress;
+	public final fun component9 ()Lnet/bramp/ffmpeg/kotlin/progress/Progress$Status;
+	public final fun copy (JLorg/apache/commons/lang3/math/Fraction;JJJJJFLnet/bramp/ffmpeg/kotlin/progress/Progress$Status;)Lnet/bramp/ffmpeg/kotlin/progress/Progress;
+	public static synthetic fun copy$default (Lnet/bramp/ffmpeg/kotlin/progress/Progress;JLorg/apache/commons/lang3/math/Fraction;JJJJJFLnet/bramp/ffmpeg/kotlin/progress/Progress$Status;ILjava/lang/Object;)Lnet/bramp/ffmpeg/kotlin/progress/Progress;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBitrate ()J
 	public final fun getDropFrames ()J
@@ -2395,80 +2395,80 @@ public final class net/bramp/ffmpeg/progress/Progress {
 	public final fun getFrame ()J
 	public final fun getOutTimeNs ()J
 	public final fun getSpeed ()F
-	public final fun getStatus ()Lnet/bramp/ffmpeg/progress/Progress$Status;
+	public final fun getStatus ()Lnet/bramp/ffmpeg/kotlin/progress/Progress$Status;
 	public final fun getTotalSize ()J
 	public fun hashCode ()I
 	public final fun isEnd ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class net/bramp/ffmpeg/progress/Progress$Companion {
+public final class net/bramp/ffmpeg/kotlin/progress/Progress$Companion {
 	public final fun getLOG ()Lorg/slf4j/Logger;
 }
 
-public final class net/bramp/ffmpeg/progress/Progress$Status : java/lang/Enum {
-	public static final field Companion Lnet/bramp/ffmpeg/progress/Progress$Status$Companion;
-	public static final field Continue Lnet/bramp/ffmpeg/progress/Progress$Status;
-	public static final field End Lnet/bramp/ffmpeg/progress/Progress$Status;
+public final class net/bramp/ffmpeg/kotlin/progress/Progress$Status : java/lang/Enum {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/progress/Progress$Status$Companion;
+	public static final field Continue Lnet/bramp/ffmpeg/kotlin/progress/Progress$Status;
+	public static final field End Lnet/bramp/ffmpeg/kotlin/progress/Progress$Status;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun toString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/progress/Progress$Status;
-	public static fun values ()[Lnet/bramp/ffmpeg/progress/Progress$Status;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/progress/Progress$Status;
+	public static fun values ()[Lnet/bramp/ffmpeg/kotlin/progress/Progress$Status;
 }
 
-public final class net/bramp/ffmpeg/progress/Progress$Status$Companion {
-	public final fun of (Ljava/lang/String;)Lnet/bramp/ffmpeg/progress/Progress$Status;
+public final class net/bramp/ffmpeg/kotlin/progress/Progress$Status$Companion {
+	public final fun of (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/progress/Progress$Status;
 }
 
-public abstract interface class net/bramp/ffmpeg/progress/ProgressListener {
-	public abstract fun progress (Lnet/bramp/ffmpeg/progress/Progress;)V
+public abstract interface class net/bramp/ffmpeg/kotlin/progress/ProgressListener {
+	public abstract fun progress (Lnet/bramp/ffmpeg/kotlin/progress/Progress;)V
 }
 
-public abstract interface class net/bramp/ffmpeg/progress/ProgressParser : java/io/Closeable {
+public abstract interface class net/bramp/ffmpeg/kotlin/progress/ProgressParser : java/io/Closeable {
 	public abstract fun getUri ()Ljava/net/URI;
 	public abstract fun start ()V
 	public abstract fun stop ()V
 }
 
-public final class net/bramp/ffmpeg/progress/StreamProgressParser {
-	public static final field Companion Lnet/bramp/ffmpeg/progress/StreamProgressParser$Companion;
-	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;)V
+public final class net/bramp/ffmpeg/kotlin/progress/StreamProgressParser {
+	public static final field Companion Lnet/bramp/ffmpeg/kotlin/progress/StreamProgressParser$Companion;
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)V
 	public final fun processReader (Ljava/io/Reader;)V
 	public final fun processStream (Ljava/io/InputStream;)V
 }
 
-public final class net/bramp/ffmpeg/progress/StreamProgressParser$Companion {
+public final class net/bramp/ffmpeg/kotlin/progress/StreamProgressParser$Companion {
 }
 
-public final class net/bramp/ffmpeg/progress/TcpProgressParser : net/bramp/ffmpeg/progress/AbstractSocketProgressParser {
-	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;)V
-	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;I)V
-	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;ILjava/net/InetAddress;)V
-	public synthetic fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;ILjava/net/InetAddress;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+public final class net/bramp/ffmpeg/kotlin/progress/TcpProgressParser : net/bramp/ffmpeg/kotlin/progress/AbstractSocketProgressParser {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;I)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;ILjava/net/InetAddress;)V
+	public synthetic fun <init> (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;ILjava/net/InetAddress;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getUri ()Ljava/net/URI;
 	public fun stop ()V
 }
 
-public final class net/bramp/ffmpeg/progress/UdpProgressParser : net/bramp/ffmpeg/progress/AbstractSocketProgressParser {
-	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;)V
-	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;I)V
-	public fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;ILjava/net/InetAddress;)V
-	public synthetic fun <init> (Lnet/bramp/ffmpeg/progress/ProgressListener;ILjava/net/InetAddress;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+public final class net/bramp/ffmpeg/kotlin/progress/UdpProgressParser : net/bramp/ffmpeg/kotlin/progress/AbstractSocketProgressParser {
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;I)V
+	public fun <init> (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;ILjava/net/InetAddress;)V
+	public synthetic fun <init> (Lnet/bramp/ffmpeg/kotlin/progress/ProgressListener;ILjava/net/InetAddress;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getUri ()Ljava/net/URI;
 	public fun stop ()V
 }
 
-public final class net/bramp/ffmpeg/serialization/CodecTypeSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/CodecTypeSerializer;
+public final class net/bramp/ffmpeg/kotlin/serialization/CodecTypeSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/serialization/CodecTypeSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/shared/CodecType;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/shared/CodecType;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/shared/CodecType;)V
 }
 
-public final class net/bramp/ffmpeg/serialization/FFmpegFrameOrPacketListSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/FFmpegFrameOrPacketListSerializer;
+public final class net/bramp/ffmpeg/kotlin/serialization/FFmpegFrameOrPacketListSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/serialization/FFmpegFrameOrPacketListSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/util/List;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
@@ -2476,35 +2476,35 @@ public final class net/bramp/ffmpeg/serialization/FFmpegFrameOrPacketListSeriali
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/util/List;)V
 }
 
-public final class net/bramp/ffmpeg/serialization/FFmpegFrameOrPacketSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/FFmpegFrameOrPacketSerializer;
+public final class net/bramp/ffmpeg/kotlin/serialization/FFmpegFrameOrPacketSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/serialization/FFmpegFrameOrPacketSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegFrameOrPacket;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrameOrPacket;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegFrameOrPacket;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegFrameOrPacket;)V
 }
 
-public final class net/bramp/ffmpeg/serialization/FFmpegProbeResultSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/FFmpegProbeResultSerializer;
+public final class net/bramp/ffmpeg/kotlin/serialization/FFmpegProbeResultSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/serialization/FFmpegProbeResultSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegProbeResult;)V
 }
 
-public final class net/bramp/ffmpeg/serialization/FFmpegStreamSideDataSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/FFmpegStreamSideDataSerializer;
+public final class net/bramp/ffmpeg/kotlin/serialization/FFmpegStreamSideDataSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/serialization/FFmpegStreamSideDataSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/probe/FFmpegStream$SideData;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lnet/bramp/ffmpeg/kotlin/probe/FFmpegStream$SideData;)V
 }
 
-public final class net/bramp/ffmpeg/serialization/FractionSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Lnet/bramp/ffmpeg/serialization/FractionSerializer;
+public final class net/bramp/ffmpeg/kotlin/serialization/FractionSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Lnet/bramp/ffmpeg/kotlin/serialization/FractionSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lorg/apache/commons/lang3/math/Fraction;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
@@ -2512,7 +2512,7 @@ public final class net/bramp/ffmpeg/serialization/FractionSerializer : kotlinx/s
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lorg/apache/commons/lang3/math/Fraction;)V
 }
 
-public final class net/bramp/ffmpeg/serialization/LowercaseEnumSerializer : kotlinx/serialization/KSerializer {
+public final class net/bramp/ffmpeg/kotlin/serialization/LowercaseEnumSerializer : kotlinx/serialization/KSerializer {
 	public fun <init> ([Ljava/lang/Enum;)V
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Enum;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2521,14 +2521,14 @@ public final class net/bramp/ffmpeg/serialization/LowercaseEnumSerializer : kotl
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 }
 
-public final class net/bramp/ffmpeg/shared/CodecType : java/lang/Enum {
-	public static final field Attachment Lnet/bramp/ffmpeg/shared/CodecType;
-	public static final field Audio Lnet/bramp/ffmpeg/shared/CodecType;
-	public static final field Data Lnet/bramp/ffmpeg/shared/CodecType;
-	public static final field Subtitle Lnet/bramp/ffmpeg/shared/CodecType;
-	public static final field Video Lnet/bramp/ffmpeg/shared/CodecType;
+public final class net/bramp/ffmpeg/kotlin/shared/CodecType : java/lang/Enum {
+	public static final field Attachment Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
+	public static final field Audio Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
+	public static final field Data Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
+	public static final field Subtitle Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
+	public static final field Video Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/shared/CodecType;
-	public static fun values ()[Lnet/bramp/ffmpeg/shared/CodecType;
+	public static fun valueOf (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
+	public static fun values ()[Lnet/bramp/ffmpeg/kotlin/shared/CodecType;
 }
 
