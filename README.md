@@ -134,6 +134,80 @@ FFmpegJob job = executor.createJob(builder, new ProgressListener() {
 job.run();
 ```
 
+## Kotlin DSL
+
+For Kotlin users, a more idiomatic DSL is available that provides a cleaner and more concise syntax. The DSL is fully
+compatible with the existing builders.
+
+### Basic Usage
+
+```kotlin
+val ffmpeg = FFmpeg()
+val ffprobe = FFprobe()
+val executor = FFmpegExecutor(ffmpeg, ffprobe)
+
+// Execute immediately
+executor.run {
+  input("input.mp4")
+  output("output.mp4") {
+    videoCodec = "libx264"
+    videoResolution(640, 480)
+    audioCodec = "aac"
+    audioChannels = 2
+  }
+}
+```
+
+### More Examples
+
+```kotlin
+// Two-pass encoding
+executor.runTwoPass {
+  input("input.mp4")
+  output("output.mp4") {
+    videoCodec = "libx264"
+    videoBitRate = 2_000_000
+    audioCodec = "aac"
+  }
+}
+
+// Multiple outputs
+executor.run {
+  input("input.mp4")
+  
+  output("hd.mp4") {
+    videoCodec = "libx264"
+    videoResolution(1920, 1080)
+    videoBitRate = 5_000_000
+  }
+  
+  output("sd.mp4") {
+    videoCodec = "libx264"
+    videoResolution(640, 480)
+    videoBitRate = 1_000_000
+  }
+}
+
+// HLS streaming
+executor.run {
+  input("input.mp4")
+  hlsOutput("stream.m3u8") {
+    hlsTime(10, TimeUnit.SECONDS)
+    hlsSegmentFilename = "segment%03d.ts"
+    videoCodec = "libx264"
+  }
+}
+
+// FFprobe with DSL
+val result = ffprobe.probe {
+  input = "input.mp4"
+  showFormat = true
+  showStreams = true
+}
+```
+
+For comprehensive documentation on the Kotlin DSL, see [DSL.md](DSL.md).
+
 ## Building & Contributing
 
 If you wish to make changes, then building is simple with Gradle:

@@ -968,6 +968,214 @@ public final class net/bramp/ffmpeg/builder/VideoCodec {
 	public static final field ZMBV Ljava/lang/String;
 }
 
+public final class net/bramp/ffmpeg/dsl/ExtensionsKt {
+	public static final fun buildFFmpegCommand (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public static final fun buildFFprobeCommand (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public static final fun job (Lnet/bramp/ffmpeg/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/job/FFmpegJob;
+	public static final fun job (Lnet/bramp/ffmpeg/FFmpegExecutor;Lnet/bramp/ffmpeg/progress/ProgressListener;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/job/FFmpegJob;
+	public static final fun probe (Lnet/bramp/ffmpeg/FFprobe;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;
+	public static final fun run (Lnet/bramp/ffmpeg/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)V
+	public static final fun runTwoPass (Lnet/bramp/ffmpeg/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)V
+	public static final fun twoPassJob (Lnet/bramp/ffmpeg/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/job/FFmpegJob;
+	public static final fun twoPassJob (Lnet/bramp/ffmpeg/FFmpegExecutor;Lnet/bramp/ffmpeg/progress/ProgressListener;Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/job/FFmpegJob;
+}
+
+public final class net/bramp/ffmpeg/dsl/FFmpegDsl {
+	public fun <init> ()V
+	public final fun extraArgs ([Ljava/lang/String;)V
+	public final fun getAudioFilter ()Ljava/lang/String;
+	public final fun getOverrideOutputFiles ()Z
+	public final fun getPass ()I
+	public final fun getPassDirectory ()Ljava/lang/String;
+	public final fun getPassPrefix ()Ljava/lang/String;
+	public final fun getStrict ()Lnet/bramp/ffmpeg/builder/Strict;
+	public final fun getThreads ()I
+	public final fun getUserAgent ()Ljava/lang/String;
+	public final fun getVerbosity ()Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;
+	public final fun getVideoFilter ()Ljava/lang/String;
+	public final fun hlsOutput (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun hlsOutput$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun input (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun input (Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun input$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun input$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Lnet/bramp/ffmpeg/probe/FFmpegProbeResult;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun output (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun output (Ljava/net/URI;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun output$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun output$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Ljava/net/URI;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun progress (Ljava/net/URI;)V
+	public final fun setAudioFilter (Ljava/lang/String;)V
+	public final fun setOverrideOutputFiles (Z)V
+	public final fun setPass (I)V
+	public final fun setPassDirectory (Ljava/lang/String;)V
+	public final fun setPassPrefix (Ljava/lang/String;)V
+	public final fun setStrict (Lnet/bramp/ffmpeg/builder/Strict;)V
+	public final fun setThreads (I)V
+	public final fun setUserAgent (Ljava/lang/String;)V
+	public final fun setVerbosity (Lnet/bramp/ffmpeg/builder/FFmpegBuilder$Verbosity;)V
+	public final fun setVideoFilter (Ljava/lang/String;)V
+	public final fun stdoutOutput (Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun stdoutOutput$default (Lnet/bramp/ffmpeg/dsl/FFmpegDsl;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun vbr (I)V
+}
+
+public final class net/bramp/ffmpeg/dsl/FFmpegDslKt {
+	public static final fun execute (Lnet/bramp/ffmpeg/FFmpegExecutor;Lkotlin/jvm/functions/Function1;)V
+	public static final fun ffmpeg (Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/builder/FFmpegBuilder;
+}
+
+public abstract interface annotation class net/bramp/ffmpeg/dsl/FFmpegDslMarker : java/lang/annotation/Annotation {
+}
+
+public final class net/bramp/ffmpeg/dsl/FFprobeDsl {
+	public fun <init> ()V
+	public final fun extraArgs ([Ljava/lang/String;)V
+	public final fun getInput ()Ljava/lang/String;
+	public final fun getShowChapters ()Z
+	public final fun getShowFormat ()Z
+	public final fun getShowFrames ()Z
+	public final fun getShowPackets ()Z
+	public final fun getShowStreams ()Z
+	public final fun getUserAgent ()Ljava/lang/String;
+	public final fun setInput (Ljava/lang/String;)V
+	public final fun setShowChapters (Z)V
+	public final fun setShowFormat (Z)V
+	public final fun setShowFrames (Z)V
+	public final fun setShowPackets (Z)V
+	public final fun setShowStreams (Z)V
+	public final fun setUserAgent (Ljava/lang/String;)V
+}
+
+public final class net/bramp/ffmpeg/dsl/FFprobeDslKt {
+	public static final fun ffprobe (Lkotlin/jvm/functions/Function1;)Lnet/bramp/ffmpeg/builder/FFprobeBuilder;
+}
+
+public final class net/bramp/ffmpeg/dsl/HlsOutputDsl {
+	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegHlsOutputBuilder;)V
+	public final fun disableAudio ()V
+	public final fun disableVideo ()V
+	public final fun duration (JLjava/util/concurrent/TimeUnit;)V
+	public final fun extraArgs ([Ljava/lang/String;)V
+	public final fun getAudioBitRate ()J
+	public final fun getAudioChannels ()I
+	public final fun getAudioCodec ()Ljava/lang/String;
+	public final fun getAudioSampleRate ()I
+	public final fun getHlsBaseUrl ()Ljava/lang/String;
+	public final fun getHlsListSize ()Ljava/lang/Integer;
+	public final fun getHlsSegmentFilename ()Ljava/lang/String;
+	public final fun getTargetSize ()J
+	public final fun getVideoBitRate ()J
+	public final fun getVideoCodec ()Ljava/lang/String;
+	public final fun getVideoPreset ()Ljava/lang/String;
+	public final fun hlsInitTime (JLjava/util/concurrent/TimeUnit;)V
+	public final fun hlsTime (JLjava/util/concurrent/TimeUnit;)V
+	public final fun setAudioBitRate (J)V
+	public final fun setAudioChannels (I)V
+	public final fun setAudioCodec (Ljava/lang/String;)V
+	public final fun setAudioSampleRate (I)V
+	public final fun setHlsBaseUrl (Ljava/lang/String;)V
+	public final fun setHlsListSize (Ljava/lang/Integer;)V
+	public final fun setHlsSegmentFilename (Ljava/lang/String;)V
+	public final fun setTargetSize (J)V
+	public final fun setVideoBitRate (J)V
+	public final fun setVideoCodec (Ljava/lang/String;)V
+	public final fun setVideoPreset (Ljava/lang/String;)V
+	public final fun startOffset (JLjava/util/concurrent/TimeUnit;)V
+	public final fun videoFrameRate (D)V
+	public final fun videoFrameRate (II)V
+	public final fun videoResolution (II)V
+}
+
+public final class net/bramp/ffmpeg/dsl/InputDsl {
+	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegFileInputBuilder;)V
+	public final fun duration (JLjava/util/concurrent/TimeUnit;)V
+	public final fun extraArgs ([Ljava/lang/String;)V
+	public final fun getFormat ()Ljava/lang/String;
+	public final fun getStreamLoop ()I
+	public final fun readAtNativeFrameRate ()V
+	public final fun setFormat (Ljava/lang/String;)V
+	public final fun setStreamLoop (I)V
+	public final fun startOffset (JLjava/util/concurrent/TimeUnit;)V
+	public final fun videoFrameRate (D)V
+	public final fun videoFrameRate (II)V
+	public final fun videoResolution (II)V
+}
+
+public final class net/bramp/ffmpeg/dsl/OutputDsl {
+	public fun <init> (Lnet/bramp/ffmpeg/builder/FFmpegOutputBuilder;)V
+	public final fun disableAudio ()V
+	public final fun disableSubtitle ()V
+	public final fun disableVideo ()V
+	public final fun duration (JLjava/util/concurrent/TimeUnit;)V
+	public final fun extraArgs ([Ljava/lang/String;)V
+	public final fun getAudioBitRate ()J
+	public final fun getAudioBitStreamFilter ()Ljava/lang/String;
+	public final fun getAudioChannels ()I
+	public final fun getAudioCodec ()Ljava/lang/String;
+	public final fun getAudioFilter ()Ljava/lang/String;
+	public final fun getAudioPreset ()Ljava/lang/String;
+	public final fun getAudioQuality ()Ljava/lang/Double;
+	public final fun getAudioSampleFormat ()Ljava/lang/String;
+	public final fun getAudioSampleRate ()I
+	public final fun getBFrames ()Ljava/lang/Integer;
+	public final fun getComplexFilter ()Ljava/lang/String;
+	public final fun getConstantRateFactor ()Ljava/lang/Double;
+	public final fun getFormat ()Ljava/lang/String;
+	public final fun getFrames ()Ljava/lang/Integer;
+	public final fun getPreset ()Ljava/lang/String;
+	public final fun getPresetFilename ()Ljava/lang/String;
+	public final fun getStrict ()Lnet/bramp/ffmpeg/builder/Strict;
+	public final fun getSubtitleCodec ()Ljava/lang/String;
+	public final fun getSubtitlePreset ()Ljava/lang/String;
+	public final fun getTargetSize ()J
+	public final fun getVideoBitRate ()J
+	public final fun getVideoBitStreamFilter ()Ljava/lang/String;
+	public final fun getVideoCodec ()Ljava/lang/String;
+	public final fun getVideoFilter ()Ljava/lang/String;
+	public final fun getVideoFrameRate ()Lorg/apache/commons/lang3/math/Fraction;
+	public final fun getVideoMovFlags ()Ljava/lang/String;
+	public final fun getVideoPixelFormat ()Ljava/lang/String;
+	public final fun getVideoPreset ()Ljava/lang/String;
+	public final fun getVideoPresetFile ()Ljava/lang/String;
+	public final fun getVideoQuality ()Ljava/lang/Double;
+	public final fun metadata (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun setAudioBitRate (J)V
+	public final fun setAudioBitStreamFilter (Ljava/lang/String;)V
+	public final fun setAudioChannels (I)V
+	public final fun setAudioCodec (Ljava/lang/String;)V
+	public final fun setAudioFilter (Ljava/lang/String;)V
+	public final fun setAudioPreset (Ljava/lang/String;)V
+	public final fun setAudioQuality (Ljava/lang/Double;)V
+	public final fun setAudioSampleFormat (Ljava/lang/String;)V
+	public final fun setAudioSampleRate (I)V
+	public final fun setBFrames (Ljava/lang/Integer;)V
+	public final fun setComplexFilter (Ljava/lang/String;)V
+	public final fun setConstantRateFactor (Ljava/lang/Double;)V
+	public final fun setFormat (Ljava/lang/String;)V
+	public final fun setFrames (Ljava/lang/Integer;)V
+	public final fun setPreset (Ljava/lang/String;)V
+	public final fun setPresetFilename (Ljava/lang/String;)V
+	public final fun setStrict (Lnet/bramp/ffmpeg/builder/Strict;)V
+	public final fun setSubtitleCodec (Ljava/lang/String;)V
+	public final fun setSubtitlePreset (Ljava/lang/String;)V
+	public final fun setTargetSize (J)V
+	public final fun setVideoBitRate (J)V
+	public final fun setVideoBitStreamFilter (Ljava/lang/String;)V
+	public final fun setVideoCodec (Ljava/lang/String;)V
+	public final fun setVideoFilter (Ljava/lang/String;)V
+	public final fun setVideoFrameRate (Lorg/apache/commons/lang3/math/Fraction;)V
+	public final fun setVideoMovFlags (Ljava/lang/String;)V
+	public final fun setVideoPixelFormat (Ljava/lang/String;)V
+	public final fun setVideoPreset (Ljava/lang/String;)V
+	public final fun setVideoPresetFile (Ljava/lang/String;)V
+	public final fun setVideoQuality (Ljava/lang/Double;)V
+	public final fun startOffset (JLjava/util/concurrent/TimeUnit;)V
+	public final fun videoFrameRate (D)V
+	public final fun videoFrameRate (II)V
+	public final fun videoResolution (II)V
+	public final fun videoResolution (Ljava/lang/String;)V
+}
+
 public abstract interface class net/bramp/ffmpeg/info/ChannelLayout {
 	public abstract fun getName ()Ljava/lang/String;
 }
