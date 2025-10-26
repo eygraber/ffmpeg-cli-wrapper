@@ -31,6 +31,19 @@ implementation 'com.eygraber:ffmpeg-cli-wrapper:0.9.0'
 The latest release version can be found
 on [Maven Central](http://mvnrepository.com/artifact/com.eygraber/ffmpeg-cli-wrapper).
 
+## Migrating from Java Version
+
+**Note:** This library has been rewritten in Kotlin. If you're migrating from the older Java version (
+`net.bramp.ffmpeg:ffmpeg`), please see the [Migration Guide](MIGRATION.md) for detailed instructions on updating your
+code.
+
+Key changes:
+
+- Package name changed from `net.bramp.ffmpeg` to `net.bramp.ffmpeg.kotlin`
+- New Kotlin DSL for more idiomatic Kotlin code
+- Builder pattern still supported for backward compatibility
+- Improved null safety and type safety
+
 ## Usage
 
 ### Video Encoding
@@ -208,6 +221,13 @@ val result = ffprobe.probe {
 ```
 
 For comprehensive documentation on the Kotlin DSL, see [DSL.md](DSL.md).
+
+## Documentation
+
+- **[README.md](README.md)** - This file, basic usage and examples
+- **[DSL.md](DSL.md)** - Comprehensive Kotlin DSL documentation
+- **[MIGRATION.md](MIGRATION.md)** - Migration guide from Java to Kotlin version
+- **[API docs](https://bramp.github.io/ffmpeg-cli-wrapper/)** - Full API documentation
 
 ## Building & Contributing
 
