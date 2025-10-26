@@ -25,7 +25,6 @@ java {
 
 dependencies {
   implementation(libs.commons.lang3)
-  implementation(libs.jsonSugar)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.slf4j.api)
 
