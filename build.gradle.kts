@@ -42,6 +42,15 @@ tasks.withType<KotlinCompile>().configureEach {
   compilerOptions.jvmTarget = JvmTarget.JVM_1_8
 }
 
+tasks.compileTestKotlin.configure {
+  compilerOptions.jvmTarget = JvmTarget.JVM_11
+}
+
+tasks.compileTestJava.configure {
+  sourceCompatibility = JavaVersion.VERSION_11.toString()
+  targetCompatibility = JavaVersion.VERSION_11.toString()
+}
+
 tasks.withType<Test> {
   testLogging {
     events = setOf(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
