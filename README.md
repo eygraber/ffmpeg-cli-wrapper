@@ -7,12 +7,12 @@ by Andrew Brampton ([bramp.net](https://bramp.net)) (c) 2013-2024
 A fluent interface for running FFmpeg from Java.
 
 ![Java](https://img.shields.io/badge/Java-8+-brightgreen.svg)
-[![PR Checks](https://github.com/bramp/ffmpeg-cli-wrapper/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/bramp/ffmpeg-cli-wrapper/actions/workflows/pr-checks.yml)
-[![Coverage Status](https://img.shields.io/coveralls/bramp/ffmpeg-cli-wrapper.svg)](https://coveralls.io/github/bramp/ffmpeg-cli-wrapper)
-[![Maven Central](https://img.shields.io/maven-central/v/net.bramp.ffmpeg/ffmpeg.svg)](http://mvnrepository.com/artifact/net.bramp.ffmpeg/ffmpeg)
-[![Libraries.io](https://img.shields.io/librariesio/github/bramp/ffmpeg-cli-wrapper.svg)](https://libraries.io/github/bramp/ffmpeg-cli-wrapper)
+[![PR Checks](https://github.com/eygraber/ffmpeg-cli-wrapper/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/eygraber/ffmpeg-cli-wrapper/actions/workflows/pr-checks.yml)
+[![Coverage Status](https://img.shields.io/coveralls/eygraber/ffmpeg-cli-wrapper.svg)](https://coveralls.io/github/eygraber/ffmpeg-cli-wrapper)
+[![Maven Central](https://img.shields.io/maven-central/v/com.eygraber/ffmpeg-cli-wrapper.svg)](http://mvnrepository.com/artifact/com.eygraber/ffmpeg-cli-wrapper)
+[![Libraries.io](https://img.shields.io/librariesio/github/eygraber/ffmpeg-cli-wrapper.svg)](https://libraries.io/github/eygraber/ffmpeg-cli-wrapper)
 
-[GitHub](https://github.com/bramp/ffmpeg-cli-wrapper) | [API docs](https://bramp.github.io/ffmpeg-cli-wrapper/)
+[GitHub](https://github.com/eygraber/ffmpeg-cli-wrapper) | [API docs](https://bramp.github.io/ffmpeg-cli-wrapper/)
 
 ## Install
 
@@ -28,7 +28,8 @@ For Gradle (Groovy DSL, `build.gradle`):
 implementation 'com.eygraber:ffmpeg-cli-wrapper:0.9.0'
 ```
 
-The latest release version can be found on [Maven Central](http://mvnrepository.com/artifact/com.eygraber/ffmpeg).
+The latest release version can be found
+on [Maven Central](http://mvnrepository.com/artifact/com.eygraber/ffmpeg-cli-wrapper).
 
 ## Usage
 
@@ -231,7 +232,7 @@ FFmpeg from a PPA, or using the static build. More information [here](http://ask
 
 ## Get involved
 
-We welcome contributions. Please check the [issue tracker](https://github.com/bramp/ffmpeg-cli-wrapper/issues).
+We welcome contributions. Please check the [issue tracker](https://github.com/eygraber/ffmpeg-cli-wrapper/issues).
 If you see something you wish to work on, please either comment on the issue, or just send a pull
 request. Want to work on something else, then just open a issue, and we can discuss! We appreciate
 documentation improvements, code cleanup, or new features. Please be mindful that all work is done
