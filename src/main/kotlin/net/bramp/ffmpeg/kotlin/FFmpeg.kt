@@ -121,7 +121,7 @@ class FFmpeg @JvmOverloads constructor(
       wrapInReader(process).useLines { lines ->
         lines.mapNotNull { line ->
           codecsRegex.matchEntire(line)?.let { match ->
-            Codec(match.groupValues[2], match.groupValues[3], match.groupValues[1])
+            Codec(name = match.groupValues[2], longName = match.groupValues[3], flags = match.groupValues[1])
           }
         }.toList()
       }.also {
@@ -146,10 +146,10 @@ class FFmpeg @JvmOverloads constructor(
               isTimelineSupported = match.groups["timelinesupport"]?.value == "T",
               isSliceThreading = match.groups["slicethreading"]?.value == "S",
               isCommandSupport = match.groups["commandsupport"]?.value == "C",
-              name = match.groups["name"]?.value ?: "",
-              inputPattern = FilterPattern(match.groups["inputpattern"]?.value ?: ""),
-              outputPattern = FilterPattern(match.groups["outputpattern"]?.value ?: ""),
-              description = match.groups["description"]?.value ?: "",
+              name = match.groups["name"]?.value.orEmpty(),
+              inputPattern = FilterPattern(match.groups["inputpattern"]?.value.orEmpty()),
+              outputPattern = FilterPattern(match.groups["outputpattern"]?.value.orEmpty()),
+              description = match.groups["description"]?.value.orEmpty(),
             )
           }
         }.toList()
@@ -171,7 +171,7 @@ class FFmpeg @JvmOverloads constructor(
       wrapInReader(process).useLines { lines ->
         lines.mapNotNull { line ->
           formatsRegex.matchEntire(line)?.let { match ->
-            Format(match.groupValues[2], match.groupValues[3], match.groupValues[1])
+            Format(name = match.groupValues[2], longName = match.groupValues[3], flags = match.groupValues[1])
           }
         }.toList()
       }.also {

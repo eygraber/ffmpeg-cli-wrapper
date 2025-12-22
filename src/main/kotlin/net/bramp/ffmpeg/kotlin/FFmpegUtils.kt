@@ -8,6 +8,7 @@ import net.bramp.ffmpeg.kotlin.serialization.FFmpegStreamSideDataSerializer
 import net.bramp.ffmpeg.kotlin.serialization.FractionSerializer
 import net.bramp.ffmpeg.kotlin.serialization.LowercaseEnumSerializer
 import net.bramp.ffmpeg.kotlin.shared.CodecType
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 /** Helper class with commonly used methods */
@@ -68,11 +69,11 @@ object FFmpegUtils {
     minutes -= TimeUnit.HOURS.toMinutes(hours)
 
     return if(ns == 0L) {
-      "%02d:%02d:%02d".format(hours, minutes, seconds)
+      "%02d:%02d:%02d".format(Locale.ROOT, hours, minutes, seconds)
     }
     else {
-      val nanoStr = "%09d".format(ns).trimEnd('0').trimEnd('.')
-      "%02d:%02d:%02d.%s".format(hours, minutes, seconds, nanoStr)
+      val nanoStr = "%09d".format(Locale.ROOT, ns).trimEnd('0').trimEnd('.')
+      "%02d:%02d:%02d.%s".format(Locale.ROOT, hours, minutes, seconds, nanoStr)
     }
   }
 
@@ -85,18 +86,17 @@ object FFmpegUtils {
    */
   @JvmStatic
   fun fromTimecode(time: String): Long {
-    Preconditions.checkNotNullEmptyOrBlank(time, "time must not be empty string")
+    Preconditions.checkNotNullEmptyOrBlank(arg = time, errorMessage = "time must not be empty string")
 
     if(time == "N/A") {
       return -1L
     }
 
-    val m = timeRegex.find(time)
-    require(m != null) { "invalid time '$time'" }
+    val m = requireNotNull(timeRegex.find(time)) { "invalid time '$time'" }
 
-    val hours = m.groups[1]!!.value.toLong()
-    val mins = m.groups[2]!!.value.toLong()
-    val secs = m.groups[3]!!.value.toDouble()
+    val hours = requireNotNull(m.groups[1]).value.toLong()
+    val mins = requireNotNull(m.groups[2]).value.toLong()
+    val secs = requireNotNull(m.groups[3]).value.toDouble()
 
     return TimeUnit.HOURS.toNanos(hours) +
       TimeUnit.MINUTES.toNanos(mins) +
@@ -111,14 +111,13 @@ object FFmpegUtils {
    */
   @JvmStatic
   fun parseBitrate(bitrate: String): Long {
-    Preconditions.checkNotNullEmptyOrBlank(bitrate, "bitrate must not be empty string")
+    Preconditions.checkNotNullEmptyOrBlank(arg = bitrate, errorMessage = "bitrate must not be empty string")
 
     if(bitrate == "N/A") {
       return -1L
     }
-    val m = bitrateRegex.find(bitrate)
-    require(m != null) { "Invalid bitrate '$bitrate'" }
+    val m = requireNotNull(bitrateRegex.find(bitrate)) { "Invalid bitrate '$bitrate'" }
 
-    return (m.groups[1]!!.value.toFloat() * 1000).toLong()
+    return (requireNotNull(m.groups[1]).value.toFloat() * 1000).toLong()
   }
 }

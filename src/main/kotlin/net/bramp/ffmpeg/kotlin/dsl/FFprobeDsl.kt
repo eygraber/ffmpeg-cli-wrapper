@@ -24,6 +24,7 @@ fun ffprobe(block: FFprobeDsl.() -> Unit): FFprobeBuilder {
  * DSL class for building FFprobe commands
  */
 @FFmpegDslMarker
+@Suppress("BooleanPropertyNaming")
 class FFprobeDsl {
   internal val builder = FFprobeBuilder()
 

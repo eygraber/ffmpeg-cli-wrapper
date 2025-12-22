@@ -90,13 +90,14 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
 
   fun setVideoBitStreamFilter(filter: String): T {
     this.videoBitStreamFilter =
-      Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
+      Preconditions.checkNotNullEmptyOrBlank(arg = filter, errorMessage = "filter must not be empty")
     return getThis()
   }
 
   fun setVideoPreset(preset: String): T {
     this.video_enabled = true
-    this.videoPreset = Preconditions.checkNotNullEmptyOrBlank(preset, "video preset must not be empty")
+    this.videoPreset =
+      Preconditions.checkNotNullEmptyOrBlank(arg = preset, errorMessage = "video preset must not be empty")
     return getThis()
   }
 
@@ -107,7 +108,7 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
 
   fun setVideoFilter(filter: String): T {
     this.video_enabled = true
-    this.videoFilter = Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
+    this.videoFilter = Preconditions.checkNotNullEmptyOrBlank(arg = filter, errorMessage = "filter must not be empty")
     return getThis()
   }
 
@@ -120,7 +121,7 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
   fun setAudioSampleFormat(sampleFormat: String): T {
     this.audio_enabled = true
     this.audioSampleFormat =
-      Preconditions.checkNotNullEmptyOrBlank(sampleFormat, "sample format must not be empty")
+      Preconditions.checkNotNullEmptyOrBlank(arg = sampleFormat, errorMessage = "sample format must not be empty")
     return getThis()
   }
 
@@ -141,18 +142,18 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
   fun setAudioBitStreamFilter(filter: String): T {
     this.audio_enabled = true
     this.audioBitStreamFilter =
-      Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
+      Preconditions.checkNotNullEmptyOrBlank(arg = filter, errorMessage = "filter must not be empty")
     return getThis()
   }
 
   fun setComplexFilter(filter: String): T {
-    this.complexFilter = Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
+    this.complexFilter = Preconditions.checkNotNullEmptyOrBlank(arg = filter, errorMessage = "filter must not be empty")
     return getThis()
   }
 
   fun setAudioFilter(filter: String): T {
     this.audio_enabled = true
-    this.audioFilter = Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
+    this.audioFilter = Preconditions.checkNotNullEmptyOrBlank(arg = filter, errorMessage = "filter must not be empty")
     return getThis()
   }
 
@@ -241,13 +242,13 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
 
   override fun addGlobalFlags(parent: FFmpegBuilder, args: MutableList<String>) {
     super.addGlobalFlags(parent, args)
-    constantRateFactor?.let {
+    constantRateFactor?.let { crf ->
       args.add("-crf")
-      args.add(formatDecimalInteger(it))
+      args.add(formatDecimalInteger(crf))
     }
-    complexFilter?.let {
+    complexFilter?.let { filter ->
       args.add("-filter_complex")
-      args.add(it)
+      args.add(filter)
     }
   }
 
@@ -259,36 +260,36 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
       args.add("-b:v")
       args.add(videoBitRate.toString())
     }
-    videoQuality?.let {
+    videoQuality?.let { quality ->
       args.add("-qscale:v")
-      args.add(formatDecimalInteger(it))
+      args.add(formatDecimalInteger(quality))
     }
-    videoPreset?.takeIf { it.isNotBlank() }?.let {
+    videoPreset?.takeIf { it.isNotBlank() }?.let { preset ->
       args.add("-vpre")
-      args.add(it)
+      args.add(preset)
     }
-    videoFilter?.takeIf { it.isNotBlank() }?.let {
+    videoFilter?.takeIf { it.isNotBlank() }?.let { filter ->
       check(parent.inputs.size == 1) {
         "Video filter only works with one input, instead use setComplexVideoFilter(..)"
       }
       args.add("-vf")
-      args.add(it)
+      args.add(filter)
     }
-    videoBitStreamFilter?.takeIf { it.isNotBlank() }?.let {
+    videoBitStreamFilter?.takeIf { it.isNotBlank() }?.let { filter ->
       args.add("-bsf:v")
-      args.add(it)
+      args.add(filter)
     }
-    bFrames?.let {
+    bFrames?.let { frames ->
       args.add("-bf")
-      args.add(it.toString())
+      args.add(frames.toString())
     }
   }
 
   override fun addAudioFlags(args: MutableList<String>) {
     super.addAudioFlags(args)
-    audioSampleFormat?.takeIf { it.isNotBlank() }?.let {
+    audioSampleFormat?.takeIf { it.isNotBlank() }?.let { fmt ->
       args.add("-sample_fmt")
-      args.add(it)
+      args.add(fmt)
     }
     check(audioBitRate <= 0L || audioQuality == null || !throwWarnings) {
       "Only one of audio_bit_rate and audio_quality can be set"
@@ -297,17 +298,17 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
       args.add("-b:a")
       args.add(audioBitRate.toString())
     }
-    audioQuality?.let {
+    audioQuality?.let { quality ->
       args.add("-qscale:a")
-      args.add(formatDecimalInteger(it))
+      args.add(formatDecimalInteger(quality))
     }
-    audioBitStreamFilter?.takeIf { it.isNotBlank() }?.let {
+    audioBitStreamFilter?.takeIf { it.isNotBlank() }?.let { filter ->
       args.add("-bsf:a")
-      args.add(it)
+      args.add(filter)
     }
-    audioFilter?.takeIf { it.isNotBlank() }?.let {
+    audioFilter?.takeIf { it.isNotBlank() }?.let { filter ->
       args.add("-af")
-      args.add(it)
+      args.add(filter)
     }
   }
 
@@ -315,8 +316,8 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
     check(filename == null || uri == null) { "Only one of filename and uri can be set" }
     when {
       pass == 1 -> args.add(DEVNULL)
-      filename != null -> args.add(filename!!)
-      uri != null -> args.add(uri.toString())
+      filename != null -> args.add(requireNotNull(filename))
+      uri != null -> args.add(requireNotNull(uri).toString())
       else -> error("Either filename or uri must be set, or pass must be 1")
     }
   }

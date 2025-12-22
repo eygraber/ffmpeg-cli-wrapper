@@ -26,6 +26,7 @@ class StreamHeaderPacket : Packet() {
   var sampleRate: Fraction = Fraction.ZERO
   var channels = 0
 
+  @Suppress("ThrowsCount")
   @Throws(IOException::class)
   override fun readBody(dataInputStream: NutDataInputStream) {
     id = dataInputStream.readVarInt()

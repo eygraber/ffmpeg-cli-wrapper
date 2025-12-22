@@ -189,7 +189,7 @@ class FFmpegBuilder {
    */
   @Deprecated("")
   fun setComplexFilter(filter: String?): FFmpegBuilder {
-    complexFilter = Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
+    complexFilter = Preconditions.checkNotNullEmptyOrBlank(arg = filter, errorMessage = "filter must not be empty")
     return this
   }
 
@@ -200,7 +200,7 @@ class FFmpegBuilder {
    * @return this
    */
   fun setAudioFilter(filter: String?): FFmpegBuilder {
-    audioFilter = Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
+    audioFilter = Preconditions.checkNotNullEmptyOrBlank(arg = filter, errorMessage = "filter must not be empty")
     return this
   }
 
@@ -211,7 +211,7 @@ class FFmpegBuilder {
    * @return this
    */
   fun setVideoFilter(filter: String?): FFmpegBuilder {
-    videoFilter = Preconditions.checkNotNullEmptyOrBlank(filter, "filter must not be empty")
+    videoFilter = Preconditions.checkNotNullEmptyOrBlank(arg = filter, errorMessage = "filter must not be empty")
     return this
   }
 
@@ -237,7 +237,7 @@ class FFmpegBuilder {
    */
   fun addExtraArgs(vararg values: String): FFmpegBuilder = apply {
     require(values.isNotEmpty()) { "one or more values must be supplied" }
-    Preconditions.checkNotNullEmptyOrBlank(values[0], "first extra arg may not be empty")
+    Preconditions.checkNotNullEmptyOrBlank(arg = values[0], errorMessage = "first extra arg may not be empty")
     extraArgs.addAll(values)
   }
 
@@ -314,9 +314,9 @@ class FFmpegBuilder {
     add("-v")
     add(verbosity.toString())
 
-    userAgent?.let {
+    userAgent?.let { agent ->
       add("-user_agent")
-      add(it)
+      add(agent)
     }
 
     startOffset?.let { startOffset ->
@@ -347,9 +347,9 @@ class FFmpegBuilder {
       add("-re")
     }
 
-    progress?.let {
+    progress?.let { p ->
       add("-progress")
-      add(it.toString())
+      add(p.toString())
     }
 
     addAll(extraArgs)
@@ -361,33 +361,33 @@ class FFmpegBuilder {
     if(pass > 0) {
       add("-pass")
       add(pass.toString())
-      passPrefix?.let {
+      passPrefix?.let { prefix ->
         add("-passlogfile")
-        add("$passDirectory$it")
+        add("$passDirectory$prefix")
       }
     }
 
-    audioFilter?.takeIf { it.isNotBlank() }?.let {
+    audioFilter?.takeIf { it.isNotBlank() }?.let { filter ->
       add("-af")
-      add(it)
+      add(filter)
     }
 
-    videoFilter?.takeIf { it.isNotBlank() }?.let {
+    videoFilter?.takeIf { it.isNotBlank() }?.let { filter ->
       add("-vf")
-      add(it)
+      add(filter)
     }
 
-    complexFilter?.takeIf { it.isNotBlank() }?.let {
+    complexFilter?.takeIf { it.isNotBlank() }?.let { filter ->
       log.warn(
         "Using FFmpegBuilder#setComplexFilter is deprecated. Specify it on the outputStream instead",
       )
       add("-filter_complex")
-      add(it)
+      add(filter)
     }
 
-    qscale?.let {
+    qscale?.let { qs ->
       add("-qscale:a")
-      add(it.toString())
+      add(qs.toString())
     }
 
     outputs.forEach { output ->

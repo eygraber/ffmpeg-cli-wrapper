@@ -14,6 +14,7 @@ class MainHeaderPacket : Packet() {
   val frameCodes: MutableList<FrameCode> = mutableListOf()
   val elision: MutableList<ByteArray> = mutableListOf()
 
+  @Suppress("ThrowsCount")
   @Throws(IOException::class)
   override fun readBody(dataInputStream: NutDataInputStream) {
     frameCodes.clear()

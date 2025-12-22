@@ -155,7 +155,7 @@ class Frame {
     data = ByteArray(size)
     val elision = nut.header.elision[headerIdx]
     System.arraycopy(elision, 0, data, 0, elision.size)
-    input.readFully(data, elision.size, size - elision.size)
+    input.readFully(b = data, off = elision.size, len = size - elision.size)
   }
 
   override fun toString(): String =
