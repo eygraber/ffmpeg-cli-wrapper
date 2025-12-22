@@ -1,7 +1,7 @@
 [versions]
 commonsLang3 = "3.20.0"
-detekt = "1.23.8"
-detektEygraber = "1.0.12"
+detekt = "2.0.0-alpha.1"
+detektEygraber = "1.0.14"
 grizzlyHttpServer = "4.0.2"
 junit = "4.13.2"
 kotest = "6.0.7"
@@ -30,7 +30,7 @@ slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 
 [plugins]
 abiCompat = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.18.1" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
 dokka = { id = "org.jetbrains.dokka", version = "2.1.0" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

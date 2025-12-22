@@ -43,12 +43,42 @@ object FFmpegProbeResultSerializer : KSerializer<FFmpegProbeResult> {
 
   override fun serialize(encoder: Encoder, value: FFmpegProbeResult) {
     encoder.encodeStructure(descriptor) {
-      encodeNullableSerializableElement(descriptor, 0, errorSerializer, value.error)
-      encodeNullableSerializableElement(descriptor, 1, formatSerializer, value.format)
-      encodeNullableSerializableElement(descriptor, 2, streamsSerializer, value.streams)
-      encodeNullableSerializableElement(descriptor, 3, chaptersSerializer, value.chapters)
-      encodeNullableSerializableElement(descriptor, 4, packetsSerializer, value.packets)
-      encodeNullableSerializableElement(descriptor, 5, framesSerializer, value.frames)
+      encodeNullableSerializableElement(
+        descriptor = descriptor,
+        index = 0,
+        serializer = errorSerializer,
+        value = value.error,
+      )
+      encodeNullableSerializableElement(
+        descriptor = descriptor,
+        index = 1,
+        serializer = formatSerializer,
+        value = value.format,
+      )
+      encodeNullableSerializableElement(
+        descriptor = descriptor,
+        index = 2,
+        serializer = streamsSerializer,
+        value = value.streams,
+      )
+      encodeNullableSerializableElement(
+        descriptor = descriptor,
+        index = 3,
+        serializer = chaptersSerializer,
+        value = value.chapters,
+      )
+      encodeNullableSerializableElement(
+        descriptor = descriptor,
+        index = 4,
+        serializer = packetsSerializer,
+        value = value.packets,
+      )
+      encodeNullableSerializableElement(
+        descriptor = descriptor,
+        index = 5,
+        serializer = framesSerializer,
+        value = value.frames,
+      )
     }
   }
 

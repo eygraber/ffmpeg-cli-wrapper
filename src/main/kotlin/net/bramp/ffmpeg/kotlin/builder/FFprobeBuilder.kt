@@ -52,7 +52,7 @@ class FFprobeBuilder {
     require(values.isNotEmpty()) {
       "one or more values must be supplied"
     }
-    Preconditions.checkNotNullEmptyOrBlank(values[0], "first extra arg may not be empty")
+    Preconditions.checkNotNullEmptyOrBlank(arg = values[0], errorMessage = "first extra arg may not be empty")
     for(value in values) {
       extraArgs.add(value)
     }
@@ -71,9 +71,9 @@ class FFprobeBuilder {
       add("-print_format")
       add("json")
       add("-show_error")
-      userAgent?.let {
+      userAgent?.let { agent ->
         add("-user_agent")
-        add(it)
+        add(agent)
       }
       addAll(extraArgs)
       if(isShowFormat) add("-show_format")

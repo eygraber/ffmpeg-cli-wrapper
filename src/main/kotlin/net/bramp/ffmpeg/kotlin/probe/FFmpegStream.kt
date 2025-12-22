@@ -46,6 +46,7 @@ data class FFmpegStream(
   @SerialName("max_bit_rate") val maxBitRate: Long = 0,
   @SerialName("bits_per_raw_sample") val bitsPerRawSample: Int = 0,
   @SerialName("nal_length_size") val nalLengthSize: String? = null,
+  @Suppress("NonBooleanPropertyPrefixedWithIs")
   @SerialName("is_avc") val isAvc: String? = null,
   @SerialName("bits_per_sample") val bitsPerSample: Int = 0,
   @SerialName("nb_frames") val nbFrames: Long = 0,

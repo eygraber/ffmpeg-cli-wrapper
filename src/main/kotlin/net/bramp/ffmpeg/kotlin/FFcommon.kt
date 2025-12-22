@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 /** Private class to contain common methods for both FFmpeg and FFprobe. */
+@Suppress("AbstractClassCanBeConcreteClass")
 abstract class FFcommon protected constructor(
   val path: String,
   protected val runFunc: ProcessFunction = RunProcessFunction(),

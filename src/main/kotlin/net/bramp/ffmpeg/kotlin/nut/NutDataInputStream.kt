@@ -119,7 +119,7 @@ class NutDataInputStream(inputStream: InputStream) : DataInput {
     // Otherwise read the remaining 64bit startCode
     val buffer = ByteArray(8)
     buffer[0] = frameCode
-    readFully(buffer, 1, 7)
+    readFully(b = buffer, off = 1, len = 7)
     return (buffer[0].toLong() shl 56) +
       (buffer[1].toLong() and 0xff shl 48) +
       (buffer[2].toLong() and 0xff shl 40) +

@@ -68,6 +68,7 @@ fun FFmpegExecutor.execute(block: FFmpegDsl.() -> Unit) {
  * Main DSL class for building FFmpeg commands
  */
 @FFmpegDslMarker
+@Suppress("BooleanPropertyNaming")
 class FFmpegDsl {
   internal val builder = FFmpegBuilder()
 

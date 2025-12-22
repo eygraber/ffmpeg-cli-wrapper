@@ -69,12 +69,12 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   }
 
   protected constructor(parent: FFmpegBuilder, filename: String) {
-    this.parent = requireNotNull(parent)
-    this.filename = Preconditions.checkNotNullEmptyOrBlank(filename, "filename must not be empty")
+    this.parent = parent
+    this.filename = Preconditions.checkNotNullEmptyOrBlank(arg = filename, errorMessage = "filename must not be empty")
   }
 
   protected constructor(parent: FFmpegBuilder, uri: URI) {
-    this.parent = requireNotNull(parent)
+    this.parent = parent
     this.uri = Preconditions.checkValidStream(uri)
   }
 
@@ -142,17 +142,17 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
 
   fun setPresetFilename(presetFilename: String): T {
     this.presetFilename =
-      Preconditions.checkNotNullEmptyOrBlank(presetFilename, "file preset must not be empty")
+      Preconditions.checkNotNullEmptyOrBlank(arg = presetFilename, errorMessage = "file preset must not be empty")
     return getThis()
   }
 
   fun setPreset(preset: String): T {
-    this.preset = Preconditions.checkNotNullEmptyOrBlank(preset, "preset must not be empty")
+    this.preset = Preconditions.checkNotNullEmptyOrBlank(arg = preset, errorMessage = "preset must not be empty")
     return getThis()
   }
 
   fun setFilename(filename: String): T {
-    this.filename = Preconditions.checkNotNullEmptyOrBlank(filename, "filename must not be empty")
+    this.filename = Preconditions.checkNotNullEmptyOrBlank(arg = filename, errorMessage = "filename must not be empty")
     return getThis()
   }
 
@@ -162,13 +162,13 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   }
 
   open fun setFormat(format: String): T {
-    this.format = Preconditions.checkNotNullEmptyOrBlank(format, "format must not be empty")
+    this.format = Preconditions.checkNotNullEmptyOrBlank(arg = format, errorMessage = "format must not be empty")
     return getThis()
   }
 
   fun setVideoCodec(codec: String): T {
     this.video_enabled = true
-    this.video_codec = Preconditions.checkNotNullEmptyOrBlank(codec, "codec must not be empty")
+    this.video_codec = Preconditions.checkNotNullEmptyOrBlank(arg = codec, errorMessage = "codec must not be empty")
     return getThis()
   }
 
@@ -181,13 +181,13 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   fun setVideoMovFlags(movflags: String): T {
     this.video_enabled = true
     this.video_movflags =
-      Preconditions.checkNotNullEmptyOrBlank(movflags, "movflags must not be empty")
+      Preconditions.checkNotNullEmptyOrBlank(arg = movflags, errorMessage = "movflags must not be empty")
     return getThis()
   }
 
   fun setVideoFrameRate(frameRate: Fraction): T {
     this.video_enabled = true
-    this.video_frame_rate = requireNotNull(frameRate)
+    this.video_frame_rate = frameRate
     return getThis()
   }
 
@@ -228,20 +228,20 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   fun setVideoResolution(abbreviation: String): T {
     this.video_enabled = true
     this.video_size =
-      Preconditions.checkNotNullEmptyOrBlank(abbreviation, "video abbreviation must not be empty")
+      Preconditions.checkNotNullEmptyOrBlank(arg = abbreviation, errorMessage = "video abbreviation must not be empty")
     return getThis()
   }
 
   fun setVideoPixelFormat(format: String): T {
     this.video_enabled = true
     this.video_pixel_format =
-      Preconditions.checkNotNullEmptyOrBlank(format, "format must not be empty")
+      Preconditions.checkNotNullEmptyOrBlank(arg = format, errorMessage = "format must not be empty")
     return getThis()
   }
 
   fun addMetaTag(key: String, value: String): T {
     MetadataSpecifier.checkValidKey(key)
-    Preconditions.checkNotNullEmptyOrBlank(value, "value must not be empty")
+    Preconditions.checkNotNullEmptyOrBlank(arg = value, errorMessage = "value must not be empty")
     meta_tags.add("-metadata")
     meta_tags.add("$key=$value")
     return getThis()
@@ -249,7 +249,7 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
 
   fun addMetaTag(spec: MetadataSpecifier, key: String, value: String): T {
     MetadataSpecifier.checkValidKey(key)
-    Preconditions.checkNotNullEmptyOrBlank(value, "value must not be empty")
+    Preconditions.checkNotNullEmptyOrBlank(arg = value, errorMessage = "value must not be empty")
     meta_tags.add("-metadata:${spec.spec}")
     meta_tags.add("$key=$value")
     return getThis()
@@ -257,13 +257,13 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
 
   fun setAudioCodec(codec: String): T {
     this.audio_enabled = true
-    this.audio_codec = Preconditions.checkNotNullEmptyOrBlank(codec, "codec must not be empty")
+    this.audio_codec = Preconditions.checkNotNullEmptyOrBlank(arg = codec, errorMessage = "codec must not be empty")
     return getThis()
   }
 
   fun setSubtitleCodec(codec: String): T {
     this.subtitle_enabled = true
-    this.subtitle_codec = Preconditions.checkNotNullEmptyOrBlank(codec, "codec must not be empty")
+    this.subtitle_codec = Preconditions.checkNotNullEmptyOrBlank(arg = codec, errorMessage = "codec must not be empty")
     return getThis()
   }
 
@@ -298,7 +298,7 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   }
 
   fun setStrict(strict: Strict): T {
-    this.strict = requireNotNull(strict)
+    this.strict = strict
     return getThis()
   }
 
@@ -311,20 +311,20 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
   fun setAudioPreset(preset: String): T {
     this.audio_enabled = true
     this.audio_preset =
-      Preconditions.checkNotNullEmptyOrBlank(preset, "audio preset must not be empty")
+      Preconditions.checkNotNullEmptyOrBlank(arg = preset, errorMessage = "audio preset must not be empty")
     return getThis()
   }
 
   fun setSubtitlePreset(preset: String): T {
     this.subtitle_enabled = true
     this.subtitle_preset =
-      Preconditions.checkNotNullEmptyOrBlank(preset, "subtitle preset must not be empty")
+      Preconditions.checkNotNullEmptyOrBlank(arg = preset, errorMessage = "subtitle preset must not be empty")
     return getThis()
   }
 
   fun addExtraArgs(vararg values: String): T {
     require(values.isNotEmpty()) { "one or more values must be supplied" }
-    Preconditions.checkNotNullEmptyOrBlank(values[0], "first extra arg may not be empty")
+    Preconditions.checkNotNullEmptyOrBlank(arg = values[0], errorMessage = "first extra arg may not be empty")
     extra_args.addAll(values)
     return getThis()
   }
@@ -359,13 +359,13 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
     }
 
     if(subtitle_enabled) {
-      subtitle_codec?.takeIf { it.isNotBlank() }?.let {
+      subtitle_codec?.takeIf { it.isNotBlank() }?.let { codec ->
         add("-scodec")
-        add(it)
+        add(codec)
       }
-      subtitle_preset?.takeIf { it.isNotBlank() }?.let {
+      subtitle_preset?.takeIf { it.isNotBlank() }?.let { preset ->
         add("-spre")
-        add(it)
+        add(preset)
       }
     }
     else {
@@ -384,33 +384,33 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
       args.add("-strict")
       args.add(strict.toString().lowercase())
     }
-    format?.takeIf { it.isNotBlank() }?.let {
+    format?.takeIf { it.isNotBlank() }?.let { f ->
       args.add("-f")
-      args.add(it)
+      args.add(f)
     }
-    preset?.takeIf { it.isNotBlank() }?.let {
+    preset?.takeIf { it.isNotBlank() }?.let { p ->
       args.add("-preset")
-      args.add(it)
+      args.add(p)
     }
-    presetFilename?.takeIf { it.isNotBlank() }?.let {
+    presetFilename?.takeIf { it.isNotBlank() }?.let { p ->
       args.add("-fpre")
-      args.add(it)
+      args.add(p)
     }
-    startOffset?.let {
+    startOffset?.let { offset ->
       args.add("-ss")
-      args.add(FFmpegUtils.toTimecode(it, TimeUnit.MILLISECONDS))
+      args.add(FFmpegUtils.toTimecode(offset, TimeUnit.MILLISECONDS))
     }
-    duration?.let {
+    duration?.let { d ->
       args.add("-t")
-      args.add(FFmpegUtils.toTimecode(it, TimeUnit.MILLISECONDS))
+      args.add(FFmpegUtils.toTimecode(d, TimeUnit.MILLISECONDS))
     }
     args.addAll(meta_tags)
   }
 
   protected open fun addAudioFlags(args: MutableList<String>) {
-    audio_codec?.takeIf { it.isNotBlank() }?.let {
+    audio_codec?.takeIf { it.isNotBlank() }?.let { codec ->
       args.add("-acodec")
-      args.add(it)
+      args.add(codec)
     }
     if(audio_channels > 0) {
       args.add("-ac")
@@ -420,31 +420,31 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
       args.add("-ar")
       args.add(audio_sample_rate.toString())
     }
-    audio_preset?.takeIf { it.isNotBlank() }?.let {
+    audio_preset?.takeIf { it.isNotBlank() }?.let { preset ->
       args.add("-apre")
-      args.add(it)
+      args.add(preset)
     }
   }
 
   protected open fun addVideoFlags(parent: FFmpegBuilder, args: MutableList<String>) {
-    video_frames?.let {
+    video_frames?.let { frames ->
       args.add("-vframes")
-      args.add(it.toString())
+      args.add(frames.toString())
     }
-    video_codec?.takeIf { it.isNotBlank() }?.let {
+    video_codec?.takeIf { it.isNotBlank() }?.let { codec ->
       args.add("-vcodec")
-      args.add(it)
+      args.add(codec)
     }
-    video_pixel_format?.takeIf { it.isNotBlank() }?.let {
+    video_pixel_format?.takeIf { it.isNotBlank() }?.let { fmt ->
       args.add("-pix_fmt")
-      args.add(it)
+      args.add(fmt)
     }
     if(video_copyinkf) {
       args.add("-copyinkf")
     }
-    video_movflags?.takeIf { it.isNotBlank() }?.let {
+    video_movflags?.takeIf { it.isNotBlank() }?.let { flags ->
       args.add("-movflags")
-      args.add(it)
+      args.add(flags)
     }
 
     video_size?.let { videoSize ->
@@ -460,9 +460,9 @@ abstract class AbstractFFmpegStreamBuilder<T : AbstractFFmpegStreamBuilder<T>> {
       }
     }
 
-    video_frame_rate?.let {
+    video_frame_rate?.let { rate ->
       args.add("-r")
-      args.add(it.toString())
+      args.add(rate.toString())
     }
   }
 

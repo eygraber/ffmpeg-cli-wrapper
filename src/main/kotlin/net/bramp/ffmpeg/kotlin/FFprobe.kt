@@ -44,8 +44,6 @@ class FFprobe(
    */
   @Throws(IOException::class)
   fun probe(mediaPath: String): FFmpegProbeResult {
-    requireNotNull(mediaPath) { "mediaPath must not be null" }
-
     val args = listOf(
       ffprobePath,
       "-v",
@@ -72,8 +70,6 @@ class FFprobe(
    */
   @Throws(IOException::class)
   fun probe(mediaPath: String, userAgent: String?): FFmpegProbeResult {
-    requireNotNull(mediaPath) { "mediaPath must not be null" }
-
     val args = buildList {
       add(ffprobePath)
       add("-v")
@@ -105,8 +101,6 @@ class FFprobe(
    */
   @Throws(IOException::class)
   fun probe(mediaPath: String, userAgent: String?, vararg extraArgs: String): FFmpegProbeResult {
-    requireNotNull(mediaPath) { "mediaPath must not be null" }
-
     val args = buildList {
       add(ffprobePath)
       add("-v")

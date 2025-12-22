@@ -45,7 +45,8 @@ class FFmpegHlsOutputBuilder(parent: FFmpegBuilder, filename: String) :
    * @return [FFmpegHlsOutputBuilder]
    */
   fun setHlsSegmentFileName(filename: String?): FFmpegHlsOutputBuilder {
-    hlsSegmentFilename = Preconditions.checkNotNullEmptyOrBlank(filename, "filename must not be empty")
+    hlsSegmentFilename =
+      Preconditions.checkNotNullEmptyOrBlank(arg = filename, errorMessage = "filename must not be empty")
     return this
   }
 
@@ -87,35 +88,35 @@ class FFmpegHlsOutputBuilder(parent: FFmpegBuilder, filename: String) :
    * @return [FFmpegHlsOutputBuilder]
    */
   fun setHlsBaseUrl(baseurl: String?): FFmpegHlsOutputBuilder {
-    hlsBaseUrl = Preconditions.checkNotNullEmptyOrBlank(baseurl, "baseurl must not be empty")
+    hlsBaseUrl = Preconditions.checkNotNullEmptyOrBlank(arg = baseurl, errorMessage = "baseurl must not be empty")
     return this
   }
 
   override fun addFormatArgs(args: MutableList<String>) {
     super.addFormatArgs(args)
-    hlsTime?.let {
+    hlsTime?.let { time ->
       args.add("-hls_time")
-      args.add(FFmpegUtils.toTimecode(it, TimeUnit.MILLISECONDS))
+      args.add(FFmpegUtils.toTimecode(time, TimeUnit.MILLISECONDS))
     }
 
-    hlsSegmentFilename?.takeUnless { it.isEmpty() }?.let {
+    hlsSegmentFilename?.takeUnless { it.isEmpty() }?.let { filename ->
       args.add("-hls_segment_filename")
-      args.add(it)
+      args.add(filename)
     }
 
-    hlsInitTime?.let {
+    hlsInitTime?.let { time ->
       args.add("-hls_init_time")
-      args.add(FFmpegUtils.toTimecode(it, TimeUnit.MILLISECONDS))
+      args.add(FFmpegUtils.toTimecode(time, TimeUnit.MILLISECONDS))
     }
 
-    hlsListSize?.let {
+    hlsListSize?.let { size ->
       args.add("-hls_list_size")
-      args.add(it.toString())
+      args.add(size.toString())
     }
 
-    hlsBaseUrl?.takeUnless { it.isEmpty() }?.let {
+    hlsBaseUrl?.takeUnless { it.isEmpty() }?.let { url ->
       args.add("-hls_base_url")
-      args.add(it)
+      args.add(url)
     }
   }
 
