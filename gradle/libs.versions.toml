@@ -1,7 +1,7 @@
 [versions]
 commonsLang3 = "3.20.0"
 detekt = "2.0.0-alpha.1"
-detektEygraber = "1.0.14"
+detektEygraber = "1.0.15"
 grizzlyHttpServer = "4.0.2"
 junit = "4.13.2"
 kotest = "6.1.2"
