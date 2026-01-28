@@ -55,7 +55,7 @@ class LoggingFilterReader(input: Reader?, val logger: Logger) : FilterReader(inp
     const val LOG_CHAR = '\n'
     private fun indexOf(array: CharArray, c: Char, off: Int, len: Int): Int {
       for(i in off until off + len) {
-        if (array[i] == c) {
+        if(array[i] == c) {
           return i
         }
       }

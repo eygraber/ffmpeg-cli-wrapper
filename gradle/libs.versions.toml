@@ -1,7 +1,7 @@
 [versions]
 commonsLang3 = "3.20.0"
-detekt = "2.0.0-alpha.1"
-detektEygraber = "1.0.14"
+detekt = "2.0.0-alpha.2"
+ktlintCustomRules = "0.1.1"
 grizzlyHttpServer = "4.0.2"
 junit = "4.13.2"
 kotest = "6.1.2"
@@ -16,14 +16,17 @@ slf4j = "2.0.17"
 
 [libraries]
 commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang3" }
-detektEygraber-formatting = { module = "com.eygraber.detekt.rules:formatting", version.ref = "detektEygraber" }
-detektEygraber-style = { module = "com.eygraber.detekt.rules:style", version.ref = "detektEygraber" }
 grizzly-http-server = { module = "org.glassfish.grizzly:grizzly-http-server", version.ref = "grizzlyHttpServer" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
-# not actually used; just here so renovate picks it up
+# just here so renovate picks it up
+# noinspection UnusedVersionCatalogEntry
 ktlint = { module = "com.pinterest.ktlint:ktlint-bom", version.ref = "ktlint" }
+
+# just here so renovate picks it up
+# noinspection UnusedVersionCatalogEntry
+ktlintCustomRules = { module = "com.eygraber.ktlint.rules:ktlint-rules", version.ref = "ktlintCustomRules" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }

@@ -152,7 +152,7 @@ class FFprobe(
         reader.readText(),
       )
 
-      if (result == null) {
+      if(result == null) {
         throw IOException("FFprobe returned no output")
       }
 

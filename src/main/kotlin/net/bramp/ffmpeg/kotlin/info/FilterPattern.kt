@@ -29,7 +29,7 @@ data class FilterPattern(
       val streams: MutableList<CodecType> = ArrayList()
 
       for(i in pattern.indices) {
-        when (val c = pattern[i]) {
+        when(val c = pattern[i]) {
           '|',
           'N',
           -> {}
