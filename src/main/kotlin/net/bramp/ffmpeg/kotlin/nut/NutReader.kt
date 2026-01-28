@@ -47,10 +47,10 @@ class NutReader(inputStream: InputStream, private val listener: NutReaderListene
     dataInputStream.resetCRC()
     try {
       var startcode = dataInputStream.readStartCode()
-      while (true) {
+      while(true) {
         val packet = Packet.StartCode.Companion.of(startcode)
-        if (packet == null) {
-          if (Packet.StartCode.Companion.isPossibleStartcode(startcode)) {
+        if(packet == null) {
+          if(Packet.StartCode.Companion.isPossibleStartcode(startcode)) {
             throw IOException("expected framecode, found " + Packet.StartCode.Companion.toString(startcode))
           }
 
@@ -61,17 +61,17 @@ class NutReader(inputStream: InputStream, private val listener: NutReaderListene
           startcode = dataInputStream.readStartCode()
           continue
         }
-        when (packet) {
+        when(packet) {
           Packet.StartCode.Main -> {
             header = MainHeaderPacket()
-            if (!Packet.StartCode.Main.equalsCode(startcode)) {
+            if(!Packet.StartCode.Main.equalsCode(startcode)) {
               throw IOException("expected main header found: 0x${startcode.toString(16).uppercase()}")
             }
             header.read(dataInputStream, startcode)
             startcode = dataInputStream.readStartCode()
           }
           Packet.StartCode.Stream -> {
-            if (!Packet.StartCode.Stream.equalsCode(startcode)) {
+            if(!Packet.StartCode.Stream.equalsCode(startcode)) {
               throw IOException("expected stream header found: 0x${startcode.toString(16).uppercase()}")
             }
             val streamHeader = StreamHeaderPacket()

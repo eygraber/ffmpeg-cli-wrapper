@@ -20,10 +20,10 @@ internal class TcpProgressParserRunnable(
           parser.processStream(socket.getInputStream())
         }
       }
-      catch (_: SocketException) {
+      catch(_: SocketException) {
         // Most likely a Socket closed exception, which we can safely ignore
       }
-      catch (_: IOException) {
+      catch(_: IOException) {
         // We have no good way to report this back to the user... yet
         // TODO Report to the user that this failed in some way
       }

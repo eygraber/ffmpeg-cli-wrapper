@@ -233,7 +233,8 @@ abstract class AbstractFFmpegOutputBuilder<T : AbstractFFmpegOutputBuilder<T>> :
       if(video_enabled && videoBitRate == 0L) {
         val audioBitRateForCalc = if(audio_enabled) audioBitRate else 0L
         videoBitRate = totalBitRate - audioBitRateForCalc
-      } else if(audio_enabled && audioBitRate == 0L) {
+      }
+      else if(audio_enabled && audioBitRate == 0L) {
         audioBitRate = totalBitRate
       }
     }

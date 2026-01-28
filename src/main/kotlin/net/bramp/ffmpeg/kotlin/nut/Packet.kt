@@ -26,7 +26,7 @@ open class Packet {
        */
       fun of(startcode: Long): StartCode? {
         for(c in entries) {
-          if (c.equalsCode(startcode)) {
+          if(c.equalsCode(startcode)) {
             return c
           }
         }

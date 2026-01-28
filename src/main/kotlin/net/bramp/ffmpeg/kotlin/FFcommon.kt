@@ -42,7 +42,7 @@ abstract class FFcommon protected constructor(
   @Throws(IOException::class)
   protected fun throwOnError(p: Process) {
     try {
-      if (ProcessUtils.waitForWithTimeout(p, 1, TimeUnit.SECONDS) != 0) {
+      if(ProcessUtils.waitForWithTimeout(p, 1, TimeUnit.SECONDS) != 0) {
         // TODO Parse the error
         throw IOException("$path returned non-zero exit status. Check stdout.")
       }
@@ -56,7 +56,7 @@ abstract class FFcommon protected constructor(
   @Suppress("CanBeNonNullable")
   protected fun throwOnError(p: Process, result: FFmpegProbeResult?) {
     try {
-      if (ProcessUtils.waitForWithTimeout(p, 1, TimeUnit.SECONDS) != 0) {
+      if(ProcessUtils.waitForWithTimeout(p, 1, TimeUnit.SECONDS) != 0) {
         val ffmpegError: FFmpegError? = result?.error
         throw FFmpegException("$path returned non-zero exit status. Check stdout.", ffmpegError)
       }
@@ -84,13 +84,14 @@ abstract class FFcommon protected constructor(
         throwOnError(p) // Check for process error first
 
         // If process didn't error, but versionLine is null, it's an unexpected output
-        if (versionLine == null) {
+        if(versionLine == null) {
           throw IOException(
             "Failed to read version from $path output: version line was null after successful process execution.",
           )
         }
         this.version = versionLine
-      } finally {
+      }
+      finally {
         p.destroy()
       }
     }

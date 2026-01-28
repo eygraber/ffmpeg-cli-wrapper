@@ -33,9 +33,6 @@ dependencies {
   testImplementation(libs.kotest.assertions.core)
   testImplementation(libs.logback.classic)
   testImplementation(libs.mockk)
-
-  detektPlugins(libs.detektEygraber.formatting)
-  detektPlugins(libs.detektEygraber.style)
 }
 
 tasks.withType<KotlinCompile>().configureEach {
