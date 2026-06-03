@@ -257,7 +257,7 @@ public abstract class net/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilde
 	public final fun getVideo_pixel_format ()Ljava/lang/String;
 	public final fun getVideo_size ()Ljava/lang/String;
 	public final fun getVideo_width ()I
-	public static final fun isValidSize$ffmpeg_cli_wrapper (I)Z
+	public static final fun isValidSize$com_eygraber_ffmpeg_cli_wrapper (I)Z
 	public final fun setAudioChannels (I)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun setAudioCodec (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
 	public final fun setAudioPreset (Ljava/lang/String;)Lnet/bramp/ffmpeg/kotlin/builder/AbstractFFmpegStreamBuilder;
